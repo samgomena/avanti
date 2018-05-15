@@ -1,0 +1,18 @@
+/**
+ * Components: Scaffolding
+ */
+
+// General
+// =======
+
+html {
+	position: relative;
+	font-size: 14px;
+
+	@include media-breakpoint-up(sm) {
+		font-size: 15px;
+	}
+}
+body {
+	position: relative;
+}

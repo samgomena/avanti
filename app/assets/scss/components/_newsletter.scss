@@ -1,0 +1,32 @@
+/**
+ * Components: Newsletter
+ */
+
+.section {
+	
+	&_newsletter {
+
+		// Form
+		
+		&__form {
+
+			.row {
+
+				> [class*="col"] {
+
+					@include media-breakpoint-up(md) {
+						padding-left: $spacer / 2;
+						padding-right: $spacer / 2;
+					}
+				}
+			}
+
+			// Hidden input
+
+			#mce-hidden-input {
+				position: absolute;
+				transform: scale(0);
+			}
+		}
+	}
+}

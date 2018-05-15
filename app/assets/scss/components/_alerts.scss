@@ -1,0 +1,35 @@
+/**
+ * Components: Alerts
+ */
+
+.alert {
+	border-width: 2px 0 0 0;
+	font-family: $headings-font-family;
+	color: $headings-color;
+	box-shadow: 0 5px 30px 0 fade-out(black,.85);
+	
+	// Contextual classes
+
+	&-danger {
+		background-color: white;
+		border-color: theme-color("danger");
+	}
+	&-success {
+		background-color: white;
+		border-color: theme-color("success");
+	}
+}
+
+#page-alert {
+	position: fixed;
+	top: $navbar-height; left: 0; right: 0;
+	width: 100%; max-width: 600px;
+	text-align: center;
+	z-index: 999;
+
+	@include media-breakpoint-up(md) {
+		top: $navbar-height + 20px;
+		left: 50%; right: auto;
+		transform: translateX(-50%);
+	}
+}

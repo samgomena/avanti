@@ -1,0 +1,74 @@
+/**
+ * Components: Contact info
+ */
+
+.section {
+
+	&_contact {
+
+		// Info
+
+		&__info {
+			margin-bottom: 2rem;
+			padding: 0 1rem;
+
+			&__item {
+				margin-bottom: 1rem;
+
+				+ .section_contact__info__item {
+					padding-top: 1rem;
+					border-top: 1px solid $gray;
+				}
+
+				// Heading
+
+				&__heading {
+					@include font-small(900);
+				}
+
+				// Content
+
+				&__content {
+					font-family: $headings-font-family;
+					
+					// Phone links
+
+					a[href*="tel"] {
+						color: $body-color;
+
+						&:hover, &:focus, &:active, &:active:hover, &:active:focus {
+						 	text-decoration: none;   
+						}
+					}
+
+					@at-root ul#{&} {
+						list-style-type: none;
+						padding-left: 0;
+
+						> li {
+							display: inline-block;
+
+							> a {
+								display: block;
+								$size: 1.5rem;
+								width: $size; height: $size;
+								line-height: $size;
+								text-align: center;
+								background-color: $link-color;
+								color: white;
+
+								&:hover {
+									background-color: $link-hover-color;
+								}
+							}
+
+							+ li {
+								margin-left: 3px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

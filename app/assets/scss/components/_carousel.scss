@@ -1,0 +1,90 @@
+/**
+ * Components: Carousel
+ */
+
+.carousel {
+
+	// Indicators
+
+	&-indicators {
+		position: relative;
+		margin-top: 2rem;
+		bottom: 0;
+
+		> li {
+			$size: 10px;
+			width: $size; height: $size;
+			border-radius: 50%;
+			background-color: $gray;
+			cursor: pointer;
+
+			&.active {
+				background-color: $primary;
+			}
+		}
+	}
+}
+
+// Flickity carousel
+
+.flickity {
+
+	// Controls
+
+	&-prev-next-button {
+		$size: 3rem;
+		display: block;
+		width: $size; height: $size;
+		top: calc(50% - 1rem - 5px);
+		background-color: white;
+		opacity: .75;
+
+		@at-root .dots-disabled #{&} {
+			top: 50%;
+		}
+
+		// Arrow
+
+		.arrow {
+			display: none;
+		}
+
+		// New arrow
+
+		&:before {
+			content: '\f104';
+			font-family: 'FontAwesome';
+			font-size: 2rem;
+			position: absolute;
+			top: 50%; left: 50%;
+			transform: translate(-75%, -50%);
+
+			@at-root .next#{&} {
+				content: '\f105';
+				transform: translate(-25%, -50%);
+			}
+		}
+
+		&:hover, &:focus, &:active, &:active:hover, &:active:focus {
+		 	opacity: 1;   
+		}
+	}
+	
+	// Indicators
+
+	&-page-dots {
+		position: relative;
+		bottom: auto;
+		margin-top: 2rem;
+
+		> .dot {
+			margin: 0 3px;
+			background-color: $gray;
+			opacity: 1;
+
+			&.is-selected {
+				background-color: $primary;
+			}
+		}
+	}
+}

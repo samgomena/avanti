@@ -1,0 +1,64 @@
+/**
+ * Components: Menu navigation
+ */
+
+.section {
+	
+	&_menu {
+
+		// Navigation
+
+		&__nav {
+			margin-bottom: 2.5rem;
+
+			> ul {
+				list-style-type: none;
+				padding-left: 0;
+				text-align: center;
+
+				> li {
+					display: inline-block;
+
+					> a {
+						position: relative;
+						display: block;
+						padding: $input-btn-padding-y $input-btn-padding-x / 2;
+						@include font-small(900);
+						color: $body-color;
+						transition: color .1s;
+
+						&:after {
+							content: '';
+							display: block;
+							position: absolute;
+							bottom: 5px; left: $input-btn-padding-x / 2; right: $input-btn-padding-x / 2;
+							border-top: 3px solid $primary;
+							transform: translateY(10px);
+							opacity: 0;
+							transition: all .1s;
+						}
+
+						&:hover, &:focus, &:active, &:active:hover, &:active:focus {
+							color: $headings-color;
+							text-decoration: none;  
+						}
+					}
+
+					// Active
+
+					&.active {
+
+						> a {
+							color: $headings-color;
+
+							&:after {
+								transform: translateY(0);
+								opacity: 1;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

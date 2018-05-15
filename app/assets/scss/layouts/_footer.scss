@@ -1,0 +1,98 @@
+/**
+ * Layouts: Footer
+ */
+
+.section {
+
+	// Footer
+
+	&_footer {
+		background-color: $headings-color;
+
+		// Cols
+
+		[class*="col"] {
+
+			@include media-breakpoint-up(md) {
+				padding: 0 2rem;
+			}
+		}
+
+		// Links
+
+		a {
+			color: $body-color;
+
+			&:hover, &:focus, &:active, &:active:hover, &:active:focus {
+				color: $body-color;   
+			}
+		}
+
+		// Heading
+
+		&__heading {
+			@include font-small();
+			margin-top: 2rem;
+			margin-bottom: 1.5rem;
+			color: $primary;
+
+			@include media-breakpoint-up(md) {
+				margin-top: 0;
+			}
+		}
+
+		// Info
+
+		&__info {
+			list-style-type: none;
+			padding-left: 0;
+
+			> li {
+				position: relative;
+				padding-left: 2rem;
+
+				> i {
+					position: absolute;
+					left: 0; top: .4em;
+				}
+
+				+ li {
+					margin-top: .5rem;
+				}
+			}
+		}
+
+		// Opening hours
+
+		&__open {
+
+			&__days {
+				@include font-small();
+				font-weight: 900;
+			}
+			&__time {
+				font-family: $headings-font-family;
+				font-size: $font-size-lg;
+			}
+
+			+ .section_footer__open {
+				margin-top: 1rem;
+			}
+		}
+
+		// Copyright
+
+		&__copyright {
+			margin-top: 2rem;
+
+			&:before {
+				content: '';
+				display: inline-block;
+				width: 3rem;
+				margin-right: 1rem;
+				border-top: 1px solid $body-color;
+				vertical-align: middle;
+			}
+		}
+	}
+}

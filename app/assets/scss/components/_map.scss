@@ -1,0 +1,22 @@
+/**
+ * Components: Map
+ */
+
+.section {
+	
+	&_map {
+
+		&__map {
+			position: absolute;
+			top: 0; right: 0; bottom: 0; left: 0;
+
+			&__heading {
+				@include font-small(800);
+				margin-top: 1rem;
+			}
+			&__content {
+				line-height: $line-height-base;
+			}
+		}
+	}
+}

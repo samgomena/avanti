@@ -1,0 +1,38 @@
+/**
+ * Components: Forms
+ */
+
+// Form controls
+
+.form-control {
+
+	// Sizes
+
+	&-sm {
+		font-size: $font-size-base;
+	}
+
+	// Placeholder
+
+	&::placeholder {
+		font-family: $headings-font-family;
+	}
+}
+
+// Feedback
+
+.invalid-feedback {
+	font-size: .95rem;
+}
+
+// Bootstrap v4 Beta fixes
+
+input[type="date"], input[type="time"] {
+
+	&.form-control {
+		height: $input-height;
+	}
+	&.form-control-sm {
+		height: $input-height-sm;
+	}
+}

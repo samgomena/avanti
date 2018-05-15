@@ -1,0 +1,76 @@
+/**
+ * Components: Section
+ */
+
+.section {
+	position: relative;
+	padding: 3rem 0;
+
+	@include media-breakpoint-up(md) {
+		padding: 6rem 0;
+	}
+
+	// Parallax background fix
+
+	&[data-parallax="scroll"] {
+		background-color: transparent;
+	}
+
+	// Backgrounds
+
+	&_gray {
+		background-color: $gray;
+	}
+
+	// Borders
+
+	&_border {
+
+		&_top {
+			border-top: 1px solid $gray;
+		}
+		&_bottom {
+			border-bottom: 1px solid $gray;
+		}
+	}
+
+	// Padding
+
+	&_no-padding {
+
+		&_top {
+			padding-top: 0;
+		}
+		&_bottom {
+			padding-bottom: 0;
+		}
+	}
+
+	// Headings
+
+	&__preheading {
+		@include font-small();
+	}
+	&__heading {
+		margin-bottom: 2.5rem;
+		max-width: 600px;
+
+		&.text-center {
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		+ .section__subheading {	
+			margin-top: -1.5rem;
+		}
+	}
+	&__subheading {
+		max-width: 600px;
+		margin-bottom: 2.5rem;
+
+		&.text-center {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+}
