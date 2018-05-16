@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php';
 
-// Defind variables
+// Defined variables
 $json =		array();
 $email =	isset( $_POST['contact__form__email'] ) ? $_POST['contact__form__email'] : '';
 $name =		isset( $_POST['contact__form__name'] ) ? $_POST['contact__form__name'] : '';
@@ -15,10 +15,10 @@ if( !$email ) {
 	$json['error']['email'] = 'Please enter your email address.';
 }
 if( !$message ) {
-	$json['error']['message'] = 'Please enter your message.';
+	$json['error']['message'] = 'Please enter a message.';
 }
 
-// Proceed if no erros found
+// Proceed if no errors found
 if( !isset( $json['error'] ) ) {
 
 	// Email message

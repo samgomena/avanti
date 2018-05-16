@@ -7,7 +7,7 @@
 $to_email = 'admin@domain.com';
 
 // Email subject
-$mail_subject = 'New email via Touche';
+$mail_subject = 'New email via Avanti';
 
 // Email content can be modified in sendmail.php
 
