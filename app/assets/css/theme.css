@@ -4695,6 +4695,7 @@ tbody.collapse.show
 .navbar-toggler:focus
 {
     text-decoration: none;
+    outline: 0;
 }
 .navbar-toggler:not(:disabled):not(.disabled)
 {
@@ -11502,13 +11503,13 @@ input[type='time'].form-control-sm,
         width: 100%;
     }
 }
-@media (max-width: 991.98px)
-{
-    .navbar-nav
-    {
-        padding-bottom: 1rem;
-    }
-}
+/*@media (max-width: 991.98px)*/
+/*{*/
+    /*.navbar-nav*/
+    /*{*/
+        /*padding-bottom: 1rem;*/
+    /*}*/
+/*}*/
 .navbar .nav-link
 {
     font-family: 'Lato', sans-serif;
