@@ -40,7 +40,8 @@
 
 						&:hover, &:focus, &:active, &:active:hover, &:active:focus {
 							color: $headings-color;
-							text-decoration: none;  
+							text-decoration: none;
+							outline: 0;
 						}
 					}
 

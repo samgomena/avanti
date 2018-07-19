@@ -4695,7 +4695,6 @@ tbody.collapse.show
 .navbar-toggler:focus
 {
     text-decoration: none;
-    outline: 0;
 }
 .navbar-toggler:not(:disabled):not(.disabled)
 {
@@ -11290,6 +11289,60 @@ input[type='time'].form-control-sm,
     opacity: 1;
 }
 
+/* progressive image CSS */
+.progressive
+{
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    outline: none;
+}
+.progressive img
+{
+    display: block;
+
+    width: 100%;
+    max-width: none;
+    height: auto;
+
+    border: 0 none;
+}
+.progressive img.preview
+{
+    transform: scale(1.05); 
+
+    -webkit-filter: blur(2vw);
+            filter: blur(2vw);
+}
+.progressive img.reveal
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    animation: progressiveReveal 1s ease-out; 
+
+    will-change: transform, opacity;
+}
+
+@keyframes progressiveReveal
+{
+    0%
+    {
+        transform: scale(1.05);
+
+        opacity: 0;
+    }
+    100%
+    {
+        transform: scale(1);
+
+        opacity: 1;
+    }
+}
+
 /** 
  * Components: Lightbox
  */
@@ -11466,9 +11519,10 @@ input[type='time'].form-control-sm,
 .section_menu__nav > ul > li > a:active:hover,
 .section_menu__nav > ul > li > a:active:focus
 {
-    text-decoration: none; 
+    text-decoration: none;
 
     color: #151515;
+    outline: 0;
 }
 .section_menu__nav > ul > li.active > a
 {
@@ -11503,13 +11557,6 @@ input[type='time'].form-control-sm,
         width: 100%;
     }
 }
-/*@media (max-width: 991.98px)*/
-/*{*/
-    /*.navbar-nav*/
-    /*{*/
-        /*padding-bottom: 1rem;*/
-    /*}*/
-/*}*/
 .navbar .nav-link
 {
     font-family: 'Lato', sans-serif;
@@ -12238,38 +12285,4 @@ body
     vertical-align: middle; 
 
     border-top: 1px solid #777;
-}
-
-/* progressive image CSS */
-.progressive {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    outline: none;
-}
-
-.progressive img {
-    display: block;
-    width: 100%;
-    max-width: none;
-    height: auto;
-    border: 0 none;
-}
-
-.progressive img.preview {
-    filter: blur(2vw);
-    transform: scale(1.05);
-}
-
-.progressive img.reveal {
-    position: absolute;
-    left: 0;
-    top: 0;
-    will-change: transform, opacity;
-    animation: progressiveReveal 1s ease-out;
-}
-
-@keyframes progressiveReveal {
-    0% { transform: scale(1.05); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
 }

@@ -20,13 +20,13 @@
 	}
 
 	// Nav
-
-	&-nav {
-
-		@include media-breakpoint-down(md) {
-			padding-bottom: 1rem;
-		}
-	}
+	// TODO: Removes space in between links on hamburger dropdown; This may need to be changed one day.
+	//&-nav {
+    //
+	//	@include media-breakpoint-down(md) {
+	//		padding-bottom: 1rem;
+	//	}
+	//}
 
 	// Nav link
 
