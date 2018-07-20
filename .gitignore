@@ -1,0 +1,9 @@
+
+dist
+dist/*
+
+docs
+docs/*
+
+*.DS_Store
+*.idea
