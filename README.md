@@ -1,4 +1,4 @@
 # avanti
 Website for the restaurant.
 
-Check it out [here](https://avantitualatin.com).
+Check out the website [here](https://avantitualatin.com).
