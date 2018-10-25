@@ -1,21 +1,21 @@
 {
-  "name": "dummy",
-  "version": "1.0.0",
-  "description": "",
+  "name": "Avanti Restaurant & Bar",
+  "version": "0.8.0",
+  "description": "The website for the restaurant in Tualatin, Oregon.",
   "main": "app/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
     "type": "git",
-    "url": "https://Simzikov@bitbucket.org/Simzikov/dummy.git"
+    "url": "https://github.com/samgomena/avanti.git"
   },
   "keywords": [
     ""
   ],
-  "author": "simpleqode.com",
+  "author": "Sam Gomena",
   "license": "ISC",
-  "homepage": "https://Simzikov@bitbucket.org/Simzikov/dummy.git",
+  "homepage": "https://avantitualatin.com",
   "devDependencies": {
     "browser-sync": "^2.18.2",
     "del": "^3.0.0",
@@ -36,3 +36,4 @@
     "stream-combiner2": "^1.1.1"
   }
 }
+
