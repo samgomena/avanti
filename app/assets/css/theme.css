@@ -12113,7 +12113,11 @@ body
 
     content: '';
 
-    opacity: .5; 
+    /*
+        sgomena 11/15
+        Changed opacity from 0.5 to 0.3 to brighten up <section> header pictures
+    */
+    opacity: .3;
     background-color: black;
 }
 @media (min-width: 768px)
