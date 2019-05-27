@@ -18,7 +18,7 @@
   "homepage": "https://Simzikov@bitbucket.org/Simzikov/dummy.git",
   "devDependencies": {
     "browser-sync": "^2.18.2",
-    "del": "^3.0.0",
+    "del": "^4.1.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-cache": "^1.0.1",
