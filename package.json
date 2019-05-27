@@ -1,6 +1,6 @@
 {
-  "name": "Avanti Restaurant & Bar",
-  "version": "0.8.0",
+  "name": "Avanti Restaurant and Bar",
+  "version": "1.1.0",
   "description": "The website for the restaurant in Tualatin, Oregon.",
   "main": "app/index.html",
   "scripts": {

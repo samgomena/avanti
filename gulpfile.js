@@ -83,7 +83,7 @@ gulp.task('useref', function() {
 var imagemin = require('gulp-imagemin');
 
 gulp.task('images', function() {
-  return gulp.src('app/assets/img/**/*.+(png|jpg|gif|svg)')
+  return gulp.src('app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)')
     .pipe(cache(imagemin()))
     .pipe(gulp.dest('dist/assets/img'))
 });
