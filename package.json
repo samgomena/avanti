@@ -31,7 +31,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-useref-plus": "0.0.8",
     "gulp-wait": "0.0.2",
-    "postcss-flexbugs-fixes": "^3.0.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
     "run-sequence": "^2.2.0",
     "stream-combiner2": "^1.1.1"
   }
