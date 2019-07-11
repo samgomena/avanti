@@ -1,1938 +1,263 @@
+
 <!doctype html>
 <html lang="en">
-  <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/ico/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/ico/favicon-16x16.png">
-	<link rel="manifest" href="assets/ico/manifest.json">
-	<link rel="mask-icon" href="assets/ico/safari-pinned-tab.svg" color="#5bbad5">
-	<link rel="shortcut icon" href="assets/ico/favicon.ico">
-	<meta name="msapplication-config" content="assets/ico/browserconfig.xml">
-	<meta name="theme-color" content="#ffffff">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/ico/favicon-16x16.png">
+    <link rel="manifest" href="assets/ico/manifest.json">
+    <link rel="mask-icon" href="assets/ico/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <meta name="msapplication-config" content="assets/ico/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
 
-	<title>Avanti - Restaurant & Bar</title>
+    <title>Avanti - Restaurant & Bar</title>
 
-	<!-- CSS Plugins -->
-	<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/plugins/lightbox/css/lightbox.min.css">
-	<link rel="stylesheet" href="assets/plugins/flickity/flickity.min.css">
+    <!-- CSS Plugins -->
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/lightbox/css/lightbox.min.css">
+    <link rel="stylesheet" href="assets/plugins/flickity/flickity.min.css">
 
-	<!-- CSS Global -->
-	<!-- build:css assets/css/theme.min.css -->
-	<link rel="stylesheet" href="assets/css/theme.css">
-	<!-- endbuild -->
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="assets/css/theme.min.css">
 
-  </head>
-  <body data-spy="scroll" data-offset="71" data-target=".navbar:visible">
+</head>
+<body data-spy="scroll" data-offset="71" data-target=".navbar:visible">
 
-	<!-- NAVBAR
-	================================================== -->
-	<nav class="navbar navbar-light navbar-expand-lg fixed-top">
-		<div class="container">
+<!-- NAVBAR
+================================================== -->
+<nav class="navbar navbar-light navbar-expand-lg fixed-top">
+    <div class="container">
 
-			<!-- Navbar: Brand -->
-			<a class="navbar-brand d-lg-none" href="index.html">Avanti</a>
+        <!-- Navbar: Brand -->
+        <a class="navbar-brand d-lg-none" href="index.html">Avanti</a>
 
-			<!-- Navbar: Toggler -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			
-			<!-- Navbar: Collapse -->
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Navbar: Toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-				<!-- Navbar navigation: Left -->
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="about-us.html">About Us</a>
-					</li>
-					<!--<li class="nav-item">-->
-						<!--&lt;!&ndash;<a class="nav-link dropdown-toggle" href="http://example.com" id="nav-item__menu" &lt;!&ndash;data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&ndash;&gt;>&ndash;&gt;-->
-						<!--<a class="nav-link" href="menu.html" id="nav-item__menu">-->
-							<!--Menu-->
-						<!--</a>-->
-						<!--&lt;!&ndash;<div class="dropdown-menu" aria-labelledby="nav-item__menu">&ndash;&gt;-->
-							<!--&lt;!&ndash;<a class="dropdown-item" href="menu.html">Menu: Standard</a>&ndash;&gt;-->
-							<!--&lt;!&ndash;<a class="dropdown-item" href="menu_no-images.html">Menu: No Images</a>&ndash;&gt;-->
-						<!--&lt;!&ndash;</div>&ndash;&gt;-->
-					<!--</li>-->
-					<!--<li class="nav-item">-->
-						<!--<a class="nav-link" href="reservation.html">Reservation</a>-->
-					<!--</li>-->
-				</ul>
+        <!-- Navbar: Collapse -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-				<!-- Navbar: Brand -->
-				<a class="navbar-brand d-none d-lg-flex" href="index.html">
-					Avanti
-				</a>
+            <!-- Navbar navigation: Left -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="about-us.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="menu.html" id="nav-item__menu">
+                        Menu
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="special_events.html">Special Events</a>
+                </li>
+            </ul>
 
-				<!-- Navbar navigation: Right -->
-				<ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <!--<a class="nav-link dropdown-toggle" href="http://example.com" id="nav-item__menu" &lt;!&ndash;data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&ndash;&gt;>-->
-                        <a class="nav-link" href="menu.html" id="nav-item__menu">
-                            Menu
-                        </a>
-                        <!--<div class="dropdown-menu" aria-labelledby="nav-item__menu">-->
-                        <!--<a class="dropdown-item" href="menu.html">Menu: Standard</a>-->
-                        <!--<a class="dropdown-item" href="menu_no-images.html">Menu: No Images</a>-->
-                        <!--</div>-->
+            <!-- Navbar: Brand -->
+            <a class="navbar-brand d-none d-lg-flex" href="index.html">
+                Avanti
+            </a>
+
+            <!-- Navbar navigation: Right -->
+            <ul class="navbar-nav ml-auto">
+                <!--<li class="nav-item">-->
+                <!--<a class="nav-link" href="news-and-events.html">News & Events</a>-->
+                <!--</li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="gallery.html">Some Photos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact-us.html">Contact Us</a>
+                </li>
+            </ul>
+
+        </div> <!-- / .navbar-collapse -->
+    </div> <!-- / .container -->
+</nav> <!-- / .navbar -->
+
+
+<!-- WELCOME ================================================== -->
+<section class="section section_welcome" data-parallax="scroll" data-image-src="assets/img/1.jpg">
+
+    <!-- Content -->
+    <div class="section_welcome__main">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col">
+
+                    <!-- Heading -->
+                    <h1 class="section__heading section_welcome__heading text-center">
+                        Avanti<br>
+                    </h1>
+                    <h2 class="section__preheading section_welcome__preheading text-center text-muted">
+                        <span class="text-primary">Restaurant and Bar</span>
+                    </h2>
+                    <p class="section__subheading section_welcome__subheading text-center text-muted">
+                        Located in Tualatin, Oregon.
+                    </p><br><br>
+                    <!--<h2 class="section__preheading section_welcome__preheading text-center">-->
+                        <!--<span class="text-primary">Tuesday-Thursday from 9-10 PM</span>-->
+                    <!--</h2>-->
+                    <!--<h2 class="section__preheading section_welcome__preheading text-center">-->
+                        <!--<span class="text-primary">Friday-Saturday from 9-11 PM</span>-->
+                    <!--</h2><br><br>-->
+                    <!--<h6 class="section__subheading section_welcome__preheading text-center">-->
+                        <!--New Late Night Happy Hour-->
+                    <!--</h6>-->
+                    <!--<h6 class="section__subheading section_welcome__preheading text-center">-->
+                        <!--Outdoor Seating Now Available-->
+                    <!--</h6>-->
+
+                    <!-- Button -->
+                    <!--<div class="text-center">-->
+                    <!--<a href="#section_reservation" class="btn btn-primary text-white">-->
+                    <!--Make a reservation-->
+                    <!--</a>-->
+                    <!--</div>-->
+
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </div>
+
+    <!-- Footer -->
+    <div class="section_welcome__footer">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md">
+
+                    <!-- Social links -->
+                    <ul class="section_welcome__footer__social text-center text-lg-left">
+                        <li>
+                            <a href="https://www.facebook.com/pg/avanti.tualatin">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/avanti_restaurant/">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-md">
+
+                    <!-- Address -->
+                    <div class="section_welcome__footer__address text-center text-lg-right">
+                        <i class="fa fa-map-marker"></i> <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">7995 SW Nyberg St, Tualatin, OR 97062</a>
+                    </div>
+
+                </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
+    </div>
+
+</section>
+
+<!-- FOOTER
+================================================== -->
+<footer class="section section_footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+
+                <!-- About Us -->
+                <h5 class="section_footer__heading">
+                    About Us
+                </h5>
+                <p>
+                    We're a small family owned restaurant located on the corner of Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
+                </p>
+
+            </div>
+            <div class="col-sm-4">
+
+                <!-- Contact info -->
+                <h5 class="section_footer__heading">
+                    Contact info
+                </h5>
+                <ul class="section_footer__info">
+                    <li>
+                        <i class="fa fa-map-marker"></i> <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">7995 SW Nyberg St, Tualatin, OR 97062</a>
                     </li>
-					<!--<li class="nav-item">-->
-						<!--<a class="nav-link" href="news-and-events.html">News & Events</a>-->
-					<!--</li>-->
-					<!--<li class="nav-item">-->
-						<!--<a class="nav-link" href="gallery.html">Gallery</a>-->
-					<!--</li>-->
-					<!--<li class="nav-item">-->
-						<!--<a class="nav-link" href="contact-us.html">Contact</a>-->
-					<!--</li>-->
-				</ul>
+                    <li>
+                        <i class="fa fa-phone"></i><a href="tel:5038265631">(503)-826-5631</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-envelope-o"></i> <a href="mailto:avanti.tualatin@gmail.com">avanti.tualatin@gmail.com</a>
+                    </li>
+                </ul>
 
-			</div> <!-- / .navbar-collapse -->
+            </div>
+            <div class="col-sm-4">
 
-		</div> <!-- / .container -->
-	</nav> <!-- / .navbar -->
-
-	<!-- WELCOME ================================================== -->
-	<section class="section section_welcome" data-parallax="scroll" data-image-src="assets/img/1.jpg">
-
-		<!-- Content -->
-		<div class="section_welcome__main">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col">
-
-						<!-- Heading -->
-						<h2 class="section__preheading section_welcome__preheading text-center text-muted">
-							<span class="text-primary">Restaurant</span> / Bar
-						</h2>
-						<h1 class="section__heading section_welcome__heading text-center">
-							Avanti
-						</h1>
-						<p class="section__subheading section_welcome__subheading text-center text-muted">
-                            <!--TODO-->
-							Located in Tualatin, Oregon.
-						</p>
-
-						<!-- Button -->
-						<!--<div class="text-center">-->
-							<!--<a href="#section_reservation" class="btn btn-primary text-white">-->
-								<!--Make a reservation-->
-							<!--</a>-->
-						<!--</div>-->
-
-					</div>
-				</div> <!-- / .row -->
-			</div> <!-- / .container -->
-		</div>
-
-		<!-- Footer -->
-		<div class="section_welcome__footer">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-md">
-
-						<!-- Social links -->
-						<ul class="section_welcome__footer__social text-center text-lg-left">
-							<!--<li>-->
-								<!--<a href="#">-->
-									<!--<i class="fa fa-twitter"></i>-->
-								<!--</a>-->
-							<!--</li>-->
-							<li>
-								<a href="#">
-									<i class="fa fa-facebook"></i>
-								</a>
-							</li>
-							<li>
-								<a href="https://www.instagram.com/avanti_restaurant/">
-									<i class="fa fa-instagram"></i>
-								</a>
-							</li>
-						</ul>
-
-					</div>
-					<div class="col-md">
-
-						<!-- Address -->
-						<div class="section_welcome__footer__address text-center text-lg-right">
-                            <i class="fa fa-map-marker"></i> <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">7995 SW Nyberg St, Tualatin, OR 97062</a>
-						</div>
-
-					</div>
-				</div> <!-- / .row -->
-			</div> <!-- / .container -->
-		</div>
-
-	</section>
-
-	<!--&lt;!&ndash; DISCOVER-->
-	<!--================================================== &ndash;&gt;-->
-	<!--<section class="section section_discover section_no-padding_bottom">-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col-md-2 align-self-start">-->
-					<!---->
-					<!--&lt;!&ndash; Description &ndash;&gt;-->
-					<!--<p class="section_discover__description">-->
-                        <!--&lt;!&ndash;TODO&ndash;&gt;-->
-						<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
-					<!--</p>-->
-	<!---->
-				<!--</div>-->
-				<!--<div class="col-md-4 align-self-start">-->
-					<!---->
-					<!--&lt;!&ndash; Image &ndash;&gt;-->
-					<!--<div class="section_discover__img">-->
-                        <!--<a href="assets/img/2.jpg" class="progressive replace img-fluid">-->
-                            <!--<img src="assets/img/2.jpg" class="preview" alt="...">-->
-                        <!--</a>-->
-					<!--</div>-->
-
-				<!--</div>-->
-				<!--<div class="col-md-6 align-self-center">-->
-					<!---->
-					<!--&lt;!&ndash; Content &ndash;&gt;-->
-                    <!--&lt;!&ndash;TODO&ndash;&gt;-->
-					<!--<h2><em>Lorem ipsum</em> dolor sit amet</h2>-->
-					<!--<p>-->
-                        <!--&lt;!&ndash;TODO&ndash;&gt;-->
-						<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias veritatis nisi, consequatur, laborum libero a neque ducimus. Porro rem illum quo nostrum quisquam asperiores, blanditiis, consectetur. Possimus facilis velit, voluptatibus!-->
-					<!--</p>-->
-
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-		<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-	<!--</section>-->
-
-	<!--&lt;!&ndash; DISCOVER-->
-	<!--================================================== &ndash;&gt;-->
-	<!--<section class="section section_discover">-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col-md-2 order-md-2 align-self-end">-->
-					<!---->
-					<!--&lt;!&ndash; Description &ndash;&gt;-->
-					<!--<p class="section_discover__description">-->
-                        <!--&lt;!&ndash;TODO&ndash;&gt;-->
-						<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
-					<!--</p>-->
-	<!---->
-				<!--</div>-->
-				<!--<div class="col-md-4 order-md-3 align-self-start">-->
-					<!---->
-					<!--&lt;!&ndash; Image &ndash;&gt;-->
-					<!--<div class="section_discover__img alt">-->
-                        <!--<a href="assets/img/7.jpg" class="progressive replace img-fluid">-->
-                            <!--<img src="assets/img/7.jpg" class="preview" alt="...">-->
-                        <!--</a>-->
-
-					<!--</div>-->
-
-				<!--</div>-->
-				<!--<div class="col-md-6 order-md-1 align-self-center">-->
-					<!---->
-					<!--&lt;!&ndash; Content &ndash;&gt;-->
-                    <!--&lt;!&ndash;TODO&ndash;&gt;-->
-					<!--<h2><em>Velit ipsa</em> quidem debitis amet</h2>-->
-					<!--<p>-->
-                        <!--&lt;!&ndash;TODO&ndash;&gt;-->
-						<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quae similique asperiores consequatur! Nihil temporibus qui enim, ab voluptates corporis commodi eum maxime. Accusamus voluptates a, et quidem! Quo, et?-->
-					<!--</p>-->
-
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-		<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-	<!--</section>-->
-
-	<!-- ABOUT
-	================================================== -->
-	<!--<section class="section section_about">-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col-md-4">-->
-
-					<!--&lt;!&ndash; Description &ndash;&gt;-->
-					<!--<p class="section_about__description">-->
-                        <!--&lt;!&ndash;TODO&ndash;&gt;-->
-						<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam placeat molestiae ab, consectetur.-->
-					<!--</p>-->
-
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-		<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-	<!--</section>-->
-
-	<!-- MENU ================================================== -->
-	<section class="section section_menu section_border_bottom">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-	
-					<!-- Heading -->
-					<h2 class="section__heading text-center">
-						Our menu
-					</h2>
-					<p class="section__subheading text-center">
-                        Made with a rotating selection of this seasons finest and freshest ingredients.
-					</p>
-	
-				</div>
-			</div> <!-- / .row -->
-			<div class="row">
-				<div class="col">
-					
-					<!-- Navigation -->
-					<nav class="section_menu__nav">
-						<ul>
-							<li class="active">
-								<a href="#menu_images" data-filter=".mains">Mains</a>
-							</li>
-							<li>
-								<a href="#menu_images" data-filter=".lunch">Lunch</a>
-							</li>
-							<li>
-								<a href="#menu_images" data-filter=".dinner">Dinner</a>
-							</li>
-							<li>
-								<a href="#menu_images" data-filter=".drinks">Drinks</a>
-							</li>
-						</ul>
-					</nav>
-
-				</div>
-			</div>
-
-			<div class="row section_menu__grid" id="menu_images">
-                <div class="col-md-6 section_menu__grid__item lunch">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Caprese</h4>
-                                <p>
-                                    Hand-pulled mozzarella, heirloom tomato, and basil sprinkled with pesto oil and balsamic reduction.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $10
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
+                <!-- Hours -->
+                <h5 class="section_footer__heading">
+                    Hours
+                </h5>
+                <div class="section_footer__open">
+                    <div class="section_footer__open__days">Tuesday - Saturday</div>
+                    <div class="section_footer__open__time">11:00 AM - 10:00 PM</div>
+                    <div class="small">Happy Hour: 3:00PM - 5:00 PM & 9:00 PM - Close</div>
                 </div>
-                <div class="col-md-6 section_menu__grid__item dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Caprese</h4>
-                                <p>
-                                    Hand-pulled mozzarella, heirloom tomato, and basil sprinkled with pesto oil and balsamic reduction.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $11
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
+                <div class="section_footer__open">
+                    <div class="section_footer__open__days">Sunday</div>
+                    <div class="section_footer__open__time">4:00 PM - 9:00 PM</div>
                 </div>
-                <div class="col-md-6 section_menu__grid__item lunch">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Fish & Chips</h4>
-                                <p>
-                                    Tempura Cod, Wasabi Aioli
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $17
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
+                <br>
+                <!-- Seasonal Closures and Openings =============== -->
+                <!--
+                <h5 class="section_footer__heading">
+                    Seasonal Closures and Opening
+                </h5>
+                <div class="section_footer__open">
+                    <div class="section_footer__open__time">Christmas Eve - Closed</div>
+                    <div class="section_footer__open__time">Christmas Day - Closed</div>
+                    <div class="section_footer__open__time">New Year's Eve - Open for Dinner at 4:00 PM</div>
+                    <div class="section_footer__open__time">New Year's Day - Closed</div>
                 </div>
-                <div class="col-md-6 section_menu__grid__item lunch">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>BLTA</h4>
-                                <p>
-                                    Bacon, Lettuce, Tomato, Avocado, Fries or Salad
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $15
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
+            -->
+
+            </div>
+        </div> <!-- / .row -->
+        <div class="row">
+            <div class="col-12">
+
+                <!-- Copyright -->
+                <div class="section_footer__copyright">
+                    <i class="fa fa-copyright"></i> <span id="js-current-year"></span> Avanti. All rights reserved.
                 </div>
-                <div class="col-md-6 section_menu__grid__item lunch">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Chicken Salad Sandwich</h4>
-                                <p>
-                                    Served with Fries or Salad
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $14
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item lunch">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Fried Prawns & Coleslaw Salad</h4>
-                                <p>
-                                    Served with Fried or Salad
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $17
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Coconut Shrimp</h4>
-                                <p>
-                                    Served with wasabi aioli.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $10
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Wild Caught Sockeye Salmon</h4>
-                                <p>
-                                    Wheat Berries, Kale, Summer Squash, Smoked Tomato Beurre Blanc
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $27
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item lunch dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                                <!--<div class="section_menu__item__img">-->
-                                    <!--<a href="assets/img/28.jpg" class="progressive replace">-->
-                                        <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                                    <!--</a>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Marinated Olives</h4>
-                                <p>
-                                    Served with bread.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $5
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item lunch dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Marcona Almonds</h4>
-                                <p>
-                                    <!--TODO-->
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $6
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item lunch dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Truffled Mushroom Soup</h4>
-                                <p>
-                                    Topped with creme fraiche, chives.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $7
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item lunch">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>House Salad</h4>
-                                <p>
-                                    Mixed greens with heirloom tomatoes tossed in a balsamic vinaigrette.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $6
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>House Salad</h4>
-                                <p>
-                                    Mixed greens with heirloom tomatoes tossed in a balsamic vinaigrette.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $7
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item lunch dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Baby Kale Salad</h4>
-                                <p>
-                                    Topped with wheat berries, heirloom tomatoes, Lemongrass Vinaigrette.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $7
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Bayb Kale Salad</h4>
-                                <p>
-                                    Topped with wheat berries, heirloom tomatoes, Lemongrass Vinaigrette.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $8
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item dinner">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Ahi Tuna Tartare</h4>
-                                <p>
-                                    Ahi Tuna Tartare
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $14
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-				<div class="col-md-6 section_menu__grid__item mains dinner">
-					<div class="section_menu__item">
-						<div class="row">
-							<!--<div class="col-3 align-self-center">-->
-								<!--<div class="section_menu__item__img">-->
-									<!--<a href="assets/img/26.jpg" class="progressive replace ">-->
-							            <!--<img src="assets/img/26.jpg" class="preview" alt="...">-->
-						            <!--</a>-->
-								<!--</div>-->
-							<!--</div>-->
-							<div class="col-7">
-								<h4>Chicken Breast with Mushroom Risotto</h4>
-								<p>
-                                    <!--TODO-->
-								</p>
-							</div>
-							<div class="col-2">
-								<div class="section_menu__item__price text-center">
-									$24
-								</div>
-							</div>
-						</div> <!-- / .row -->
-					</div>
-				</div>
-				<div class="col-md-6 section_menu__grid__item mains dinner">
-					<div class="section_menu__item">
-						<div class="row">
-							<!--<div class="col-3 align-self-center">-->
-								<!--<div class="section_menu__item__img">-->
-									<!--<a href="assets/img/31.jpg" class="progressive replace ">-->
-							            <!--<img src="assets/img/31.jpg" class="preview" alt="...">-->
-						            <!--</a>-->
-								<!--</div>-->
-							<!--</div>-->
-							<div class="col-7">
-								<h4>Smoked Pork Chop</h4>
-								<p>
-                                    Double-cut and grilled. Served with French onion bread pudding, grilled asparagus, and mushroom cream.
-								</p>
-							</div>
-							<div class="col-2">
-								<div class="section_menu__item__price text-center">
-									$27
-								</div>
-							</div>
-						</div> <!-- / .row -->
-					</div>
-				</div>
-				<div class="col-md-6 section_menu__grid__item mains dinner">
-					<div class="section_menu__item">
-						<div class="row">
-							<!--<div class="col-3 align-self-center">-->
-								<!--<div class="section_menu__item__img">-->
-									<!--<a href="assets/img/27.jpg" class="progressive replace ">-->
-							            <!--<img src="assets/img/27.jpg" class="preview" alt="...">-->
-						            <!--</a>-->
-								<!--</div>-->
-							<!--</div>-->
-							<div class="col-7">
-								<h4>Flatiron Steak</h4>
-								<p>
-                                    Grilled and served with pomme risole, parsnip puree, mushrooms, Cipollini onions, and topped with demi.
-								</p>
-							</div>
-							<div class="col-2">
-								<div class="section_menu__item__price text-center">
-									$28
-								</div>
-							</div>
-						</div> <!-- / .row -->
-					</div>
-				</div>
-                <div class="col-md-6 section_menu__grid__item lunch">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Grilled Coho Salmon Salad</h4>
-                                <p>
-                                    Served on a bed of baby kale with wheat berries, heirloom tomatoes with a lemongrass vinaigrette.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $20
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item lunch">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/28.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Seared Ahi Niçoise</h4>
-                                <p>
-                                    Red Pepper Vinaigrette, Hardboiled Egg, French Green Beans, Fingerling Potatoes, Olives, Roasted Tomato
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $18
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-				<div class="col-md-6 section_menu__grid__item mains dinner">
-					<div class="section_menu__item">
-						<div class="row">
-							<!--<div class="col-3 align-self-center">-->
-								<!--<div class="section_menu__item__img">-->
-									<!--<a href="assets/img/28.jpg" class="progressive replace ">-->
-							            <!--<img src="assets/img/28.jpg" class="preview" alt="...">-->
-						            <!--</a>-->
-								<!--</div>-->
-							<!--</div>-->
-							<div class="col-7">
-								<h4>Diver Scallops</h4>
-								<p>
-                                    Pan Seared Diver Scallops, Broken Truffle Vinaigrette, Lemongrass Celery Root Puree, Grilled Broccoli, and Fingerling Potato
-								</p>
-							</div>
-							<div class="col-2">
-								<div class="section_menu__item__price text-center">
-									$30
-								</div>
-							</div>
-						</div> <!-- / .row -->
-					</div>
-				</div>
-				<div class="col-md-6 section_menu__grid__item dinner">
-					<div class="section_menu__item">
-						<div class="row">
-							<!--<div class="col-3 align-self-center">-->
-								<!--<div class="section_menu__item__img">-->
-									<!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-							            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-						            <!--</a>-->
-								<!--</div>-->
-							<!--</div>-->
-							<div class="col-7">
-								<h4>Cheeseburger with Fries</h4>
-								<p>
-                                    Tomato, lettuce, onion, and pickle on a brioche bun. Served with truffle fries.
-								</p>
-							</div>
-							<div class="col-2">
-								<div class="section_menu__item__price text-center">
-									$15
-								</div>
-							</div>
-						</div> <!-- / .row -->
-					</div>
-				</div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>PamaFlower</h4>
-                                <p>
-                                    Absolut Citron, Pama, St. Germain, Soda
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $11
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Last Word</h4>
-                                <p>
-                                    Tanqueray, Luxardo, Green Chartreuse, Lime
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $12
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Hemingway Daiquiri</h4>
-                                <p>
-                                    Bacardi, Luxardo, Grapefruit, Lime
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $11
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Grapefruit Drop</h4>
-                                <p>
-                                    Vodka, Campari, Grapefruit, Lemon
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $10
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Pineapple</h4>
-                                <p>
-                                    Vodka, Pineapple, Lime, Ginger beer
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $10
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Sidecar</h4>
-                                <p>
-                                    Brandy, Triple Sec, Lemon
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $10
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Aperol Spritz</h4>
-                                <p>
-                                    Aperol, Proseco, Soda
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $10
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>Orange Creamsicle</h4>
-                                <p>
-                                    Rum, Triple Sec, Orange Juice, Cream
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $10
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/30.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/30.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>On Tap</h4>
-                                <p>
-                                    A selection of rotating beers and ciders.
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    $5
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-                <div class="col-md-6 section_menu__grid__item drinks">
-                    <div class="section_menu__item">
-                        <div class="row">
-                            <!--<div class="col-3 align-self-center">-->
-                            <!--<div class="section_menu__item__img">-->
-                            <!--<a href="assets/img/29.jpg" class="progressive replace ">-->
-                            <!--<img src="assets/img/29.jpg" class="preview" alt="...">-->
-                            <!--</a>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <div class="col-7">
-                                <h4>House Red</h4>
-                                <p>
-                                    Rock Point Red Blend
-                                </p>
-                            </div>
-                            <div class="col-2">
-                                <div class="section_menu__item__price text-center">
-                                    gl/btl $8/24
-                                </div>
-                            </div>
-                        </div> <!-- / .row -->
-                    </div>
-                </div>
-			</div> <!-- / .row -->
-		</div> <!-- / .container -->
-	</section>
 
-	<!-- DISHES ================================================== -->
-	<!--<section class="section section_dishes">-->
-
-		<!--&lt;!&ndash; Header &ndash;&gt;-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col">-->
-
-					<!--&lt;!&ndash; Heading &ndash;&gt;-->
-					<!--<h2 class="section__heading text-center">-->
-						<!--Featured dishes-->
-					<!--</h2>-->
-
-					<!--&lt;!&ndash; Subheading &ndash;&gt;-->
-					<!--<p class="section__subheading text-center">-->
-						<!--Quibusdam in labore tempore quidem voluptatum ullam soluta! Maiores!-->
-					<!--</p>-->
-
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
-
-		<!--&lt;!&ndash; Carousel &ndash;&gt;-->
-		<!--<div class="section_dishes__carousel dots-disabled">-->
-			<!--<div class="section_dishes__carousel__item">-->
-
-				<!--&lt;!&ndash; Image &ndash;&gt;-->
-				<!--<img src="assets/img/26.jpg" alt="..." class="section_dishes__carousel__item__img">-->
-
-				<!--&lt;!&ndash; Body &ndash;&gt;-->
-				<!--<div class="section_dishes__carousel__item__body">-->
-					<!--<h5 class="section_dishes__carousel__item__body__heading mb-0">-->
-						<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet <span>$25</span>-->
-					<!--</h5>-->
-				<!--</div>-->
-
-			<!--</div>-->
-			<!--<div class="section_dishes__carousel__item">-->
-
-				<!--&lt;!&ndash; Image &ndash;&gt;-->
-				<!--<img src="assets/img/27.jpg" alt="..." class="section_dishes__carousel__item__img">-->
-
-				<!--&lt;!&ndash; Body &ndash;&gt;-->
-				<!--<div class="section_dishes__carousel__item__body">-->
-					<!--<h5 class="section_dishes__carousel__item__body__heading mb-0">-->
-						<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet <span>$35</span>-->
-					<!--</h5>-->
-				<!--</div>-->
-
-			<!--</div>-->
-			<!--<div class="section_dishes__carousel__item">-->
-
-				<!--&lt;!&ndash; Image &ndash;&gt;-->
-				<!--<img src="assets/img/28.jpg" alt="..." class="section_dishes__carousel__item__img">-->
-
-				<!--&lt;!&ndash; Body &ndash;&gt;-->
-				<!--<div class="section_dishes__carousel__item__body">-->
-					<!--<h5 class="section_dishes__carousel__item__body__heading mb-0">-->
-						<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet <span>$18</span>-->
-					<!--</h5>-->
-				<!--</div>-->
-
-			<!--</div>-->
-			<!--<div class="section_dishes__carousel__item">-->
-
-				<!--&lt;!&ndash; Image &ndash;&gt;-->
-				<!--<img src="assets/img/29.jpg" alt="..." class="section_dishes__carousel__item__img">-->
-
-				<!--&lt;!&ndash; Body &ndash;&gt;-->
-				<!--<div class="section_dishes__carousel__item__body">-->
-					<!--<h5 class="section_dishes__carousel__item__body__heading mb-0">-->
-						<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet <span>$32</span>-->
-					<!--</h5>-->
-				<!--</div>-->
-
-			<!--</div>-->
-			<!--<div class="section_dishes__carousel__item">-->
-
-				<!--&lt;!&ndash; Image &ndash;&gt;-->
-				<!--<img src="assets/img/30.jpg" alt="..." class="section_dishes__carousel__item__img">-->
-
-				<!--&lt;!&ndash; Body &ndash;&gt;-->
-				<!--<div class="section_dishes__carousel__item__body">-->
-					<!--<h5 class="section_dishes__carousel__item__body__heading mb-0">-->
-						<!--Lorem ipsum dolor sit amet <span>$40</span>-->
-					<!--</h5>-->
-				<!--</div>-->
-
-			<!--</div>-->
-			<!--<div class="section_dishes__carousel__item">-->
-
-				<!--&lt;!&ndash; Image &ndash;&gt;-->
-				<!--<img src="assets/img/31.jpg" alt="..." class="section_dishes__carousel__item__img">-->
-
-				<!--&lt;!&ndash; Body &ndash;&gt;-->
-				<!--<div class="section_dishes__carousel__item__body">-->
-					<!--<h5 class="section_dishes__carousel__item__body__heading mb-0">-->
-						<!--Lorem ipsum dolor sit amet <span>$27</span>-->
-					<!--</h5>-->
-				<!--</div>-->
-
-			<!--</div>-->
-		<!--</div> &lt;!&ndash; / .section_dishes__carousel &ndash;&gt;-->
-
-	<!--</section>-->
-
-	<!-- RESERVATION ================================================== -->
-	<!--<section class="section section_reservation section_gray" id="section_reservation">-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col">-->
-	<!---->
-					<!--&lt;!&ndash; Heading &ndash;&gt;-->
-					<!--<h2 class="section__heading text-center">-->
-					<!--Make online reservation-->
-					<!--</h2>-->
-
-					<!--&lt;!&ndash; Subheading &ndash;&gt;-->
-					<!--<p class="section__subheading text-center">-->
-						<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam illo praesentium sequi in cum, beatae maiores quae qui.-->
-					<!--</p>-->
-	<!---->
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-			<!--<div class="row justify-content-lg-center  section_reservation__row">-->
-				<!--<div class="col-lg-8">-->
-					<!---->
-					<!--&lt;!&ndash; Form &ndash;&gt;-->
-					<!--<form class="section_reservation__form" id="reservation__form">-->
-						<!--<div class="row">-->
-							<!--<div class="col-md-6">-->
-
-								<!--<div class="form-group">-->
-									<!--<label class="sr-only" for="reservation__form__name">Full name</label>-->
-									<!--<input type="text" class="form-control" id="reservation__form__name" name="reservation__form__name" placeholder="Full name">-->
-									<!--<div class="invalid-feedback"></div>-->
-								<!--</div>-->
-								<!--<div class="form-group">-->
-									<!--<label class="sr-only" for="reservation__form__phone">Phone number</label>-->
-									<!--<input type="tel" class="form-control" id="reservation__form__phone" name="reservation__form__phone" placeholder="Phone number">-->
-									<!--<div class="invalid-feedback"></div>-->
-								<!--</div>-->
-								<!--<div class="form-group">-->
-									<!--<label class="sr-only" for="reservation__form__email">E-mail address</label>-->
-									<!--<input type="email" class="form-control" id="reservation__form__email" name="reservation__form__email" placeholder="E-mail address">-->
-									<!--<div class="invalid-feedback"></div>-->
-								<!--</div>-->
-
-							<!--</div>-->
-							<!--<div class="col-md-6">-->
-
-								<!--<div class="form-group">-->
-									<!--<label class="sr-only" for="reservation__form__people">People</label>-->
-									<!--<select class="form-control" id="reservation__form__people" name="reservation__form__people">-->
-										<!--<option value="1">1 person</option>-->
-										<!--<option value="2" selected="">2 persons</option>-->
-										<!--<option value="3">3 persons</option>-->
-										<!--<option value="4">4 persons</option>-->
-										<!--<option value="5">5 persons</option>-->
-									<!--</select>-->
-									<!--<div class="invalid-feedback"></div>-->
-								<!--</div>-->
-								<!--<div class="form-group">-->
-									<!--<label class="sr-only" for="reservation__form__date">Date</label>-->
-									<!--<input type="date" class="form-control" id="reservation__form__date" name="reservation__form__date" value="2016-12-31">-->
-									<!--<div class="invalid-feedback"></div>-->
-								<!--</div>-->
-								<!--<div class="form-group">-->
-									<!--<label class="sr-only" for="reservation__form__time">Time</label>-->
-									<!--<input type="time" class="form-control" id="reservation__form__time" name="reservation__form__time" value="18:00">-->
-									<!--<div class="invalid-feedback"></div>-->
-								<!--</div>-->
-
-							<!--</div>-->
-							<!--<div class="col">-->
-
-								<!--<div class="text-center">-->
-									<!--<button type="submit" class="btn btn-primary">-->
-										<!--Reserve a table-->
-									<!--</button>-->
-								<!--</div>-->
-
-							<!--</div>-->
-						<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-					<!--</form>-->
-
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-		<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-	<!--</section>-->
-
-	<!-- TESTIMONIALS ================================================== -->
-	<!--<section class="section section_testimonials section_border_bottom">-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col">-->
-	<!---->
-					<!--&lt;!&ndash; Heading &ndash;&gt;-->
-					<!--<h2 class="section__heading text-center">-->
-						<!--What clients say about us-->
-					<!--</h2>-->
-
-					<!--&lt;!&ndash; Subheading &ndash;&gt;-->
-					<!--<p class="section__subheading text-center">-->
-						<!--Lorem ipsum dolor sit amet, consectetur adipisicing elit.-->
-					<!--</p>-->
-	<!---->
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-			<!--<div class="row">-->
-				<!--<div class="col">-->
-					<!--<div class="section_testimonials__carousel">-->
-						<!--<div class="section_testimonials__carousel__item text-center text-md-left">-->
-							<!--<div class="row align-items-center">-->
-								<!--<div class="col-md-3 order-md-3">-->
-									<!---->
-									<!--&lt;!&ndash; Photo &ndash;&gt;-->
-									<!--<div class="section_testimonials__photo">-->
-										<!--<img src="assets/img/20.jpg" class="img-fluid" alt="...">-->
-									<!--</div>-->
-
-								<!--</div>-->
-								<!--<div class="col-md-7 order-md-2">-->
-									<!---->
-									<!--&lt;!&ndash; Blockquote &ndash;&gt;-->
-									<!--<blockquote class="section_testimonials__blockquote mx-auto">-->
-										<!--<p>-->
-											<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos at veritatis vitae modi ex quis quibusdam error repudiandae adipisci dolore perspiciatis iste, vel fuga a, libero architecto ratione deleniti sequi.-->
-										<!--</p>-->
-										<!--<footer class="text-muted">-->
-											<!--Richard Roe-->
-										<!--</footer>-->
-									<!--</blockquote>-->
-
-								<!--</div>-->
-								<!--<div class="col-md-1 order-md-1"></div>-->
-							<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-						<!--</div>-->
-						<!--<div class="section_testimonials__carousel__item text-center text-md-left">-->
-							<!--<div class="row align-items-center">-->
-								<!--<div class="col-md-3 order-md-3">-->
-									<!---->
-									<!--&lt;!&ndash; Photo &ndash;&gt;-->
-									<!--<div class="section_testimonials__photo">-->
-										<!--<img src="assets/img/21.jpg" class="img-fluid" alt="...">-->
-									<!--</div>-->
-
-								<!--</div>-->
-								<!--<div class="col-md-7 order-md-2">-->
-									<!---->
-									<!--&lt;!&ndash; Blockquote &ndash;&gt;-->
-									<!--<blockquote class="section_testimonials__blockquote mx-auto">-->
-										<!--<p>-->
-											<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos at veritatis vitae modi ex quis quibusdam error repudiandae adipisci dolore perspiciatis iste, vel fuga a, libero architecto ratione deleniti sequi.-->
-										<!--</p>-->
-										<!--<footer class="text-muted">-->
-											<!--Elisabeth Doe-->
-										<!--</footer>-->
-									<!--</blockquote>-->
-
-								<!--</div>-->
-								<!--<div class="col-md-1 order-md-1"></div>-->
-							<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-						<!--</div>-->
-						<!--<div class="section_testimonials__carousel__item text-center text-md-left">-->
-							<!--<div class="row align-items-center">-->
-								<!--<div class="col-md-3 order-md-3">-->
-									<!---->
-									<!--&lt;!&ndash; Photo &ndash;&gt;-->
-									<!--<div class="section_testimonials__photo">-->
-										<!--<img src="assets/img/22.jpg" class="img-fluid" alt="...">-->
-									<!--</div>-->
-
-								<!--</div>-->
-								<!--<div class="col-md-7 order-md-2">-->
-									<!---->
-									<!--&lt;!&ndash; Blockquote &ndash;&gt;-->
-									<!--<blockquote class="section_testimonials__blockquote mx-auto">-->
-										<!--<p>-->
-											<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos at veritatis vitae modi ex quis quibusdam error repudiandae adipisci dolore perspiciatis iste, vel fuga a, libero architecto ratione deleniti sequi.-->
-										<!--</p>-->
-										<!--<footer class="text-muted">-->
-											<!--Monica Roe-->
-										<!--</footer>-->
-									<!--</blockquote>-->
-
-								<!--</div>-->
-								<!--<div class="col-md-1 order-md-1"></div>-->
-							<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-						<!--</div>-->
-					<!--</div> &lt;!&ndash; / .carousel &ndash;&gt;-->
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-		<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-	<!--</section>-->
-
-	<!--&lt;!&ndash; EVENTS-->
-	<!--================================================== &ndash;&gt;-->
-	<!--<section class="section section_events section_no-padding_bottom">-->
-
-		<!--&lt;!&ndash; Intro &ndash;&gt;-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col">-->
-	<!---->
-					<!--&lt;!&ndash; Heading &ndash;&gt;-->
-					<!--<h2 class="section__heading text-center">-->
-						<!--Upcoming events-->
-					<!--</h2>-->
-
-					<!--&lt;!&ndash; Subheading &ndash;&gt;-->
-					<!--<p class="section__subheading text-center">-->
-						<!--Commodi rem veritatis quis eaque mollitia.-->
-					<!--</p>-->
-	<!---->
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-		<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-
-		<!--&lt;!&ndash; Events &ndash;&gt;-->
-		<!--<div class="section_events__items">-->
-		<!---->
-			<!--&lt;!&ndash; Event #1 &ndash;&gt;-->
-			<!--<div class="section_events__item active">-->
-
-				<!--&lt;!&ndash; Bg image &ndash;&gt;-->
-				<!--<div class="section_events__item__bg" style="background-image: url(assets/img/8.jpg)"></div>-->
-
-				<!--&lt;!&ndash; Content &ndash;&gt;-->
-				<!--<div class="container">-->
-
-					<!--&lt;!&ndash; Content: Large &ndash;&gt;-->
-					<!--<div class="section_events__item__content_lg">-->
-						<!--<div class="row">-->
-							<!--<div class="col-md-8 col-lg-5">-->
-								<!---->
-								<!--&lt;!&ndash; Date &ndash;&gt;-->
-								<!--<h3 class="section__preheading text-primary">-->
-									<!--<time datetime="2017-09-30">September 30, 2017</time>-->
-								<!--</h3>-->
-
-								<!--&lt;!&ndash; Heading &ndash;&gt;-->
-								<!--<h2 class="section__heading text-white">-->
-									<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum voluptas, aut ea quae!-->
-								<!--</h2>-->
-
-								<!--&lt;!&ndash; Description &ndash;&gt;-->
-								<!--<p class="section__subheading">-->
-									<!--&lt;!&ndash;TODO&ndash;&gt;Alias earum, labore doloremque iusto a modi et, dolorem veritatis iste quis ab. Facere est optio, voluptate molestias aspernatur impedit perferendis odit?-->
-								<!--</p>-->
-
-								<!--&lt;!&ndash; Button &ndash;&gt;-->
-								<!--<a href="#section_reservation" class="btn btn-primary text-white">-->
-									<!--Reserve a table-->
-								<!--</a>-->
-
-							<!--</div>-->
-						<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-					<!--</div> &lt;!&ndash; / .section_events__item__content_lg &ndash;&gt;-->
-
-					<!--&lt;!&ndash; Content: Small &ndash;&gt;-->
-					<!--<div class="section_events__item__content_sm">-->
-						<!--<div class="row">-->
-							<!--<div class="col-3 col-md-2 col-lg-1">-->
-								<!---->
-								<!--&lt;!&ndash; Date &ndash;&gt;-->
-								<!--<time datetime="2017-09-30">-->
-									<!--30 <small>Sep</small>-->
-								<!--</time>-->
-
-							<!--</div>-->
-							<!--<div class="col-9 col-md-7 col-lg-8">-->
-								<!---->
-								<!--&lt;!&ndash; Heading &ndash;&gt;-->
-								<!--<h4>-->
-									<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum voluptas, aut ea quae!-->
-								<!--</h4>-->
-
-							<!--</div>-->
-							<!--<div class="col-9 ml-auto col-md-3 text-md-right">-->
-								<!---->
-								<!--&lt;!&ndash; Button &ndash;&gt;-->
-								<!--<a href="#section_reservation" class="btn btn-primary">-->
-									<!--Reserve a table-->
-								<!--</a>-->
-
-							<!--</div>-->
-						<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-					<!--</div> &lt;!&ndash; / .section_events__item__content_sm &ndash;&gt;-->
-
-				<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-
-			<!--</div> &lt;!&ndash; / .section_events__item &ndash;&gt;-->
-
-			<!--&lt;!&ndash; Event #2 &ndash;&gt;-->
-			<!--<div class="section_events__item">-->
-
-				<!--&lt;!&ndash; Bg image &ndash;&gt;-->
-				<!--<div class="section_events__item__bg" style="background-image: url(assets/img/9.jpg)"></div>-->
-
-				<!--&lt;!&ndash; Content &ndash;&gt;-->
-				<!--<div class="container">-->
-
-					<!--&lt;!&ndash; Content: Large &ndash;&gt;-->
-					<!--<div class="section_events__item__content_lg">-->
-						<!--<div class="row">-->
-							<!--<div class="col-md-8 col-lg-5">-->
-								<!---->
-								<!--&lt;!&ndash; Date &ndash;&gt;-->
-								<!--<h3 class="section__preheading text-primary">-->
-									<!--<time datetime="2017-09-29">September 29, 2017</time>-->
-								<!--</h3>-->
-
-								<!--&lt;!&ndash; Heading &ndash;&gt;-->
-								<!--<h2 class="section__heading text-white">-->
-									<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum voluptas, aut ea quae!-->
-								<!--</h2>-->
-
-								<!--&lt;!&ndash; Description &ndash;&gt;-->
-								<!--<p class="section__subheading">-->
-                                    <!--&lt;!&ndash;TODO&ndash;&gt;Alias earum, labore doloremque iusto a modi et, dolorem veritatis iste quis ab. Facere est optio, voluptate molestias aspernatur impedit perferendis odit?-->
-								<!--</p>-->
-
-								<!--&lt;!&ndash; Button &ndash;&gt;-->
-								<!--<a href="#section_reservation" class="btn btn-primary text-white">-->
-									<!--Reserve a table-->
-								<!--</a>-->
-
-							<!--</div>-->
-						<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-					<!--</div> &lt;!&ndash; / .section_events__item__content_lg &ndash;&gt;-->
-
-					<!--&lt;!&ndash; Content: Small &ndash;&gt;-->
-					<!--<div class="section_events__item__content_sm">-->
-						<!--<div class="row">-->
-							<!--<div class="col-3 col-md-2 col-lg-1">-->
-								<!---->
-								<!--&lt;!&ndash; Date &ndash;&gt;-->
-								<!--<time datetime="2017-09-29">-->
-									<!--29 <small>Sep</small>-->
-								<!--</time>-->
-
-							<!--</div>-->
-							<!--<div class="col-9 col-md-7 col-lg-8">-->
-								<!---->
-								<!--&lt;!&ndash; Heading &ndash;&gt;-->
-								<!--<h4>-->
-									<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum voluptas, aut ea quae!-->
-								<!--</h4>-->
-
-							<!--</div>-->
-							<!--<div class="col-9 ml-auto col-md-3 text-md-right">-->
-								<!---->
-								<!--&lt;!&ndash; Button &ndash;&gt;-->
-								<!--<a href="#section_reservation" class="btn btn-primary">-->
-									<!--Reserve a table-->
-								<!--</a>-->
-
-							<!--</div>-->
-						<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-					<!--</div> &lt;!&ndash; / .section_events__item__content_sm &ndash;&gt;-->
-
-				<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-
-			<!--</div> &lt;!&ndash; / .section_events__item &ndash;&gt;-->
-
-			<!--&lt;!&ndash; Event #3 &ndash;&gt;-->
-			<!--<div class="section_events__item">-->
-
-				<!--&lt;!&ndash; Bg image &ndash;&gt;-->
-				<!--<div class="section_events__item__bg" style="background-image: url(assets/img/10.jpg)"></div>-->
-
-				<!--&lt;!&ndash; Content &ndash;&gt;-->
-				<!--<div class="container">-->
-
-					<!--&lt;!&ndash; Content: Large &ndash;&gt;-->
-					<!--<div class="section_events__item__content_lg">-->
-						<!--<div class="row">-->
-							<!--<div class="col-md-8 col-lg-5">-->
-								<!---->
-								<!--&lt;!&ndash; Date &ndash;&gt;-->
-								<!--<h3 class="section__preheading text-primary">-->
-									<!--<time datetime="2017-09-28">September 28, 2017</time>-->
-								<!--</h3>-->
-
-								<!--&lt;!&ndash; Heading &ndash;&gt;-->
-								<!--<h2 class="section__heading text-white">-->
-									<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum voluptas, aut ea quae!-->
-								<!--</h2>-->
-
-								<!--&lt;!&ndash; Description &ndash;&gt;-->
-								<!--<p class="section__subheading">-->
-                                    <!--&lt;!&ndash;TODO&ndash;&gt;Alias earum, labore doloremque iusto a modi et, dolorem veritatis iste quis ab. Facere est optio, voluptate molestias aspernatur impedit perferendis odit?-->
-								<!--</p>-->
-
-								<!--&lt;!&ndash; Button &ndash;&gt;-->
-								<!--<a href="#section_reservation" class="btn btn-primary text-white">-->
-									<!--Reserve a table-->
-								<!--</a>-->
-
-							<!--</div>-->
-						<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-					<!--</div> &lt;!&ndash; / .section_events__item__content_lg &ndash;&gt;-->
-
-					<!--&lt;!&ndash; Content: Small &ndash;&gt;-->
-					<!--<div class="section_events__item__content_sm">-->
-						<!--<div class="row">-->
-							<!--<div class="col-3 col-md-2 col-lg-1">-->
-								<!---->
-								<!--&lt;!&ndash; Date &ndash;&gt;-->
-								<!--<time datetime="2017-09-28">-->
-									<!--28 <small>Sep</small>-->
-								<!--</time>-->
-
-							<!--</div>-->
-							<!--<div class="col-9 col-md-7 col-lg-8">-->
-								<!---->
-								<!--&lt;!&ndash; Heading &ndash;&gt;-->
-								<!--<h4>-->
-									<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum voluptas, aut ea quae!-->
-								<!--</h4>-->
-
-							<!--</div>-->
-							<!--<div class="col-9 ml-auto col-md-3 text-md-right">-->
-								<!---->
-								<!--&lt;!&ndash; Button &ndash;&gt;-->
-								<!--<a href="#section_reservation" class="btn btn-primary">-->
-									<!--Reserve a table-->
-								<!--</a>-->
-
-							<!--</div>-->
-						<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-					<!--</div> &lt;!&ndash; / .section_events__item__content_sm &ndash;&gt;-->
-
-				<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-
-			<!--</div> &lt;!&ndash; / .section_events__item &ndash;&gt;-->
-
-		<!--</div> &lt;!&ndash; / .section_events_items &ndash;&gt;-->
-
-	<!--</section>-->
-
-	<!-- NEWSLETTER ================================================== -->
-	<section class="section section_gray section_newsletter">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-	
-					<!-- Heading -->
-					<h2 class="section__heading section_newsletter__heading text-center">
-						Newsletter
-					</h2>
-					<p class="section__subheading text-center">
-
-					</p>
-	
-				</div>
-			</div> <!-- / .row -->
-			<div class="row justify-content-center">
-				<div class="col-lg-6">
-					
-					<!-- Form -->
-					<div id="mc_embed_signup">
-						<form class="section_newsletter__form validate" action="//simpleqode.us15.list-manage.com/subscribe/post-json?u=507744bbfd1cc2879036c7780&id=4523d25e1b&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate="">
-							<div id="mc_embed_signup_scroll" class="row">
-								<div class="mc-field-group form-group col-md-9">
-									<label for="mce-EMAIL" class="sr-only">E-mail address</label>
-									<input type="email" value="" name="EMAIL" class="required email form-control" id="mce-EMAIL" placeholder="Email address">
-								</div>
-								<div id="mce-responses" class="clear">
-									<div class="response"></div>
-									<div class="response" id="mce-success-response"></div>
-								</div>
-								<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-								<div aria-hidden="true" id="mce-hidden-input">
-									<input type="text" name="b_507744bbfd1cc2879036c7780_4523d25e1b" tabindex="-1" value="">
-								</div>
-								<div class="clear col-md-3 text-center">
-									<button type="submit" class="btn btn-primary" id="mc-embedded-subscribe">
-										Subscribe
-									</button>
-								</div>
-							</div>
-						</form>
-					</div> <!-- #mc_embed_signup -->
-
-				</div>
-			</div> <!-- / .row -->
-		</div> <!-- / .container -->
-	</section>
-
-	<!-- NEWSLETTER CLONE
-	================================================== -->
-	<!--
-		MailChimp newsletters generally cannot be used more than
-		once on a page, because this will cause HTML IDs conflict.
-		This section solves this problem by calling the 
-		original sign-up form and imitating its behaviour. Please 
-		don't use it without the original sign-up form. Remove 
-		d-none to make it visible.
-	-->
-	<!--<section class="section section_gray section_newsletter d-none">-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col">-->
-	<!---->
-					<!--&lt;!&ndash; Heading &ndash;&gt;-->
-					<!--<h2 class="section__heading section_newsletter__heading text-center">-->
-						<!--Newsletter-->
-					<!--</h2>-->
-					<!--<p class="section__subheading text-center">-->
-						<!--&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam illo praesentium sequi in cum, beatae maiores quae qui.-->
-					<!--</p>-->
-	<!---->
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-			<!--<div class="row justify-content-center">-->
-				<!--<div class="col-lg-6">-->
-					<!---->
-					<!--&lt;!&ndash; Form &ndash;&gt;-->
-					<!--<form class="section_newsletter__form section_newsletter__form_clone">-->
-						<!--<div class="row">-->
-							<!--<div class="form-group col-md-9">-->
-								<!--<label class="sr-only">E-mail address</label>-->
-								<!--<input type="email" class="form-control" placeholder="Email address">-->
-							<!--</div>-->
-							<!--<div class="col-md-3 text-center">-->
-								<!--<button type="submit" class="btn btn-primary">-->
-									<!--Subscribe-->
-								<!--</button>-->
-							<!--</div>-->
-						<!--</div>-->
-					<!--</form>-->
-
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-		<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-	<!--</section>-->
-
-	<!-- GALLERY
-	================================================== -->
-	<!--<section class="section section_gallery">-->
-		<!--<div class="container">-->
-			<!--<div class="row">-->
-				<!--<div class="col">-->
-	<!---->
-					<!--&lt;!&ndash; Heading &ndash;&gt;-->
-					<!--<h2 class="section__heading text-center">-->
-						<!--Our gallery-->
-					<!--</h2>-->
-
-					<!--&lt;!&ndash; Subheading &ndash;&gt;-->
-					<!--&lt;!&ndash;<p class="section__subheading text-center">&ndash;&gt;-->
-						<!--&lt;!&ndash;&lt;!&ndash;TODO&ndash;&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit.&ndash;&gt;-->
-					<!--&lt;!&ndash;</p>&ndash;&gt;-->
-	<!---->
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-			<!--<div class="row section_gallery__grid">-->
-				<!--<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">-->
-
-					<!--<a href="assets/img/11.jpg" data-lightbox="gallery">-->
-						<!--<a href="assets/img/11.jpg" class="progressive replace img-fluid">-->
-                            <!--<img src="assets/img/11.jpg" class="preview" alt="...">-->
-                        <!--</a>-->
-					<!--</a>-->
-
-				<!--</div>-->
-				<!--<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">-->
-
-					<!--<a href="assets/img/16.jpg" data-lightbox="gallery">-->
-						<!--<a href="assets/img/16.jpg" class="progressive replace img-fluid">-->
-	                        <!--<img src="assets/img/16.jpg" class="preview" alt="...">-->
-                        <!--</a>-->
-					<!--</a>-->
-
-				<!--</div>-->
-				<!--<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">-->
-
-					<!--<a href="assets/img/13.jpg" data-lightbox="gallery">-->
-						<!--<a href="assets/img/13.jpg" class="progressive replace img-fluid">-->
-							<!--<img src="assets/img/13.jpg" class="preview" alt="...">-->
-						<!--</a>-->
-					<!--</a>-->
-
-				<!--</div>-->
-				<!--<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">-->
-
-					<!--<a href="assets/img/15.jpg" data-lightbox="gallery">-->
-						<!--<a href="assets/img/15.jpg" class="progressive replace img-fluid">-->
-							<!--<img src="assets/img/15.jpg" class="preview" alt="...">-->
-						<!--</a>-->
-					<!--</a>-->
-
-				<!--</div>-->
-				<!--<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">-->
-
-					<!--<a href="assets/img/14.jpg" data-lightbox="gallery">-->
-						<!--<a href="assets/img/14.jpg" class="progressive replace img-fluid">-->
-							<!--<img src="assets/img/14.jpg" class="preview" alt="...">-->
-						<!--</a>-->
-					<!--</a>-->
-
-				<!--</div>-->
-				<!--<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">-->
-
-					<!--<a href="assets/img/18.jpg" data-lightbox="gallery">-->
-						<!--<a href="assets/img/18.jpg" class="progressive replace img-fluid">-->
-							<!--<img src="assets/img/18.jpg" class="preview" alt="...">-->
-						<!--</a>-->
-					<!--</a>-->
-
-				<!--</div>-->
-				<!--<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">-->
-
-					<!--<a href="assets/img/17.jpg" data-lightbox="gallery">-->
-						<!--<a href="assets/img/17.jpg" class="progressive replace img-fluid">-->
-							<!--<img src="assets/img/17.jpg" class="preview" alt="...">-->
-						<!--</a>-->
-					<!--</a>-->
-
-				<!--</div>-->
-				<!--<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">-->
-
-					<!--<a href="assets/img/12.jpg" data-lightbox="gallery">-->
-						<!--<a href="assets/img/12.jpg" class="progressive replace img-fluid">-->
-							<!--<a href="assets/img/12.jpg" class="progressive replace preview">-->
-							    <!--<img src="assets/img/12.jpg" class="preview" alt="...">-->
-						    <!--</a>-->
-						<!--</a>-->
-					<!--</a>-->
-
-				<!--</div>-->
-			<!--</div> &lt;!&ndash; / .row &ndash;&gt;-->
-		<!--</div> &lt;!&ndash; / .container &ndash;&gt;-->
-	<!--</section>-->
-
-	<!-- MAP
-	================================================== -->
-	<section class="section section_map">
-		<div class="section_map__map" data-lat="45.3830129" data-lng="-122.75848759999997" data-zoom="12" data-info="<h4 class='section_map__map__heading text-center'>Avanti - Restaurant & Bar</h4><p class='section_map__map__content text-center text-muted'>7995 SW Nyberg St, Tualatin, OR 97062<br>(503)-826-5631</p>"></div>
-	</section>
-
-	<!-- FOOTER
-	================================================== -->
-	<footer class="section section_footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-4">
-				
-					<!-- About Us -->
-					<h5 class="section_footer__heading">
-						About Us
-					</h5>
-					<p>
-						We're a small family owned restaurant located in Tualatin, Oregon.
-					</p>
-
-				</div>
-				<div class="col-sm-4">
-				
-					<!-- Contact info -->
-					<h5 class="section_footer__heading">
-						Contact info
-					</h5>
-					<ul class="section_footer__info">
-						<li>
-                            <i class="fa fa-map-marker"></i> <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">7995 SW Nyberg St, Tualatin, OR 97062</a>
-						</li>
-						<li>
-							<i class="fa fa-phone"></i><a href="tel:5038265631">(503)-826-5631</a>
-						</li>
-						<li>
-							<i class="fa fa-envelope-o"></i> <a href="mailto:avanti.tualatin@gmail.com">avanti.tualatin@gmail.com</a>
-						</li>
-					</ul>
-
-				</div>
-				<div class="col-sm-4">
-				
-					<!-- Hours -->
-					<h5 class="section_footer__heading">
-                        Hours
-					</h5>
-					<div class="section_footer__open">
-						<div class="section_footer__open__days">Tuesday - Saturday</div>
-						<div class="section_footer__open__time">12:00 PM - 10:00 PM</div>
-					</div>
-					<div class="section_footer__open">
-						<div class="section_footer__open__days">Sunday</div>
-						<div class="section_footer__open__time">4:00 PM - 9:00 PM</div>
-					</div>
-
-				</div>
-			</div> <!-- / .row -->
-			<div class="row">
-				<div class="col-12">
-				
-					<!-- Copyright -->
-					<div class="section_footer__copyright">
-						<i class="fa fa-copyright"></i> <span id="js-current-year"></span> Avanti. All rights reserved.
-					</div>
-
-				</div>
-			</div> <!-- / .row -->
-		</div> <!-- / .container -->
-	</footer>
-
-	<!-- JAVASCRIPT
-	================================================== -->
-
-	<!-- JS Global -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRZiJYqN2QbncqggIukTHS3fS6O6fRm6w"></script>
-
-	<!-- JS Plugins -->
-	<script src="assets/plugins/parallax/parallax.min.js"></script>
-	<script src="assets/plugins/isotope/lib/imagesloaded.pkgd.min.js"></script>
-	<script src="assets/plugins/isotope/isotope.pkgd.min.js"></script>
-	<script src="assets/plugins/flickity/flickity.pkgd.min.js"></script>
-	<script src="assets/plugins/lightbox/js/lightbox.min.js"></script>
-	<!--<script src="assets/plugins/reservation/reservation.js"></script>-->
-	<script src="assets/plugins/alerts/alerts.js"></script>
-
-	<!-- JS Custom -->
-	 <!--build:js assets/js/theme.min.js -->
-	<script src="assets/js/theme.js"></script>
-	<!-- endbuild -->
-	<script src="assets/js/custom.js"></script>
-
-  </body>
+            </div>
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+</footer>
+
+<!-- JAVASCRIPT
+================================================== -->
+
+<!-- JS Global -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRZiJYqN2QbncqggIukTHS3fS6O6fRm6w"></script>
+
+<!-- JS Plugins -->
+<script src="assets/plugins/parallax/parallax.min.js"></script>
+<script src="assets/plugins/isotope/lib/imagesloaded.pkgd.min.js"></script>
+<script src="assets/plugins/isotope/isotope.pkgd.min.js"></script>
+<script src="assets/plugins/flickity/flickity.pkgd.min.js"></script>
+<script src="assets/plugins/lightbox/js/lightbox.min.js"></script>
+<!--<script src="assets/plugins/reservation/reservation.js"></script>-->
+<script src="assets/plugins/alerts/alerts.js"></script>
+
+<!-- JS Custom -->
+<script src="assets/js/theme.js"></script>
+<script src="assets/js/custom.js"></script>
+
+</body>
 </html>

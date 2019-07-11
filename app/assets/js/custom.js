@@ -8,7 +8,7 @@
 if (window.addEventListener && window.requestAnimationFrame && document.getElementsByClassName) window.addEventListener('load', function() {
 
     // start
-    var pItem = document.getElementsByClassName('progressive replace'), pCount, timer;
+    var pictures = document.getElementsByClassName('progressive replace'), pictureCount, timer;
 
     // scroll and resize events
     window.addEventListener('scroll', scroller, false);
@@ -18,7 +18,7 @@ if (window.addEventListener && window.requestAnimationFrame && document.getEleme
     if (MutationObserver) {
 
         var observer = new MutationObserver(function() {
-            if (pItem.length !== pCount) inView();
+            if (pictures.length !== pictureCount) inView();
         });
         observer.observe(document.body, { subtree: true, childList: true, attributes: true, characterData: true });
 
@@ -42,24 +42,24 @@ if (window.addEventListener && window.requestAnimationFrame && document.getEleme
     // image in view?
     function inView() {
 
-        if (pItem.length) requestAnimationFrame(function() {
+        if (pictures.length) requestAnimationFrame(function() {
 
-            var wT = window.pageYOffset, wB = wT + window.innerHeight, cRect, pT, pB, p = 0;
-            while (p < pItem.length) {
+            var windowTop = window.pageYOffset, windowBottom = windowTop + window.innerHeight, cRect, pictureTop, pictureBottom, picture = 0;
+            while (picture < pictures.length) {
 
-                cRect = pItem[p].getBoundingClientRect();
-                pT = wT + cRect.top;
-                pB = pT + cRect.height;
+                cRect = pictures[picture].getBoundingClientRect();
+                pictureTop = windowTop + cRect.top;
+                pictureBottom = pictureTop + cRect.height;
 
-                if (wT < pB && wB > pT) {
-                    loadFullImage(pItem[p]);
-                    pItem[p].classList.remove('replace');
+                if (windowTop < pictureBottom && windowBottom > pictureTop) {
+                    loadFullImage(pictures[picture]);
+                    pictures[picture].classList.remove('replace');
                 }
-                else p++;
+                else picture++;
 
             }
 
-            pCount = pItem.length;
+            pictureCount = pictures.length;
 
         });
 
