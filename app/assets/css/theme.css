@@ -8735,6 +8735,7 @@ a.text-dark:focus {
  * Components: Alerts
  */
 .alert {
+  /* Removed by sgomena on 3/18/19 after using the alert class */
   /* font-family: 'Playfair Display', serif; */
 
   color: #151515;
