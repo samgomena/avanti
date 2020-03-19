@@ -1,566 +1,813 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/ico/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/ico/favicon-16x16.png">
-	<link rel="manifest" href="assets/ico/manifest.json">
-	<link rel="mask-icon" href="assets/ico/safari-pinned-tab.svg" color="#5bbad5">
-	<link rel="shortcut icon" href="assets/ico/favicon.ico">
-	<meta name="msapplication-config" content="assets/ico/browserconfig.xml">
-	<meta name="theme-color" content="#ffffff">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/ico/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/ico/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/ico/favicon-16x16.png"
+    />
+    <link rel="manifest" href="assets/ico/manifest.json" />
+    <link
+      rel="mask-icon"
+      href="assets/ico/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <link rel="shortcut icon" href="assets/ico/favicon.ico" />
+    <meta name="msapplication-config" content="assets/ico/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
 
-	<title>Avanti - Restaurant & Bar</title>
+    <title>Avanti - Restaurant & Bar</title>
 
-	<!-- CSS Plugins -->
-	<link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/plugins/lightbox/css/lightbox.min.css">
-	<link rel="stylesheet" href="assets/plugins/flickity/flickity.min.css">
+    <!-- CSS Plugins -->
+    <link
+      rel="stylesheet"
+      href="assets/plugins/font-awesome/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/plugins/lightbox/css/lightbox.min.css"
+    />
+    <link rel="stylesheet" href="assets/plugins/flickity/flickity.min.css" />
 
-	<!-- CSS Global -->
-	<link rel="stylesheet" href="assets/css/theme.min.css">
-
-</head>
-<body data-spy="scroll" data-offset="71" data-target=".navbar">
-
-<!-- NAVBAR
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="assets/css/theme.min.css" />
+  </head>
+  <body data-spy="scroll" data-offset="71" data-target=".navbar">
+    <!-- NAVBAR
 ================================================== -->
-<nav class="navbar navbar-light navbar-expand-lg fixed-top">
-	<div class="container">
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top">
+      <div class="container">
+        <!-- Navbar: Brand -->
+        <a class="navbar-brand d-lg-none" href="index.html">Avanti</a>
 
-		<!-- Navbar: Brand -->
-		<a class="navbar-brand d-lg-none" href="index.html">Avanti</a>
+        <!-- Navbar: Toggler -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-		<!-- Navbar: Toggler -->
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+        <!-- Navbar: Collapse -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Navbar navigation: Left -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="about-us.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="menu.html" id="nav-item__menu">
+                Our Menu
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="special_events.html">Special Events</a>
+            </li>
+          </ul>
 
-		<!-- Navbar: Collapse -->
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Navbar: Brand -->
+          <a class="navbar-brand d-none d-lg-flex" href="index.html">
+            Avanti
+          </a>
 
-			<!-- Navbar navigation: Left -->
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="about-us.html">About Us</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="menu.html" id="nav-item__menu">
-						Our Menu
-					</a>
-				</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="special_events.html">Special Events</a>
-                </li>
-			</ul>
+          <!-- Navbar navigation: Right -->
+          <ul class="navbar-nav ml-auto">
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="news-and-events.html">News & Events</a>-->
+            <!--</li>-->
+            <li class="nav-item">
+              <a class="nav-link" href="gallery.html">Some Photos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact-us.html">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+        <!-- / .navbar-collapse -->
+      </div>
+      <!-- / .container -->
+    </nav>
+    <!-- / .navbar -->
 
-			<!-- Navbar: Brand -->
-			<a class="navbar-brand d-none d-lg-flex" href="index.html">
-				Avanti
-			</a>
-
-			<!-- Navbar navigation: Right -->
-			<ul class="navbar-nav ml-auto">
-				<!--<li class="nav-item">-->
-				<!--<a class="nav-link" href="news-and-events.html">News & Events</a>-->
-				<!--</li>-->
-				<li class="nav-item">
-					<a class="nav-link" href="gallery.html">Some Photos</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="contact-us.html">Contact Us</a>
-				</li>
-			</ul>
-
-		</div> <!-- / .navbar-collapse -->
-	</div> <!-- / .container -->
-</nav> <!-- / .navbar -->
-
-<!-- HEADER
+    <!-- HEADER
 ================================================== -->
-<section class="section section_header" data-parallax="scroll" data-image-src="assets/img/Wine_On_Bar_Reflection_282_KB.jpg">
-	<div class="container">
-		<div class="row">
-			<div class="col">
+    <section
+      class="section section_header"
+      data-parallax="scroll"
+      data-image-src="assets/img/Wine_On_Bar_Reflection_282_KB.jpg"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!-- Heading -->
+            <h1 class="section__heading section_header__heading text-center">
+              Some Photos
+            </h1>
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+      <!-- / .container -->
+    </section>
 
-				<!-- Heading -->
-				<h1 class="section__heading section_header__heading text-center">
-					Some Photos
-				</h1>
-
-			</div>
-		</div> <!-- / .row -->
-	</div> <!-- / .container -->
-</section>
-
-<!-- CAROUSEL
+    <!-- CAROUSEL
 ================================================== -->
-<section class="section section_carousel section_border_bottom">
-	<div class="container">
-		<div class="row">
-			<div class="col">
-
-				<!-- Heading -->
-				<h2 class="section__heading text-center">
-					Take a peek
-				</h2>
-
-				<!-- Subheading -->
-				<p class="section__subheading text-center">
-					Lots of activity at Avanti since its soft opening on August 21, 2018.
-				</p>
-
-				<!-- Carousel -->
-				<div class="section_carousel__slider">
-					<div class="section_carousel__slider__item">
-						<a href="assets/img/Grand_Opening_3.jpeg" class="progressive replace img-fluid">
-							<img src="assets/img/Grand_Opening_3.jpeg" class="preview" alt="...">
-						</a>
-						<div class="section_carousel__slider__item__caption text-center">
-							<h4 class="section_carousel__slider__item__caption__heading">The ribbon has been cut and Avanti Restaurant and Bar is officially opened on October 25, 2018.</h4>
-						</div>
-					</div>
-					<div class="section_carousel__slider__item">
-						<a href="assets/img/Grand_Opening_2.jpeg" class="progressive replace img-fluid">
-							<img src="assets/img/Grand_Opening_2.jpeg" class="preview" alt="...">
-						</a>
-						<div class="section_carousel__slider__item__caption text-center">
-							<h4 class="section_carousel__slider__item__caption__heading">Tualatin Mayor Lou Ogden provides shears for Mark to cut the ribbon.</h4>
-						</div>
-					</div>
-					<div class="section_carousel__slider__item">
-						<a href="assets/img/Outside_Evening_Front_Scene.jpg" class="progressive replace img-fluid">
-							<img src="assets/img/Outside_Evening_Front_Scene.jpg" class="preview" alt="...">
-						</a>
-						<div class="section_carousel__slider__item__caption text-center">
-							<h4 class="section_carousel__slider__item__caption__heading">A cozy new upscale restaurant has arrived in Tualatin.</h4>
-						</div>
-					</div>
-					<div class="section_carousel__slider__item">
-						<a href="assets/img/Bar_Scene_with_Jeanne_1.jpeg" class="progressive replace img-fluid">
-							<img src="assets/img/Bar_Scene_with_Jeanne_1.jpeg" class="preview" alt="...">
-						</a>
-						<div class="section_carousel__slider__item__caption text-center">
-							<h4 class="section_carousel__slider__item__caption__heading">Jeanne pours wine for happy customers.</h4>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div> <!-- / .row -->
-	</div> <!-- / .container -->
-</section>
-
-<!-- GALLERY - PHOTOS - Collage #1
-================================================== -->
-<section class="section section_gallery">
-	<div class="container">
-		<div class="row">
-			<div class="col">
-
-				<!-- Heading -->
-				<h2 class="section__heading text-center">
-					Collage #1
-				</h2>
-
-				<!-- Subheading -->
-				<p class="section__subheading text-center">
-					Appetizers, Salads, Soups, and Desserts
-				</p>
-
-			</div>
-		</div>
-		<!-- / .row -->
-		<div class="row section_gallery__grid">
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Coconut_Shrimp_117_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Coconut_Shrimp_117_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Coconut_Shrimp_117_KB.jpg" class="preview" alt="...">
-                    </a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Cheese_Plate_221_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Cheese_Plate_221_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Cheese_Plate_221_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Ahi_Tuna_Tartare_105_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Ahi_Tuna_Tartare_105_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Ahi_Tuna_Tartare_105_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Caprese_214_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Caprese_214_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Caprese_214_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Baby_Kale_Salad_258_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Baby_Kale_Salad_258_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Baby_Kale_Salad_258_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Seared_Ahi_Nicoise_Salad_191_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Seared_Ahi_Nicoise_Salad_191_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Seared_Ahi_Nicoise_Salad_191_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Truffled_Mushroom_Soup_272_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Truffled_Mushroom_Soup_272_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Truffled_Mushroom_Soup_272_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Chocholate_Souffle_491_KB.jpeg" data-lightbox="gallery">-->
-					<a href="assets/img/Chocholate_Souffle_491_KB.jpeg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Chocholate_Souffle_491_KB.jpeg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Creme_Brulee_115_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Creme_Brulee_115_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Creme_Brulee_115_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-		</div> <!-- / .row -->
-	</div> <!-- / .container -->
-</section>
-
-<!-- GALLERY - PHOTOS - Collage #2
-	================================================== -->
-<section class="section section_gallery">
-	<div class="container">
-		<div class="row">
-			<div class="col">
-
-				<!-- Heading -->
-				<h2 class="section__heading text-center">
-					Collage #2
-				</h2>
-
-				<!-- Subheading -->
-				<p class="section__subheading text-center">
-					Dinner and Lunch Entrees
-				</p>
-
-			</div>
-		</div>
-		<!-- / .row -->
-		<div class="row section_gallery__grid">
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Pork_Chop_314_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Pork_Chop_314_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Pork_Chop_314_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Grilled_Coho_Salmon_262_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Grilled_Coho_Salmon_262_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Grilled_Coho_Salmon_262_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Flatiorn_Steak_427_KB.jpeg" data-lightbox="gallery">-->
-					<a href="assets/img/Flatiorn_Steak_427_KB.jpeg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Flatiorn_Steak_427_KB.jpeg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Pan_Braised_Alaskan_Halibut_338_KB.jpeg" data-lightbox="gallery">-->
-					<a href="assets/img/Pan_Braised_Alaskan_Halibut_338_KB.jpeg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Pan_Braised_Alaskan_Halibut_338_KB.jpeg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Grilled_Chicken_140_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Grilled_Chicken_140_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Grilled_Chicken_140_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Cheese_Burger_216_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Cheese_Burger_216_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Cheese_Burger_216_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/BLT_with_Fries_220_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/BLT_with_Fries_220_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/BLT_with_Fries_220_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-		</div> <!-- / .row -->
-	</div> <!-- / .container -->
-</section>
-
-<!-- GALLERY - PHOTOS - Collage #3
-	================================================== -->
-<section class="section section_gallery">
-	<div class="container">
-		<div class="row">
-			<div class="col">
-
-				<!-- Heading -->
-				<h2 class="section__heading text-center">
-					Collage #3
-				</h2>
-
-				<!-- Subheading -->
-				<p class="section__subheading text-center">
-					Candid Scenes and Libations
-				</p>
-
-			</div>
-		</div>
-		<!-- / .row -->
-		<div class="row section_gallery__grid">
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Bar_Photo_468_KB.JPG" data-lightbox="gallery">-->
-					<a href="assets/img/Bar_Photo_468_KB.JPG" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Bar_Photo_468_KB.JPG" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Bar_Scene_with_Jeanne_2.jpeg" data-lightbox="gallery">-->
-					<a href="assets/img/Bar_Scene_with_Jeanne_2.jpeg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Bar_Scene_with_Jeanne_2.jpeg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Dining_Area_1.jpeg" data-lightbox="gallery">-->
-					<a href="assets/img/Dining_Area_1.jpeg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Dining_Area_1.jpeg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Pre_Opening_Family_Dinner.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Pre_Opening_Family_Dinner.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Pre_Opening_Family_Dinner.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/CCC_Office_Luncheon.jpeg" data-lightbox="gallery">-->
-					<a href="assets/img/CCC_Office_Luncheon.jpeg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/CCC_Office_Luncheon.jpeg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Bloody_Mary.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Bloody_Mary.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Bloody_Mary.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Grapefruit_Drop_Libation.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Grapefruit_Drop_Libation.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Grapefruit_Drop_Libation.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Libation_in_a_Cup.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Libation_in_a_Cup.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Libation_in_a_Cup.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Jeanne_Pouring_Wine.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Jeanne_Pouring_Wine.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Jeanne_Pouring_Wine.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Libation_Iced_Tall_171_KB.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Libation_Iced_Tall_171_KB.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Libation_Iced_Tall_171_KB.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-			<div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
-
-				<!--<a href="assets/img/Jeanne_Serving_Libation.jpg" data-lightbox="gallery">-->
-					<a href="assets/img/Jeanne_Serving_Libation.jpg" class="progressive replace img-fluid" data-lightbox="gallery">
-						<img src="assets/img/Jeanne_Serving_Libation.jpg" class="preview" alt="...">
-					</a>
-				<!--</a>-->
-
-			</div>
-		</div> <!-- / .row -->
-	</div> <!-- / .container -->
-</section>
-
-
-<!-- FOOTER
-================================================== -->
-<footer class="section section_footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-4">
-
-				<!-- About Us -->
-				<h5 class="section_footer__heading">
-					About Us
-				</h5>
-				<p>
-					We're a small family owned restaurant located on the corner of Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
-				</p>
-
-			</div>
-			<div class="col-sm-4">
-
-				<!-- Contact info -->
-				<h5 class="section_footer__heading">
-					Contact info
-				</h5>
-				<ul class="section_footer__info">
-					<li>
-						<i class="fa fa-map-marker"></i> <a href="https://goo.gl/maps/K6R19AyT4Cz">7995 SW Nyberg St, Tualatin, OR 97062</a>
-					</li>
-					<li>
-						<i class="fa fa-phone"></i> <a href="tel:5038265631">(503)-826-5631</a>
-					</li>
-					<li>
-						<i class="fa fa-envelope-o"></i> <a href="mailto:avanti.tualatin@gmail.com">avanti.tualatin@gmail.com</a>
-					</li>
-				</ul>
-
-			</div>
-			<div class="col-sm-4">
-                <h5 class="section_footer__heading">
-                    Hours
-                </h5>
-                <div class="section_footer__open">
-                    <div class="section_footer__open__days">Tuesday - Thursday</div>
-                    <div class="section_footer__open__time">11:00 AM - 9:00 PM</div>
-                    <div class="small">Happy Hour: 3:00PM - 5:00 PM</div>
+    <section class="section section_carousel section_border_bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!-- Heading -->
+            <h2 class="section__heading text-center">
+              Take a peek
+            </h2>
+
+            <!-- Subheading -->
+            <p class="section__subheading text-center">
+              Lots of activity at Avanti since its soft opening on August 21,
+              2018.
+            </p>
+
+            <!-- Carousel -->
+            <div class="section_carousel__slider">
+              <div class="section_carousel__slider__item">
+                <a
+                  href="assets/img/Grand_Opening_3.jpeg"
+                  class="progressive replace img-fluid"
+                >
+                  <img
+                    src="assets/img/Grand_Opening_3.jpeg"
+                    class="preview"
+                    alt="..."
+                  />
+                </a>
+                <div
+                  class="section_carousel__slider__item__caption text-center"
+                >
+                  <h4 class="section_carousel__slider__item__caption__heading">
+                    The ribbon has been cut and Avanti Restaurant and Bar is
+                    officially opened on October 25, 2018.
+                  </h4>
                 </div>
-                <div class="section_footer__open">
-                    <div class="section_footer__open__days">Friday - Saturday</div>
-                    <div class="section_footer__open__time">11:00 AM - 10:00 PM</div>
-                    <div class="small">Happy Hour: 3:00PM - 5:00 PM &amp; 9:00 PM - Close</div>
+              </div>
+              <div class="section_carousel__slider__item">
+                <a
+                  href="assets/img/Grand_Opening_2.jpeg"
+                  class="progressive replace img-fluid"
+                >
+                  <img
+                    src="assets/img/Grand_Opening_2.jpeg"
+                    class="preview"
+                    alt="..."
+                  />
+                </a>
+                <div
+                  class="section_carousel__slider__item__caption text-center"
+                >
+                  <h4 class="section_carousel__slider__item__caption__heading">
+                    Tualatin Mayor Lou Ogden provides shears for Mark to cut the
+                    ribbon.
+                  </h4>
                 </div>
-                <div class="section_footer__open">
-                    <div class="section_footer__open__days">Sunday</div>
-                    <div class="section_footer__open__time">5:00 PM - 9:00 PM</div>
+              </div>
+              <div class="section_carousel__slider__item">
+                <a
+                  href="assets/img/Outside_Evening_Front_Scene.jpg"
+                  class="progressive replace img-fluid"
+                >
+                  <img
+                    src="assets/img/Outside_Evening_Front_Scene.jpg"
+                    class="preview"
+                    alt="..."
+                  />
+                </a>
+                <div
+                  class="section_carousel__slider__item__caption text-center"
+                >
+                  <h4 class="section_carousel__slider__item__caption__heading">
+                    A cozy new upscale restaurant has arrived in Tualatin.
+                  </h4>
                 </div>
-                <br>
+              </div>
+              <div class="section_carousel__slider__item">
+                <a
+                  href="assets/img/Bar_Scene_with_Jeanne_1.jpeg"
+                  class="progressive replace img-fluid"
+                >
+                  <img
+                    src="assets/img/Bar_Scene_with_Jeanne_1.jpeg"
+                    class="preview"
+                    alt="..."
+                  />
+                </a>
+                <div
+                  class="section_carousel__slider__item__caption text-center"
+                >
+                  <h4 class="section_carousel__slider__item__caption__heading">
+                    Jeanne pours wine for happy customers.
+                  </h4>
+                </div>
+              </div>
             </div>
-		</div> <!-- / .row -->
-		<div class="row">
-			<div class="col-12">
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+      <!-- / .container -->
+    </section>
 
-				<!-- Copyright -->
-				<div class="section_footer__copyright">
-					<i class="fa fa-copyright"></i> <span id="js-current-year"></span> Avanti. All rights reserved.
-				</div>
+    <!-- GALLERY - PHOTOS - Collage #1
+================================================== -->
+    <section class="section section_gallery">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!-- Heading -->
+            <h2 class="section__heading text-center">
+              Collage #1
+            </h2>
 
-			</div>
-		</div> <!-- / .row -->
-	</div> <!-- / .container -->
-</footer>
+            <!-- Subheading -->
+            <p class="section__subheading text-center">
+              Appetizers, Salads, Soups, and Desserts
+            </p>
+          </div>
+        </div>
+        <!-- / .row -->
+        <div class="row section_gallery__grid">
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Coconut_Shrimp_117_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Coconut_Shrimp_117_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Coconut_Shrimp_117_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Cheese_Plate_221_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Cheese_Plate_221_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Cheese_Plate_221_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Ahi_Tuna_Tartare_105_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Ahi_Tuna_Tartare_105_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Ahi_Tuna_Tartare_105_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Caprese_214_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Caprese_214_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Caprese_214_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Baby_Kale_Salad_258_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Baby_Kale_Salad_258_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Baby_Kale_Salad_258_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Seared_Ahi_Nicoise_Salad_191_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Seared_Ahi_Nicoise_Salad_191_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Seared_Ahi_Nicoise_Salad_191_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Truffled_Mushroom_Soup_272_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Truffled_Mushroom_Soup_272_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Truffled_Mushroom_Soup_272_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Chocholate_Souffle_491_KB.jpeg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Chocholate_Souffle_491_KB.jpeg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Chocholate_Souffle_491_KB.jpeg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Creme_Brulee_115_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Creme_Brulee_115_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Creme_Brulee_115_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+      <!-- / .container -->
+    </section>
 
-<!-- JAVASCRIPT
+    <!-- GALLERY - PHOTOS - Collage #2
+	================================================== -->
+    <section class="section section_gallery">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!-- Heading -->
+            <h2 class="section__heading text-center">
+              Collage #2
+            </h2>
+
+            <!-- Subheading -->
+            <p class="section__subheading text-center">
+              Dinner and Lunch Entrees
+            </p>
+          </div>
+        </div>
+        <!-- / .row -->
+        <div class="row section_gallery__grid">
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Pork_Chop_314_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Pork_Chop_314_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Pork_Chop_314_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Grilled_Coho_Salmon_262_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Grilled_Coho_Salmon_262_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Grilled_Coho_Salmon_262_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Flatiorn_Steak_427_KB.jpeg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Flatiorn_Steak_427_KB.jpeg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Flatiorn_Steak_427_KB.jpeg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Pan_Braised_Alaskan_Halibut_338_KB.jpeg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Pan_Braised_Alaskan_Halibut_338_KB.jpeg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Pan_Braised_Alaskan_Halibut_338_KB.jpeg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Grilled_Chicken_140_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Grilled_Chicken_140_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Grilled_Chicken_140_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Cheese_Burger_216_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Cheese_Burger_216_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Cheese_Burger_216_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/BLT_with_Fries_220_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/BLT_with_Fries_220_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/BLT_with_Fries_220_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+      <!-- / .container -->
+    </section>
+
+    <!-- GALLERY - PHOTOS - Collage #3
+	================================================== -->
+    <section class="section section_gallery">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!-- Heading -->
+            <h2 class="section__heading text-center">
+              Collage #3
+            </h2>
+
+            <!-- Subheading -->
+            <p class="section__subheading text-center">
+              Candid Scenes and Libations
+            </p>
+          </div>
+        </div>
+        <!-- / .row -->
+        <div class="row section_gallery__grid">
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Bar_Photo_468_KB.JPG" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Bar_Photo_468_KB.JPG"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Bar_Photo_468_KB.JPG"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Bar_Scene_with_Jeanne_2.jpeg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Bar_Scene_with_Jeanne_2.jpeg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Bar_Scene_with_Jeanne_2.jpeg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Dining_Area_1.jpeg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Dining_Area_1.jpeg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Dining_Area_1.jpeg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Pre_Opening_Family_Dinner.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Pre_Opening_Family_Dinner.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Pre_Opening_Family_Dinner.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/CCC_Office_Luncheon.jpeg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/CCC_Office_Luncheon.jpeg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/CCC_Office_Luncheon.jpeg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Bloody_Mary.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Bloody_Mary.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img src="assets/img/Bloody_Mary.jpg" class="preview" alt="..." />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Grapefruit_Drop_Libation.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Grapefruit_Drop_Libation.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Grapefruit_Drop_Libation.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Libation_in_a_Cup.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Libation_in_a_Cup.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Libation_in_a_Cup.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Jeanne_Pouring_Wine.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Jeanne_Pouring_Wine.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Jeanne_Pouring_Wine.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Libation_Iced_Tall_171_KB.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Libation_Iced_Tall_171_KB.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Libation_Iced_Tall_171_KB.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+          <div class="col-6 col-sm-6 col-md-4 section_gallery__grid__item">
+            <!--<a href="assets/img/Jeanne_Serving_Libation.jpg" data-lightbox="gallery">-->
+            <a
+              href="assets/img/Jeanne_Serving_Libation.jpg"
+              class="progressive replace img-fluid"
+              data-lightbox="gallery"
+            >
+              <img
+                src="assets/img/Jeanne_Serving_Libation.jpg"
+                class="preview"
+                alt="..."
+              />
+            </a>
+            <!--</a>-->
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+      <!-- / .container -->
+    </section>
+
+    <!-- FOOTER
+================================================== -->
+    <footer class="section section_footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            <!-- About Us -->
+            <h5 class="section_footer__heading">
+              About Us
+            </h5>
+            <p>
+              We're a small family owned restaurant located on the corner of
+              Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <!-- Contact info -->
+            <h5 class="section_footer__heading">
+              Contact info
+            </h5>
+            <ul class="section_footer__info">
+              <li>
+                <i class="fa fa-map-marker"></i>
+                <a href="https://goo.gl/maps/K6R19AyT4Cz"
+                  >7995 SW Nyberg St, Tualatin, OR 97062</a
+                >
+              </li>
+              <li>
+                <i class="fa fa-phone"></i>
+                <a href="tel:5038265631">(503)-826-5631</a>
+              </li>
+              <li>
+                <i class="fa fa-envelope-o"></i>
+                <a href="mailto:avanti.tualatin@gmail.com"
+                  >avanti.tualatin@gmail.com</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <h5 class="section_footer__heading">
+              Hours
+            </h5>
+            <div class="section_footer__open">
+              <div class="section_footer__open__days">Tuesday - Thursday</div>
+              <div class="section_footer__open__time">11:00 AM - 9:00 PM</div>
+              <div class="small">Happy Hour: 3:00PM - 5:00 PM</div>
+            </div>
+            <div class="section_footer__open">
+              <div class="section_footer__open__days">Friday - Saturday</div>
+              <div class="section_footer__open__time">11:00 AM - 10:00 PM</div>
+              <div class="small">
+                Happy Hour: 3:00PM - 5:00 PM &amp; 9:00 PM - Close
+              </div>
+            </div>
+            <div class="section_footer__open">
+              <div class="section_footer__open__days">Sunday</div>
+              <div class="section_footer__open__time">5:00 PM - 9:00 PM</div>
+            </div>
+            <br />
+          </div>
+        </div>
+        <!-- / .row -->
+        <div class="row">
+          <div class="col-12">
+            <!-- Copyright -->
+            <div class="section_footer__copyright">
+              <i class="fa fa-copyright"></i>
+              <span id="js-current-year"></span> Avanti. All rights reserved.
+            </div>
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+      <!-- / .container -->
+    </footer>
+
+    <!-- JAVASCRIPT
 ================================================== -->
 
-<!-- JS Global -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- JS Global -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- JS Plugins -->
-<script src="assets/plugins/parallax/parallax.min.js"></script>
-<script src="assets/plugins/isotope/lib/imagesloaded.pkgd.min.js"></script>
-<script src="assets/plugins/isotope/isotope.pkgd.min.js"></script>
-<script src="assets/plugins/flickity/flickity.pkgd.min.js"></script>
-<script src="assets/plugins/lightbox/js/lightbox.min.js"></script>
-<script src="assets/plugins/reservation/reservation.js"></script>
-<script src="assets/plugins/alerts/alerts.js"></script>
+    <!-- JS Plugins -->
+    <script src="assets/plugins/parallax/parallax.min.js"></script>
+    <script src="assets/plugins/isotope/lib/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/plugins/isotope/isotope.pkgd.min.js"></script>
+    <script src="assets/plugins/flickity/flickity.pkgd.min.js"></script>
+    <script src="assets/plugins/lightbox/js/lightbox.min.js"></script>
+    <script src="assets/plugins/reservation/reservation.js"></script>
+    <script src="assets/plugins/alerts/alerts.js"></script>
 
-<!-- JS Custom -->
-<script src="assets/js/theme.js"></script>
-<script src="assets/js/custom.js"></script>
-
-</body>
+    <!-- JS Custom -->
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/custom.js"></script>
+  </body>
 </html>
