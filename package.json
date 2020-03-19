@@ -1,9 +1,10 @@
 {
-  "name": "Avanti Restaurant and Bar",
+  "name": "avanti",
   "version": "1.1.0",
   "description": "The website for the restaurant in Tualatin, Oregon.",
   "main": "app/index.html",
   "scripts": {
+    "start": "./node_modules/gulp/bin/gulp.jss",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
@@ -36,4 +37,3 @@
     "stream-combiner2": "^1.1.1"
   }
 }
-
