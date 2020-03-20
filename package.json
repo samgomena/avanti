@@ -32,7 +32,7 @@
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-postcss": "^8.0.0",
-    "gulp-sass": "^3.1.0",
+    "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2",
     "gulp-useref-plus": "0.0.8",
     "gulp-wait": "0.0.2",
