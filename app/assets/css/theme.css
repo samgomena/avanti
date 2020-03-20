@@ -2315,16 +2315,6 @@ pre code
     background-color: #fff;
     box-shadow: 0 0 0 .2rem rgba(245, 166, 55, .25);
 }
-.form-control::-webkit-input-placeholder
-{
-    opacity: 1; 
-    color: #6c757d;
-}
-.form-control:-ms-input-placeholder
-{
-    opacity: 1; 
-    color: #6c757d;
-}
 .form-control::-ms-input-placeholder
 {
     opacity: 1; 
@@ -2897,7 +2887,6 @@ select.form-control-lg:not([size]):not([multiple]),
     padding: 1rem 2rem;
 
     -webkit-user-select: none;
-       -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
     transition: color .1s; 
@@ -4271,7 +4260,6 @@ tbody.collapse.show
 
     content: '';
     -webkit-user-select: none;
-       -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
     pointer-events: none;
@@ -10441,10 +10429,9 @@ a.text-dark:focus
  */
 .alert
 {
-    font-family: 'Playfair Display', serif;
-
     color: #151515;
     border-width: 2px 0 0 0;
+    border-radius: .25rem;
     box-shadow: 0 5px 30px 0 rgba(0, 0, 0, .15);
 }
 .alert-danger
@@ -11170,12 +11157,6 @@ blockquote footer
     text-transform: uppercase;
 }
 
-::-moz-selection
-{
-    color: white; 
-    background-color: #f5a637;
-}
-
 ::selection
 {
     color: white; 
@@ -11193,16 +11174,6 @@ blockquote footer
 .input-group-sm > .input-group-append > .btn
 {
     font-size: 1rem;
-}
-
-.form-control::-webkit-input-placeholder
-{
-    font-family: 'Playfair Display', serif;
-}
-
-.form-control:-ms-input-placeholder
-{
-    font-family: 'Playfair Display', serif;
 }
 
 .form-control::-ms-input-placeholder
@@ -11313,8 +11284,7 @@ input[type='time'].form-control-sm,
 {
     transform: scale(1.05); 
 
-    -webkit-filter: blur(2vw);
-            filter: blur(2vw);
+    filter: blur(2vw);
 }
 .progressive img.reveal
 {

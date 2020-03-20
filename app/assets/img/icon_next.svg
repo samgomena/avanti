@@ -1,6 +1,1 @@
-<svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" width="20" height="20">
-
-  <line x1="0" y1="0" x2="10" y2="10" style="stroke: white; stroke-width: 2; stroke-linecap: round;"></line>
-  <line x1="0" y1="20" x2="10" y2="10" style="stroke: white; stroke-width: 2; stroke-linecap: round;"></line>
-
-</svg>
+<svg baseProfile="full" xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path stroke="#fff" stroke-width="2" stroke-linecap="round" d="M0 0l10 10M0 20l10-10"/></svg>
