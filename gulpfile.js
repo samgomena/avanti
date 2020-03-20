@@ -58,7 +58,7 @@ gulp.task("watch", ["browserSync", "sass"], function() {
 var del = require("del");
 
 gulp.task("clean:dist", function() {
-  return del.sync("dist");
+  return del.sync(["dist/"]);
 });
 
 // Concat and optimize JS and CSS files
