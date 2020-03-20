@@ -23,7 +23,7 @@
   "homepage": "https://avantitualatin.com",
   "devDependencies": {
     "browser-sync": "^2.18.2",
-    "del": "^3.0.0",
+    "del": "^5.1.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-cache": "^1.0.1",
