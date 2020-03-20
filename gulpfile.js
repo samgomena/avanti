@@ -18,11 +18,7 @@ gulp.task("sass", function() {
     .pipe(wait(500))
     .pipe(sass().on("error", sass.logError))
     .pipe(postcss([require("postcss-flexbugs-fixes")]))
-    .pipe(
-      autoprefixer({
-        browsers: ["> 1%"],
-      })
-    )
+    .pipe(autoprefixer())
     .pipe(csscomb())
     .pipe(gulp.dest("app/assets/css"))
     .pipe(
