@@ -2315,6 +2315,11 @@ pre code
     background-color: #fff;
     box-shadow: 0 0 0 .2rem rgba(245, 166, 55, .25);
 }
+.form-control:-ms-input-placeholder
+{
+    opacity: 1; 
+    color: #6c757d;
+}
 .form-control::-ms-input-placeholder
 {
     opacity: 1; 
@@ -11174,6 +11179,11 @@ blockquote footer
 .input-group-sm > .input-group-append > .btn
 {
     font-size: 1rem;
+}
+
+.form-control:-ms-input-placeholder
+{
+    font-family: 'Playfair Display', serif;
 }
 
 .form-control::-ms-input-placeholder

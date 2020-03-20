@@ -15,6 +15,9 @@
   "keywords": [
     ""
   ],
+  "browserslist": [
+    "> 1%"
+  ],
   "author": "Sam Gomena",
   "license": "ISC",
   "homepage": "https://avantitualatin.com",
