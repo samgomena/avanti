@@ -1,217 +1,290 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/ico/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/ico/favicon-16x16.png">
-    <link rel="manifest" href="assets/ico/manifest.json">
-    <link rel="mask-icon" href="assets/ico/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="assets/ico/favicon.ico">
-    <meta name="msapplication-config" content="assets/ico/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/ico/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/ico/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/ico/favicon-16x16.png"
+    />
+    <link rel="manifest" href="assets/ico/manifest.json" />
+    <link
+      rel="mask-icon"
+      href="assets/ico/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <link rel="shortcut icon" href="assets/ico/favicon.ico" />
+    <meta name="msapplication-config" content="assets/ico/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
 
     <title>Avanti - Restaurant & Bar</title>
 
     <!-- CSS Plugins -->
-    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/plugins/lightbox/css/lightbox.min.css">
-    <link rel="stylesheet" href="assets/plugins/flickity/flickity.min.css">
+    <link
+      rel="stylesheet"
+      href="assets/plugins/font-awesome/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="assets/plugins/lightbox/css/lightbox.min.css"
+    />
+    <link rel="stylesheet" href="assets/plugins/flickity/flickity.min.css" />
 
     <!-- CSS Global -->
-    <link rel="stylesheet" href="assets/css/theme.min.css">
-
-</head>
-<body data-spy="scroll" data-offset="71" data-target=".navbar:visible">
-
-<!-- NAVBAR
+    <link rel="stylesheet" href="assets/css/theme.min.css" />
+  </head>
+  <body data-spy="scroll" data-offset="71" data-target=".navbar:visible">
+    <!-- NAVBAR
 ================================================== -->
-<nav class="navbar navbar-light navbar-expand-lg fixed-top">
-    <div class="container">
-
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top">
+      <div class="container">
         <!-- Navbar: Brand -->
         <a class="navbar-brand d-lg-none" href="index.html">Avanti</a>
 
         <!-- Navbar: Toggler -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
         </button>
 
         <!-- Navbar: Collapse -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Navbar navigation: Left -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="about-us.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="menu.html" id="nav-item__menu">
+                Menu
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="special_events.html">Special Events</a>
+            </li>
+          </ul>
 
-            <!-- Navbar navigation: Left -->
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="about-us.html">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="menu.html" id="nav-item__menu">
-                        Menu
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="special_events.html">Special Events</a>
-                </li>
-            </ul>
+          <!-- Navbar: Brand -->
+          <a class="navbar-brand d-none d-lg-flex" href="index.html">
+            Avanti
+          </a>
 
-            <!-- Navbar: Brand -->
-            <a class="navbar-brand d-none d-lg-flex" href="index.html">
-                Avanti
-            </a>
+          <!-- Navbar navigation: Right -->
+          <ul class="navbar-nav ml-auto">
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="news-and-events.html">News & Events</a>-->
+            <!--</li>-->
+            <li class="nav-item">
+              <a class="nav-link" href="gallery.html">Some Photos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact-us.html">Contact Us</a>
+            </li>
+          </ul>
+        </div>
+        <!-- / .navbar-collapse -->
+      </div>
+      <!-- / .container -->
+    </nav>
+    <!-- / .navbar -->
 
-            <!-- Navbar navigation: Right -->
-            <ul class="navbar-nav ml-auto">
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="news-and-events.html">News & Events</a>-->
-                <!--</li>-->
-                <li class="nav-item">
-                    <a class="nav-link" href="gallery.html">Some Photos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact-us.html">Contact Us</a>
-                </li>
-            </ul>
-
-        </div> <!-- / .navbar-collapse -->
-    </div> <!-- / .container -->
-</nav> <!-- / .navbar -->
-
-
-<!-- WELCOME ================================================== -->
-<section class="section section_welcome" data-parallax="scroll" data-image-src="assets/img/1.jpg">
-
-    <!-- Content -->
-    <div class="section_welcome__main">
+    <!-- WELCOME ================================================== -->
+    <section
+      class="section section_welcome"
+      data-parallax="scroll"
+      data-image-src="assets/img/1.jpg"
+    >
+      <!-- Content -->
+      <div class="section_welcome__main">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col">
+          <div class="row align-items-center">
+            <div class="col">
+              <div
+                class="alert alert-warning alert-dismissible fade show text-center section__subheading"
+                role="alert"
+              >
+                We are open for to go orders Tuesday - Sunday from 4 - 7 PM!
+                <hr />
+                Please see our revised
+                <a href="menu.html" class="alert-link">to go menu</a>. Or,
+                <a class="alert-link" href="tel:5038265631">call us!</a>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
 
-                    <!-- Heading -->
-                    <h1 class="section__heading section_welcome__heading text-center">
-                        Avanti<br>
-                    </h1>
-                    <h2 class="section__preheading section_welcome__preheading text-center text-muted">
-                        <span class="text-primary">Restaurant and Bar</span>
-                    </h2>
-                    <p class="section__subheading section_welcome__subheading text-center text-muted">
-                        Located in Tualatin, Oregon.
-                    </p><br><br>
-                    <!--<h2 class="section__preheading section_welcome__preheading text-center">-->
-                        <!--<span class="text-primary">Tuesday-Thursday from 9-10 PM</span>-->
-                    <!--</h2>-->
-                    <!--<h2 class="section__preheading section_welcome__preheading text-center">-->
-                        <!--<span class="text-primary">Friday-Saturday from 9-11 PM</span>-->
-                    <!--</h2><br><br>-->
-                    <!--<h6 class="section__subheading section_welcome__preheading text-center">-->
-                        <!--New Late Night Happy Hour-->
-                    <!--</h6>-->
-                    <!--<h6 class="section__subheading section_welcome__preheading text-center">-->
-                        <!--Outdoor Seating Now Available-->
-                    <!--</h6>-->
+              <!-- Heading -->
+              <h1 class="section__heading section_welcome__heading text-center">
+                Avanti<br />
+              </h1>
+              <h2
+                class="section__preheading section_welcome__preheading text-center text-muted"
+              >
+                <span class="text-primary">Restaurant and Bar</span>
+              </h2>
+              <p
+                class="section__subheading section_welcome__subheading text-center text-muted"
+              >
+                Located in Tualatin, Oregon.
+              </p>
+              <br /><br />
+              <!-- <h2
+                class="section__preheading section_welcome__preheading text-center"
+              >
+                <span class="text-primary">Tuesday-Thursday from 9-10 PM</span>
+              </h2> -->
+              <!--<h2 class="section__preheading section_welcome__preheading text-center">-->
+              <!--<span class="text-primary">Friday-Saturday from 9-11 PM</span>-->
+              <!--</h2><br><br>-->
+              <!--<h6 class="section__subheading section_welcome__preheading text-center">-->
+              <!--New Late Night Happy Hour-->
+              <!--</h6>-->
+              <!--<h6 class="section__subheading section_welcome__preheading text-center">-->
+              <!--Outdoor Seating Now Available-->
+              <!--</h6>-->
 
-                    <!-- Button -->
-                    <!--<div class="text-center">-->
-                    <!--<a href="#section_reservation" class="btn btn-primary text-white">-->
-                    <!--Make a reservation-->
-                    <!--</a>-->
-                    <!--</div>-->
+              <!-- Button -->
+              <!--<div class="text-center">-->
+              <!--<a href="#section_reservation" class="btn btn-primary text-white">-->
+              <!--Make a reservation-->
+              <!--</a>-->
+              <!--</div>-->
+            </div>
+          </div>
+          <!-- / .row -->
+        </div>
+        <!-- / .container -->
+      </div>
 
-                </div>
-            </div> <!-- / .row -->
-        </div> <!-- / .container -->
-    </div>
-
-    <!-- Footer -->
-    <div class="section_welcome__footer">
+      <!-- Footer -->
+      <div class="section_welcome__footer">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md">
+          <div class="row align-items-center">
+            <div class="col-md">
+              <!-- Social links -->
+              <ul
+                class="section_welcome__footer__social text-center text-lg-left"
+              >
+                <li>
+                  <a href="https://www.facebook.com/pg/avanti.tualatin">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com/avanti_restaurant/">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md">
+              <!-- Address -->
+              <div
+                class="section_welcome__footer__address text-center text-lg-right"
+              >
+                <i class="fa fa-map-marker"></i>
+                <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank"
+                  >7995 SW Nyberg St, Tualatin, OR 97062</a
+                >
+              </div>
+            </div>
+          </div>
+          <!-- / .row -->
+        </div>
+        <!-- / .container -->
+      </div>
+    </section>
 
-                    <!-- Social links -->
-                    <ul class="section_welcome__footer__social text-center text-lg-left">
-                        <li>
-                            <a href="https://www.facebook.com/pg/avanti.tualatin">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/avanti_restaurant/">
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-                <div class="col-md">
-
-                    <!-- Address -->
-                    <div class="section_welcome__footer__address text-center text-lg-right">
-                        <i class="fa fa-map-marker"></i> <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">7995 SW Nyberg St, Tualatin, OR 97062</a>
-                    </div>
-
-                </div>
-            </div> <!-- / .row -->
-        </div> <!-- / .container -->
-    </div>
-
-</section>
-
-<!-- FOOTER
+    <!-- FOOTER
 ================================================== -->
-<footer class="section section_footer">
-    <div class="container">
+    <footer class="section section_footer">
+      <div class="container">
         <div class="row">
-            <div class="col-sm-4">
-
-                <!-- About Us -->
-                <h5 class="section_footer__heading">
-                    About Us
-                </h5>
-                <p>
-                    We're a small family owned restaurant located on the corner of Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
-                </p>
-
+          <div class="col-sm-4">
+            <!-- About Us -->
+            <h5 class="section_footer__heading">
+              About Us
+            </h5>
+            <p>
+              We're a small family owned restaurant located on the corner of
+              Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
+            </p>
+          </div>
+          <div class="col-sm-4">
+            <!-- Contact info -->
+            <h5 class="section_footer__heading">
+              Contact info
+            </h5>
+            <ul class="section_footer__info">
+              <li>
+                <i class="fa fa-map-marker"></i>
+                <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank"
+                  >7995 SW Nyberg St, Tualatin, OR 97062</a
+                >
+              </li>
+              <li>
+                <i class="fa fa-phone"></i
+                ><a href="tel:5038265631">(503)-826-5631</a>
+              </li>
+              <li>
+                <i class="fa fa-envelope-o"></i>
+                <a href="mailto:avanti.tualatin@gmail.com"
+                  >avanti.tualatin@gmail.com</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-4">
+            <h5 class="section_footer__heading">
+              Hours
+            </h5>
+            <div class="section_footer__open">
+              <div class="section_footer__open__days">Tuesday - Thursday</div>
+              <div class="section_footer__open__time">11:00 AM - 9:00 PM</div>
+              <div class="small">Happy Hour: 3:00 PM - 5:00 PM</div>
             </div>
-            <div class="col-sm-4">
-
-                <!-- Contact info -->
-                <h5 class="section_footer__heading">
-                    Contact info
-                </h5>
-                <ul class="section_footer__info">
-                    <li>
-                        <i class="fa fa-map-marker"></i> <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">7995 SW Nyberg St, Tualatin, OR 97062</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-phone"></i><a href="tel:5038265631">(503)-826-5631</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-envelope-o"></i> <a href="mailto:avanti.tualatin@gmail.com">avanti.tualatin@gmail.com</a>
-                    </li>
-                </ul>
-
+            <div class="section_footer__open">
+              <div class="section_footer__open__days">Friday - Saturday</div>
+              <div class="section_footer__open__time">11:00 AM - 10:00 PM</div>
+              <div class="small">
+                Happy Hour: 3:00 PM - 5:00 PM &amp; 9:00 PM - Close
+              </div>
             </div>
-            <div class="col-sm-4">
-
-                <!-- Hours -->
-                <h5 class="section_footer__heading">
-                    Hours
-                </h5>
-                <div class="section_footer__open">
-                    <div class="section_footer__open__days">Tuesday - Saturday</div>
-                    <div class="section_footer__open__time">11:00 AM - 10:00 PM</div>
-                    <div class="small">Happy Hour: 3:00PM - 5:00 PM & 9:00 PM - Close</div>
-                </div>
-                <div class="section_footer__open">
-                    <div class="section_footer__open__days">Sunday</div>
-                    <div class="section_footer__open__time">4:00 PM - 9:00 PM</div>
-                </div>
-                <br>
-                <!-- Seasonal Closures and Openings =============== -->
-                <!--
+            <div class="section_footer__open">
+              <div class="section_footer__open__days">Sunday</div>
+              <div class="section_footer__open__time">5:00 PM - 9:00 PM</div>
+            </div>
+            <br />
+            <!-- Seasonal Closures and Openings =============== -->
+            <!--
                 <h5 class="section_footer__heading">
                     Seasonal Closures and Opening
                 </h5>
@@ -222,42 +295,42 @@
                     <div class="section_footer__open__time">New Year's Day - Closed</div>
                 </div>
             -->
-
-            </div>
-        </div> <!-- / .row -->
+          </div>
+        </div>
+        <!-- / .row -->
         <div class="row">
-            <div class="col-12">
-
-                <!-- Copyright -->
-                <div class="section_footer__copyright">
-                    <i class="fa fa-copyright"></i> <span id="js-current-year"></span> Avanti. All rights reserved.
-                </div>
-
+          <div class="col-12">
+            <!-- Copyright -->
+            <div class="section_footer__copyright">
+              <i class="fa fa-copyright"></i>
+              <span id="js-current-year"></span> Avanti. All rights reserved.
             </div>
-        </div> <!-- / .row -->
-    </div> <!-- / .container -->
-</footer>
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+      <!-- / .container -->
+    </footer>
 
-<!-- JAVASCRIPT
+    <!-- JAVASCRIPT
 ================================================== -->
 
-<!-- JS Global -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRZiJYqN2QbncqggIukTHS3fS6O6fRm6w"></script>
+    <!-- JS Global -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRZiJYqN2QbncqggIukTHS3fS6O6fRm6w"></script>
 
-<!-- JS Plugins -->
-<script src="assets/plugins/parallax/parallax.min.js"></script>
-<script src="assets/plugins/isotope/lib/imagesloaded.pkgd.min.js"></script>
-<script src="assets/plugins/isotope/isotope.pkgd.min.js"></script>
-<script src="assets/plugins/flickity/flickity.pkgd.min.js"></script>
-<script src="assets/plugins/lightbox/js/lightbox.min.js"></script>
-<!--<script src="assets/plugins/reservation/reservation.js"></script>-->
-<script src="assets/plugins/alerts/alerts.js"></script>
+    <!-- JS Plugins -->
+    <script src="assets/plugins/parallax/parallax.min.js"></script>
+    <script src="assets/plugins/isotope/lib/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/plugins/isotope/isotope.pkgd.min.js"></script>
+    <script src="assets/plugins/flickity/flickity.pkgd.min.js"></script>
+    <script src="assets/plugins/lightbox/js/lightbox.min.js"></script>
+    <!--<script src="assets/plugins/reservation/reservation.js"></script>-->
+    <script src="assets/plugins/alerts/alerts.js"></script>
 
-<!-- JS Custom -->
-<script src="assets/js/theme.js"></script>
-<script src="assets/js/custom.js"></script>
-
-</body>
+    <!-- JS Custom -->
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/custom.js"></script>
+  </body>
 </html>
