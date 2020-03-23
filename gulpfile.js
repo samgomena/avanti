@@ -32,18 +32,18 @@ gulp.task("sass", function() {
 
 var browserSync = require("browser-sync").create();
 
-gulp.task("browserSync", function() {
+gulp.task("browserSync", () =>
   browserSync.init({
     server: {
       baseDir: "app",
     },
-  });
-});
+  })
+);
 
 // Watch
 
-gulp.task("watch", ["browserSync", "sass"], function() {
-  gulp.watch("app/assets/scss/**/*.scss", ["sass"]);
+gulp.task("watch", gulp.series("browserSync", "sass"), () => {
+  gulp.watch("app/assets/scss/**/*.scss", gulp.series("sass"));
   gulp.watch("app/*.html", browserSync.reload);
   gulp.watch("app/assets/js/**/*.js", browserSync.reload);
   gulp.watch("app/assets/img/**/*.svg", browserSync.reload);
@@ -69,7 +69,7 @@ var uglify = require("gulp-uglify");
 var cssnano = require("gulp-cssnano");
 var cache = require("gulp-cache");
 
-gulp.task("useref", function() {
+gulp.task("useref", () => {
   return gulp
     .src("app/*.html")
     .pipe(useref())
@@ -82,7 +82,7 @@ gulp.task("useref", function() {
 
 var imagemin = require("gulp-imagemin");
 
-gulp.task("images", function() {
+gulp.task("images", () => {
   return gulp
     .src("app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)")
     .pipe(cache(imagemin()))
@@ -91,29 +91,29 @@ gulp.task("images", function() {
 
 // Copy remaining folders
 
-gulp.task("css", function() {
+gulp.task("css", () => {
   return gulp.src("app/assets/css/**/*").pipe(gulp.dest("dist/assets/css"));
 });
 
-gulp.task("js", function() {
+gulp.task("js", () => {
   return gulp.src("app/assets/js/**/*").pipe(gulp.dest("dist/assets/js"));
 });
 
-gulp.task("fonts", function() {
+gulp.task("fonts", () => {
   return gulp.src("app/assets/fonts/**/*").pipe(gulp.dest("dist/assets/fonts"));
 });
 
-gulp.task("ico", function() {
+gulp.task("ico", () => {
   return gulp.src("app/assets/ico/**/*").pipe(gulp.dest("dist/assets/ico"));
 });
 
-gulp.task("plugins", function() {
+gulp.task("plugins", () => {
   return gulp
     .src("app/assets/plugins/**/*")
     .pipe(gulp.dest("dist/assets/plugins"));
 });
 
-gulp.task("bootstrap", function() {
+gulp.task("bootstrap", () => {
   return gulp
     .src("app/assets/bootstrap/**/*")
     .pipe(gulp.dest("dist/assets/bootstrap"));
@@ -123,28 +123,27 @@ gulp.task("bootstrap", function() {
 
 var runSequence = require("run-sequence");
 
-gulp.task("build", function(callback) {
-  runSequence(
+gulp.task("build", done => {
+  gulp.series(
     "clean:dist",
-    [
-      "sass",
-      "useref",
-      "css",
-      "js",
-      "images",
-      "fonts",
-      "ico",
-      "plugins",
-      "bootstrap",
-    ],
-    callback
+    "sass",
+    "useref",
+    "css",
+    "js",
+    "images",
+    "fonts",
+    "ico",
+    "plugins",
+    "bootstrap"
   );
+  done();
 });
 
 /**
  * ACTION BY DEFAULT
  */
 
-gulp.task("default", function(callback) {
-  runSequence(["sass", "browserSync", "watch"], callback);
+gulp.task("default", done => {
+  gulp.series("sass", "browserSync", "watch");
+  done();
 });
