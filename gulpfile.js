@@ -1,4 +1,4 @@
-var gulp = require("gulp");
+const gulp = require("gulp");
 
 /**
  * WATCH
@@ -6,14 +6,14 @@ var gulp = require("gulp");
 
 // Sass
 
-var sass = require("gulp-sass");
-var postcss = require("gulp-postcss");
-var autoprefixer = require("gulp-autoprefixer");
-var wait = require("gulp-wait");
-var csscomb = require("gulp-csscomb");
+const sass = require("gulp-sass");
+const postcss = require("gulp-postcss");
+const autoprefixer = require("gulp-autoprefixer");
+const wait = require("gulp-wait");
+const csscomb = require("gulp-csscomb");
 
-gulp.task("sass", function() {
-  return gulp
+gulp.task("sass", done => {
+  gulp
     .src("app/assets/scss/**/*.scss")
     .pipe(wait(500))
     .pipe(sass().on("error", sass.logError))
@@ -26,16 +26,25 @@ gulp.task("sass", function() {
         stream: true,
       })
     );
+  done();
 });
 
 // Browser-sync
 
-var browserSync = require("browser-sync").create();
+const browserSync = require("browser-sync").create();
 
 gulp.task("browserSync", () =>
   browserSync.init({
     server: {
       baseDir: "app",
+    },
+  })
+);
+
+gulp.task("serve:dist", () =>
+  browserSync.init({
+    server: {
+      baseDir: "dist",
     },
   })
 );
@@ -55,75 +64,81 @@ gulp.task("watch", gulp.series("browserSync", "sass"), () => {
 
 // Delete folders
 
-var del = require("del");
+const del = require("del");
 
-gulp.task("clean:dist", function() {
-  return del.sync(["dist/"]);
+gulp.task("clean:dist", done => {
+  del.sync(["dist/"]);
+  done();
 });
 
 // Concat and optimize JS and CSS files
 
-var gulpIf = require("gulp-if");
-var useref = require("gulp-useref-plus");
-var uglify = require("gulp-uglify");
-var cssnano = require("gulp-cssnano");
-var cache = require("gulp-cache");
+const gulpIf = require("gulp-if");
+const useref = require("gulp-useref");
+const uglify = require("gulp-uglify");
+const cssnano = require("gulp-cssnano");
+const cache = require("gulp-cache");
 
-gulp.task("useref", () => {
+gulp.task("useref", done => {
   return gulp
     .src("app/*.html")
-    .pipe(useref())
     .pipe(gulpIf("*.js", uglify()))
     .pipe(gulpIf("*.css", cssnano()))
+    .pipe(useref())
     .pipe(gulp.dest("dist"));
+  // done();
 });
 
 // Optimize images
 
-var imagemin = require("gulp-imagemin");
+const imagemin = require("gulp-imagemin");
 
-gulp.task("images", () => {
-  return gulp
+gulp.task("images", done => {
+  gulp
     .src("app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)")
     .pipe(cache(imagemin()))
     .pipe(gulp.dest("dist/assets/img"));
+  done();
 });
 
 // Copy remaining folders
 
-gulp.task("css", () => {
-  return gulp.src("app/assets/css/**/*").pipe(gulp.dest("dist/assets/css"));
+gulp.task("css", done => {
+  gulp.src("app/assets/css/**/*").pipe(gulp.dest("dist/assets/css"));
+  done();
 });
 
-gulp.task("js", () => {
-  return gulp.src("app/assets/js/**/*").pipe(gulp.dest("dist/assets/js"));
+gulp.task("js", done => {
+  gulp.src("app/assets/js/**/*").pipe(gulp.dest("dist/assets/js"));
+  done();
 });
 
-gulp.task("fonts", () => {
-  return gulp.src("app/assets/fonts/**/*").pipe(gulp.dest("dist/assets/fonts"));
+gulp.task("fonts", done => {
+  gulp.src("app/assets/fonts/**/*").pipe(gulp.dest("dist/assets/fonts"));
+  done();
 });
 
-gulp.task("ico", () => {
-  return gulp.src("app/assets/ico/**/*").pipe(gulp.dest("dist/assets/ico"));
+gulp.task("ico", done => {
+  gulp.src("app/assets/ico/**/*").pipe(gulp.dest("dist/assets/ico"));
+  done();
 });
 
-gulp.task("plugins", () => {
-  return gulp
-    .src("app/assets/plugins/**/*")
-    .pipe(gulp.dest("dist/assets/plugins"));
+gulp.task("plugins", done => {
+  gulp.src("app/assets/plugins/**/*").pipe(gulp.dest("dist/assets/plugins"));
+  done();
 });
 
-gulp.task("bootstrap", () => {
-  return gulp
+gulp.task("bootstrap", done => {
+  gulp
     .src("app/assets/bootstrap/**/*")
     .pipe(gulp.dest("dist/assets/bootstrap"));
+  done();
 });
 
 // Build everything
 
-var runSequence = require("run-sequence");
-
-gulp.task("build", done => {
+gulp.task(
+  "build",
   gulp.series(
     "clean:dist",
     "sass",
@@ -135,15 +150,11 @@ gulp.task("build", done => {
     "ico",
     "plugins",
     "bootstrap"
-  );
-  done();
-});
+  )
+);
 
 /**
  * ACTION BY DEFAULT
  */
 
-gulp.task("default", done => {
-  gulp.series("sass", "browserSync", "watch");
-  done();
-});
+gulp.task("default", gulp.series("sass", "browserSync", "watch"));
