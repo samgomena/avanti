@@ -40,6 +40,14 @@ gulp.task("browserSync", function() {
   });
 });
 
+gulp.task("serve:dist", function() {
+  browserSync.init({
+    server: {
+      baseDir: "dist",
+    },
+  });
+});
+
 // Watch
 
 gulp.task("watch", ["browserSync", "sass"], function() {
@@ -68,10 +76,17 @@ var useref = require("gulp-useref-plus");
 var uglify = require("gulp-uglify");
 var cssnano = require("gulp-cssnano");
 var cache = require("gulp-cache");
+var fileinclude = require("gulp-file-include");
 
 gulp.task("useref", function() {
   return gulp
     .src("app/*.html")
+    .pipe(
+      fileinclude({
+        prefix: "@@",
+        basepath: "@file",
+      })
+    )
     .pipe(useref())
     .pipe(gulpIf("*.js", uglify()))
     .pipe(gulpIf("*.css", cssnano()))
@@ -129,6 +144,7 @@ gulp.task("build", function(callback) {
     [
       "sass",
       "useref",
+      // "include",
       "css",
       "js",
       "images",
