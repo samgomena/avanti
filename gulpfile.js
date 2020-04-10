@@ -12,7 +12,7 @@ var autoprefixer = require("gulp-autoprefixer");
 var wait = require("gulp-wait");
 var csscomb = require("gulp-csscomb");
 
-gulp.task("sass", function() {
+gulp.task("sass", function () {
   return gulp
     .src("app/assets/scss/**/*.scss")
     .pipe(wait(500))
@@ -32,7 +32,7 @@ gulp.task("sass", function() {
 
 var browserSync = require("browser-sync").create();
 
-gulp.task("browserSync", function() {
+gulp.task("browserSync", function () {
   browserSync.init({
     server: {
       baseDir: "app",
@@ -40,7 +40,7 @@ gulp.task("browserSync", function() {
   });
 });
 
-gulp.task("serve:dist", function() {
+gulp.task("serve:dist", function () {
   browserSync.init({
     server: {
       baseDir: "dist",
@@ -50,7 +50,7 @@ gulp.task("serve:dist", function() {
 
 // Watch
 
-gulp.task("watch", ["browserSync", "sass"], function() {
+gulp.task("watch", ["browserSync", "sass"], function () {
   gulp.watch("app/assets/scss/**/*.scss", ["sass"]);
   gulp.watch("app/*.html", browserSync.reload);
   gulp.watch("app/assets/js/**/*.js", browserSync.reload);
@@ -65,7 +65,7 @@ gulp.task("watch", ["browserSync", "sass"], function() {
 
 var del = require("del");
 
-gulp.task("clean:dist", function() {
+gulp.task("clean:dist", function () {
   return del.sync(["dist/"]);
 });
 
@@ -78,7 +78,7 @@ var cssnano = require("gulp-cssnano");
 var cache = require("gulp-cache");
 var fileinclude = require("gulp-file-include");
 
-gulp.task("useref", function() {
+gulp.task("useref", function () {
   return gulp
     .src("app/*.html")
     .pipe(
@@ -97,38 +97,51 @@ gulp.task("useref", function() {
 
 var imagemin = require("gulp-imagemin");
 
-gulp.task("images", function() {
-  return gulp
-    .src("app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)")
-    .pipe(cache(imagemin()))
-    .pipe(gulp.dest("dist/assets/img"));
+gulp.task("images", function () {
+  return (
+    gulp
+      // Just fuck all that shit up
+      .src("app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)")
+      .pipe(
+        cache(
+          imagemin([
+            imagemin.mozjpeg({ quality: 75, progressive: true }),
+            imagemin.optipng({ optimizationLevel: 5 }),
+            imagemin.svgo({
+              plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
+            }),
+          ])
+        )
+      )
+      .pipe(gulp.dest("dist/assets/img"))
+  );
 });
 
 // Copy remaining folders
 
-gulp.task("css", function() {
+gulp.task("css", function () {
   return gulp.src("app/assets/css/**/*").pipe(gulp.dest("dist/assets/css"));
 });
 
-gulp.task("js", function() {
+gulp.task("js", function () {
   return gulp.src("app/assets/js/**/*").pipe(gulp.dest("dist/assets/js"));
 });
 
-gulp.task("fonts", function() {
+gulp.task("fonts", function () {
   return gulp.src("app/assets/fonts/**/*").pipe(gulp.dest("dist/assets/fonts"));
 });
 
-gulp.task("ico", function() {
+gulp.task("ico", function () {
   return gulp.src("app/assets/ico/**/*").pipe(gulp.dest("dist/assets/ico"));
 });
 
-gulp.task("plugins", function() {
+gulp.task("plugins", function () {
   return gulp
     .src("app/assets/plugins/**/*")
     .pipe(gulp.dest("dist/assets/plugins"));
 });
 
-gulp.task("bootstrap", function() {
+gulp.task("bootstrap", function () {
   return gulp
     .src("app/assets/bootstrap/**/*")
     .pipe(gulp.dest("dist/assets/bootstrap"));
@@ -138,7 +151,7 @@ gulp.task("bootstrap", function() {
 
 var runSequence = require("run-sequence");
 
-gulp.task("build", function(callback) {
+gulp.task("build", function (callback) {
   runSequence(
     "clean:dist",
     [
@@ -161,6 +174,6 @@ gulp.task("build", function(callback) {
  * ACTION BY DEFAULT
  */
 
-gulp.task("default", function(callback) {
+gulp.task("default", function (callback) {
   runSequence(["sass", "browserSync", "watch"], callback);
 });
