@@ -30,7 +30,7 @@
     "gulp-cache": "^1.0.1",
     "gulp-csscomb": "^3.0.8",
     "gulp-cssnano": "^2.1.2",
-    "gulp-file-include": "^2.1.1",
+    "gulp-file-include": "^2.2.2",
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-postcss": "^8.0.0",
