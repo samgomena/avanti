@@ -12,7 +12,7 @@ const autoprefixer = require("gulp-autoprefixer");
 const wait = require("gulp-wait");
 const csscomb = require("gulp-csscomb");
 
-gulp.task("sass", done => {
+gulp.task("sass", (done) => {
   gulp
     .src("app/assets/scss/**/*.scss")
     .pipe(wait(500))
@@ -49,6 +49,14 @@ gulp.task("serve:dist", () =>
   })
 );
 
+gulp.task("serve:dist", function () {
+  browserSync.init({
+    server: {
+      baseDir: "dist",
+    },
+  });
+});
+
 // Watch
 
 gulp.task("watch", gulp.series("browserSync", "sass"), () => {
@@ -66,7 +74,7 @@ gulp.task("watch", gulp.series("browserSync", "sass"), () => {
 
 const del = require("del");
 
-gulp.task("clean:dist", done => {
+gulp.task("clean:dist", (done) => {
   del.sync(["dist/"]);
   done();
 });
@@ -78,10 +86,18 @@ const useref = require("gulp-useref");
 const uglify = require("gulp-uglify");
 const cssnano = require("gulp-cssnano");
 const cache = require("gulp-cache");
+const fileinclude = require("gulp-file-include");
 
-gulp.task("useref", done => {
+gulp.task("useref", (done) => {
   return gulp
     .src("app/*.html")
+    .pipe(
+      fileinclude({
+        prefix: "@@",
+        basepath: "@file",
+      })
+    )
+    .pipe(useref())
     .pipe(gulpIf("*.js", uglify()))
     .pipe(gulpIf("*.css", cssnano()))
     .pipe(useref())
@@ -93,7 +109,7 @@ gulp.task("useref", done => {
 
 const imagemin = require("gulp-imagemin");
 
-gulp.task("images", done => {
+gulp.task("images", (done) => {
   gulp
     .src("app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)")
     .pipe(cache(imagemin()))
@@ -103,32 +119,32 @@ gulp.task("images", done => {
 
 // Copy remaining folders
 
-gulp.task("css", done => {
+gulp.task("css", (done) => {
   gulp.src("app/assets/css/**/*").pipe(gulp.dest("dist/assets/css"));
   done();
 });
 
-gulp.task("js", done => {
+gulp.task("js", (done) => {
   gulp.src("app/assets/js/**/*").pipe(gulp.dest("dist/assets/js"));
   done();
 });
 
-gulp.task("fonts", done => {
+gulp.task("fonts", (done) => {
   gulp.src("app/assets/fonts/**/*").pipe(gulp.dest("dist/assets/fonts"));
   done();
 });
 
-gulp.task("ico", done => {
+gulp.task("ico", (done) => {
   gulp.src("app/assets/ico/**/*").pipe(gulp.dest("dist/assets/ico"));
   done();
 });
 
-gulp.task("plugins", done => {
+gulp.task("plugins", (done) => {
   gulp.src("app/assets/plugins/**/*").pipe(gulp.dest("dist/assets/plugins"));
   done();
 });
 
-gulp.task("bootstrap", done => {
+gulp.task("bootstrap", (done) => {
   gulp
     .src("app/assets/bootstrap/**/*")
     .pipe(gulp.dest("dist/assets/bootstrap"));
