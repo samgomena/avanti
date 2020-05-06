@@ -4,9 +4,9 @@
   "description": "The website for the restaurant in Tualatin, Oregon.",
   "main": "app/index.html",
   "scripts": {
-    "start": "./node_modules/gulp/bin/gulp.js",
+    "start": "npx gulp",
     "dist": "npx gulp serve:dist",
-    "build": "./node_modules/gulp/bin/gulp.js build",
+    "build": "npx gulp build",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
