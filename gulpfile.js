@@ -1,4 +1,4 @@
-var gulp = require("gulp");
+const gulp = require("gulp");
 
 /**
  * WATCH
@@ -6,14 +6,14 @@ var gulp = require("gulp");
 
 // Sass
 
-var sass = require("gulp-sass");
-var postcss = require("gulp-postcss");
-var autoprefixer = require("gulp-autoprefixer");
-var wait = require("gulp-wait");
-var csscomb = require("gulp-csscomb");
+const sass = require("gulp-sass");
+const postcss = require("gulp-postcss");
+const autoprefixer = require("gulp-autoprefixer");
+const wait = require("gulp-wait");
+const csscomb = require("gulp-csscomb");
 
-gulp.task("sass", function() {
-  return gulp
+gulp.task("sass", (done) => {
+  gulp
     .src("app/assets/scss/**/*.scss")
     .pipe(wait(500))
     .pipe(sass().on("error", sass.logError))
@@ -26,32 +26,33 @@ gulp.task("sass", function() {
         stream: true,
       })
     );
+  done();
 });
 
 // Browser-sync
 
-var browserSync = require("browser-sync").create();
+const browserSync = require("browser-sync").create();
 
-gulp.task("browserSync", function() {
+gulp.task("browserSync", () =>
   browserSync.init({
     server: {
       baseDir: "app",
     },
-  });
-});
+  })
+);
 
-gulp.task("serve:dist", function() {
+gulp.task("serve:dist", () =>
   browserSync.init({
     server: {
       baseDir: "dist",
     },
-  });
-});
+  })
+);
 
 // Watch
 
-gulp.task("watch", ["browserSync", "sass"], function() {
-  gulp.watch("app/assets/scss/**/*.scss", ["sass"]);
+gulp.task("watch", gulp.series("browserSync", "sass"), () => {
+  gulp.watch("app/assets/scss/**/*.scss", gulp.series("sass"));
   gulp.watch("app/*.html", browserSync.reload);
   gulp.watch("app/assets/js/**/*.js", browserSync.reload);
   gulp.watch("app/assets/img/**/*.svg", browserSync.reload);
@@ -63,22 +64,23 @@ gulp.task("watch", ["browserSync", "sass"], function() {
 
 // Delete folders
 
-var del = require("del");
+const del = require("del");
 
-gulp.task("clean:dist", function() {
-  return del.sync(["dist/"]);
+gulp.task("clean:dist", (done) => {
+  del.sync(["dist/"]);
+  done();
 });
 
 // Concat and optimize JS and CSS files
 
-var gulpIf = require("gulp-if");
-var useref = require("gulp-useref-plus");
-var uglify = require("gulp-uglify");
-var cssnano = require("gulp-cssnano");
-var cache = require("gulp-cache");
-var fileinclude = require("gulp-file-include");
+const gulpIf = require("gulp-if");
+const useref = require("gulp-useref");
+const uglify = require("gulp-uglify");
+const cssnano = require("gulp-cssnano");
+const cache = require("gulp-cache");
+const fileinclude = require("gulp-file-include");
 
-gulp.task("useref", function() {
+gulp.task("useref", (done) => {
   return gulp
     .src("app/*.html")
     .pipe(
@@ -90,77 +92,77 @@ gulp.task("useref", function() {
     .pipe(useref())
     .pipe(gulpIf("*.js", uglify()))
     .pipe(gulpIf("*.css", cssnano()))
+    .pipe(useref())
     .pipe(gulp.dest("dist"));
+  // done();
 });
 
 // Optimize images
 
-var imagemin = require("gulp-imagemin");
+const imagemin = require("gulp-imagemin");
 
-gulp.task("images", function() {
-  return gulp
+gulp.task("images", (done) => {
+  gulp
     .src("app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)")
     .pipe(cache(imagemin()))
     .pipe(gulp.dest("dist/assets/img"));
+  done();
 });
 
 // Copy remaining folders
 
-gulp.task("css", function() {
-  return gulp.src("app/assets/css/**/*").pipe(gulp.dest("dist/assets/css"));
+gulp.task("css", (done) => {
+  gulp.src("app/assets/css/**/*").pipe(gulp.dest("dist/assets/css"));
+  done();
 });
 
-gulp.task("js", function() {
-  return gulp.src("app/assets/js/**/*").pipe(gulp.dest("dist/assets/js"));
+gulp.task("js", (done) => {
+  gulp.src("app/assets/js/**/*").pipe(gulp.dest("dist/assets/js"));
+  done();
 });
 
-gulp.task("fonts", function() {
-  return gulp.src("app/assets/fonts/**/*").pipe(gulp.dest("dist/assets/fonts"));
+gulp.task("fonts", (done) => {
+  gulp.src("app/assets/fonts/**/*").pipe(gulp.dest("dist/assets/fonts"));
+  done();
 });
 
-gulp.task("ico", function() {
-  return gulp.src("app/assets/ico/**/*").pipe(gulp.dest("dist/assets/ico"));
+gulp.task("ico", (done) => {
+  gulp.src("app/assets/ico/**/*").pipe(gulp.dest("dist/assets/ico"));
+  done();
 });
 
-gulp.task("plugins", function() {
-  return gulp
-    .src("app/assets/plugins/**/*")
-    .pipe(gulp.dest("dist/assets/plugins"));
+gulp.task("plugins", (done) => {
+  gulp.src("app/assets/plugins/**/*").pipe(gulp.dest("dist/assets/plugins"));
+  done();
 });
 
-gulp.task("bootstrap", function() {
-  return gulp
+gulp.task("bootstrap", (done) => {
+  gulp
     .src("app/assets/bootstrap/**/*")
     .pipe(gulp.dest("dist/assets/bootstrap"));
+  done();
 });
 
 // Build everything
 
-var runSequence = require("run-sequence");
-
-gulp.task("build", function(callback) {
-  runSequence(
+gulp.task(
+  "build",
+  gulp.series(
     "clean:dist",
-    [
-      "sass",
-      "useref",
-      // "include",
-      "css",
-      "js",
-      "images",
-      "fonts",
-      "ico",
-      "plugins",
-      "bootstrap",
-    ],
-    callback
-  );
-});
+    "sass",
+    "useref",
+    "css",
+    "js",
+    "images",
+    "fonts",
+    "ico",
+    "plugins",
+    "bootstrap"
+  )
+);
 
 /**
  * ACTION BY DEFAULT
  */
 
-gulp.task("default", function(callback) {
-  runSequence(["sass", "browserSync", "watch"], callback);
-});
+gulp.task("default", gulp.series("sass", "browserSync", "watch"));
