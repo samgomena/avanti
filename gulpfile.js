@@ -49,14 +49,6 @@ gulp.task("serve:dist", () =>
   })
 );
 
-gulp.task("serve:dist", function () {
-  browserSync.init({
-    server: {
-      baseDir: "dist",
-    },
-  });
-});
-
 // Watch
 
 gulp.task("watch", gulp.series("browserSync", "sass"), () => {
