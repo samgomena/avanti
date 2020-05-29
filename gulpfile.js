@@ -101,6 +101,21 @@ gulp.task("useref", (done) => {
 
 const imagemin = require("gulp-imagemin");
 
+gulp.task("terribleImages", (done) => {
+  gulp
+    .src("app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)")
+    .pipe(
+      cache(
+        imagemin([
+          imagemin.mozjpeg({ quality: 25, progressive: true }),
+          imagemin.optipng({ optimizationLevel: 1 }),
+        ])
+      )
+    )
+    .pipe(gulp.dest("dist/assets/img/terrible"));
+  done();
+});
+
 gulp.task("images", (done) => {
   gulp
     .src("app/assets/img/**/*.+(png|jpg|jpeg|gif|svg)")
@@ -153,6 +168,7 @@ gulp.task(
     "useref",
     "css",
     "js",
+    "terribleImages",
     "images",
     "fonts",
     "ico",
