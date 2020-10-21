@@ -36,7 +36,7 @@
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.1.0",
     "gulp-uglify": "^3.0.2",
-    "gulp-useref": "^4.0.1",
+    "gulp-useref": "^5.0.0",
     "gulp-wait": "0.0.2",
     "node-sass": "^4.14.1",
     "postcss-flexbugs-fixes": "^4.2.1",
