@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import Layout, { siteTitle } from "../components/layout";
 
 export default function Home() {
@@ -23,9 +24,9 @@ export default function Home() {
                   We are open for table service from 4 - 9 PM!
                   <hr />
                   For to-go orders please see our
-                  <a href="menu.html" className="alert-link">
-                    to go menu
-                  </a>
+                  <Link href="/menu">
+                    <a className="alert-link">to go menu</a>
+                  </Link>
                   . Or,
                   <a className="alert-link" href="tel:5038265631">
                     call us!
