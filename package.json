@@ -2,45 +2,33 @@
   "name": "avanti",
   "version": "1.1.0",
   "description": "The website for the restaurant in Tualatin, Oregon.",
-  "main": "app/index.html",
+  "private": true,
   "scripts": {
-    "start": "npx gulp",
-    "dist": "npx gulp build && npx gulp serve:dist",
-    "build": "npx gulp build",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/samgomena/avanti.git"
   },
-  "keywords": [
-    ""
-  ],
-  "browserslist": [
-    "> 1%"
-  ],
   "author": "Sam Gomena",
   "license": "ISC",
   "homepage": "https://avantitualatin.com",
+  "dependencies": {
+    "next": "^10.0.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
+  },
   "devDependencies": {
-    "browser-sync": "^2.26.13",
-    "del": "^5.1.0",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-cache": "^1.0.1",
-    "gulp-csscomb": "^3.0.8",
-    "gulp-cssnano": "^2.1.2",
-    "gulp-file-include": "^2.2.2",
-    "gulp-if": "^3.0.0",
-    "gulp-imagemin": "^7.1.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-uglify": "^3.0.2",
-    "gulp-useref": "^4.0.1",
-    "gulp-wait": "0.0.2",
-    "node-sass": "^4.14.1",
-    "postcss-flexbugs-fixes": "^4.2.1",
-    "run-sequence": "^2.2.0",
-    "stream-combiner2": "^1.1.1"
+    "@types/node": "^15.0.3",
+    "@types/react": "^17.0.5",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.26.0",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "typescript": "^4.2.4"
   }
 }
