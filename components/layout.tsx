@@ -1,14 +1,14 @@
 import Head from "next/head";
 import Navbar from "./navbar";
 import Footer from "./footer";
-import styles from "./layout.module.css";
+import React from "react";
 
 export const siteTitle = "Avanti - Restaurant & Bar";
 
-export default function Layout({ children }) {
+export default function Layout({ children }: { children: React.ReactChild }) {
   return (
     <>
-      <div className={styles.container}>
+      <div>
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <meta
