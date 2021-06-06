@@ -165,4 +165,4 @@ gulp.task(
  * ACTION BY DEFAULT
  */
 
-gulp.task("default", gulp.series("sass", "browserSync", "watch"));
+gulp.task("default", gulp.series("sass", "useref", "browserSync", "watch"));
