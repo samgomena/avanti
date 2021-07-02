@@ -23,7 +23,7 @@
   "license": "ISC",
   "homepage": "https://avantitualatin.com",
   "devDependencies": {
-    "browser-sync": "^2.26.13",
+    "browser-sync": "^2.27.4",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
