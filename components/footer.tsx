@@ -1,30 +1,32 @@
 export default function Footer() {
   return (
-    <footer className="section section_footer">
-      <div className="container">
-        <div className="row">
+    <footer className="py-7 py-md-9 bg-black">
+      <div className="container px-4">
+        <div className="row gx-7">
           <div className="col-sm-4">
-            <h5 className="section_footer__heading">About Us</h5>
-            <p>
+            <h5 className="text-xs text-primary">About Us</h5>
+
+            <p className="mb-6">
               We're a small family owned restaurant located on the corner of
               Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
             </p>
           </div>
           <div className="col-sm-4">
-            <h5 className="section_footer__heading">Contact info</h5>
-            <ul className="section_footer__info">
-              <li>
-                <i className="fa fa-map-marker"></i>
+            <h5 className="text-xs text-primary">Contact Info</h5>
+
+            <ul className="list-unstyled mb-6">
+              <li className="d-flex mb-2">
+                <div className="fas fa-map-marker-alt me-3 mt-2 fs-sm"></div>{" "}
                 <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">
                   7995 SW Nyberg St, Tualatin, OR 97062
                 </a>
               </li>
-              <li>
-                <i className="fa fa-phone"></i>
+              <li className="d-flex mb-2">
+                <div className="fas fa-phone me-3 mt-2 fs-sm"></div>{" "}
                 <a href="tel:5038265631">(503)-826-5631</a>
               </li>
-              <li>
-                <i className="fa fa-envelope-o"></i>
+              <li className="d-flex">
+                <div className="far fa-envelope me-3 mt-2 fs-sm"></div>{" "}
                 <a href="mailto:avanti.tualatin@gmail.com">
                   avanti.tualatin@gmail.com
                 </a>
@@ -32,57 +34,23 @@ export default function Footer() {
             </ul>
           </div>
           <div className="col-sm-4">
-            <h5 className="section_footer__heading">Hours</h5>
-            <div className="section_footer__open">
-              <div className="section_footer__open__days">
-                Tuesday - Thursday
-              </div>
-              <div className="section_footer__open__time">
-                11:00 AM - 9:00 PM
-              </div>
-              <div className="small">Happy Hour: 3:00 PM - 5:00 PM</div>
+            <h5 className="text-xs text-primary">Hours</h5>
+
+            <div className="mb-3">
+              <div className="text-xs">Tuesday - Sunday</div>
+              <div className="font-serif">4:00 PM - 9:00 PM</div>
             </div>
-            <div className="section_footer__open">
-              <div className="section_footer__open__days">
-                Friday - Saturday
-              </div>
-              <div className="section_footer__open__time">
-                11:00 AM - 10:00 PM
-              </div>
-              <div className="small">
-                Happy Hour: 3:00 PM - 5:00 PM &amp; 9:00 PM - Close
-              </div>
-            </div>
-            <div className="section_footer__open">
-              <div className="section_footer__open__days">Sunday</div>
-              <div className="section_footer__open__time">
-                5:00 PM - 9:00 PM
-              </div>
-            </div>
-            <br />
-            <h5 className="section_footer__heading">
-              Seasonal Closures and Opening
-            </h5>
-            <div className="section_footer__open">
-              <div className="section_footer__open__time">
-                Christmas Eve - Closed
-              </div>
-              <div className="section_footer__open__time">
-                Christmas Day - Closed
-              </div>
-              <div className="section_footer__open__time">
-                New Year's Eve - Open for Dinner at 4:00 PM
-              </div>
-              <div className="section_footer__open__time">
-                New Year's Day - Closed
-              </div>
-            </div>
+
+            {/* <div className="mb-6">
+              <div className="text-xs">Friday - Sunday</div>
+              <div className="font-serif">12:00 AM - 03:00 AM</div>
+            </div> */}
           </div>
         </div>
         <div className="row">
           <div className="col-12">
-            <div className="section_footer__copyright">
-              <i className="fa fa-copyright"></i>
+            <div className="d-flex align-items-center">
+              <hr className="hr-sm me-3" style={{ height: "1px" }} /> &copy;{" "}
               <span>{new Date().getFullYear()}</span> Avanti. All rights
               reserved.
             </div>

@@ -1,20 +1,17 @@
 import Head from "next/head";
 import Navbar from "./navbar";
 import Footer from "./footer";
-import React from "react";
+import { ReactChild } from "react";
 
 export const siteTitle = "Avanti - Restaurant & Bar";
 
-export default function Layout({ children }: { children: React.ReactChild }) {
+export default function Layout({ children }: { children: ReactChild }) {
   return (
     <>
       <div>
         <Head>
           <link rel="icon" href="/favicon.ico" />
-          <meta
-            name="description"
-            content="Learn how to build a personal website using Next.js"
-          />
+          <meta name="description" content={siteTitle} />
           <meta
             property="og:image"
             content={`https://og-image.vercel.app/${encodeURI(
