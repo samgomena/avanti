@@ -1,8 +1,16 @@
 import Link from "next/link";
+import { useCallback } from "react";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
+  const router = useRouter();
+  const getNavClass = useCallback(
+    (path: string) => `nav-link ${router.asPath === path ? "active" : ""}`,
+    [router]
+  );
+
   return (
-    <nav className="navbar navbar-light navbar-expand-lg fixed-top">
+    <nav className="navbar navbar-dark navbar-expand-lg navbar-togglable fixed-top">
       <div className="container">
         <Link href="/">
           <a className="navbar-brand d-lg-none">Avanti</a>
@@ -11,49 +19,47 @@ export default function Navbar() {
         <button
           className="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
+        <div className="collapse navbar-collapse" id="navbarCollapse">
+          <ul className="navbar-nav">
             <li className="nav-item">
               <Link href="/about">
-                <a className="nav-link">About Us</a>
+                <a className={getNavClass("/about")}>About Us</a>
               </Link>
             </li>
             <li className="nav-item">
               <Link href="/menu">
-                <a className="nav-link" id="nav-item__menu">
-                  Menu
-                </a>
+                <a className={getNavClass("/menu")}>Menu</a>
               </Link>
             </li>
             <li className="nav-item">
               <Link href="/events">
-                <a className="nav-link">Special Events</a>
+                <a className={getNavClass("/events")}>Special Events</a>
               </Link>
             </li>
           </ul>
 
           <Link href="/">
-            <a className="navbar-brand d-none d-lg-flex">Avanti</a>
+            <a className="navbar-brand d-none d-lg-flex mx-lg-auto">Avanti</a>
           </Link>
 
-          <ul className="navbar-nav ml-auto">
+          <ul className="navbar-nav">
             <li className="nav-item">
               <Link href="/gallery">
-                <a className="nav-link">Some Photos</a>
+                <a className={getNavClass("/gallery")}>Some Photos</a>
               </Link>
             </li>
             <li className="nav-item">
               <Link href="/contact">
-                <a className="nav-link">Contact Us</a>
+                <a className={getNavClass("/contact")}>Contact Us</a>
               </Link>
             </li>
           </ul>
