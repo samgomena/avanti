@@ -1,0 +1,80 @@
+//
+// navbar.scss
+//
+
+// Dark
+
+.navbar-dark .navbar-brand {
+	color: $navbar-dark-color;
+
+	&:hover, &:focus, &:active, &:active:hover, &:active:focus {
+		color: $navbar-dark-color;   
+	}
+}
+
+// Background
+
+.navbar::before {
+	content: '';
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	background-color: $white;
+	transform: translateY(-100%);
+	transition: all .3s;
+	z-index: -1;
+}
+
+// Light
+
+.navbar-light::before {
+	transform: translateY(0);
+}
+
+.navbar-light .navbar-brand {
+	color: $navbar-light-color;
+}
+
+// Brand
+
+.navbar-brand {
+	font-family: $headings-font-family;
+	font-style: italic;
+	transition: color .1s;
+}
+
+.navbar-brand > img {
+	max-height: calc(#{$navbar-brand-font-size} * #{$line-height-base});
+	width: auto;
+}
+
+// Nav link
+
+.navbar .navbar-nav .nav-link {
+	@include text-xs();
+	transition: color .1s;
+}
+
+// Dropdown
+
+@each $breakpoint, $value in $grid-breakpoints {
+	@include media-breakpoint-down(#{$breakpoint}) {
+		.navbar-expand-#{$breakpoint} {
+			.navbar-nav > .nav-item > .dropdown-menu {
+				margin-bottom: $spacer * 0.5;
+				padding-top: 0;
+				padding-bottom: 0;
+				border-width: 0;
+			}
+		
+			.navbar-nav > .nav-item > .dropdown-menu > .dropdown-header {
+				padding-left: $spacer * 0.5;
+				padding-right: 0;
+			}
+		
+			.navbar-nav > .nav-item > .dropdown-menu > .dropdown-item {
+				padding-left: $spacer * 0.5;
+				padding-right: 0;
+			}
+		}
+	}
+}

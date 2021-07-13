@@ -1,0 +1,14 @@
+//
+// toasts.scss
+//
+
+.toast {
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+
+.toast-body {
+  padding-top: $toast-padding-y;
+  padding-bottom: $toast-padding-y;
+}

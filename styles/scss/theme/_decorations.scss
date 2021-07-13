@@ -1,0 +1,94 @@
+//
+// images.scss
+//
+
+// Media decoration
+
+.media-decoration {
+  position: relative;
+}
+
+.media-decoration-border,
+.media-decoration-solid {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  @include media-breakpoint-up(md) {
+    display: block;
+  }
+}
+
+.media-decoration-border {
+  border: $border-width solid $border-color;
+}
+
+.media-decoration-solid {
+  background-color: $light;
+}
+
+// Media decoration 1
+
+.media-decoration-1 {
+
+  @include media-breakpoint-up(md) {
+    max-width: 80%;
+  }
+}
+
+.media-decoration-1 > .media-decoration-border {
+  top: 10%;
+  left: 20%;
+}
+
+.media-decoration-1 > .media-decoration-solid {
+  top: -10%;
+  left: -30%;
+}
+
+// Block decoration
+
+.block-decoration-1 {
+  position: relative;
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    border-style: solid;
+    border-color: $primary;
+  }
+
+  &::before {
+    top: 0;
+    right: 0;
+    border-width: $border-width $border-width 0 0;
+  }
+
+  &::after {
+    bottom: 0;
+    left: 0;
+    border-width: 0 0 $border-width $border-width;
+  }
+}
+
+.block-decoration-2 {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    right: 75%;
+    bottom: 25%;
+    width: 35%;
+    height: 100%;
+    background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='5' fill='#{$gray-200}' /></svg>"));
+    background-size: 10px 10px;
+  }
+}
