@@ -1,4 +1,6 @@
 import Header from "../components/Header";
+import Heading from "../components/Heading";
+import Section from "../components/Section";
 
 export default function Gallery() {
   return (
@@ -7,27 +9,15 @@ export default function Gallery() {
         title="Some Photos"
         image="/assets/photos/Wine_On_Bar_Reflection_282_KB.jpg"
       />
-      <section className="pt-7 pt-md-9">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-8 col-lg-6 text-center">
-              <h2 className="mb-2">Take a Peek</h2>
-
-              <p className="mb-6">Lots of activity here...</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-12">{/* Carousel goes here */}</div>
-          </div>
+      <Section>
+        <Heading heading="Take a Peek" subHeading="Lots of activity here..." />
+        <div className="row">
+          <div className="col-12">{/* Carousel goes here */}</div>
         </div>
-      </section>
-
-      <section className="py-7 py-md-9">
-        <div className="container">
-          <div className="row gx-3"></div>
-        </div>
-      </section>
+      </Section>
+      <Section>
+        <div className="row gx-3">{/* Photos go here */}</div>
+      </Section>
     </>
   );
 }

@@ -69,6 +69,9 @@
 // }
 
 import Header from "../components/Header";
+import Heading from "../components/Heading";
+import Section from "../components/Section";
+
 export default function About() {
   return (
     <>
@@ -76,17 +79,12 @@ export default function About() {
         title="About Us"
         image="/assets/photos/Avanti_Front_Sunny_222_KB.jpg"
       />
-      <section className="py-7 py-md-9">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-8 col-lg-6 text-center">
-              <h2 className="mb-2">Behind the Scenes</h2>
-
-              <p className="mb-6">Something interesting or whatever</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Section>
+        <Heading
+          heading="Behind the Scenes"
+          subHeading="Something interesting or whatever"
+        />
+      </Section>
       <section className="bg-light" style={{ height: "30rem" }}>
         <div
           data-lat="45.3830129"

@@ -85,6 +85,8 @@
 // }
 
 import Header from "../components/Header";
+import Heading from "../components/Heading";
+import Section from "../components/Section";
 
 export default function Contact() {
   return (
@@ -93,42 +95,34 @@ export default function Contact() {
         title="Contact Us"
         image="/assets/photos/Avanti_Front_Sunny_222_KB.jpg"
       />
-      <section className="py-7 py-md-9">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-8 col-lg-6 text-center">
-              <h2 className="mb-2">Get in touch!</h2>
-              <p className="mb-6">
-                Thanks for reaching out! If this is an urgent matter, please
-                contact us by phone.
-              </p>
-            </div>
-          </div>
+      <Section>
+        <Heading
+          heading="Get in Touch!"
+          subHeading="Thanks for reaching out! If this is an urgent matter, please contact us by phone."
+        />
+        <div className="row">
+          <div className="col-md-3 order-md-2">
+            <h4 className="mb-2 text-xs">Write us</h4>
+            <p className="mb-4 font-serif">
+              <a href="mailto:avanti.tualatin@gmail.com">
+                avanti.tualatin@gmail.com
+              </a>
+            </p>
 
-          <div className="row">
-            <div className="col-md-3 order-md-2">
-              <h4 className="mb-2 text-xs">Write us</h4>
-              <p className="mb-4 font-serif">
-                <a href="mailto:avanti.tualatin@gmail.com">
-                  avanti.tualatin@gmail.com
-                </a>
-              </p>
+            <h4 className="mb-2 text-xs">Call use</h4>
+            <p className="mb-4 font-serif">
+              <a href="tel:5038265631">(503)-826-5631</a>
+            </p>
 
-              <h4 className="mb-2 text-xs">Call use</h4>
-              <p className="mb-4 font-serif">
-                <a href="tel:5038265631">(503)-826-5631</a>
-              </p>
-
-              <h4 className="mb-4 text-xs">Visit us</h4>
-              <p className="mb-4 font-serif">
-                <a href="https://goo.gl/maps/FL2HrEncorxU7rZH9">
-                  7995 SW Nyberg St, Tualatin, OR 97062
-                </a>
-              </p>
-            </div>
+            <h4 className="mb-4 text-xs">Visit us</h4>
+            <p className="mb-4 font-serif">
+              <a href="https://goo.gl/maps/FL2HrEncorxU7rZH9">
+                7995 SW Nyberg St, Tualatin, OR 97062
+              </a>
+            </p>
           </div>
         </div>
-      </section>
+      </Section>
     </>
   );
 }
