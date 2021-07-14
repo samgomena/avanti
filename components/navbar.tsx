@@ -1,5 +1,6 @@
+import { Collapse } from "bootstrap";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 export default function Navbar() {
@@ -10,7 +11,8 @@ export default function Navbar() {
   );
 
   const [navbarTheme, setNavbarTheme] = useState<"dark" | "light">("dark");
-  const [showCollapse, setShowCollapse] = useState<"" | "show">("");
+  const [showCollapse, setShowCollapse] = useState(false);
+  const navbarCollapse = useRef<HTMLDivElement>(null);
 
   const handleScroll = useCallback(() => {
     const scrollTop = window.pageYOffset;
@@ -25,6 +27,19 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
+
+  useEffect(() => {
+    console.log("what");
+    // const navbarCollapse = document.getElementById("navbarCollapse");
+    console.log(document);
+    if (document) {
+      console.log("wtaf");
+      // const bsCollapse =
+      //   navbarCollapse.current &&
+      //   new Collapse(navbarCollapse.current, { toggle: false });
+      // showCollapse ? bsCollapse?.show() : bsCollapse?.hide();
+    }
+  }, []);
 
   return (
     <nav
@@ -41,13 +56,14 @@ export default function Navbar() {
           aria-controls="navbarCollapse"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          onClick={() => setShowCollapse(showCollapse === "show" ? "" : "show")}
+          onClick={() => setShowCollapse((showCollapse) => !showCollapse)}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
         <div
-          className={`collapse navbar-collapse ${showCollapse}`}
+          className={`collapse navbar-collapse`}
+          ref={navbarCollapse}
           id="navbarCollapse"
         >
           <ul className="navbar-nav">

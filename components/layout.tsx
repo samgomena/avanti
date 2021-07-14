@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Navbar from "./navbar";
-import Footer from "./footer";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { ReactChild } from "react";
 import { ParallaxProvider } from "react-scroll-parallax";
 
