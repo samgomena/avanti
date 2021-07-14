@@ -1,11 +1,13 @@
 import React from "react";
+import { ParallaxBanner } from "react-scroll-parallax";
 
-type Props = { title: string };
+type Props = { title: string; image?: string };
 
-const Header: React.FC<Props> = ({ children, title }) => {
+const Header: React.FC<Props> = ({ children, title, image = "" }) => {
+  const layers = [{ image, amount: 0.5 }];
   return (
-    <header data-jarallax data-speed=".8">
-      <div className="pt-10 pb-8 pt-md-15 pb-md-13 bg-black-50">
+    <ParallaxBanner layers={layers}>
+      <div className="pt-10 pb-8 pt-md-15 pb-md-13 bg-black-50 position-relative">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 col-md-8 col-lg-6 text-center">
@@ -15,7 +17,7 @@ const Header: React.FC<Props> = ({ children, title }) => {
           </div>
         </div>
       </div>
-    </header>
+    </ParallaxBanner>
   );
 };
 

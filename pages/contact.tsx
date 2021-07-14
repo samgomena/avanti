@@ -89,7 +89,10 @@ import Header from "../components/Header";
 export default function Contact() {
   return (
     <>
-      <Header title="Contact Us" />
+      <Header
+        title="Contact Us"
+        image="/assets/photos/Avanti_Front_Sunny_222_KB.jpg"
+      />
       <section className="py-7 py-md-9">
         <div className="container">
           <div className="row justify-content-center">

@@ -3,7 +3,10 @@ import Header from "../components/Header";
 export default function Gallery() {
   return (
     <>
-      <Header title="Some Photos" />
+      <Header
+        title="Some Photos"
+        image="/assets/photos/Wine_On_Bar_Reflection_282_KB.jpg"
+      />
       <section className="pt-7 pt-md-9">
         <div className="container">
           <div className="row justify-content-center">

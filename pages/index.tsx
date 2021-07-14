@@ -4,13 +4,13 @@ export default function Home() {
   // TODO
   const layers = [
     {
-      image: "",
-      amount: 0.8,
+      image: "/assets/photos/1.jpg",
+      amount: 0,
     },
   ];
   return (
     <ParallaxBanner layers={layers} style={{ height: "100vh" }}>
-      <div className="d-flex flex-column min-vh-100 bg-black-50 pt-10 pt-md-8 pb-7 pb-md-0">
+      <div className="d-flex flex-column min-vh-100 bg-black-50 pt-10 pt-md-8 pb-7 pb-md-0 position-relative">
         <div className="container my-auto">
           <div className="row justify-content-center">
             <div className="col-12 col-md-8 col-lg-6 text-center">

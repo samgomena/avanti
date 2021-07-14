@@ -68,22 +68,14 @@
 //   );
 // }
 
-import { ParallaxBanner, Parallax } from "react-scroll-parallax";
-
+import Header from "../components/Header";
 export default function About() {
   return (
     <>
-      <header>
-        <div className="pt-10 pb-8 pt-md-15 pb-md-13 bg-black-50">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-12 col-md-8 col-lg-6 text-center">
-                <h1 className="display-6 fw-bold text-white">About Us</h1>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        title="About Us"
+        image="/assets/photos/Avanti_Front_Sunny_222_KB.jpg"
+      />
       <section className="py-7 py-md-9">
         <div className="container">
           <div className="row justify-content-center">

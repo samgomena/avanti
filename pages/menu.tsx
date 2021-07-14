@@ -5,7 +5,10 @@ import Section from "../components/Section";
 export default function Menu() {
   return (
     <>
-      <Header title="Our Menu" />
+      <Header
+        title="Our Menu"
+        image="/assets/photos/Porkchop_In_Window_322_KB.jpg"
+      />
       <section className="py-7 py-md-9 border-bottom">
         <div className="container">
           <div className="row justify-content-center">
