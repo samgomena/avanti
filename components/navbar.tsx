@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 export default function Navbar() {
@@ -9,8 +9,27 @@ export default function Navbar() {
     [router]
   );
 
+  const [navbarTheme, setNavbarTheme] = useState<"dark" | "light">("dark");
+  const [showCollapse, setShowCollapse] = useState<"" | "show">("");
+
+  const handleScroll = useCallback(() => {
+    const scrollTop = window.pageYOffset;
+    if (scrollTop <= 1) {
+      setNavbarTheme("dark");
+    } else {
+      setNavbarTheme("light");
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
   return (
-    <nav className="navbar navbar-dark navbar-expand-lg navbar-togglable fixed-top">
+    <nav
+      className={`navbar navbar-expand-lg navbar-togglable fixed-top navbar-${navbarTheme}`}
+    >
       <div className="container">
         <Link href="/">
           <a className="navbar-brand d-lg-none">Avanti</a>
@@ -19,16 +38,18 @@ export default function Navbar() {
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarCollapse"
           aria-controls="navbarCollapse"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          onClick={() => setShowCollapse(showCollapse === "show" ? "" : "show")}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarCollapse">
+        <div
+          className={`collapse navbar-collapse ${showCollapse}`}
+          id="navbarCollapse"
+        >
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link href="/about">
