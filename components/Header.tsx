@@ -4,7 +4,10 @@ import { ParallaxBanner } from "react-scroll-parallax";
 type Props = { title: string; image?: string };
 
 const Header: React.FC<Props> = ({ children, title, image = "" }) => {
-  const layers = [{ image, amount: 0.5 }];
+  image = image.startsWith("/assets/photos/")
+    ? image
+    : `/assets/photos/${image}`;
+  const layers = [{ image, amount: 0.2 }];
   return (
     <ParallaxBanner layers={layers}>
       <div className="pt-10 pb-8 pt-md-15 pb-md-13 bg-black-50 position-relative">
