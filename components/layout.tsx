@@ -2,12 +2,13 @@ import Head from "next/head";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import { ReactChild } from "react";
+import { ParallaxProvider } from "react-scroll-parallax";
 
 export const siteTitle = "Avanti - Restaurant & Bar";
 
 export default function Layout({ children }: { children: ReactChild }) {
   return (
-    <>
+    <ParallaxProvider>
       <div>
         <Head>
           <link rel="icon" href="/favicon.ico" />
@@ -25,6 +26,6 @@ export default function Layout({ children }: { children: ReactChild }) {
         {children}
       </div>
       <Footer />
-    </>
+    </ParallaxProvider>
   );
 }

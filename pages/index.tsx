@@ -1,93 +1,69 @@
-import Head from "next/head";
-import Link from "next/link";
-import { siteTitle } from "../components/layout";
+import { ParallaxBanner } from "react-scroll-parallax";
 
 export default function Home() {
+  // TODO
+  const layers = [
+    {
+      image: "",
+      amount: 0.8,
+    },
+  ];
   return (
-    <>
-      <Head>
-        <title>{siteTitle}</title>
-      </Head>
-      <section
-        className="section section_welcome"
-        data-parallax="scroll"
-        data-image-src="assets/img/1.jpg"
-      >
-        <div className="section_welcome__main">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col">
-                <div
-                  className="alert alert-warning alert-dismissible fade show text-center section__subheading"
-                  role="alert"
-                >
-                  We are open for table service from 4 - 9 PM!
-                  <hr />
-                  For to-go orders please see our
-                  <Link href="/menu">
-                    <a className="alert-link">to go menu</a>
-                  </Link>
-                  . Or,
-                  <a className="alert-link" href="tel:5038265631">
-                    call us!
-                  </a>
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="alert"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+    <ParallaxBanner layers={layers} style={{ height: "100vh" }}>
+      <div className="d-flex flex-column min-vh-100 bg-black-50 pt-10 pt-md-8 pb-7 pb-md-0">
+        <div className="container my-auto">
+          <div className="row justify-content-center">
+            <div className="col-12 col-md-8 col-lg-6 text-center">
+              <h1 className="display-1 text-white mb-4">Avanti</h1>
 
-                <h1 className="section__heading section_welcome__heading text-center">
-                  Avanti
-                  <br />
-                </h1>
-                <h2 className="section__preheading section_welcome__preheading text-center text-muted">
-                  <span className="text-primary">Restaurant and Bar</span>
-                </h2>
-                <p className="section__subheading section_welcome__subheading text-center text-muted">
-                  Located in Tualatin, Oregon.
-                </p>
-                <br />
-                <br />
-              </div>
+              <h6 className="text-xs text-white-75">
+                <span className="text-primary">Restaurant</span> / Bar
+              </h6>
+
+              <p className="text-center text-white-75 mb-7">
+                Located in Tualatin, Oregon
+              </p>
+
+              {/* <a
+                className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0"
+                href="#reservation"
+              >
+                Make reservation
+              </a> */}
             </div>
           </div>
         </div>
-      </section>
-      <section>
-        <div className="section_welcome__footer">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md">
-                <ul className="section_welcome__footer__social text-center text-lg-left">
-                  <li>
-                    <a href="https://www.facebook.com/pg/avanti.tualatin">
-                      <i className="fa fa-facebook"></i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://www.instagram.com/avanti_restaurant/">
-                      <i className="fa fa-instagram"></i>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-md">
-                <div className="section_welcome__footer__address text-center text-lg-right">
-                  <i className="fa fa-map-marker"></i>
-                  <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">
-                    7995 SW Nyberg St, Tualatin, OR 97062
-                  </a>
-                </div>
-              </div>
+
+        <div className="container">
+          <div className="row">
+            <div className="col-md">
+              <ul className="list-inline text-center text-md-start mb-3 my-md-5">
+                {Object.entries({ facebook: "", instagram: "" }).map(
+                  ([socialName, link], idx) => (
+                    <li className="list-inline-item" key={idx}>
+                      <a
+                        href={link}
+                        className="text-white-75 text-primary-hover"
+                      >
+                        <i className={`fab fa-${socialName}`}></i>
+                      </a>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+
+            <div className="col-md">
+              <p className="font-serif text-white-75 text-center text-md-end text-lg-end my-md-5">
+                <i className="fas fa-map-marker-alt text-primary me-3"></i>
+                <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">
+                  7995 SW Nyberg St, Tualatin, OR 97062
+                </a>
+              </p>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </ParallaxBanner>
   );
 }
