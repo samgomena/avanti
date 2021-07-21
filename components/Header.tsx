@@ -10,7 +10,7 @@ const Header: React.FC<Props> = ({ children, title, image = "" }) => {
   const layers = [{ image, amount: 0.2 }];
   return (
     <ParallaxBanner layers={layers}>
-      <div className="pt-10 pb-8 pt-md-15 pb-md-13 bg-black-50 position-relative">
+      <div className="pt-12 pb-12 pt-md-15 pb-md-15 bg-black-50 position-relative">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 col-md-8 col-lg-6 text-center">
