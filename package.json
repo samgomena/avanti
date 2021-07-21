@@ -19,6 +19,7 @@
     "bootstrap": "^5.0.2",
     "next": "^11.0.1",
     "react": "17.0.2",
+    "react-bootstrap": "^1.6.1",
     "react-dom": "17.0.2",
     "react-scroll-parallax": "^2.4.0",
     "sass": "^1.35.2"
