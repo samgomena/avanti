@@ -1,7 +1,33 @@
-import Image from "next/image";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Section from "../components/Section";
+import MenuItem from "../components/Menu/MenuItem";
+import MenuItemWrapper from "../components/Menu/MenuItemWrapper";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import { Service } from "../components/Menu/types";
+
+import menuJson from "../data/menu.json";
+
+const menu = menuJson.services.reduce(
+  (acc, curr) => ({ [curr]: new Array(), ...acc }),
+  {} as Record<Service, typeof MenuItem[]>
+);
+
+menuJson.items.forEach((item, idx) => {
+  item.service.forEach((service) => {
+    const price =
+      typeof item.price === "object" ? item.price[service] : item.price;
+    menu[service].push(
+      <MenuItem
+        key={idx}
+        name={item.name}
+        description={item.description}
+        price={price}
+      />
+    );
+  });
+});
 
 export default function Menu() {
   return (
@@ -19,53 +45,26 @@ export default function Menu() {
         />
         <div className="row">
           <div className="col">
-            <div
-              className="nav justify-content-center mb-6"
-              id="menuTabs"
-              role="tablist"
+            {/* Set `variant` to a madeup value as a workaround to the default value of `tabs` which applies inconsistent styling to the custom "tabs" we created in bootstrap*/}
+            {/* See: https://github.com/react-bootstrap/react-bootstrap/blob/daf5a9ef95f6db05a6915e19d7acfb41bc0b7d5f/src/Nav.tsx#L161 */}
+            <Tabs
+              className="justify-content-center mb-6"
+              // @ts-ignore
+              variant="not-tabs-or-pills"
             >
-              <a
-                className="nav-link active"
-                id="mainsTab"
-                data-bs-toggle="tab"
-                href="#mains"
-                role="tab"
-                aria-controls="mains"
-                aria-selected="true"
-              >
-                Mains
-              </a>
-              <a
-                className="nav-link"
-                id="lunchTab"
-                data-bs-toggle="tab"
-                href="#lunch"
-                role="tab"
-                aria-controls="lunch"
-              >
-                Lunch
-              </a>
-              <a
-                className="nav-link"
-                id="dinnerTab"
-                data-bs-toggle="tab"
-                href="#dinner"
-                role="tab"
-                aria-controls="dinner"
-              >
-                Dinner
-              </a>
-              <a
-                className="nav-link"
-                id="drinksTab"
-                data-bs-toggle="tab"
-                href="#drinks"
-                role="tab"
-                aria-controls="drinks"
-              >
-                Drinks
-              </a>
-            </div>
+              <Tab eventKey="lunch" title="Lunch">
+                <MenuItemWrapper>{menu.lunch}</MenuItemWrapper>
+              </Tab>
+              <Tab eventKey="dinner" title="Dinner">
+                <MenuItemWrapper>{menu.dinner}</MenuItemWrapper>
+              </Tab>
+              <Tab eventKey="hh" title="HH">
+                <MenuItemWrapper>{menu.hh}</MenuItemWrapper>
+              </Tab>
+              <Tab eventKey="drinks" title="Drinks">
+                <MenuItemWrapper>{menu.drinks}</MenuItemWrapper>
+              </Tab>
+            </Tabs>
           </div>
         </div>
       </Section>

@@ -49,11 +49,10 @@ export default function Footer() {
         </div>
         <div className="row">
           <div className="col-12">
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-sm-center align-items-start">
               <hr className="hr-sm me-3" style={{ height: "1px" }} /> Copyright
               &copy; &nbsp;
-              <span>{new Date().getFullYear()}</span> &nbsp;Avanti, Inc. All
-              rights reserved.
+              {new Date().getFullYear()}&nbsp;Avanti, Inc. All rights reserved.
             </div>
           </div>
         </div>
