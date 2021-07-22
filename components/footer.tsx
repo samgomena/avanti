@@ -7,8 +7,8 @@ export default function Footer() {
             <h5 className="text-xs text-primary">About Us</h5>
 
             <p className="mb-6">
-              We're a small family owned restaurant located on the corner of
-              Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
+              We&apos;re a small family owned restaurant located on the corner
+              of Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
             </p>
           </div>
           <div className="col-sm-4">
@@ -17,7 +17,11 @@ export default function Footer() {
             <ul className="list-unstyled mb-6">
               <li className="d-flex mb-2">
                 <div className="fas fa-map-marker-alt me-3 mt-2 fs-sm"></div>{" "}
-                <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">
+                <a
+                  href="https://goo.gl/maps/K6R19AyT4Cz"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   7995 SW Nyberg St, Tualatin, OR 97062
                 </a>
               </li>

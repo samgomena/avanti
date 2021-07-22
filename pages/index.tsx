@@ -56,7 +56,11 @@ export default function Home() {
             <div className="col-md">
               <p className="font-serif text-white-75 text-center text-md-end text-lg-end my-md-5">
                 <i className="fas fa-map-marker-alt text-primary me-3"></i>
-                <a href="https://goo.gl/maps/K6R19AyT4Cz" target="_blank">
+                <a
+                  href="https://goo.gl/maps/K6R19AyT4Cz"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   7995 SW Nyberg St, Tualatin, OR 97062
                 </a>
               </p>
