@@ -1,12 +1,11 @@
 import Head from "next/head";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { ReactChild } from "react";
 import { ParallaxProvider } from "react-scroll-parallax";
 
 export const siteTitle = "Avanti - Restaurant & Bar";
 
-export default function Layout({ children }: { children: ReactChild }) {
+const Layout: React.FC = ({ children }) => {
   return (
     <ParallaxProvider>
       <div>
@@ -21,6 +20,7 @@ export default function Layout({ children }: { children: ReactChild }) {
           />
           <meta name="og:title" content={siteTitle} />
           <meta name="twitter:card" content="summary_large_image" />
+          <title>{siteTitle}</title>
         </Head>
         <Navbar />
         {children}
@@ -28,4 +28,6 @@ export default function Layout({ children }: { children: ReactChild }) {
       <Footer />
     </ParallaxProvider>
   );
-}
+};
+
+export default Layout;

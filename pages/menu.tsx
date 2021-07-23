@@ -17,7 +17,9 @@ const menu = menuJson.services.reduce(
 menuJson.items.forEach((item, idx) => {
   item.service.forEach((service) => {
     const price =
+      // @ts-ignore
       typeof item.price === "object" ? item.price[service] : item.price;
+    // @ts-ignore
     menu[service].push(
       <MenuItem
         key={idx}

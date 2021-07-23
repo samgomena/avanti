@@ -9,7 +9,7 @@ export default function Home() {
     },
   ];
   return (
-    <ParallaxBanner layers={layers} style={{ height: "100vh" }}>
+    <ParallaxBanner layers={layers} className="h-100">
       <div className="d-flex flex-column min-vh-100 bg-black-50 pt-10 pt-md-8 pb-7 pb-md-0 position-relative">
         <div className="container my-auto">
           <div className="row justify-content-center">
