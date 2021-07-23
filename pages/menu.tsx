@@ -5,21 +5,21 @@ import MenuItem from "../components/Menu/MenuItem";
 import MenuItemWrapper from "../components/Menu/MenuItemWrapper";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { Service } from "../components/Menu/types";
+import { Service, Services, Item } from "../components/Menu/types";
 
 import menuJson from "../data/menu.json";
 
 const menu = menuJson.services.reduce(
   (acc, curr) => ({ [curr]: new Array(), ...acc }),
-  {} as Record<Service, typeof MenuItem[]>
+  {} as { [k in Service]: JSX.Element[] }
 );
 
 menuJson.items.forEach((item, idx) => {
-  item.service.forEach((service) => {
-    const price =
+  const services = item.service as Services;
+  services.forEach((service) => {
+    const price: number =
       // @ts-ignore
       typeof item.price === "object" ? item.price[service] : item.price;
-    // @ts-ignore
     menu[service].push(
       <MenuItem
         key={idx}

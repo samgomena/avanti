@@ -6,7 +6,7 @@ export type Item = {
   name: string;
   description: string;
   service: Services;
-  price: number | Record<Service, number>;
+  price: number | { [k in Service]: number };
 };
 
 export type Items = Item[];
