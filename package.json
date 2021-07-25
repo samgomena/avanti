@@ -18,12 +18,14 @@
   "homepage": "https://avantitualatin.com",
   "dependencies": {
     "bootstrap": "^5.0.2",
+    "formik": "^2.2.9",
     "next": "^11.0.1",
     "react": "17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-dom": "17.0.2",
     "react-scroll-parallax": "^2.4.0",
-    "sass": "^1.35.2"
+    "sass": "^1.35.2",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.0.17",
