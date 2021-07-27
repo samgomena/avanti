@@ -1,40 +1,16 @@
 import Header from "../components/Header";
 import Section from "../components/Section";
+import FormError from "../components/FormError";
 
 import Button from "react-bootstrap/Button";
 
 import { useCallback, useState } from "react";
-import {
-  Form,
-  Formik,
-  Field,
-  FormikHelpers,
-  FormikErrors,
-  FormikTouched,
-} from "formik";
+import { Form, Formik, Field, FormikHelpers } from "formik";
 import * as Yup from "yup";
 
 type LoginValues = {
   email: string;
   password: string;
-};
-
-type FormErrorProps = {
-  errors: FormikErrors<LoginValues>;
-  touched: FormikTouched<LoginValues>;
-  field: keyof LoginValues;
-};
-
-const FormError: React.FC<FormErrorProps> = ({ errors, touched, field }) => {
-  if (touched[field] && errors[field]) {
-    return (
-      // Manually add `display: block` b/c it defaults to `display: none` for reasons unknown
-      <div className="invalid-feedback" style={{ display: "block" }}>
-        {errors[field]}
-      </div>
-    );
-  }
-  return null;
 };
 
 const LoginSchema = Yup.object({
