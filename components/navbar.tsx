@@ -97,6 +97,12 @@ export default function AvantiNavbar() {
                 </Nav.Link>
               </Link>
             </Nav.Item>
+
+            <Nav.Item>
+              <Link href="/login" passHref>
+                <Nav.Link active={router.asPath === "/login"}>Login</Nav.Link>
+              </Link>
+            </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </div>
