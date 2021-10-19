@@ -46,7 +46,7 @@ const Login: React.FC = () => {
               onSubmit={onSubmit}
               validationSchema={LoginSchema}
             >
-              {({ errors, touched, isSubmitting }) => (
+              {({ errors, touched, isSubmitting, isValid }) => (
                 <Form className="needs-validation" noValidate>
                   <div className="row gx-3">
                     <div className="col">
@@ -105,7 +105,7 @@ const Login: React.FC = () => {
                       <Button
                         type="submit"
                         variant="outline-primary"
-                        disabled={isSubmitting}
+                        disabled={!isValid || isSubmitting}
                       >
                         Login
                       </Button>
