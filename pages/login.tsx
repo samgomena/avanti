@@ -4,6 +4,7 @@ import FormError from "../components/FormError";
 
 import Button from "react-bootstrap/Button";
 
+import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { Form, Formik, Field, FormikHelpers } from "formik";
 import * as Yup from "yup";
@@ -14,8 +15,10 @@ type LoginValues = {
 };
 
 const LoginSchema = Yup.object({
-  email: Yup.string().email("Email is invalid").required("Email is required."),
-  password: Yup.string().required("Password is required."),
+  email: Yup.string()
+    .email("That's not a valid email!")
+    .required("Your email is required to log in!"),
+  password: Yup.string().required("Your password is required to log in!"),
 });
 
 const Login: React.FC = () => {
@@ -25,14 +28,22 @@ const Login: React.FC = () => {
     password: "",
   };
 
+  const router = useRouter();
+
   const onSubmit = useCallback(
     (values: LoginValues, { setSubmitting }: FormikHelpers<LoginValues>) => {
       setTimeout(() => {
         console.log(JSON.stringify(values));
-        setSubmitting(false);
+        if (
+          values.email === "sam@gomena.io" &&
+          values.password === "password"
+        ) {
+          setSubmitting(false);
+          router.push("/admin");
+        }
       }, 1000);
     },
-    []
+    [router]
   );
 
   return (
