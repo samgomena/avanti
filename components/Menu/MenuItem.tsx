@@ -1,7 +1,7 @@
 type Props = {
   name: string;
   description: string;
-  price: number;
+  price?: number;
 };
 
 const MenuItem: React.FC<Props> = ({ name, description, price }) => {

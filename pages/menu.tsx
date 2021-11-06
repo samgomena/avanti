@@ -5,33 +5,20 @@ import MenuItem from "../components/Menu/MenuItem";
 import MenuItemWrapper from "../components/Menu/MenuItemWrapper";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { Service, Services, Item } from "../components/Menu/types";
 
-import menuJson from "../data/menu.json";
+import { useMenuBuckets } from "../lib/hooks/useMenu";
 
-const menu = menuJson.services.reduce(
-  (acc, curr) => ({ [curr]: new Array(), ...acc }),
-  {} as { [k in Service]: JSX.Element[] }
-);
-
-menuJson.items.forEach((item, idx) => {
-  const services = item.service as Services;
-  services.forEach((service) => {
-    const price: number =
-      // @ts-ignore
-      typeof item.price === "object" ? item.price[service] : item.price;
-    menu[service].push(
+export default function Menu() {
+  const menu = useMenuBuckets({
+    as: (item, service, idx) => (
       <MenuItem
         key={idx}
         name={item.name}
         description={item.description}
-        price={price}
+        price={item.price[service]}
       />
-    );
+    ),
   });
-});
-
-export default function Menu() {
   return (
     <>
       <Header
@@ -51,7 +38,7 @@ export default function Menu() {
             {/* See: https://github.com/react-bootstrap/react-bootstrap/blob/daf5a9ef95f6db05a6915e19d7acfb41bc0b7d5f/src/Nav.tsx#L161 */}
             <Tabs
               className="justify-content-center mb-6"
-              // @ts-ignore
+              // @ts-expect-error
               variant="not-tabs-or-pills"
             >
               <Tab eventKey="lunch" title="Lunch">
