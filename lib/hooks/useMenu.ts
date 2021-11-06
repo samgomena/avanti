@@ -15,8 +15,8 @@ const useMenu = (): Menu => {
 export const useMenuBuckets = <T extends Item | JSX.Element>({
   as = null,
 }: {
-  as: ((item: Item, service: Service, idx: number) => JSX.Element) | null;
-}) => {
+  as?: ((item: Item, service: Service, idx: number) => JSX.Element) | null;
+} = {}) => {
   // Create "buckets" for each service period to fill with items from that service period
   const _menu = useMemo(
     () =>
