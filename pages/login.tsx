@@ -1,17 +1,22 @@
 import Header from "../components/Header";
 import Section from "../components/Section";
-import FormError from "../components/FormError";
+import Field from "../components/Form/FieldWithError";
 
 import Button from "react-bootstrap/Button";
 
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import { Form, Formik, Field, FormikHelpers } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 
 type LoginValues = {
   email: string;
   password: string;
+};
+
+const initialValues: LoginValues = {
+  email: "",
+  password: "",
 };
 
 const LoginSchema = Yup.object({
@@ -23,11 +28,6 @@ const LoginSchema = Yup.object({
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const initialValues: LoginValues = {
-    email: "",
-    password: "",
-  };
-
   const router = useRouter();
 
   const onSubmit = useCallback(
@@ -35,7 +35,7 @@ const Login: React.FC = () => {
       setTimeout(() => {
         console.log(JSON.stringify(values));
         if (
-          values.email === "sam@gomena.io" &&
+          values.email === "email@example.com" &&
           values.password === "password"
         ) {
           setSubmitting(false);
@@ -57,8 +57,9 @@ const Login: React.FC = () => {
               onSubmit={onSubmit}
               validationSchema={LoginSchema}
             >
-              {({ errors, touched, isSubmitting, isValid }) => (
+              {({ isSubmitting, isValid }) => (
                 <Form className="needs-validation" noValidate>
+                  {console.log(isSubmitting)}
                   <div className="row gx-3">
                     <div className="col">
                       <div className="mb-3 form-group">
@@ -72,11 +73,6 @@ const Login: React.FC = () => {
                           placeholder="Email"
                           type="email"
                         />
-                        <FormError
-                          errors={errors}
-                          touched={touched}
-                          field="email"
-                        />
                       </div>
 
                       <div className="mb-3 form-group">
@@ -89,11 +85,6 @@ const Login: React.FC = () => {
                           type={showPassword ? "text" : "password"}
                           name="password"
                           placeholder="Password"
-                        />
-                        <FormError
-                          errors={errors}
-                          touched={touched}
-                          field="password"
                         />
                         <div className="form-check">
                           <input
@@ -118,7 +109,7 @@ const Login: React.FC = () => {
                         variant="outline-primary"
                         disabled={!isValid || isSubmitting}
                       >
-                        Login
+                        {isSubmitting ? "Logging in" : "Login"}
                       </Button>
                     </div>
                   </div>
