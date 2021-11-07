@@ -18,4 +18,4 @@ export type Menu = {
   items: Item[];
 };
 
-export type MenuBuckets<T> = { [k in Service]: T[] };
+export type MenuBuckets<T = Item> = { [k in Service]: T[] };
