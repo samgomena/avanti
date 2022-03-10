@@ -1,11 +1,5 @@
 import menu from "../../data/menu.json";
-import {
-  Items,
-  Item,
-  Menu,
-  MenuBuckets,
-  Service,
-} from "../../components/Menu/types";
+import { Items, Item, Menu, MenuBuckets, Service } from "../types/menu";
 import { useMemo } from "react";
 
 const useMenu = (): Menu => {
@@ -39,7 +33,7 @@ export const useMenuBuckets = <T extends Item | JSX.Element>({
       }
       idx++;
     }
-  }, []);
+  }, [as, _menu]);
 
   return _menu;
 };

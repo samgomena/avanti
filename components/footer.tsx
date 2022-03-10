@@ -1,4 +1,14 @@
+import useInfo from "../lib/hooks/useInfo";
+
+const formatPhone = (number: string) => {
+  const area = number.slice(0, 3);
+  const middle = number.slice(3, 6);
+  const end = number.slice(6);
+  return `(${area})-${middle}-${end}`;
+};
+
 export default function Footer() {
+  const info = useInfo();
   return (
     <footer className="py-7 py-md-9 bg-black">
       <div className="container px-4">
@@ -6,10 +16,11 @@ export default function Footer() {
           <div className="col-sm-4">
             <h5 className="text-xs text-primary">About Us</h5>
 
-            <p className="mb-6">
+            {/* <p className="mb-6">
               We&apos;re a small family owned restaurant located on the corner
               of Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
-            </p>
+            </p> */}
+            <p className="mb-6">{info.about}</p>
           </div>
           <div className="col-sm-4">
             <h5 className="text-xs text-primary">Contact Info</h5>
@@ -22,17 +33,19 @@ export default function Footer() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  7995 SW Nyberg St, Tualatin, OR 97062
+                  {info.contact.address}
                 </a>
               </li>
               <li className="d-flex mb-2">
                 <div className="fas fa-phone me-3 mt-2 fs-sm"></div>{" "}
-                <a href="tel:5038265631">(503)-826-5631</a>
+                <a href={`tel:${info.contact.phone}`}>
+                  {formatPhone(info.contact.phone)}
+                </a>
               </li>
               <li className="d-flex">
                 <div className="far fa-envelope me-3 mt-2 fs-sm"></div>{" "}
-                <a href="mailto:avanti.tualatin@gmail.com">
-                  avanti.tualatin@gmail.com
+                <a href={`mailto:${info.contact.email}`}>
+                  {info.contact.email}
                 </a>
               </li>
             </ul>
