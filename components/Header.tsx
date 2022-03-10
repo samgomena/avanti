@@ -7,7 +7,7 @@ const Header: React.FC<Props> = ({ children, title, image = "" }) => {
   image = image.startsWith("/assets/photos/")
     ? image
     : `/assets/photos/${image}`;
-  const layers = [{ image, amount: 0.2 }];
+  const layers = [{ image, speed: -10 }];
   return (
     <ParallaxBanner layers={layers}>
       <div className="py-12 py-md-15 bg-black-50 position-relative">
