@@ -16,6 +16,14 @@ export default function withAdminNav(Component: React.FC) {
                     <NavLink href="/admin/overview">Overview</NavLink>
                   </div>
                   <div className="nav-item">
+                    <NavLink href="/admin/info">Info</NavLink>
+                  </div>
+                  <div className="nav-item">
+                    <NavLink href="/admin/info/edit" subMenu>
+                      Edit
+                    </NavLink>
+                  </div>
+                  <div className="nav-item">
                     <NavLink href="/admin/menu">Menu</NavLink>
                   </div>
                   <div className="nav-item">
@@ -27,6 +35,12 @@ export default function withAdminNav(Component: React.FC) {
                     <NavLink href="/admin/menu/edit" subMenu>
                       Edit
                     </NavLink>
+                  </div>
+                  <div className="nav-item">
+                    <NavLink href="/admin/closures">Closures</NavLink>
+                  </div>
+                  <div className="nav-item">
+                    <NavLink href="/admin/people">People</NavLink>
                   </div>
                   <div className="nav-item">
                     <NavLink href="/admin/settings">Settings</NavLink>
