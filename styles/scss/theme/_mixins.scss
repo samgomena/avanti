@@ -1,0 +1,42 @@
+//
+// mixins.scss
+//
+
+// Fonts
+
+@mixin text-xs($font-weight:700) {
+	font-family: $font-family-base;
+	font-size: $font-size-xs;
+	font-weight: $font-weight;
+	text-transform: uppercase;
+	letter-spacing: .05em;
+}
+
+// Icons
+
+@mixin icon-square($size) {
+	width: $size; height: $size;
+	line-height: $size;
+	text-align: center;
+}
+
+@mixin icon-circle($size) {
+	@include icon-square($size);
+	border-radius: 50%;
+}
+
+// Cover block
+
+@mixin cover-block($top: 0, $right: 0, $bottom: 0, $left: 0) {
+	position: absolute;
+	top: $top; right: $right; bottom: $bottom; left: $left;
+}
+
+@mixin cover-content($top: 0, $right: 0, $bottom: 0, $left: 0) {
+	content: '';
+	@include cover-block($top, $right, $bottom, $left);
+}
+
+@mixin cover-image($img) {
+	background: url($img) no-repeat center center / cover;
+}

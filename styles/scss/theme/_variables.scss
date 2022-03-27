@@ -1,0 +1,426 @@
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+// Color system
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900
+) !default;
+
+$blue: #0d6efd !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #d63384 !default;
+$red: #dc3545 !default;
+$orange: #f5a637 !default; // NEW
+$yellow: #ffc107 !default;
+$green: #198754 !default;
+$teal: #20c997 !default;
+$cyan: #0dcaf0 !default;
+
+$colors: (
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800
+) !default;
+
+$primary: $orange !default;
+$secondary: $gray-600 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-200 !default;
+$dark: $gray-900 !default;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
+) !default;
+
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+$enable-rounded: false !default;
+$enable-rfs: false !default;
+$enable-validation-icons: false !default;
+$enable-negative-margins: true !default;
+
+
+// Prefix for :root CSS variables
+
+$variable-prefix: bs- !default;
+
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25, // 4px
+  2: $spacer * 0.5, // 8px
+  3: $spacer, // 16px
+  4: $spacer * 1.5, // 24px
+  5: $spacer * 2, // 32px
+  6: $spacer * 2.5, // 40px
+  7: $spacer * 3, // 48px
+  8: $spacer * 4.5, // 72px
+  9: $spacer * 6, // 96px
+  10: $spacer * 7.5, // 120px
+  11: $spacer * 9, // 144px
+  12: $spacer * 10.5, // 168px
+  13: $spacer * 12, // 192px
+  14: $spacer * 13.5, // 216px
+  15: $spacer * 15, // 240px
+) !default;
+
+
+// Position
+//
+// Define the edge positioning anchors of the position utilities.
+
+$position-values: (
+  0: 0,
+  50: 50%,
+  100: 100%,
+  auto: auto,
+) !default;
+
+
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-bg: $white !default;
+$body-color: $gray-600 !default;
+
+
+// Links
+//
+// Style anchor elements.
+
+$link-color: $primary !default;
+$link-hover-color: $link-color !default;
+
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+) !default;
+
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-gutter-width: 2rem !default;
+
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-width: 1px !default;
+$border-color: $gray-200 !default;
+
+$border-radius: 0 !default;
+$border-radius-sm: $border-radius !default;
+$border-radius-lg: $border-radius !default;
+
+$caret-spacing: $spacer * 0.5 !default;
+
+$transition-base: all .1s ease-in-out !default;
+
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$font-family-sans-serif: 'Lato', sans-serif !default;
+$font-family-serif: 'Playfair Display', serif !default;
+$font-family-base: $font-family-sans-serif !default;
+
+$font-size-base: 1rem !default; // 16px
+$font-size-xs: .75rem !default; // 12px
+$font-size-sm: .875rem !default; // 14px
+$font-size-lg: 1.125rem !default; // 18px
+
+$line-height-base: 1.7 !default;
+$line-height-lg: 1.5 !default;
+
+$h1-font-size: 1.9375rem !default;
+$h2-font-size: 1.75rem !default;
+$h3-font-size: 1.5625rem !default;
+$h4-font-size: 1.375rem !default;
+$h5-font-size: 1.1875rem !default;
+$h6-font-size: 1rem !default;
+
+$font-sizes: (
+  1: $h1-font-size,
+  2: $h2-font-size,
+  3: $h3-font-size,
+  4: $h4-font-size,
+  5: $h5-font-size,
+  6: $h6-font-size,
+  xs: $font-size-xs,
+  sm: $font-size-sm,
+  lg: $font-size-lg,
+) !default;
+
+$headings-margin-bottom: .8em !default;
+$headings-font-family: $font-family-serif !default;
+$headings-font-weight: 400 !default;
+$headings-line-height: 1.4 !default;
+$headings-color: $black !default;
+
+$display-font-sizes: (
+  1: 5rem,
+  2: 4.5rem,
+  3: 4rem,
+  4: 3.5rem,
+  5: 3rem,
+  6: 2.5rem
+) !default;
+
+$display-font-weight: 700 !default;
+$display-line-height: 1 !default;
+
+$text-muted: $gray-500 !default;
+
+$blockquote-font-size: $font-size-lg !default;
+$blockquote-footer-color: $text-muted !default;
+$blockquote-footer-font-size: $font-size-sm !default;
+
+$hr-color: $border-color !default;
+$hr-opacity: 1 !default;
+
+
+// Navs
+
+$nav-link-color: $body-color !default;
+$nav-link-hover-color: $black !default;
+$nav-link-active-color: $black !default;
+
+
+// Navbar
+
+$navbar-padding-y: .5625rem !default;
+
+$navbar-nav-link-padding-x: 1rem !default;
+
+$navbar-brand-font-size: 2rem !default;
+$navbar-brand-margin-end: 1rem !default;
+
+$navbar-dark-color: $white !default;
+$navbar-dark-hover-color: $primary !default;
+$navbar-dark-active-color: $primary !default;
+$navbar-dark-toggler-border-color: transparent !default;
+
+$navbar-light-color: $headings-color !default;
+$navbar-light-hover-color: $primary !default;
+$navbar-light-active-color: $primary !default;
+$navbar-light-toggler-border-color: transparent !default;
+
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+
+$dropdown-min-width: 12rem !default;
+$dropdown-padding-y: $spacer * 1.5 !default;
+$dropdown-border-color: $border-color !default;
+
+$dropdown-link-color: $body-color !default;
+$dropdown-link-hover-color: $black !default;
+$dropdown-link-hover-bg: transparent !default;
+
+$dropdown-link-active-color: $black !default;
+$dropdown-link-active-bg: transparent !default;
+
+$dropdown-item-padding-y: $spacer * .25 !default;
+$dropdown-item-padding-x: $spacer * 1.5 !default;
+
+$dropdown-header-color: $black !default;
+$dropdown-header-padding: $spacer * .25 $spacer * 1.5 $spacer * .5 !default;
+
+
+// Buttons + Forms
+//
+// Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
+
+$input-btn-padding-y: $spacer !default;
+$input-btn-padding-x: $spacer * 2 !default;
+$input-btn-font-size: $font-size-base !default;
+$input-btn-line-height: 1.25 !default;
+
+$input-btn-focus-width: 0 !default;
+
+$input-btn-padding-y-sm: .75rem !default;
+$input-btn-padding-x-sm: 1.5rem !default;
+$input-btn-line-height-sm: $input-btn-line-height !default;
+
+
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+
+$btn-line-height: calc(#{$input-btn-font-size} * #{$input-btn-line-height});
+
+$btn-transition: color .1s ease-in-out !default;
+
+
+// Forms
+
+$input-padding-x: $spacer !default;
+
+$input-color: $black !default;
+$input-border-color: $border-color !default;
+$input-box-shadow: none !default;
+
+$input-focus-border-color: $primary !default;
+
+$input-placeholder-color: $body-color !default;
+
+
+// Cards
+
+$card-spacer-y: $spacer * 1.5 !default;
+$card-border-color: $border-color !default;
+
+
+// Toasts
+
+$toast-padding-y: $spacer !default;
+$toast-padding-x: $spacer * 2 !default;
+$toast-font-size: $font-size-sm !default;
+$toast-color: $black !default;
+$toast-background-color: $white !default;
+$toast-border-width: $border-width * 3 !default;
+$toast-border-color: $primary !default;
+
+
+// Alerts
+//
+// Define alert colors, border radius, and padding.
+
+$alert-padding-y: 1.5rem !default;
+$alert-border-radius: $border-radius !default;
+
+
+// Utilities
+
+
+$utilities: (
+  "max-width": (
+    property: max-width,
+    class: mw,
+    responsive: true,
+    values: (
+      100: 100%,
+      120: 120%,
+    )
+  ),
+  "background-color": (
+    property: background-color,
+    class: bg,
+    values: map-merge(
+      $theme-colors,
+      (
+        "body": $body-bg,
+        "white": $white,
+        "transparent": transparent,
+        "black": $black,
+        "black-50": rgba($black, .5),
+        "black-75": rgba($black, .75),
+      )
+    )
+  ),
+  "color": (
+    property: color,
+    class: text,
+    state: hover,
+    values: map-merge(
+      $theme-colors,
+      (
+        "white": $white,
+        "white-50": rgba($white, .5),
+        "white-75": rgba($white, .75),
+        "black": $black,
+        "black-50": rgba($black, .5),
+        "body": $body-color,
+        "muted": $text-muted,
+        "reset": inherit,
+      )
+    )
+  ),
+  "font-family": (
+    property: font-family,
+    class: font,
+    values: (
+      monospace: var(--#{$variable-prefix}font-monospace),
+      sans-serif: $font-family-sans-serif,
+      serif: $font-family-serif,
+    )
+  ),
+  "object-fit": (
+    property: object-fit,
+    class: object-fit,
+    values: (
+      fill: fill,
+      contain: contain,
+      cover: cover,
+      none: none,
+      scale-down: scale-down,
+    )
+  ),
+);

@@ -1,0 +1,26 @@
+//
+// buttons.scss
+// 
+
+.btn {
+  @include text-xs();
+}
+
+
+// Outline
+
+@each $color, $value in $theme-colors {
+  .btn-outline-#{$color} {
+    background-color: transparent;
+    color: $black;
+
+    &:hover {
+      background-color: transparent;
+      color: $primary;
+    }
+
+    &.disabled, &:disabled {
+      color: $black;
+    }
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "services": ["dinner", "lunch", "hh", "drinks"],
+  "items": [
+    {
+      "name": "Bread Service",
+      "description": "Served with extra virgin olive oil and balsamic vinegar",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 3,
+        "lunch": 3
+      }
+    },
+    {
+      "name": "Marcona Almonds",
+      "description": "",
+      "service": ["dinner", "lunch", "hh"],
+      "price": {
+        "dinner": 5,
+        "lunch": 5,
+        "hh": 4
+      }
+    },
+    {
+      "name": "Marinated Olives",
+      "description": "",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 8,
+        "lunch": 8
+      }
+    },
+    {
+      "name": "Coconut Shrimp",
+      "description": "Served with wasabi aioli",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 12,
+        "lunch": 10
+      }
+    },
+    {
+      "name": "Cheese Plate",
+      "description": "A handful of rotating cheeses with seasonal fruit, Marcona almonds, fig compote, and bread",
+      "service": ["dinner"],
+      "price": { "dinner": 18 }
+    },
+    {
+      "name": "Ahi Tuna Tartare",
+      "description": "",
+      "service": ["dinner"],
+      "price": { "dinner": 16 }
+    },
+    {
+      "name": "Seared Ahi Tuna",
+      "description": "Served with wasabi, pickled ginger, and seaweed salad",
+      "service": ["dinner"],
+      "price": { "dinner": 16 }
+    },
+    {
+      "name": "Crab Cakes",
+      "description": "Served with house made remoulade",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 18,
+        "lunch": 15
+      }
+    },
+    {
+      "name": "Soup of the Day",
+      "description": "",
+      "service": ["dinner", "lunch"],
+      "price": { "dinner": 9, "lunch": 9 }
+    },
+    {
+      "name": "Shigoku Oysters",
+      "description": "Half dozen served on the half shell",
+      "service": ["dinner"],
+      "price": { "dinner": 17 }
+    },
+    {
+      "name": "House Salad",
+      "description": "Mixed greens with tomato, candied hazelnuts, and balsamic vinaigrette",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 9,
+        "lunch": 7
+      }
+    },
+    {
+      "name": "Baby Kale Salad",
+      "description": "With wheat berries and tomato in a lemongrass vinaigrette",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 9,
+        "lunch": 8
+      }
+    },
+    {
+      "name": "Roasted Beet and Arugula Salad",
+      "description": "With chopped hazelnuts in a miso vinaigrette",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 10,
+        "lunch": 9
+      }
+    },
+    {
+      "name": "Caprese Salad",
+      "description": "With heirloom tomatoes, fresh basil, and fresh mozzarella",
+      "service": ["dinner"],
+      "price": { "dinner": 14 }
+    },
+    {
+      "name": "Seared Ahi Niçoise Salad",
+      "description": "Served with red pepper vinaigrette, hardboiled egg, fingerling potato, olives, and roasted tomato",
+      "service": ["dinner"],
+      "price": { "dinner": 32 }
+    },
+    {
+      "name": "Chicken Breast with Risotto",
+      "description": "Grilled bone-in chicken breast, truffle mushroom and spinach risotto and grilled broccolini",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 29,
+        "lunch": 27
+      }
+    },
+    {
+      "name": "Grilled Prawns",
+      "description": "Served atop roasted tomato and pesto risotto, with spinach and grilled asparagus",
+      "service": ["dinner"],
+      "price": { "dinner": 30 }
+    },
+    {
+      "name": "Pan Seared Diver Scallops",
+      "description": "Broken truffle vinaigrette, lemongrass celery root puree, grilled broccolini, and crispy fingerling potato",
+      "service": ["dinner"],
+      "price": { "dinner": 33 }
+    },
+    {
+      "name": "Hoisin Braised Short Ribs",
+      "description": "Served with roasted vegetables and pomme puree",
+      "service": ["dinner"],
+      "price": { "dinner": 32 }
+    },
+    {
+      "name": "Panko and Herb-Crusted Mahi Mahi",
+      "description": "Served with crème fraîche rice, sauce chasseur with bacon, mushroom, tomato, shallots, and grilled asparagus",
+      "service": ["dinner"],
+      "price": { "dinner": 31 }
+    },
+    {
+      "name": "Smoked Double-Cut Pork Chop",
+      "description": " Served with French onion bread pudding, grilled broccolini, and mushroom cream",
+      "service": ["dinner"],
+      "price": { "dinner": 30 }
+    },
+    {
+      "name": "Beef Tenderloin Filet",
+      "description": "Served with pomme puree, grilled broccolini, and demi",
+      "service": ["dinner"],
+      "price": { "dinner": 39 }
+    },
+    {
+      "name": "Grilled King Salmon",
+      "description": "Served with wheat berries and sautéed kale in a smoked tomato Buerre Blanc sauce finished with grilled asparagus",
+      "service": ["dinner"],
+      "price": { "dinner": 33 }
+    },
+    {
+      "name": "Tillamook Cheddar Cheeseburger with Fries",
+      "description": "Tomato, lettuce, and onion",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 17,
+        "lunch": 15
+      }
+    },
+    {
+      "name": "Tempura Cod Fish & Chips",
+      "description": "Served with coleslaw and wasabi ailoi",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 23,
+        "lunch": 21
+      }
+    },
+    {
+      "name": "PamaFlower",
+      "description": "Absolut Citron, Pama, St. Germain, soda",
+      "service": ["drinks"],
+      "price": { "drinks": 11 }
+    },
+    {
+      "name": "Last Word",
+      "description": "Tanqueray, Luxardo, Green Chartreuse, lime",
+      "service": ["drinks"],
+      "price": { "drinks": 12 }
+    },
+    {
+      "name": "Hemingway Daiquiri",
+      "description": "Bacardi, Luxardo, grapefruit, lime",
+      "service": ["drinks"],
+      "price": { "drinks": 11 }
+    },
+    {
+      "name": "Grapefruit Drop",
+      "description": "Vodka, Campari, grapefruit, lemon",
+      "service": ["drinks"],
+      "price": { "drinks": 10 }
+    },
+    {
+      "name": "Sidecar",
+      "description": "Brandy, Triple Sec, lemon",
+      "service": ["drinks"],
+      "price": { "drinks": 10 }
+    },
+    {
+      "name": "Pineapple Mule",
+      "description": "Vodka, pineapple, lime, ginger beer",
+      "service": ["drinks"],
+      "price": { "drinks": 10 }
+    },
+    {
+      "name": "Redemption Boulevard",
+      "description": "Redemption High Rye Bourbon, Aperol, Sweet Vermouth",
+      "service": ["drinks"],
+      "price": { "drinks": 12 }
+    },
+    {
+      "name": "Aperol Spritz",
+      "description": "Aperol, Prosecco, soda",
+      "service": ["drinks"],
+      "price": { "drinks": 11 }
+    },
+    {
+      "name": "Lolita",
+      "description": "Vodka, lemon, strawberry, jalapeño, basil",
+      "service": ["drinks"],
+      "price": { "drinks": 12 }
+    }
+  ]
+}

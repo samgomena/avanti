@@ -1,0 +1,20 @@
+{
+  "about": "We're a small family owned restaurant located on the corner of Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.",
+  "contact": {
+    "address": "7995 SW Nyberg St, Tualatin, OR 97062",
+    "phone": "5038265631",
+    "email": "avanti.tualatin@gmail.com"
+  },
+  "hours": [
+    {
+      "days": ["tuesday", "wednesday", "thursday", "sunday"],
+      "open": "16:00",
+      "close": "21:00"
+    },
+    {
+      "days": ["friday", "saturday"],
+      "open": "16:00",
+      "close": "22:00"
+    }
+  ]
+}
