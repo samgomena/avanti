@@ -1,0 +1,21 @@
+//
+// dropdown.scss
+//
+
+// Menu
+
+.dropdown-menu {
+  background-clip: border-box;
+}
+
+// Header
+
+.dropdown-header {
+  @include text-xs;
+}
+
+// Item
+
+.dropdown-item {
+  font-family: $font-family-serif;
+}

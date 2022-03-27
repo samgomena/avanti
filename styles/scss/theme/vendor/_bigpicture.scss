@@ -1,0 +1,15 @@
+//
+// bigpicture.scss
+//
+
+#bp_container {
+  background: rgba($black, .75) !important;
+}
+
+#bp_container > * {
+  box-shadow: none !important;
+}
+
+.bp-x {
+  display: none;
+}
