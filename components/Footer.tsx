@@ -1,4 +1,6 @@
 import useInfo from "../lib/hooks/useInfo";
+import { HoursPreview } from "../lib/types/info";
+import { to12 } from "../lib/utils/utils";
 
 const formatPhone = (number: string) => {
   const area = number.slice(0, 3);
@@ -15,11 +17,6 @@ export default function Footer() {
         <div className="row gx-7">
           <div className="col-sm-4">
             <h5 className="text-xs text-primary">About Us</h5>
-
-            {/* <p className="mb-6">
-              We&apos;re a small family owned restaurant located on the corner
-              of Nyberg Street and Martinazzi Avenue in Tualatin, Oregon.
-            </p> */}
             <p className="mb-6">{info.about}</p>
           </div>
           <div className="col-sm-4">
@@ -29,7 +26,9 @@ export default function Footer() {
               <li className="d-flex mb-2">
                 <div className="fas fa-map-marker-alt me-3 mt-2 fs-sm"></div>{" "}
                 <a
-                  href="https://goo.gl/maps/K6R19AyT4Cz"
+                  href={`https://www.google.com/maps/search/${encodeURIComponent(
+                    info.contact.address
+                  )}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -53,15 +52,20 @@ export default function Footer() {
           <div className="col-sm-4">
             <h5 className="text-xs text-primary">Hours</h5>
 
-            <div className="mb-3">
-              <div className="text-xs">Tuesday - Sunday</div>
-              <div className="font-serif">4:00 PM - 9:00 PM</div>
-            </div>
-
-            {/* <div className="mb-6">
-              <div className="text-xs">Friday - Sunday</div>
-              <div className="font-serif">12:00 AM - 03:00 AM</div>
-            </div> */}
+            {info.hoursPreview.map(({ day, open, close }, idx) => (
+              <div className="mb-3" key={day}>
+                <div className="text-xs">{day}</div>
+                {open === null || close === null ? (
+                  <div className="font-serif">
+                    <em>Closed</em>
+                  </div>
+                ) : (
+                  <div className="font-serif">
+                    {to12(open)} - {to12(close)}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
         <div className="row">
