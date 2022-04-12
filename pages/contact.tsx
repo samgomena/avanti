@@ -93,7 +93,7 @@ export default function Contact() {
     <>
       <Header
         title="Contact Us"
-        image="/assets/photos/Avanti_Front_Sunny_222_KB.jpg"
+        image="/assets/photos/avanti_business_logo.jpg"
       />
       <Section>
         <Heading

@@ -21,10 +21,7 @@ export default function Menu() {
   });
   return (
     <>
-      <Header
-        title="Our Menu"
-        image="/assets/photos/Porkchop_In_Window_322_KB.jpg"
-      />
+      <Header title="Our Menu" image="/assets/photos/porkchop_in_window.jpg" />
       <Section>
         <Heading
           heading="Menu"
