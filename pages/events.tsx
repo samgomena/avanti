@@ -5,7 +5,7 @@ import Section from "../components/Section";
 export default function Events() {
   return (
     <>
-      <Header title="Special Events" image="Glasses_On_Bar_Shelf_460_KB.jpg" />
+      <Header title="Special Events" image="glasses_on_shelf.jpg" />
       <Section>
         <Heading
           heading="Upcoming Events"

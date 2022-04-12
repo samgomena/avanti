@@ -77,7 +77,7 @@ export default function About() {
     <>
       <Header
         title="About Us"
-        image="/assets/photos/Avanti_Front_Sunny_222_KB.jpg"
+        image="/assets/photos/avanti_business_logo.jpg"
       />
       <Section>
         <Heading

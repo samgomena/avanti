@@ -5,10 +5,7 @@ import Section from "../components/Section";
 export default function Gallery() {
   return (
     <>
-      <Header
-        title="Some Photos"
-        image="/assets/photos/Wine_On_Bar_Reflection_282_KB.jpg"
-      />
+      <Header title="Some Photos" image="/assets/photos/wine_on_bar.jpg" />
       <Section>
         <Heading heading="Take a Peek" subHeading="Lots of activity here..." />
         <div className="row">
