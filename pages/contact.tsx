@@ -87,8 +87,11 @@
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Section from "../components/Section";
+import useInfo from "../lib/hooks/useInfo";
+import { formatPhone } from "../lib/utils/utils";
 
 export default function Contact() {
+  const info = useInfo();
   return (
     <>
       <Header
@@ -104,20 +107,24 @@ export default function Contact() {
           <div className="col-md-3 order-md-2">
             <h4 className="mb-2 text-xs">Write us</h4>
             <p className="mb-4 font-serif">
-              <a href="mailto:avanti.tualatin@gmail.com">
-                avanti.tualatin@gmail.com
-              </a>
+              <a href={`mailto:${info.contact.email}`}>{info.contact.email}</a>
             </p>
 
-            <h4 className="mb-2 text-xs">Call use</h4>
+            <h4 className="mb-2 text-xs">Call us</h4>
             <p className="mb-4 font-serif">
-              <a href="tel:5038265631">(503)-826-5631</a>
+              <a href={`tel:${info.contact.phone}`}>
+                {formatPhone(info.contact.phone)}
+              </a>
             </p>
 
             <h4 className="mb-4 text-xs">Visit us</h4>
             <p className="mb-4 font-serif">
-              <a href="https://goo.gl/maps/FL2HrEncorxU7rZH9">
-                7995 SW Nyberg St, Tualatin, OR 97062
+              <a
+                href="https://goo.gl/maps/FL2HrEncorxU7rZH9"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {info.contact.address}
               </a>
             </p>
           </div>
