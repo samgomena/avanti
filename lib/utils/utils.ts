@@ -34,3 +34,10 @@ export const to12 = (input: string) => {
 
   return `${hoursInt}:${minutes} ${suffix}`;
 };
+
+export const formatPhone = (number: string) => {
+  const area = number.slice(0, 3);
+  const middle = number.slice(3, 6);
+  const end = number.slice(6);
+  return `(${area})-${middle}-${end}`;
+};
