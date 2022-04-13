@@ -1,13 +1,7 @@
 import useInfo from "../lib/hooks/useInfo";
 import { HoursPreview } from "../lib/types/info";
 import { to12 } from "../lib/utils/utils";
-
-const formatPhone = (number: string) => {
-  const area = number.slice(0, 3);
-  const middle = number.slice(3, 6);
-  const end = number.slice(6);
-  return `(${area})-${middle}-${end}`;
-};
+import { formatPhone } from "../lib/utils/utils";
 
 export default function Footer() {
   const info = useInfo();
