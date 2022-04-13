@@ -67,10 +67,13 @@
 //     </>
 //   );
 // }
+import dynamic from "next/dynamic";
 
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Section from "../components/Section";
+
+const Map = dynamic(() => import("../components/Map/Map"), { ssr: false });
 
 export default function About() {
   return (
@@ -80,18 +83,11 @@ export default function About() {
         image="/assets/photos/avanti_business_logo.jpg"
       />
       <Section>
-        <Heading
-          heading="Behind the Scenes"
-          subHeading="Something interesting or whatever"
-        />
+        <Heading heading="Behind the Scenes" subHeading="" />
+        <p>Something interesting or whatever</p>
       </Section>
       <section className="bg-light" style={{ height: "30rem" }}>
-        <div
-          data-lat="45.3830129"
-          data-lng="-122.75848759999997"
-          data-zoom="12"
-          data-info="<h4 className='section_map__map__heading text-center'>Avanti - Restaurant & Bar</h4><p className='section_map__map__content text-center text-muted'>7995 SW Nyberg St, Tualatin, OR 97062<br>(503)-826-5631</p>"
-        ></div>
+        <Map />
       </section>
     </>
   );
