@@ -7,7 +7,7 @@ export type Contact = {
 type OpenClose = {
   open: `${number}:${number}` | "";
   close: `${number}:${number}` | "";
-  start: `${number}:${number}` | "";
+  start?: `${number}:${number}` | "";
 };
 
 export type Days =
@@ -20,9 +20,15 @@ export type Days =
   | "sunday";
 
 export type Hours = ({ days: Days[] } & OpenClose)[];
+export type HoursPreview = {
+  day: Days;
+  open: string | null;
+  close: string | null;
+}[];
 
 export type Info = {
   about: string;
   contact: Contact;
   hours: Hours;
+  hoursPreview: HoursPreview;
 };

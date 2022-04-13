@@ -1,4 +1,16 @@
-// 
+//
 // user.scss
 // Use this to write your custom SCSS
 //
+
+a {
+  text-decoration: none;
+}
+
+footer a {
+  color: #777;
+  &:hover {
+    color: #777;
+    text-decoration: underline;
+  }
+}
