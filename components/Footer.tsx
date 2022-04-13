@@ -3,6 +3,8 @@ import { HoursPreview } from "../lib/types/info";
 import { to12 } from "../lib/utils/utils";
 import { formatPhone } from "../lib/utils/utils";
 
+import { Mail, MapPin, Phone } from "react-feather";
+
 export default function Footer() {
   const info = useInfo();
   return (
@@ -18,7 +20,9 @@ export default function Footer() {
 
             <ul className="list-unstyled mb-6">
               <li className="d-flex mb-2">
-                <div className="fas fa-map-marker-alt me-3 mt-2 fs-sm"></div>{" "}
+                <div className="me-3 mt-2 fs-sm">
+                  <MapPin size={16} />
+                </div>
                 <a
                   href={`https://www.google.com/maps/search/${encodeURIComponent(
                     info.contact.address
@@ -30,13 +34,17 @@ export default function Footer() {
                 </a>
               </li>
               <li className="d-flex mb-2">
-                <div className="fas fa-phone me-3 mt-2 fs-sm"></div>{" "}
+                <div className="me-3 fs-sm">
+                  <Phone size={16} />
+                </div>
                 <a href={`tel:${info.contact.phone}`}>
                   {formatPhone(info.contact.phone)}
                 </a>
               </li>
               <li className="d-flex">
-                <div className="far fa-envelope me-3 mt-2 fs-sm"></div>{" "}
+                <div className="me-3 fs-sm">
+                  <Mail size={16} />
+                </div>
                 <a href={`mailto:${info.contact.email}`}>
                   {info.contact.email}
                 </a>

@@ -84,6 +84,7 @@
 //   );
 // }
 
+import { Facebook, Instagram } from "react-feather";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Section from "../components/Section";
@@ -125,6 +126,21 @@ export default function Contact() {
                 rel="noreferrer"
               >
                 {info.contact.address}
+              </a>
+            </p>
+
+            <h4 className="mb-4 text-xs">Social</h4>
+            <p className="mb-4 font-serif">
+              <a href={info.contact.facebook} target="_blank" rel="noreferrer">
+                <Facebook />
+              </a>
+              <a
+                href={info.contact.instagram}
+                target="_blank"
+                rel="noreferrer"
+                className="ms-2"
+              >
+                <Instagram />
               </a>
             </p>
           </div>
