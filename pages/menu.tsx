@@ -7,6 +7,21 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
 import { useMenuBuckets } from "../lib/hooks/useMenu";
+import { useMemo } from "react";
+
+/**
+ * Given the time of day and the menu, return the appropriate menu item.
+ */
+const getDefaultActiveKey = () => {
+  const hour = new Date().getHours();
+  if (hour >= 11 && hour <= 15) {
+    return "lunch";
+  } else if (hour >= 17 && hour <= 23) {
+    return "dinner";
+  }
+
+  return "dinner";
+};
 
 export default function Menu() {
   const menu = useMenuBuckets({
@@ -19,6 +34,8 @@ export default function Menu() {
       />
     ),
   });
+
+  const defaultActiveKey = useMemo(getDefaultActiveKey, []);
   return (
     <>
       <Header title="Our Menu" image="/assets/photos/porkchop_in_window.jpg" />
@@ -31,12 +48,10 @@ export default function Menu() {
         />
         <div className="row">
           <div className="col">
-            {/* Set `variant` to a madeup value as a workaround to the default value of `tabs` which applies inconsistent styling to the custom "tabs" we created in bootstrap*/}
-            {/* See: https://github.com/react-bootstrap/react-bootstrap/blob/daf5a9ef95f6db05a6915e19d7acfb41bc0b7d5f/src/Nav.tsx#L161 */}
             <Tabs
+              defaultActiveKey={defaultActiveKey}
               className="justify-content-center mb-6"
-              // @ts-expect-error
-              variant="not-tabs-or-pills"
+              variant="pills"
             >
               <Tab eventKey="lunch" title="Lunch">
                 <MenuItemWrapper>{menu.lunch}</MenuItemWrapper>
