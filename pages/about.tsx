@@ -73,6 +73,8 @@ import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Section from "../components/Section";
 
+// Disabled SSR via dynamic import because Map imports leaflet which interacts with `window` on load
+// See: https://stackoverflow.com/a/68183906/4668680
 const Map = dynamic(() => import("../components/Map/Map"), { ssr: false });
 
 export default function About() {
