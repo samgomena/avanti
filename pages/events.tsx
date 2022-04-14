@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Section from "../components/Section";
@@ -11,6 +12,17 @@ export default function Events() {
           heading="Upcoming Events"
           subHeading="Avanti is a perfect place for celebrating family and corporate events!"
         />
+        <div className="row">
+          <div className="col-12">
+            <p>
+              If you would like to schedule a private event, please
+              <Link href="/contact">
+                <a> contact us</a>
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
       </Section>
     </>
   );

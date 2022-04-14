@@ -1,77 +1,12 @@
-// export default function About() {
-//   return (
-//     <>
-//       <section className="section section_info section_info_opposite">
-//         <div className="container">
-//           <div className="row">
-//             <div className="col">
-//               <p className="section__subheading text-center"></p>
-
-//               <p>
-//                 On August 21, 2018, a lifelong dream of chef/owner Mark Carruth
-//                 and his soulmate Jeanne Schneider became a reality at the corner
-//                 of Nyberg and Martinazzi in Tualatin, Oregon. After spending
-//                 most of their lives working in corporate restaurants, this
-//                 talented and personable couple launched a small, unique,
-//                 upscale, family restaurant and bar that provides all of the
-//                 following and more:
-//               </p>
-
-//               <ul>
-//                 <li>
-//                   Excellent appetizers, soups, salads, and entrees created,
-//                   prepared, and plated by Chef Mark and delivered by Jeanne
-//                 </li>
-//                 <br />
-//                 <li>
-//                   A relaxing atmosphere for lunch, happy hour, and dinner, where
-//                   Mark and Jeanne take pride in visiting with and getting to
-//                   know their customers
-//                 </li>
-//                 <br />
-//                 <li>
-//                   A new go-to "date night" destination, yet one that is also
-//                   enjoyed by families with children
-//                 </li>
-//               </ul>
-
-//               <p>
-//                 Avanti now offers an exceptional culinary experience not
-//                 previously available in this section of the Portland
-//                 metropolitan area.
-//               </p>
-//             </div>
-//           </div>
-//           <div className="row align-items-justify">
-//             <div className="col-md-6 order-md-3"></div>
-//             <div className="col-md-1 order-md-2"></div>
-//             <div className="col-md-5 order-md-1">
-//               <div className="section_info__body">
-//                 <p className="lead text-heading"></p>
-//                 <p></p>
-//                 <br />
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
-//       <section className="section section_map">
-//         <div
-//           className="section_map__map"
-//           data-lat="45.3830129"
-//           data-lng="-122.75848759999997"
-//           data-zoom="12"
-//           data-info="<h4 className='section_map__map__heading text-center'>Avanti - Restaurant & Bar</h4><p className='section_map__map__content text-center text-muted'>7995 SW Nyberg St, Tualatin, OR 97062<br>(503)-826-5631</p>"
-//         ></div>
-//       </section>
-//     </>
-//   );
-// }
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Section from "../components/Section";
+
+import jeanneSignature from "../public/assets/photos/jeanne_signature.png";
+import markSignature from "../public/assets/photos/mark_signature.png";
 
 // Disabled SSR via dynamic import because Map imports leaflet which interacts with `window` on load
 // See: https://stackoverflow.com/a/68183906/4668680
@@ -86,7 +21,39 @@ export default function About() {
       />
       <Section>
         <Heading heading="Behind the Scenes" subHeading="" />
-        <p>Something interesting or whatever</p>
+        <p>
+          Welcome to Avanti - Restaurant & bar. Avanti is the passion project of
+          owners Mark Carruth and Jeanne Schneider who after tirelessly for
+          other enitites decided to channel their efforts toward something of
+          their own.
+        </p>
+        <p>
+          After initially opening in Tualatin, Oregon in 2018, the restaurant
+          was forced to close due to the Coronavirus Pandemic. Soon after, plans
+          began to relocate, and Avanti was set to reopen in West Linn, Oregon
+          just off the 10th street exit.
+        </p>
+        <p>
+          We bring Avanti to you, humbly, and hope that you like it just as much
+          as we do.
+        </p>
+        <p>
+          <Image
+            src={jeanneSignature}
+            alt="Jeanne Schneider's signature"
+            width={160}
+            height={32.5}
+          />
+        </p>
+        <p>
+          <Image
+            src={markSignature}
+            alt="Mark Carruth's signature"
+            width={261}
+            height={32.5}
+          />
+        </p>
+        <p>&mdash; Jeanne Schneider and Mark Curruth, Owners and Operators</p>
       </Section>
       <section className="bg-light" style={{ height: "30rem" }}>
         <Map />
