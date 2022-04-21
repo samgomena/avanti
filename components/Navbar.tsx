@@ -21,7 +21,7 @@ export default function AvantiNavbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  const handleToggle = useCallback((expanded) => {
+  const handleToggle = useCallback((expanded: boolean) => {
     if (expanded) {
       setNavbarTheme("light");
     } else if (!window.pageYOffset) {
