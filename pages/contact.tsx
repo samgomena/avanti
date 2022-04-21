@@ -121,7 +121,9 @@ export default function Contact() {
             <h4 className="mb-4 text-xs">Visit us</h4>
             <p className="mb-4 font-serif">
               <a
-                href="https://goo.gl/maps/FL2HrEncorxU7rZH9"
+                href={`https://www.google.com/maps/search/${encodeURIComponent(
+                  info.contact.address
+                )}`}
                 target="_blank"
                 rel="noreferrer"
               >
