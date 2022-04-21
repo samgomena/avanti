@@ -7,7 +7,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
 import { useMenuBuckets } from "../lib/hooks/useMenu";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 /**
  * Given the time of day and the menu, return the appropriate menu item.
@@ -24,7 +24,7 @@ const getDefaultActiveKey = () => {
 };
 
 export default function Menu() {
-  const menu = useMenuBuckets({
+  const menu = useMenuBuckets<React.ReactNode>({
     as: (item, service, idx) => (
       <MenuItem
         key={idx}
