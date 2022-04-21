@@ -1,3 +1,10 @@
 {
-  "adminPage": false
+  "adminPage": {
+    "enabled": false,
+    "description": "Shows the admin page after logging in. Note that the login page is still accessible."
+  },
+  "reservations": {
+    "enabled": false,
+    "description": "Allows users to make a reservation."
+  }
 }

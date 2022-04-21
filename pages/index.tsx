@@ -1,4 +1,7 @@
+import { Facebook, Instagram, MapPin } from "react-feather";
 import { ParallaxBanner } from "react-scroll-parallax";
+import { useFlag } from "../lib/hooks/useFlags";
+import useInfo from "../lib/hooks/useInfo";
 
 const layers = [
   {
@@ -7,7 +10,11 @@ const layers = [
   },
 ];
 
+const iconSize = 18;
 export default function Home() {
+  const info = useInfo();
+  const { enabled: reservationsEnabled } = useFlag("reservations");
+
   return (
     <ParallaxBanner layers={layers} className="h-100">
       <div className="d-flex flex-column min-vh-100 bg-black-50 pt-10 pt-md-8 pb-7 pb-md-0 position-relative">
@@ -21,15 +28,17 @@ export default function Home() {
               </h6>
 
               <p className="text-center text-white-75 mb-7">
-                Located in Tualatin, Oregon
+                Located in West Linn, Oregon
               </p>
 
-              {/* <a
-                className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0"
-                href="#reservation"
-              >
-                Make reservation
-              </a> */}
+              {reservationsEnabled && (
+                <a
+                  className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0"
+                  href="#reservation"
+                >
+                  Make a reservation
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -38,18 +47,26 @@ export default function Home() {
           <div className="row">
             <div className="col-md">
               <ul className="list-inline text-center text-md-start mb-3 my-md-5">
-                {Object.entries({ facebook: "", instagram: "" }).map(
-                  ([socialName, link], idx) => (
-                    <li className="list-inline-item" key={idx}>
-                      <a
-                        href={link}
-                        className="text-white-75 text-primary-hover"
-                      >
-                        <i className={`fab fa-${socialName}`}></i>
-                      </a>
-                    </li>
-                  )
-                )}
+                <li className="list-inline-item">
+                  <a
+                    href={info.contact.facebook}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-white-75 text-primary-hover"
+                  >
+                    <Facebook size={iconSize} />
+                  </a>
+                </li>
+                <li className="list-inline-item">
+                  <a
+                    href={info.contact.instagram}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-white-75 text-primary-hover"
+                  >
+                    <Instagram size={iconSize} />
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -57,11 +74,15 @@ export default function Home() {
               <p className="font-serif text-white-75 text-center text-md-end text-lg-end my-md-5">
                 <i className="fas fa-map-marker-alt text-primary me-3"></i>
                 <a
-                  href="https://goo.gl/maps/K6R19AyT4Cz"
+                  href={`https://www.google.com/maps/search/${encodeURIComponent(
+                    info.contact.address
+                  )}`}
                   target="_blank"
                   rel="noreferrer"
+                  className="text-white-75 text-primary-hover"
                 >
-                  7995 SW Nyberg St, Tualatin, OR 97062
+                  <MapPin className="me-2 mb-2" size={18} />
+                  {info.contact.address}
                 </a>
               </p>
             </div>
