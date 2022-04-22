@@ -1,15 +1,15 @@
 import menu from "../../data/menu.json";
 import { Items, Item, Menu, MenuBuckets, Service } from "../types/menu";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 const useMenu = (): Menu => {
   return menu as Menu;
 };
 
-export const useMenuBuckets = <T extends Item | JSX.Element>({
+export const useMenuBuckets = <T extends Item | React.ReactNode>({
   as = null,
 }: {
-  as?: ((item: Item, service: Service, idx: number) => JSX.Element) | null;
+  as?: ((item: Item, service: Service, idx: number) => React.ReactNode) | null;
 } = {}) => {
   // Create "buckets" for each service period to fill with items from that service period
   const _menu = useMemo(

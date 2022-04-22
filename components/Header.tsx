@@ -1,9 +1,13 @@
 import React from "react";
 import { ParallaxBanner } from "react-scroll-parallax";
 
-type Props = { title: string; image?: string };
+type HeaderProps = { title: string; image?: string };
 
-const Header: React.FC<Props> = ({ children, title, image = "" }) => {
+const Header: React.FC<React.PropsWithChildren<HeaderProps>> = ({
+  children,
+  title,
+  image = "",
+}) => {
   image = image.startsWith("/assets/photos/")
     ? image
     : `/assets/photos/${image}`;
@@ -24,7 +28,9 @@ const Header: React.FC<Props> = ({ children, title, image = "" }) => {
   );
 };
 
-export const AdminHeader: React.FC = ({ children }) => {
+export const AdminHeader: React.FC<React.PropsWithChildren<{}>> = ({
+  children,
+}) => {
   return <div className="py-6 bg-black position-relative">{children}</div>;
 };
 

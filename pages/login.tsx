@@ -59,7 +59,6 @@ const Login: React.FC = () => {
             >
               {({ isSubmitting, isValid }) => (
                 <Form className="needs-validation" noValidate>
-                  {console.log(isSubmitting)}
                   <div className="row gx-3">
                     <div className="col">
                       <div className="mb-3 form-group">
