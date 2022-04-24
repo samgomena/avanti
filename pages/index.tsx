@@ -1,12 +1,13 @@
 import { Facebook, Instagram, MapPin } from "react-feather";
 import { ParallaxBanner } from "react-scroll-parallax";
+import Alerts from "../components/Alerts";
 import { useFlag } from "../lib/hooks/useFlags";
 import useInfo from "../lib/hooks/useInfo";
 
 const layers = [
   {
     image: "/assets/photos/1.jpg",
-    amount: 0,
+    speed: 10,
   },
 ];
 
@@ -21,6 +22,7 @@ export default function Home() {
         <div className="container my-auto">
           <div className="row justify-content-center">
             <div className="col-12 col-md-8 col-lg-6 text-center">
+              <Alerts />
               <h1 className="display-1 text-white mb-4">Avanti</h1>
 
               <h6 className="text-xs text-white-75">
