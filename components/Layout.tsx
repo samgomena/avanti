@@ -28,7 +28,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           />
           <meta
             property="og:image"
-            content="https://avantiwestlinn.com/api/og-image"
+            // content="https://avantiwestlinn.com/api/og-image"
+            content="/assets/photos/og-image.png"
           />
 
           {/* Twitter Meta Tags */}
