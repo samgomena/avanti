@@ -26,10 +26,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             property="og:description"
             content="We're a small family-owned restaurant located just off of I-205 at the 10th street exit in West Linn, Oregon."
           />
-          <meta
-            property="og:image"
-            content="https://avantiwestlinn.com/api/og-image"
-          />
+          <meta property="og:image" content="/assets/photos/og-image.png" />
 
           {/* Twitter Meta Tags */}
           <meta name="twitter:card" content="summary_large_image" />
