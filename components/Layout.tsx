@@ -11,17 +11,39 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <ParallaxProvider>
       <div>
         <Head>
-          <link rel="icon" href="/favicon.ico" />
-          <meta name="description" content={siteTitle} />
+          {/* HTML Meta Tags */}
+          <title>{siteTitle}</title>
+          <meta
+            name="description"
+            content="We're a small family-owned restaurant located just off of I-205 at the 10th street exit in West Linn, Oregon."
+          />
+
+          {/* Facebook Meta Tags */}
+          <meta property="og:url" content="https://avantiwestlinn.com/" />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content={siteTitle} />
+          <meta
+            property="og:description"
+            content="We're a small family-owned restaurant located just off of I-205 at the 10th street exit in West Linn, Oregon."
+          />
           <meta
             property="og:image"
-            content={`https://og-image.vercel.app/${encodeURI(
-              siteTitle
-            )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+            content="https://avantiwestlinn.com/api/og-image"
           />
-          <meta name="og:title" content={siteTitle} />
+
+          {/* Twitter Meta Tags */}
           <meta name="twitter:card" content="summary_large_image" />
-          <title>{siteTitle}</title>
+          <meta property="twitter:domain" content="avantiwestlinn.com" />
+          <meta property="twitter:url" content="https://avantiwestlinn.com/" />
+          <meta name="twitter:title" content={siteTitle} />
+          <meta
+            name="twitter:description"
+            content="We're a small family-owned restaurant located just off of I-205 at the 10th street exit in West Linn, Oregon."
+          />
+          <meta
+            name="twitter:image"
+            content="https://avantiwestlinn.com/api/og-image"
+          />
         </Head>
         <Navbar />
         {children}
