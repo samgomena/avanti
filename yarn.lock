@@ -1729,10 +1729,10 @@ p-try@^1.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
   integrity sha1-y8ec26+P1CKOE/Yh8rGiN8GyB7M=
 
-parallax-controller@^1.3.5:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/parallax-controller/-/parallax-controller-1.3.5.tgz#a2f2b84c59dd2ec91f6c128ad7b21ea8b444cc2e"
-  integrity sha512-AyfQT+uXWzTAVz8uAQZuCYlqvq5pKNxg34Gvk1TbA/qvvyA9SkWtzWXlgDZ4SElDWT8OBfidE0DAYqslaX2++A==
+parallax-controller@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/parallax-controller/-/parallax-controller-1.4.0.tgz#2588383010688742d489de86442d8c8162817bff"
+  integrity sha512-sNDvyww8gS5glisJLuSC1ZdMXkvMkQnenkFLbQWZ3HzOzimtW99oAHXJacyGijh1d7PfEJlGofBM97iMNhh8NQ==
   dependencies:
     bezier-easing "^2.1.0"
 
@@ -1879,12 +1879,12 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-scroll-parallax@^3.0.6:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/react-scroll-parallax/-/react-scroll-parallax-3.0.6.tgz#1292d48a971d9577a680b39fff3f7a412ef31e5e"
-  integrity sha512-PcGigEVUZXdmzWCthyuTU3ua+K4zhBxnMXcf76Bw0yvrpFCoFLcQEUVllnfELWvC5oknVL0vS9VzRIQu6sIU8A==
+react-scroll-parallax@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-scroll-parallax/-/react-scroll-parallax-3.1.0.tgz#087cb641c1d4f6ee321f73952ab74f2d6cf1d985"
+  integrity sha512-L9vMS5zEsBlIPTfREJ7UuFF0chC+VH7sjUK6IficDTBhKF2hJDTJJcYyE7H/BTYTVj7TwsoVDRWsnJj2kcYjCA==
   dependencies:
-    parallax-controller "^1.3.5"
+    parallax-controller "^1.4.0"
 
 react-transition-group@^4.4.2:
   version "4.4.2"
