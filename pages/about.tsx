@@ -53,7 +53,7 @@ export default function About() {
             height={32.5}
           />
         </p>
-        <p>&mdash; Jeanne Schneider and Mark Curruth, Owners and Operators</p>
+        <p>&mdash; Jeanne Schneider and Mark Carruth, Owners and Operators</p>
       </Section>
       <section className="bg-light" style={{ height: "30rem" }}>
         <Map />
