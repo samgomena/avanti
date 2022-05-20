@@ -23,7 +23,7 @@ export default function About() {
         <Heading heading="Behind the Scenes" subHeading="" />
         <p>
           Welcome to Avanti - Restaurant & bar. Avanti is the passion project of
-          owners Mark Carruth and Jeanne Schneider who after tirelessly for
+          owners Mark Carruth and Jeanne Schneider who after working tirelessly for
           other enitites decided to channel their efforts toward something of
           their own.
         </p>
