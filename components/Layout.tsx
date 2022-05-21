@@ -2,7 +2,6 @@ import Head from "next/head";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { ParallaxProvider } from "react-scroll-parallax";
-import React from "react";
 
 export const siteTitle = "Avanti - Restaurant & Bar";
 

@@ -7,10 +7,14 @@ a {
   text-decoration: none;
 }
 
+footer {
+  color: $gray-500;
+}
+
 footer a {
-  color: #777;
+  color: $gray-500;
   &:hover {
-    color: #777;
+    color: $gray-500;
     text-decoration: underline;
   }
 }
