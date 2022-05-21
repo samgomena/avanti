@@ -11,7 +11,7 @@ const layers = [
   },
 ];
 
-const iconSize = 18;
+const iconSize = 24;
 export default function Home() {
   const info = useInfo();
   const { enabled: reservationsEnabled } = useFlag("reservations");
@@ -25,9 +25,9 @@ export default function Home() {
               <Alerts />
               <h1 className="display-1 text-white mb-4">Avanti</h1>
 
-              <h6 className="text-xs text-white-75">
+              <h2 className="text-xs text-white-75">
                 <span className="text-primary">Restaurant</span> / Bar
-              </h6>
+              </h2>
 
               <p className="text-center text-white-75 mb-7">
                 Located in West Linn, Oregon
@@ -56,6 +56,7 @@ export default function Home() {
                     rel="noreferrer"
                     className="text-white-75 text-primary-hover"
                   >
+                    <span className="visually-hidden">Facebook</span>
                     <Facebook size={iconSize} />
                   </a>
                 </li>
@@ -66,6 +67,7 @@ export default function Home() {
                     rel="noreferrer"
                     className="text-white-75 text-primary-hover"
                   >
+                    <span className="visually-hidden">Instagram</span>
                     <Instagram size={iconSize} />
                   </a>
                 </li>

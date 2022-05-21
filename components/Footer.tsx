@@ -1,5 +1,4 @@
 import useInfo from "../lib/hooks/useInfo";
-import { HoursPreview } from "../lib/types/info";
 import { to12 } from "../lib/utils/utils";
 import { formatPhone } from "../lib/utils/utils";
 
@@ -12,11 +11,11 @@ export default function Footer() {
       <div className="container px-4">
         <div className="row gx-7">
           <div className="col-sm-4">
-            <h5 className="text-xs text-primary">About Us</h5>
+            <h3 className="text-xs text-primary">About Us</h3>
             <p className="mb-6">{info.about}</p>
           </div>
           <div className="col-sm-4">
-            <h5 className="text-xs text-primary">Contact Info</h5>
+            <h3 className="text-xs text-primary">Contact Info</h3>
 
             <ul className="list-unstyled mb-6">
               <li className="d-flex mb-2">
@@ -52,7 +51,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="col-sm-4">
-            <h5 className="text-xs text-primary">Hours</h5>
+            <h3 className="text-xs text-primary">Hours</h3>
 
             {info.hoursPreview.map(({ day, open, close }, idx) => (
               <div className="mb-3" key={day}>
