@@ -10,12 +10,6 @@
     "lint": "next lint",
     "test": "jest --watch"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/samgomena/avanti.git"
