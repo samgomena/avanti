@@ -85,7 +85,7 @@ export default function Gallery() {
     <>
       <Header title="Some Photos" image="/assets/photos/wine_on_bar.jpg" />
       <Section>
-        <Heading heading="Take a Peek" />
+        <Heading heading="Take a Peek" subHeading="" />
         <div className="row">
           <div className="col-12">{/* Carousel goes here */}</div>
         </div>
