@@ -1,7 +1,7 @@
 export type Alert = {
   start: string;
   end: string;
-  title: string;
+  title?: string;
   text: string;
 };
 

@@ -1,8 +1,8 @@
-import Image from "next/image";
+import dynamic from "next/dynamic";
+import Image, { StaticImageData } from "next/image";
 
 import Header from "../components/Header";
 import Heading from "../components/Heading";
-import Masonry from "../components/Masonry/Masonry";
 import Section from "../components/Section";
 
 import ahi_nicoise_salad from "../public/assets/photos/ahi_nicoise_salad.jpg";
@@ -28,6 +28,27 @@ import serving_libation from "../public/assets/photos/serving_libation.jpg";
 import shirley_temple from "../public/assets/photos/shirley_temple.jpg";
 import truffled_mushroom_soup from "../public/assets/photos/truffled_mushroom_soup.jpg";
 
+const Masonry = dynamic(() => import("../components/Masonry/Masonry"), {
+  // Ensure we load on the client because this component dynamically determines column counts that can mess with hydration
+  // See: https://github.com/samgomena/avanti/issues/159
+  ssr: false,
+});
+
+const mapper = (
+  { src, alt }: { src: StaticImageData; alt: string },
+  idx: number
+) => (
+  <Image
+    key={idx}
+    src={src}
+    alt={alt}
+    placeholder="blur"
+    // TODO: This "fixes" blurry images in chrome but makes them look considerably worse in Safari
+    // See: https://stackoverflow.com/questions/37906602/blurry-downscaled-images-in-chrome
+    // style={{ imageRendering: "-webkit-optimize-contrast" }}
+  />
+);
+
 const appetizers = [
   { src: coconut_shrimp, alt: "Coconut Shrimp" },
   { src: cheese_plate, alt: "Cheese Plate" },
@@ -36,9 +57,7 @@ const appetizers = [
   { src: caprese, alt: "Caprese Salad" },
   { src: truffled_mushroom_soup, alt: "Truffled Mushroom Soup" },
   { src: creme_brulee, alt: "Creme Brulee" },
-].map(({ src, alt }, idx) => (
-  <Image key={idx} src={src} alt={alt} layout="responsive" placeholder="blur" />
-));
+].map(mapper);
 
 const mains = [
   { src: pork_chop, alt: "Smoked Double-Cut Pork Chop" },
@@ -50,9 +69,7 @@ const mains = [
   { src: braised_halibut, alt: "Pan Braised Alaskan Halibut" },
   { src: blt_with_fries, alt: "BLT with Fries" },
   { src: chocolate_souffle, alt: "Chocolate Souffle" },
-].map(({ src, alt }, idx) => (
-  <Image key={idx} src={src} alt={alt} layout="responsive" placeholder="blur" />
-));
+].map(mapper);
 
 const drinks = [
   { src: bloody_mary, alt: "Blood Mary" },
@@ -61,23 +78,20 @@ const drinks = [
   { src: serving_libation, alt: "Serving a Drink" },
   { src: pineapple_mule, alt: "Pineapple Mule" },
   { src: shirley_temple, alt: "PamaFlower" },
-].map(({ src, alt }, idx) => (
-  <Image key={idx} src={src} alt={alt} layout="responsive" placeholder="blur" />
-));
+].map(mapper);
 
 export default function Gallery() {
   return (
     <>
       <Header title="Some Photos" image="/assets/photos/wine_on_bar.jpg" />
       <Section>
-        <Heading heading="Take a Peek" subHeading="" />
+        <Heading heading="Take a Peek" />
         <div className="row">
           <div className="col-12">{/* Carousel goes here */}</div>
         </div>
       </Section>
       <Section>
         <div className="row gx-3">
-          {/* Photos go here */}
           <div className="mb-6">
             <Masonry responsive gutter={14} columns={3}>
               {appetizers}

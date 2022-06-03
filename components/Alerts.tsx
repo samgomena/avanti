@@ -7,7 +7,9 @@ const Alerts: React.FC = () => {
   const [show, setShow] = useState(true);
   const now = new Date();
 
-  if (new Date(alert.start) > now && new Date(alert.end) < now) {
+  // If alert hasn't started yet or alert has expired then don't show it
+  // Note: This is *exclusive* so the alert will show on the days of the start end dates
+  if (now < new Date(alert.start) || now > new Date(alert.end)) {
     return null;
   }
 
