@@ -1,7 +1,6 @@
 name: Run tests for PRs
 on:
   pull_request:
-    branches: [ $default-branch ]
   
 jobs:
   build:
