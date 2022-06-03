@@ -1,8 +1,8 @@
+import dynamic from "next/dynamic";
 import Image, { StaticImageData } from "next/image";
 
 import Header from "../components/Header";
 import Heading from "../components/Heading";
-import Masonry from "../components/Masonry/Masonry";
 import Section from "../components/Section";
 
 import ahi_nicoise_salad from "../public/assets/photos/ahi_nicoise_salad.jpg";
@@ -27,6 +27,12 @@ import pouring_wine from "../public/assets/photos/pouring_wine.jpg";
 import serving_libation from "../public/assets/photos/serving_libation.jpg";
 import shirley_temple from "../public/assets/photos/shirley_temple.jpg";
 import truffled_mushroom_soup from "../public/assets/photos/truffled_mushroom_soup.jpg";
+
+const Masonry = dynamic(() => import("../components/Masonry/Masonry"), {
+  // Ensure we load on the client because this component dynamically determines column counts that can mess with hydration
+  // See: https://github.com/samgomena/avanti/issues/159
+  ssr: false,
+});
 
 const mapper = (
   { src, alt }: { src: StaticImageData; alt: string },
