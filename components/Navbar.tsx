@@ -9,7 +9,7 @@ export default function AvantiNavbar() {
   const [navbarTheme, setNavbarTheme] = useState<"dark" | "light">("dark");
 
   const handleScroll = useCallback(() => {
-    if (window.pageYOffset <= 1) {
+    if (window.scrollY <= 1) {
       setNavbarTheme("dark");
     } else {
       setNavbarTheme("light");
@@ -17,6 +17,11 @@ export default function AvantiNavbar() {
   }, []);
 
   useEffect(() => {
+    // Handle case where user has already scrolled down and page reloads with scroll restoration
+    if (window.scrollY > 1) {
+      setNavbarTheme("light");
+    }
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
@@ -24,7 +29,7 @@ export default function AvantiNavbar() {
   const handleToggle = useCallback((expanded: boolean) => {
     if (expanded) {
       setNavbarTheme("light");
-    } else if (!window.pageYOffset) {
+    } else if (!window.scrollY) {
       setNavbarTheme("dark");
     }
   }, []);

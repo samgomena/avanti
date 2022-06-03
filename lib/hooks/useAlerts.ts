@@ -1,5 +1,5 @@
 import alerts from "../../data/alerts.json";
-import { Alerts } from "../types/alerts";
+import type { Alerts } from "../types/alerts";
 
 const useAlerts = () => alerts as Alerts;
 

@@ -20,12 +20,12 @@ export default function About() {
         image="/assets/photos/avanti_business_logo.jpg"
       />
       <Section>
-        <Heading heading="Behind the Scenes" subHeading="" />
+        <Heading heading="Behind the Scenes" />
         <p>
           Welcome to Avanti - Restaurant & bar. Avanti is the passion project of
-          owners Mark Carruth and Jeanne Schneider who after working tirelessly for
-          other enitites decided to channel their efforts toward something of
-          their own.
+          owners Mark Carruth and Jeanne Schneider who after working tirelessly
+          for other enitites decided to channel their efforts toward something
+          of their own.
         </p>
         <p>
           After initially opening in Tualatin, Oregon in 2018, the restaurant

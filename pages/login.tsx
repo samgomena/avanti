@@ -108,7 +108,7 @@ const Login: React.FC = () => {
                         variant="outline-primary"
                         disabled={!isValid || isSubmitting}
                       >
-                        {isSubmitting ? "Logging in" : "Login"}
+                        {isSubmitting ? "logging in" : "login"}
                       </Button>
                     </div>
                   </div>
