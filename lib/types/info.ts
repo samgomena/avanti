@@ -21,8 +21,9 @@ export type Days =
   | "saturday"
   | "sunday";
 
-export type Hours = ({ days: Days[] } & OpenClose)[];
-export type HoursPreview = {
+// TODO: Consider refactoring hours into a more compact format
+// export type Hours = ({ days: Days[] } & OpenClose)[];
+export type Hours = {
   day: Days;
   open: string | null;
   close: string | null;
@@ -32,5 +33,4 @@ export type Info = {
   about: string;
   contact: Contact;
   hours: Hours;
-  hoursPreview: HoursPreview;
 };

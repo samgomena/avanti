@@ -9,18 +9,6 @@
   },
   "hours": [
     {
-      "days": ["tuesday", "wednesday", "thursday", "sunday"],
-      "open": "16:00",
-      "close": "21:00"
-    },
-    {
-      "days": ["friday", "saturday"],
-      "open": "16:00",
-      "close": "22:00"
-    }
-  ],
-  "hoursPreview": [
-    {
       "day": "monday",
       "open": null,
       "close": null
