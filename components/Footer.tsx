@@ -53,7 +53,7 @@ export default function Footer() {
           <div className="col-sm-4">
             <h3 className="text-xs text-primary">Hours</h3>
 
-            {info.hoursPreview.map(({ day, open, close }) => (
+            {info.hours.map(({ day, open, close }) => (
               <div className="mb-3" key={day}>
                 <div className="text-xs">{day}</div>
                 {open === null || close === null ? (
