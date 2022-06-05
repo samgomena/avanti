@@ -78,9 +78,7 @@ export default function Home() {
               <p className="font-serif text-white-75 text-center text-md-end text-lg-end my-md-5">
                 <i className="fas fa-map-marker-alt text-primary me-3"></i>
                 <a
-                  href={`https://www.google.com/maps/search/${encodeURIComponent(
-                    info.contact.address
-                  )}`}
+                  href="https://goo.gl/maps/rgDVKbs6SsXyUxiU9"
                   target="_blank"
                   rel="noreferrer"
                   className="text-white-75 text-primary-hover"
