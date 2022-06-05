@@ -1,76 +1,12 @@
 import Button from "react-bootstrap/Button";
-import CloseButton from "react-bootstrap/CloseButton";
-import {
-  FieldArray,
-  Field as FormikField,
-  Form,
-  Formik,
-  FormikValues,
-  ErrorMessage,
-} from "formik";
+import { Form, Formik, FormikValues } from "formik";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
-import PhoneField from "../../../components/Form/PhoneField";
 import useInfo, { days } from "../../../lib/hooks/useInfo";
 import withAdminNav from "../../../lib/withAdminNav";
 import HoursField from "../../../components/Form/HoursField";
 import { capitalize } from "../../../lib/utils/utils";
-import { Days } from "../../../lib/types/info";
-import FormError from "../../../components/Form/FormError";
-import { Fragment } from "react";
 import * as Yup from "yup";
-import useSavedChanges from "../../../lib/hooks/useSavedChanges";
-
-// Declare new validator on array fields for hours
-// Note: I *think* this adds the method to all instances of Yup across the site (the docs say something about how `addMethod` modifys the prototype)
-declare module "yup" {
-  interface ArraySchema<T> {
-    uniqueDays(): this;
-  }
-}
-
-// Add a custom validator to Yup that ensures that the array of days is unique
-// I.e. A days open/closing hours can only be specified once so ensure no two days are selected at the same time
-Yup.addMethod(Yup.array, "uniqueDays", function () {
-  return this.test("uniqueDays", "", function (values) {
-    const { path, createError } = this;
-
-    // Map the list of "checked" days to the number of times each day has been checked
-    // We preserve the mapping of day -> count so we provide a nice error message later on
-    // Note: The max size of either array (values or _days) can only be 7 (for each day of the week) so this is O(7) (even though it looks a lot worse)
-    const counts: { [d in Days]: number } = values?.reduce(
-      (acc, { days: _days }) => {
-        _days?.forEach((day: Days) => {
-          // Default the count to 0 if it doesn't exist
-          acc[day] ??= 0;
-          // Increment the count for this day
-          acc[day] += 1;
-        });
-        return acc;
-      },
-      {}
-    );
-
-    for (const [day, count] of Object.entries(counts)) {
-      // If we find a day that has been checked more than once, return a validation error
-      if (count > 1) {
-        console.log(`${path}.${count - 1}.days`);
-        return createError({
-          path: `${path}.${count - 1}.days`,
-          // path,
-          message: `${capitalize(day)} has already been selected!`,
-        });
-      }
-    }
-    return true;
-  });
-});
-
-const initialHoursValues = {
-  days: [] as Days[],
-  open: "",
-  close: "",
-};
 
 const validationSchema = Yup.object({
   about: Yup.string().required("This is required!"),
@@ -88,23 +24,31 @@ const validationSchema = Yup.object({
   }),
   hours: Yup.array(
     Yup.object({
-      days: Yup.array(Yup.string().oneOf(days)).min(
-        1,
-        "At least one day must be selected!"
-      ),
+      days: Yup.string().oneOf(days),
       open: Yup.string(),
       close: Yup.string(),
     })
-  ).uniqueDays(),
+  ),
 });
 
 const EditInfo: React.FC = () => {
   const info = useInfo();
 
   const onSubmit = async (values: FormikValues) => {
-    // setSavedChanges(values);
-    await new Promise((r) => setTimeout(r, 1500));
-    console.info(values);
+    if (process.env.NODE_ENV !== "development") {
+      console.log(values);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/info/edit", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+      console.log("Coolio McFly ; )", await res.json());
+    } catch (error) {
+      console.error("Whoopsies", error);
+    }
   };
 
   return (
@@ -116,7 +60,15 @@ const EditInfo: React.FC = () => {
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
-          {({ isSubmitting, errors, values, isValid, resetForm, dirty }) => (
+          {({
+            isSubmitting,
+            errors,
+            values,
+            isValid,
+            resetForm,
+            dirty,
+            setFieldValue,
+          }) => (
             <Form className="needs-validation" noValidate>
               <BeforeUnload />
               <div className="col">
@@ -132,51 +84,46 @@ const EditInfo: React.FC = () => {
                 <Field name="contact.email" placeholder="Email" />
                 <Field name="contact.phone" placeholder="Phone number" />
 
-                <FieldArray name="hours">
-                  {({ push, remove }) => (
-                    <div className="form-group mb-3" role="group">
-                      {values.hours.map((_, idx1) => (
-                        <Fragment key={`hours-${idx1}`}>
-                          <div>
-                            <CloseButton
-                              className="float-end"
-                              onClick={() => remove(idx1)}
-                              aria-label="remove"
-                            />
-                          </div>
-                          {days.map((day, idx2) => (
-                            <div
-                              key={`day-${idx2}`}
-                              className="form-check form-check-inline"
-                            >
-                              <label className="form-check-label">
-                                <FormikField
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  name={`hours.${idx1}.days`}
-                                  value={day}
-                                />
-                                {capitalize(day)}
-                              </label>
-                            </div>
-                          ))}
-                          <ErrorMessage
-                            component={FormError}
-                            name={`hours.${idx1}.days`}
-                          />
-                          <HoursField idx={idx1} />
-                        </Fragment>
-                      ))}
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        onClick={() => push(initialHoursValues)}
-                      >
-                        +
-                      </Button>
-                    </div>
-                  )}
-                </FieldArray>
+                {/* TODO(6/4/22): This needs validation/error handling */}
+                {values.hours.map((entry, idx) => (
+                  <div key={idx} className="form-group mb-3">
+                    <label>
+                      {capitalize(entry.day)}
+                      <HoursField idx={idx} />
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          onChange={(e) => {
+                            // Was open and now closed
+                            if (e.target.checked) {
+                              setFieldValue(`hours[${idx}]`, {
+                                ...entry,
+                                open: "",
+                                close: "",
+                              });
+                            } else {
+                              // Was closed and now open
+                              setFieldValue(`hours[${idx}]`, {
+                                ...entry,
+                                open: "12:00",
+                                close: "12:00",
+                              });
+                            }
+                          }}
+                          checked={entry.open === "" && entry.close === ""}
+                          className="form-check-input"
+                          id={`closed-${entry.day}`}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`closed-${entry.day}`}
+                        >
+                          Closed on {capitalize(entry.day)}
+                        </label>
+                      </div>
+                    </label>
+                  </div>
+                ))}
               </div>
 
               <div className="row">

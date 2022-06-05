@@ -10,8 +10,8 @@
   "hours": [
     {
       "day": "monday",
-      "open": null,
-      "close": null
+      "open": "",
+      "close": ""
     },
     {
       "day": "tuesday",
