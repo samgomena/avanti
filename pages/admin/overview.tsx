@@ -8,7 +8,7 @@ import {
   Services,
 } from "../../lib/types/menu";
 import { useEffect } from "react";
-import useFlags from "../../lib/hooks/useFlags";
+import { useFlag } from "../../lib/hooks/useFlags";
 import { useRouter } from "next/router";
 
 type MenuBucketStats = { [k in Service]: { total: number; avgPrice: number } };
@@ -35,12 +35,9 @@ const getStats = (menuBuckets: MenuBuckets) =>
 
 const Overview: React.FC = () => {
   const router = useRouter();
-  const { adminPage } = useFlags();
+  const { enabled } = useFlag("adminPage");
 
-  useEffect(() => {
-    // Default to adding items for now
-    router.push(adminPage ? "/admin/menu/add" : "/");
-  }, [adminPage, router]);
+  !enabled && router.push("/");
 
   const menuBuckets = useMenuBuckets();
   const stats = getStats(menuBuckets as MenuBuckets<Item>);
