@@ -58,8 +58,19 @@ const validationSchema = Yup.object({
 const initialValues: { items: Item[] } = { items: [initialValue] };
 
 const onSubmit = async (values: any) => {
-  await new Promise((r) => setTimeout(r, 1200));
-  console.info(values);
+  if (process.env.NODE_ENV !== "development") {
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/menu/add", {
+      method: "POST",
+      body: JSON.stringify(values),
+    });
+    console.log("Coolio McFly ; )", await res.json());
+  } catch (error) {
+    console.error("Whoopsies", error);
+  }
 };
 
 const AddMenuItem: React.FC = () => {
