@@ -43,7 +43,7 @@
       "description": "Mixed greens with tomato, candied hazelnuts, and balsamic vinaigrette",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 12,
+        "dinner": 10,
         "lunch": 7
       }
     },
@@ -52,7 +52,7 @@
       "description": "With chopped hazelnuts in a miso vinaigrette",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 10,
+        "dinner": 12,
         "lunch": 9
       }
     },
