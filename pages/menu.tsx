@@ -35,7 +35,9 @@ export default function Menu() {
     ),
   });
 
-  const defaultActiveKey = useMemo(getDefaultActiveKey, []);
+  // TODO(6/4/22): Default active key is always dinner while lunch/hh are disbaled
+  // const defaultActiveKey = useMemo(getDefaultActiveKey, []);
+  const defaultActiveKey = "dinner";
   return (
     <>
       <Header title="Our Menu" image="/assets/photos/porkchop_in_window.jpg" />
@@ -53,15 +55,16 @@ export default function Menu() {
               className="justify-content-center mb-6"
               variant="pills"
             >
-              <Tab eventKey="lunch" title="Lunch">
+              {/* TODO(6/4/22): Disabled Lunch and HH items on the menu */}
+              {/* <Tab eventKey="lunch" title="Lunch">
                 <MenuItemWrapper>{menu.lunch}</MenuItemWrapper>
-              </Tab>
+              </Tab> */}
               <Tab eventKey="dinner" title="Dinner">
                 <MenuItemWrapper>{menu.dinner}</MenuItemWrapper>
               </Tab>
-              <Tab eventKey="hh" title="HH">
+              {/* <Tab eventKey="hh" title="HH">
                 <MenuItemWrapper>{menu.hh}</MenuItemWrapper>
-              </Tab>
+              </Tab> */}
               <Tab eventKey="drinks" title="Drinks">
                 <MenuItemWrapper>{menu.drinks}</MenuItemWrapper>
               </Tab>

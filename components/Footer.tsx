@@ -23,9 +23,7 @@ export default function Footer() {
                   <MapPin size={16} />
                 </div>
                 <a
-                  href={`https://www.google.com/maps/search/${encodeURIComponent(
-                    info.contact.address
-                  )}`}
+                  href="https://goo.gl/maps/rgDVKbs6SsXyUxiU9"
                   target="_blank"
                   rel="noreferrer"
                 >
