@@ -1,4 +1,6 @@
+import { useRouter } from "next/router";
 import useSWR from "swr";
+import { useFlag } from "../../lib/hooks/useFlags";
 import fetcher from "../../lib/utils/fetcher";
 
 import withAdminNav from "../../lib/withAdminNav";
@@ -15,6 +17,11 @@ const formatDate = (date: string) =>
   });
 
 const Settings: React.FC = () => {
+  const router = useRouter();
+  const { enabled } = useFlag("adminPage");
+
+  !enabled && router.push("/");
+
   const { data: user } = useSWR("/api/user", fetcher);
   console.log(user);
   if (!user) {
