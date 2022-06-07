@@ -1,6 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const User = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (process.env.NODE_ENV !== "development") {
+    return res.status(403).json({
+      error: "Forbidden",
+    });
+  }
+
   //   const user = req.session.get("user");
   const user = {
     firstName: "John",
