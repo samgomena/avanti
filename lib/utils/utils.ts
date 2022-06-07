@@ -1,4 +1,8 @@
-export const serviceToDisplay = (code: string) => {
+import { DEFAULT_BREAKPOINTS } from "react-bootstrap/esm/ThemeProvider";
+import type { Hours } from "../types/info";
+import { Service } from "../types/menu";
+
+export const serviceToDisplay = (code: Service) => {
   switch (code) {
     case "dinner":
     case "lunch":
@@ -36,7 +40,7 @@ export const to12 = (input: string) => {
     return "";
   }
   let hoursInt = parseInt(hours, 10);
-  const suffix = hoursInt >= 12 ? "PM" : "AM";
+  const suffix = hoursInt >= 12 && hoursInt < 24 ? "PM" : "AM";
   // TODO: This doesn't handle the case for stuff that happens after midnight, which may be desirable
   // I.e. 25:00 => 1:00 AM
   hoursInt = hoursInt > 12 ? hoursInt - 12 : hoursInt;
@@ -45,9 +49,47 @@ export const to12 = (input: string) => {
   return `${hoursInt}:${minutes} ${suffix}`;
 };
 
-export const formatPhone = (number: string) => {
-  const area = number.slice(0, 3);
-  const middle = number.slice(3, 6);
-  const end = number.slice(6);
+export const formatPhone = (phone: string) => {
+  if (phone === "") {
+    return "";
+  }
+
+  const area = phone.slice(0, 3);
+  const middle = phone.slice(3, 6);
+  const end = phone.slice(6);
   return `(${area})-${middle}-${end}`;
+};
+
+export const compactHours = (hours: Hours) => {
+  const result = [];
+
+  for (let i = 0; i < hours.length; i++) {
+    const { open, close } = hours[i];
+
+    // At the end of the hours array, add the entry and break out of the loop
+    if (i + 1 === hours.length) {
+      result.push([hours[i]]);
+      break;
+    }
+
+    const bucket = [];
+    let nextOpen = hours[i + 1].open;
+    let nextClose = hours[i + 1].close;
+    // While the following days have the same open and close times, add them to the bucket
+    while (open === nextOpen && close === nextClose) {
+      bucket.push(hours[i]);
+      i++;
+
+      // Check if we're at the end *again* this happens if the hours are the same for at least the last two days of the week
+      if (i + 1 === hours.length) {
+        break;
+      }
+
+      nextOpen = hours[i + 1].open;
+      nextClose = hours[i + 1].close;
+    }
+    // The next day has different open and close times, but we still need to add the current day to the bucket
+    result.push([...bucket, hours[i]]);
+  }
+  return result;
 };

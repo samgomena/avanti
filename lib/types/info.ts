@@ -25,8 +25,8 @@ export type Days =
 // export type Hours = ({ days: Days[] } & OpenClose)[];
 export type Hours = {
   day: Days;
-  open: string | null;
-  close: string | null;
+  open: string;
+  close: string;
 }[];
 
 export type Info = {
