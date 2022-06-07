@@ -1,16 +1,12 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import useFlags from "../../lib/hooks/useFlags";
+import { useFlag } from "../../lib/hooks/useFlags";
 import withAdminNav from "../../lib/withAdminNav";
 
 const Info: React.FC = () => {
   const router = useRouter();
-  const { adminPage } = useFlags();
+  const { enabled } = useFlag("adminPage");
 
-  useEffect(() => {
-    // Default to adding items for now
-    router.push(adminPage ? "/admin/info/edit" : "/");
-  }, [adminPage, router]);
+  router.push(enabled ? "/admin/info/edit" : "/");
 
   return null;
 };
