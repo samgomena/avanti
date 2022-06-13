@@ -2,6 +2,15 @@
   "services": ["dinner", "lunch", "hh", "drinks"],
   "items": [
     {
+      "name": "Marinated Olives",
+      "description": "",
+      "service": ["dinner", "lunch", "hh"],
+      "price": {
+        "dinner": 8,
+        "hh": 4
+      }
+    },
+    {
       "name": "Marcona Almonds",
       "description": "",
       "service": ["dinner", "lunch", "hh"],
@@ -52,6 +61,15 @@
       "description": "With chopped hazelnuts in a miso vinaigrette",
       "service": ["dinner", "lunch"],
       "price": {
+        "dinner": 14,
+        "lunch": 9
+      }
+    },
+    {
+      "name": "Caprese Salad",
+      "description": "Heirloom tomato, basil, and fresh mozzarella",
+      "service": ["dinner", "lunch"],
+      "price": {
         "dinner": 12,
         "lunch": 9
       }
@@ -78,11 +96,19 @@
       "price": { "dinner": 34 }
     },
     {
-      "name": "Bavette Steak",
-      "description": "Served with pomme purée, roasted cipollini and carrots finished with demi",
+      "name": "Smoked Pork Chop",
+      "description": "Brined in apple cider vinegar, served with roasted cipollini onions, pomme puree, and green beans finished with demi",
       "service": ["dinner"],
       "price": {
-        "dinner": 32
+        "dinner": 32 
+      }
+    },
+    {
+      "name": "Flat Iron Steak",
+      "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 34
       }
     },
     {
