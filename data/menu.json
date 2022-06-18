@@ -6,7 +6,6 @@
       "name": "Marinated Olives",
       "description": "",
       "course": "appetizers",
-      "service": ["dinner", "lunch", "hh"],
       "price": {
         "dinner": 8,
         "hh": 4
@@ -16,7 +15,6 @@
       "name": "Marcona Almonds",
       "description": "",
       "course": "appetizers",
-      "service": ["dinner", "lunch", "hh"],
       "price": {
         "dinner": 6,
         "lunch": 5,
@@ -27,14 +25,12 @@
       "name": "Cheese Plate",
       "description": "A handful of rotating cheeses with seasonal fruit, Marcona almonds, and fig compote",
       "course": "appetizers",
-      "service": ["dinner"],
       "price": { "dinner": 20 }
     },
     {
       "name": "Coconut Shrimp",
       "description": "Served with wasabi aioli",
       "course": "appetizers",
-      "service": ["dinner", "lunch"],
       "price": {
         "dinner": 13,
         "lunch": 10
@@ -44,21 +40,18 @@
       "name": "Seared Ahi Tuna",
       "description": "Served with wasabi, pickled ginger, and Wakame salad",
       "course": "appetizers",
-      "service": ["dinner"],
       "price": { "dinner": 20 }
     },
     {
       "name": "Oysters",
       "description": "Half dozen served on the half shell",
       "course": "appetizers",
-      "service": ["dinner"],
       "price": { "dinner": 19 }
     },
     {
       "name": "House Salad",
       "description": "Mixed greens with tomato, candied hazelnuts, and balsamic vinaigrette",
       "course": "soups/salads",
-      "service": ["dinner", "lunch"],
       "price": {
         "dinner": 10,
         "lunch": 7
@@ -68,7 +61,6 @@
       "name": "Roasted Beet and Arugula Salad",
       "description": "With chopped hazelnuts in a miso vinaigrette",
       "course": "soups/salads",
-      "service": ["dinner", "lunch"],
       "price": {
         "dinner": 14,
         "lunch": 9
@@ -78,7 +70,6 @@
       "name": "Caprese Salad",
       "description": "Heirloom tomato, basil, and fresh mozzarella",
       "course": "soups/salads",
-      "service": ["dinner", "lunch"],
       "price": {
         "dinner": 12,
         "lunch": 9
@@ -88,7 +79,6 @@
       "name": "Chicken Breast with Risotto",
       "description": "Grilled bone-in chicken breast, truffle mushroom risotto, spinach, and grilled broccolini",
       "course": "mains",
-      "service": ["dinner", "lunch"],
       "price": {
         "dinner": 30,
         "lunch": 27
@@ -98,21 +88,18 @@
       "name": "Panko and Herb-Crusted Mahi Mahi",
       "description": "Served with crème fraîche, rice, sauce chasseur with bacon, mushroom, tomato, shallots, and grilled asparagus",
       "course": "mains",
-      "service": ["dinner"],
       "price": { "dinner": 32 }
     },
     {
       "name": "Grilled King Salmon",
       "description": "Served with wheat berries and sautéed kale in a smoked tomato Buerre Blanc sauce finished with grilled asparagus",
       "course": "mains",
-      "service": ["dinner"],
       "price": { "dinner": 34 }
     },
     {
       "name": "Smoked Pork Chop",
       "description": "Brined in apple cider vinegar, served with roasted cipollini onions, pomme purée, and green beans finished with demi",
       "course": "mains",
-      "service": ["dinner"],
       "price": {
         "dinner": 32
       }
@@ -121,7 +108,6 @@
       "name": "Flat Iron Steak",
       "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi",
       "course": "mains",
-      "service": ["dinner"],
       "price": {
         "dinner": 34
       }
@@ -130,7 +116,6 @@
       "name": "Prawns, Reto, and Capellini",
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "course": "mains",
-      "service": ["dinner"],
       "price": {
         "dinner": 26
       }
@@ -139,7 +124,6 @@
       "name": "Tillamook Cheddar Cheeseburger with Fries",
       "description": "Tomato, lettuce, and onion",
       "course": "mains",
-      "service": ["dinner", "lunch"],
       "price": {
         "dinner": 19,
         "lunch": 15
@@ -149,7 +133,6 @@
       "name": "Tempura Cod Fish & Chips",
       "description": "Served with coleslaw and wasabi ailoi",
       "course": "mains",
-      "service": ["dinner", "lunch"],
       "price": {
         "dinner": 24,
         "lunch": 21
@@ -159,77 +142,66 @@
       "name": "PamaFlower",
       "description": "Absolut Citron, Pama, St. Germain, soda",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 11 }
     },
     {
       "name": "Last Word",
       "description": "Tanqueray, Luxardo, Green Chartreuse, lime",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 12 }
     },
     {
       "name": "Hemingway Daiquiri",
       "description": "Bacardi, Luxardo, grapefruit, lime",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 11 }
     },
     {
       "name": "Grapefruit Drop",
       "description": "Vodka, Campari, grapefruit, lemon",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 10 }
     },
     {
       "name": "Pineapple Mule",
       "description": "Vodka, pineapple, lime, ginger beer",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 10 }
     },
     {
       "name": "Sidecar",
       "description": "Brandy, Triple Sec, lemon",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 10 }
     },
     {
       "name": "Aperol Spritz",
       "description": "Aperol, Prosecco, soda",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 11 }
     },
     {
       "name": "Redemption Boulevard",
       "description": "Redemption High Rye Bourbon, Aperol, Sweet Vermouth",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 12 }
     },
     {
       "name": "Lolita",
       "description": "Vodka, lemon, strawberry, jalapeño, basil",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 12 }
     },
     {
       "name": "Amaro Whiskey Sour",
       "description": "Amaro, Whiskey, Lemon, Egg White",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 12 }
     },
     {
       "name": "Paloma",
       "description": "Silver Tequila, Grapefruit, Lime, Soda",
       "course": "drinks",
-      "service": ["drinks"],
       "price": { "drinks": 11 }
     }
   ]

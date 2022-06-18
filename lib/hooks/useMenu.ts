@@ -1,5 +1,12 @@
 import menu from "../../data/menu.json";
-import { Items, Item, Menu, MenuBuckets, Service } from "../types/menu";
+import {
+  Items,
+  Item,
+  Menu,
+  MenuBuckets,
+  Service,
+  Services,
+} from "../types/menu";
 import React, { useMemo } from "react";
 
 const useMenu = (): Menu => {
@@ -11,6 +18,8 @@ export const useMenuBuckets = <T extends Item | React.ReactNode>({
 }: {
   as?: ((item: Item, service: Service, idx: number) => React.ReactNode) | null;
 } = {}) => {
+  // Use useMenu here to get types for free
+  const menu = useMenu();
   // Create "buckets" for each service period to fill with items from that service period
   const _menu = useMemo(
     () =>
@@ -18,22 +27,18 @@ export const useMenuBuckets = <T extends Item | React.ReactNode>({
         (acc, curr) => ({ [curr]: new Array(), ...acc }),
         {} as MenuBuckets<T>
       ),
-    []
+    [menu.services]
   );
 
   useMemo(() => {
-    let idx = 0;
-    for (const item of menu.items as Items) {
-      for (const service of item.service) {
-        if (as !== null) {
-          _menu[service].push(as(item, service, idx) as T);
-        } else {
-          _menu[service].push(item as T);
-        }
-      }
-      idx++;
-    }
-  }, [as, _menu]);
+    menu.items.forEach((item, idx) => {
+      (Object.keys(item.price) as Services).forEach((service) => {
+        _menu[service].push(
+          as !== null ? (as(item, service, idx) as T) : (item as T)
+        );
+      });
+    });
+  }, [as, _menu, menu.items]);
 
   return _menu;
 };

@@ -10,7 +10,6 @@ export type Item = {
   name: string;
   description: string;
   course: string;
-  service: Services;
   price: Price;
 };
 
@@ -19,7 +18,7 @@ export type Items = Item[];
 export type Menu = {
   services: Services;
   courses: Courses;
-  items: Item[];
+  items: Items;
 };
 
 export type MenuBuckets<T = Item> = { [k in Service]: T[] };
