@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Facebook, Instagram, MapPin } from "react-feather";
 import { ParallaxBanner } from "react-scroll-parallax";
 import Alerts from "../components/Alerts";
@@ -32,6 +33,12 @@ export default function Home() {
               <p className="text-center text-white-75 mb-7">
                 Located in West Linn, Oregon
               </p>
+
+              <Link href="/menu">
+                <a className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0 umami--click--Menu-Button-Clicked">
+                  Menu
+                </a>
+              </Link>
 
               {reservationsEnabled && (
                 <a
