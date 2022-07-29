@@ -4,7 +4,9 @@ class Document extends NextDocument {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <script async defer data-website-id="cc608202-4eca-436d-affd-90de0b9d1256" src="https://umami-alpha-ebon.vercel.app/umami.js"></script>
+        </Head>
         <body>
           <Main />
           <NextScript />

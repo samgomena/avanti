@@ -37,6 +37,13 @@
       }
     },
     {
+      "name": "Crab Cakes",
+      "description": "Served with remoulade",
+      "price": {
+        "dinner": 21
+      }
+    },
+    {
       "name": "Seared Ahi Tuna",
       "description": "Served with wasabi, pickled ginger, and Wakame salad",
       "course": "appetizers",
@@ -49,9 +56,17 @@
       "price": { "dinner": 19 }
     },
     {
+      "name": "Soup of the Day",
+      "description": "",
+      "price": {
+        "dinner": 11,
+        "lunch": 9
+      }
+    },
+    {
       "name": "House Salad",
-      "description": "Mixed greens with tomato, candied hazelnuts, and balsamic vinaigrette",
       "course": "soups/salads",
+      "description": "Mixed greens with tomato, and candied hazelnuts in a balsamic vinaigrette",
       "price": {
         "dinner": 10,
         "lunch": 7
@@ -62,7 +77,7 @@
       "description": "With chopped hazelnuts in a miso vinaigrette",
       "course": "soups/salads",
       "price": {
-        "dinner": 14,
+        "dinner": 12,
         "lunch": 9
       }
     },
@@ -71,7 +86,7 @@
       "description": "Heirloom tomato, basil, and fresh mozzarella",
       "course": "soups/salads",
       "price": {
-        "dinner": 12,
+        "dinner": 14,
         "lunch": 9
       }
     },
@@ -106,14 +121,14 @@
     },
     {
       "name": "Flat Iron Steak",
-      "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi",
+      "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi-glace",
       "course": "mains",
       "price": {
-        "dinner": 34
+        "dinner": 35
       }
     },
     {
-      "name": "Prawns, Reto, and Capellini",
+      "name": "Prawns and Capellini",
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "course": "mains",
       "price": {
@@ -203,6 +218,24 @@
       "description": "Silver Tequila, Grapefruit, Lime, Soda",
       "course": "drinks",
       "price": { "drinks": 11 }
+    },
+    {
+      "name": "Lion's Tail",
+      "description": "Bourbon, Allspice Dram, Lime",
+      "course": "drinks",
+      "price": { "drinks": 12 }
+    },
+    {
+      "name": "White Queen",
+      "description": "Gin, Italicus, Cointreau, Lemon, Egg White",
+      "course": "drinks",
+      "price": { "drinks": 12 }
+    },
+    {
+      "name": "Vesper",
+      "description": "Aviation Gin, Ketal One, Lillet Blanc",
+      "course": "drinks",
+      "price": { "drinks": 14 }
     }
   ]
 }
