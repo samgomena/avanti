@@ -36,6 +36,14 @@
       }
     },
     {
+      "name": "Crab Cakes",
+      "description": "Served with remoulade",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 21
+      }
+    },
+    {
       "name": "Seared Ahi Tuna",
       "description": "Served with wasabi, pickled ginger, and Wakame salad",
       "service": ["dinner"],
@@ -48,8 +56,17 @@
       "price": { "dinner": 19 }
     },
     {
+      "name": "Soup of the Day",
+      "description": "",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 11,
+        "lunch": 9
+      }
+    },
+    {
       "name": "House Salad",
-      "description": "Mixed greens with tomato, candied hazelnuts, and balsamic vinaigrette",
+      "description": "Mixed greens with tomato, and candied hazelnuts in a balsamic vinaigrette",
       "service": ["dinner", "lunch"],
       "price": {
         "dinner": 10,
@@ -61,7 +78,7 @@
       "description": "With chopped hazelnuts in a miso vinaigrette",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 14,
+        "dinner": 12,
         "lunch": 9
       }
     },
@@ -70,7 +87,7 @@
       "description": "Heirloom tomato, basil, and fresh mozzarella",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 12,
+        "dinner": 14,
         "lunch": 9
       }
     },
@@ -97,22 +114,22 @@
     },
     {
       "name": "Smoked Pork Chop",
-      "description": "Brined in apple cider vinegar, served with roasted cipollini onions, pomme puree, and green beans finished with demi",
-      "service": ["dinner"],
-      "price": {
-        "dinner": 32 
-      }
-    },
-    {
-      "name": "Flat Iron Steak",
-      "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi",
+      "description": "Brined in apple cider vinegar, served with French onion bread pudding and green beans, finished with mushroom sauce",
       "service": ["dinner"],
       "price": {
         "dinner": 34
       }
     },
     {
-      "name": "Prawns, Reto, and Capellini",
+      "name": "Flat Iron Steak",
+      "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi-glace",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 35
+      }
+    },
+    {
+      "name": "Prawns and Capellini",
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "service": ["dinner"],
       "price": {
@@ -202,6 +219,24 @@
       "description": "Silver Tequila, Grapefruit, Lime, Soda",
       "service": ["drinks"],
       "price": { "drinks": 11 }
+    },
+    {
+      "name": "Lion's Tail",
+      "description": "Bourbon, Allspice Dram, Lime",
+      "service": ["drinks"],
+      "price": { "drinks": 12 }
+    },
+    {
+      "name": "White Queen",
+      "description": "Gin, Italicus, Cointreau, Lemon, Egg White",
+      "service": ["drinks"],
+      "price": { "drinks": 12 }
+    },
+    {
+      "name": "Vesper",
+      "description": "Aviation Gin, Ketal One, Lillet Blanc",
+      "service": ["drinks"],
+      "price": { "drinks": 14 }
     }
   ]
 }
