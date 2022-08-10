@@ -66,7 +66,12 @@ export default function AvantiNavbar() {
             </Nav.Item>
             <Nav.Item>
               <Link href="/menu" passHref>
-                <Nav.Link active={router.asPath === "/menu"}>Menu</Nav.Link>
+                <Nav.Link
+                  active={router.asPath === "/menu"}
+                  className="umami--click--Menu-Navbar-Clicked"
+                >
+                  Menu
+                </Nav.Link>
               </Link>
             </Nav.Item>
             <Nav.Item>
