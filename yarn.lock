@@ -826,10 +826,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/bootstrap@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.2.0.tgz#e619da0357f243b1252bd82eb236389ea1fd811d"
-  integrity sha512-zncxyEdbShnbOkY1zGBNqvpdVuIGDEA3rxcANJ4v9b3yaMxp+xDCNSwrXK5+uM7Wz7cb1RoIoRUQ0Q5JyfjyfA==
+"@types/bootstrap@^5.2.3":
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.2.3.tgz#562defe61dac6c9598843d4088de8007a36607bd"
+  integrity sha512-r2SE9NYaaI7B/jJk8gqRtXzlhgFL6dlXBResJkCbQa8ept619WeiOIO4zBQxdmUFzkKNWLK5ZOyYGI3QZoaqbQ==
   dependencies:
     "@popperjs/core" "^2.9.2"
 
