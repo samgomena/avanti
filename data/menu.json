@@ -129,6 +129,14 @@
       }
     },
     {
+      "name": "Braised Alaskan Halibut",
+      "description": "Served with saffron butter poached fingerling potatoes in a tomato basil white wine butter sauce with grilled asparagus",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 37
+      }
+    },
+    {
       "name": "Prawns and Capellini",
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "service": ["dinner"],
