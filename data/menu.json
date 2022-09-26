@@ -145,6 +145,14 @@
       }
     },
     {
+      "name": "Creamy Braised Pork Sugo",
+      "description": "Served with musrooms and poached apples over penne pasta",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 24
+      }
+    },
+    {
       "name": "Tillamook Cheddar Cheeseburger with Fries",
       "description": "Tomato, lettuce, and onion",
       "service": ["dinner", "lunch"],
@@ -242,7 +250,7 @@
     },
     {
       "name": "Vesper",
-      "description": "Aviation Gin, Ketal One, Lillet Blanc",
+      "description": "Aviation Gin, Ketel One, Lillet Blanc",
       "service": ["drinks"],
       "price": { "drinks": 14 }
     }
