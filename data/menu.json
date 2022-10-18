@@ -21,17 +21,27 @@
       }
     },
     {
+      "name": "Bread Service",
+      "description": "",
+      "service": ["dinner", "lunch", "hh"],
+      "price": {
+        "dinner": 5,
+        "lunch": 5,
+        "hh": 4
+      }
+    },
+    {
       "name": "Cheese Plate",
       "description": "A handful of rotating cheeses with seasonal fruit, Marcona almonds, and fig compote",
       "service": ["dinner"],
-      "price": { "dinner": 20 }
+      "price": { "dinner": 22 }
     },
     {
       "name": "Coconut Shrimp",
       "description": "Served with wasabi aioli",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 13,
+        "dinner": 14,
         "lunch": 10
       }
     },
@@ -92,19 +102,26 @@
       }
     },
     {
-      "name": "Chicken Breast with Risotto",
-      "description": "Grilled bone-in chicken breast, truffle mushroom risotto, spinach, and grilled broccolini",
-      "service": ["dinner", "lunch"],
+      "name": "Marinated Grilled Prawns",
+      "description": "Served with heirloom and roasted tomato risotto, spinach, pesto, and grilled zucchini",
+      "service": ["dinner"],
       "price": {
-        "dinner": 30,
-        "lunch": 27
+        "dinner": 31
+      }
+    },
+    {
+      "name": "Braised Short Ribs",
+      "description": "Served in a hoisin burgundy sauce with pomme purée, carrots, parsnips, and cippolini onions",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 37
       }
     },
     {
       "name": "Panko and Herb-Crusted Mahi Mahi",
       "description": "Served with crème fraîche, rice, sauce chasseur with bacon, mushroom, tomato, shallots, and grilled asparagus",
       "service": ["dinner"],
-      "price": { "dinner": 32 }
+      "price": { "dinner": 33 }
     },
     {
       "name": "Grilled King Salmon",
@@ -117,7 +134,7 @@
       "description": "Brined in apple cider vinegar, served with French onion bread pudding and green beans, finished with mushroom sauce",
       "service": ["dinner"],
       "price": {
-        "dinner": 34
+        "dinner": 36
       }
     },
     {
@@ -141,7 +158,7 @@
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "service": ["dinner"],
       "price": {
-        "dinner": 26
+        "dinner": 27
       }
     },
     {
@@ -149,7 +166,7 @@
       "description": "Served with musrooms and poached apples over penne pasta",
       "service": ["dinner"],
       "price": {
-        "dinner": 24
+        "dinner": 26
       }
     },
     {
