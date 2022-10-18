@@ -134,7 +134,7 @@
       "description": "Brined in apple cider vinegar, served with French onion bread pudding and green beans, finished with mushroom sauce",
       "service": ["dinner"],
       "price": {
-        "dinner": 34
+        "dinner": 36
       }
     },
     {
@@ -158,7 +158,7 @@
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "service": ["dinner"],
       "price": {
-        "dinner": 26
+        "dinner": 27
       }
     },
     {
@@ -166,7 +166,7 @@
       "description": "Served with musrooms and poached apples over penne pasta",
       "service": ["dinner"],
       "price": {
-        "dinner": 24
+        "dinner": 26
       }
     },
     {
