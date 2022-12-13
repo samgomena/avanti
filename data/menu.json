@@ -1,5 +1,5 @@
 {
-  "services": ["dinner", "lunch", "hh", "drinks"],
+  "services": ["dinner", "lunch", "hh", "drinks", "dessert"],
   "items": [
     {
       "name": "Marinated Olives",
@@ -124,12 +124,6 @@
       "price": { "dinner": 33 }
     },
     {
-      "name": "Grilled King Salmon",
-      "description": "Served with wheat berries and sautéed kale in a smoked tomato Buerre Blanc sauce finished with grilled asparagus",
-      "service": ["dinner"],
-      "price": { "dinner": 34 }
-    },
-    {
       "name": "Smoked Pork Chop",
       "description": "Brined in apple cider vinegar, served with French onion bread pudding and green beans, finished with mushroom sauce",
       "service": ["dinner"],
@@ -154,6 +148,14 @@
       }
     },
     {
+      "name": "Mary's Organic Chicken Breast",
+      "description": "Served with fingerling potato hash and bacon, chanterelle dijon cream sauce, and grilled broccolini",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 32
+      }
+    },
+    {
       "name": "Prawns and Capellini",
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "service": ["dinner"],
@@ -167,7 +169,8 @@
       "service": ["dinner"],
       "price": {
         "dinner": 26
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Tillamook Cheddar Cheeseburger with Fries",
@@ -270,6 +273,42 @@
       "description": "Aviation Gin, Ketel One, Lillet Blanc",
       "service": ["drinks"],
       "price": { "drinks": 14 }
+    },
+    {
+      "name": "Vanilla bean crème brûlée",
+      "description": "",
+      "service": ["dessert"],
+      "price": { "dessert": 10 }
+    },
+    {
+      "name": "Crème fraîche cheesecake",
+      "description": "Served with a raspberry pinot noir sauce",
+      "service": ["dessert"],
+      "price": { "dessert": 11 }
+    },
+    {
+      "name": "Pumpkin pie",
+      "description": "Served with whipped cream",
+      "service": ["dessert"],
+      "price": { "dessert": 12 }
+    },
+    {
+      "name": "Chocolate peanut butter tort",
+      "description": "",
+      "service": ["dessert"],
+      "price": { "dessert": 11 }
+    },
+    {
+      "name": "Affogato",
+      "description": "Vanilla bean ice cream served with a shot of espresso",
+      "service": ["dessert"],
+      "price": { "dessert": 8 }
+    },
+    {
+      "name": "Sorbet",
+      "description": "A rotating choice of seasonal flavors",
+      "service": ["dessert"],
+      "price": { "dessert": 7 }
     }
   ]
 }
