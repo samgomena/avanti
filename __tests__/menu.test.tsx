@@ -26,7 +26,19 @@ describe("Menu", () => {
       const tab = screen.getByText(_tab);
       expect(tab).toBeInTheDocument();
       expect(tab).toHaveClass("nav-link");
-      expect(tab);
+    });
+  });
+
+  // TODO: Update the ff thingy and ensure that it's actually working
+  it("Does not have ff'd tabs", () => {
+    render(
+      <ParallaxProvider>
+        <Menu />
+      </ParallaxProvider>
+    );
+
+    ["Lunch", "Happy Hour", "Dessert"].forEach((_tab) => {
+      expect(screen.queryByText(_tab)).toBeNull();
     });
   });
 
