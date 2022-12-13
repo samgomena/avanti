@@ -1,4 +1,4 @@
-export type Service = "dinner" | "lunch" | "hh" | "drinks";
+export type Service = "dinner" | "lunch" | "hh" | "drinks" | "dessert";
 
 export type Services = Service[];
 
@@ -9,6 +9,7 @@ export type Item = {
   description: string;
   service: Services;
   price: Price;
+  disabled?: boolean;
 };
 
 export type Items = Item[];

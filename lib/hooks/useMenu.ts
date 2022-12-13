@@ -23,7 +23,10 @@ export const useMenuBuckets = <T extends Item | React.ReactNode>({
 
   useMemo(() => {
     let idx = 0;
-    for (const item of menu.items as Items) {
+    // Loop over items that are not disabled; this could definitely be cleaned up
+    for (const item of (menu.items as Items).filter(
+      (item) => !item.disabled
+    ) as Items) {
       for (const service of item.service) {
         if (as !== null) {
           _menu[service].push(as(item, service, idx) as T);
