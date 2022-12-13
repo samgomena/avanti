@@ -2,6 +2,15 @@
   "services": ["dinner", "lunch", "hh", "drinks"],
   "items": [
     {
+      "name": "Marinated Olives",
+      "description": "",
+      "service": ["dinner", "lunch", "hh"],
+      "price": {
+        "dinner": 8,
+        "hh": 4
+      }
+    },
+    {
       "name": "Marcona Almonds",
       "description": "",
       "service": ["dinner", "lunch", "hh"],
@@ -12,18 +21,36 @@
       }
     },
     {
+      "name": "Bread Service",
+      "description": "",
+      "service": ["dinner", "lunch", "hh"],
+      "price": {
+        "dinner": 5,
+        "lunch": 5,
+        "hh": 4
+      }
+    },
+    {
       "name": "Cheese Plate",
       "description": "A handful of rotating cheeses with seasonal fruit, Marcona almonds, and fig compote",
       "service": ["dinner"],
-      "price": { "dinner": 20 }
+      "price": { "dinner": 22 }
     },
     {
       "name": "Coconut Shrimp",
       "description": "Served with wasabi aioli",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 13,
+        "dinner": 14,
         "lunch": 10
+      }
+    },
+    {
+      "name": "Crab Cakes",
+      "description": "Served with remoulade",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 21
       }
     },
     {
@@ -39,8 +66,17 @@
       "price": { "dinner": 19 }
     },
     {
+      "name": "Soup of the Day",
+      "description": "",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 11,
+        "lunch": 9
+      }
+    },
+    {
       "name": "House Salad",
-      "description": "Mixed greens with tomato, candied hazelnuts, and balsamic vinaigrette",
+      "description": "Mixed greens with tomato, and candied hazelnuts in a balsamic vinaigrette",
       "service": ["dinner", "lunch"],
       "price": {
         "dinner": 10,
@@ -57,19 +93,35 @@
       }
     },
     {
-      "name": "Chicken Breast with Risotto",
-      "description": "Grilled bone-in chicken breast, truffle mushroom risotto, spinach, and grilled broccolini",
+      "name": "Caprese Salad",
+      "description": "Heirloom tomato, basil, and fresh mozzarella",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 30,
-        "lunch": 27
+        "dinner": 14,
+        "lunch": 9
+      }
+    },
+    {
+      "name": "Marinated Grilled Prawns",
+      "description": "Served with heirloom and roasted tomato risotto, spinach, pesto, and grilled zucchini",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 31
+      }
+    },
+    {
+      "name": "Braised Short Ribs",
+      "description": "Served in a hoisin burgundy sauce with pomme purée, carrots, parsnips, and cippolini onions",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 37
       }
     },
     {
       "name": "Panko and Herb-Crusted Mahi Mahi",
       "description": "Served with crème fraîche, rice, sauce chasseur with bacon, mushroom, tomato, shallots, and grilled asparagus",
       "service": ["dinner"],
-      "price": { "dinner": 32 }
+      "price": { "dinner": 33 }
     },
     {
       "name": "Grilled King Salmon",
@@ -78,16 +130,40 @@
       "price": { "dinner": 34 }
     },
     {
-      "name": "Bavette Steak",
-      "description": "Served with pomme purée, roasted cipollini and carrots finished with demi",
+      "name": "Smoked Pork Chop",
+      "description": "Brined in apple cider vinegar, served with French onion bread pudding and green beans, finished with mushroom sauce",
       "service": ["dinner"],
       "price": {
-        "dinner": 32
+        "dinner": 36
       }
     },
     {
-      "name": "Prawns, Reto, and Capellini",
+      "name": "Flat Iron Steak",
+      "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi-glace",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 35
+      }
+    },
+    {
+      "name": "Braised Alaskan Halibut",
+      "description": "Served with saffron butter poached fingerling potatoes in a tomato basil white wine butter sauce with grilled asparagus",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 37
+      }
+    },
+    {
+      "name": "Prawns and Capellini",
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 27
+      }
+    },
+    {
+      "name": "Creamy Braised Pork Sugo",
+      "description": "Served with musrooms and poached apples over penne pasta",
       "service": ["dinner"],
       "price": {
         "dinner": 26
@@ -176,6 +252,24 @@
       "description": "Silver Tequila, Grapefruit, Lime, Soda",
       "service": ["drinks"],
       "price": { "drinks": 11 }
+    },
+    {
+      "name": "Lion's Tail",
+      "description": "Bourbon, Allspice Dram, Lime",
+      "service": ["drinks"],
+      "price": { "drinks": 12 }
+    },
+    {
+      "name": "White Queen",
+      "description": "Gin, Italicus, Cointreau, Lemon, Egg White",
+      "service": ["drinks"],
+      "price": { "drinks": 12 }
+    },
+    {
+      "name": "Vesper",
+      "description": "Aviation Gin, Ketel One, Lillet Blanc",
+      "service": ["drinks"],
+      "price": { "drinks": 14 }
     }
   ]
 }
