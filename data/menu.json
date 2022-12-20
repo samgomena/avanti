@@ -46,6 +46,14 @@
       }
     },
     {
+      "name": "Ahi Poke Stack",
+      "description": "",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 22
+      }
+    },
+    {
       "name": "Crab Cakes",
       "description": "Served with remoulade",
       "service": ["dinner"],
@@ -70,7 +78,7 @@
       "description": "",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 11,
+        "dinner": 12,
         "lunch": 9
       }
     },
@@ -99,6 +107,16 @@
       "price": {
         "dinner": 14,
         "lunch": 9
+      },
+      "disabled": true
+    },
+    {
+      "name": "Baby Kale Salad",
+      "description": "With parmesan, wheat berries, and tomato in a lemongrass vinaigrette",
+      "service": ["dinner", "lunch"],
+      "price": {
+        "dinner": 10,
+        "lunch": 9
       }
     },
     {
@@ -107,6 +125,15 @@
       "service": ["dinner"],
       "price": {
         "dinner": 31
+      },
+      "disabled": true
+    },
+    {
+      "name": "Chicken Breast",
+      "description": "Served on a bed of truffle mushroom risotto with cipollini onions, spinach, demi-glace, and grilled broccolini",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 30
       }
     },
     {
@@ -140,27 +167,19 @@
       }
     },
     {
-      "name": "Braised Alaskan Halibut",
-      "description": "Served with saffron butter poached fingerling potatoes in a tomato basil white wine butter sauce with grilled asparagus",
+      "name": "Pan Seared Scallops",
+      "description": "Served with celery root purée, grilled broccoli, and crispy fingerling potatoes with a broken truffle vinaigrette",
       "service": ["dinner"],
       "price": {
-        "dinner": 37
+        "dinner": 40
       }
     },
     {
-      "name": "Mary's Organic Chicken Breast",
-      "description": "Served with fingerling potato hash and bacon, chanterelle dijon cream sauce, and grilled broccolini",
+      "name": "Australian Rack of Lamb",
+      "description": "Served with goat chesse potato gratin and grilled broccolini",
       "service": ["dinner"],
       "price": {
-        "dinner": 32
-      }
-    },
-    {
-      "name": "Prawns and Capellini",
-      "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
-      "service": ["dinner"],
-      "price": {
-        "dinner": 27
+        "dinner": 46
       }
     },
     {
@@ -168,7 +187,32 @@
       "description": "Served with musrooms and poached apples over penne pasta",
       "service": ["dinner"],
       "price": {
-        "dinner": 26
+        "dinner": 24
+      }
+    },
+    {
+      "name": "Sautéed Prawns and Capellini",
+      "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 27
+      }
+    },
+    {
+      "name": "Braised Alaskan Halibut",
+      "description": "Served with saffron butter poached fingerling potatoes in a tomato basil white wine butter sauce with grilled asparagus",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 37
+      },
+      "disabled": true
+    },
+    {
+      "name": "Mary's Organic Chicken Breast",
+      "description": "Served with fingerling potato hash and bacon, chanterelle dijon cream sauce, and grilled broccolini",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 32
       },
       "disabled": true
     },
