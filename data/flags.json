@@ -6,5 +6,17 @@
   "reservations": {
     "enabled": false,
     "description": "Allows users to make a reservation."
+  },
+  "showLunch": {
+    "enabled": false,
+    "description": "Show lunch on the menu page."
+  },
+  "showHh": {
+    "enabled": false,
+    "description": "Show happy hour on the menu page."
+  },
+  "showDesserts": {
+    "enabled": false,
+    "description": "Show desserts on the menu page."
   }
 }
