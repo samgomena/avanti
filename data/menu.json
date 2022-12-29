@@ -37,6 +37,12 @@
       "price": { "dinner": 22 }
     },
     {
+      "name": "Arancini",
+      "description": "Fried risotto cakes filled with smoked pork and goat cheese",
+      "service": ["dinner"],
+      "price": { "dinner": 16 }
+    },
+    {
       "name": "Coconut Shrimp",
       "description": "Served with wasabi aioli",
       "service": ["dinner", "lunch"],
@@ -187,7 +193,7 @@
       "description": "Served with musrooms and poached apples over penne pasta",
       "service": ["dinner"],
       "price": {
-        "dinner": 24
+        "dinner": 26
       }
     },
     {
