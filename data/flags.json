@@ -1,6 +1,9 @@
 {
   "adminPage": {
-    "enabled": false,
+    "enabled": {
+      "local": true,
+      "production": false
+    },
     "description": "Shows the admin page after logging in. Note that the login page is still accessible."
   },
   "reservations": {

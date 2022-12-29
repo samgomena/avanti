@@ -1,5 +1,12 @@
+export type FlagEnabled =
+  | boolean
+  | {
+      local: boolean;
+      production: boolean;
+    };
+
 export type Flag = {
-  enabled: boolean;
+  enabled: FlagEnabled;
   description?: string;
 };
 

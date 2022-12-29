@@ -1,4 +1,3 @@
-import { DEFAULT_BREAKPOINTS } from "react-bootstrap/esm/ThemeProvider";
 import type { Hours } from "../types/info";
 import { Service } from "../types/menu";
 
@@ -93,3 +92,5 @@ export const compactHours = (hours: Hours) => {
   }
   return result;
 };
+
+export const isProd = () => process.env.NODE_ENV === "production";
