@@ -89,7 +89,9 @@ const EditInfo: React.FC = () => {
                   <div key={idx} className="form-group mb-3">
                     <label>
                       {capitalize(entry.day)}
-                      <HoursField idx={idx} />
+                      {(entry.open !== "" || entry.close !== "") && (
+                        <HoursField idx={idx} />
+                      )}
                       <div className="form-check">
                         <input
                           type="checkbox"

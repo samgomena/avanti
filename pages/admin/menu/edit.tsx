@@ -1,4 +1,5 @@
 import Button from "react-bootstrap/Button";
+import Collapse from "react-bootstrap/Collapse";
 
 import {
   ErrorMessage,
@@ -9,16 +10,17 @@ import {
   FormikValues,
   FormikHelpers,
 } from "formik";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import * as Yup from "yup";
 
 import FieldWithError from "../../../components/Form/FieldWithError";
 import withAdminNav from "../../../lib/withAdminNav";
 import useMenu from "../../../lib/hooks/useMenu";
-import { Menu } from "../../../lib/types/menu";
+import { Menu, Services } from "../../../lib/types/menu";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
-import { serviceToDisplay } from "../../../lib/utils/utils";
+import { inflect, serviceToDisplay } from "../../../lib/utils/utils";
 import FormError from "../../../components/Form/FormError";
+import { ChevronDown, ChevronUp, MoreHorizontal } from "react-feather";
 
 const validationSchema = Yup.object({
   items: Yup.array().of(
@@ -87,69 +89,18 @@ const EditMenu: React.FC = () => {
                 {({ remove }) =>
                   values.items.map(({ name, service }, idx1) => (
                     <Fragment key={`name-${idx1}`}>
-                      <div className="col-12">
-                        <FieldWithError
-                          name={`items.${idx1}.name`}
-                          placeholder="Name"
-                        />
-
-                        <FieldWithError
-                          name={`items.${idx1}.description`}
-                          placeholder="Description"
-                          as="textarea"
-                          type="text"
-                          rows={3}
-                        />
-
-                        <div className="form-group mb-3" role="group">
-                          {menu.services.map((_service, idx2) => (
-                            <div
-                              className="form-check"
-                              key={`service-${idx1}-${idx2}`}
-                            >
-                              <Field
-                                className="form-check-input"
-                                checked={service.indexOf(_service) !== -1}
-                                type="checkbox"
-                                value={_service}
-                                name={`items.${idx1}.service`}
-                              />
-                              <label className="form-check-label">
-                                {serviceToDisplay(_service)}
-                              </label>
-
-                              <div className="input-group input-group-sm w-25 mb-3">
-                                <span className="input-group-text">$</span>
-                                <Field
-                                  className="form-control form-control-sm"
-                                  // This throws a warning because some service prices are not defined. Likely, you have to define a custom field that accounts for undefined values to fix this.
-                                  name={`items.${idx1}.price.${_service}`}
-                                  type="number"
-                                  placeholder="Price"
-                                />
-                                <ErrorMessage
-                                  component={FormError}
-                                  name={`items.${idx1}.price.${_service}`}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                          <ErrorMessage
-                            component={FormError}
-                            name={`items.${idx1}.service`}
-                          />
-                        </div>
-                      </div>
-                      <Button onClick={() => remove(idx1)}>
-                        Remove {name} from the menu
-                      </Button>
+                      <EditMenuItem
+                        idx={idx1}
+                        name={name}
+                        service={service}
+                        remove={remove}
+                      />
                       <hr />
                     </Fragment>
                   ))
                 }
               </FieldArray>
               <div className="row fixed-bottom" style={{ position: "sticky" }}>
-                {/* <hr /> */}
                 <div className="col-8">
                   <Button
                     type="submit"
@@ -158,9 +109,9 @@ const EditMenu: React.FC = () => {
                       !isValid || isSubmitting || values.items.length === 0
                     }
                   >
-                    {`Submit ${values.items.length} ${
-                      values.items.length === 1 ? "item" : "items"
-                    }`}
+                    {`Submit ${values.items.length} ${inflect("item")(
+                      values.items.length
+                    )}`}
                   </Button>
                 </div>
                 <div className="col-3">
@@ -183,3 +134,88 @@ const EditMenu: React.FC = () => {
 };
 
 export default withAdminNav(EditMenu);
+
+type EditMenuItemProps = {
+  idx: number;
+  name: string;
+  service: Services;
+  remove: (_: number) => void;
+};
+
+function EditMenuItem({ idx, name, service, remove }: EditMenuItemProps) {
+  const [open, setOpen] = useState(false);
+  const { services } = useMenu();
+  return (
+    <>
+      <div
+        className="fs-5 w-100 d-flex"
+        style={{
+          cursor: "pointer",
+        }}
+        onClick={() => setOpen(!open)}
+      >
+        <span
+          style={{
+            cursor: "grab",
+          }}
+        >
+          <MoreHorizontal />
+        </span>
+
+        <span>{name}</span>
+        <span className="ml-auto">
+          {open ? <ChevronUp /> : <ChevronDown />}
+        </span>
+      </div>
+      <Collapse in={open} timeout={50}>
+        <div className="col-12 collapse" id={`toggle-${idx}`}>
+          <FieldWithError name={`items.${idx}.name`} placeholder="Name" />
+
+          <FieldWithError
+            name={`items.${idx}.description`}
+            placeholder="Description"
+            as="textarea"
+            type="text"
+            rows={3}
+          />
+
+          <div className="form-group mb-3" role="group">
+            {services.map((_service, idx2) => (
+              <div className="form-check" key={`service-${idx}-${idx2}`}>
+                <Field
+                  className="form-check-input"
+                  checked={service.indexOf(_service) !== -1}
+                  type="checkbox"
+                  value={_service}
+                  name={`items.${idx}.service`}
+                />
+                <label className="form-check-label">
+                  {serviceToDisplay(_service)}
+                </label>
+
+                <div className="input-group input-group-sm w-50 mb-3">
+                  <span className="input-group-text">$</span>
+                  <Field
+                    className="form-control form-control-sm"
+                    // This throws a warning because some service prices are not defined. Likely, you have to define a custom field that accounts for undefined values to fix this.
+                    name={`items.${idx}.price.${_service}`}
+                    type="number"
+                    placeholder="Price"
+                  />
+                  <ErrorMessage
+                    component={FormError}
+                    name={`items.${idx}.price.${_service}`}
+                  />
+                </div>
+              </div>
+            ))}
+            <ErrorMessage component={FormError} name={`items.${idx}.service`} />
+          </div>
+          <Button onClick={() => remove(idx)}>
+            Remove {name} from the menu
+          </Button>
+        </div>
+      </Collapse>
+    </>
+  );
+}

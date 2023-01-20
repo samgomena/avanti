@@ -3,12 +3,12 @@ import { Service } from "../types/menu";
 
 export const serviceToDisplay = (code: Service) => {
   switch (code) {
-    case "dinner":
-    case "lunch":
-    case "drinks":
-      return capitalize(code);
+    // Handle special cases
     case "hh":
       return "Happy Hour";
+    // Err'thing else should just be capitalized
+    default:
+      return capitalize(code);
   }
 };
 
