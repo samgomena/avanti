@@ -80,7 +80,7 @@ $theme-colors: (
 //
 // Quickly modify global styling by enabling or disabling optional features.
 
-$enable-rounded: false !default;
+$enable-rounded: true !default;
 $enable-rfs: false !default;
 $enable-validation-icons: false !default;
 $enable-negative-margins: true !default;

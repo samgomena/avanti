@@ -23,9 +23,7 @@ const Alerts: React.FC = () => {
   return show ? (
     <Alert
       variant="warning"
-      className="text-center"
-      // This doesn't look right with no border radius
-      style={{ borderRadius: "0.25rem" }}
+      className="text-center rounded"
       onClose={() => setShow(false)}
       dismissible
     >
