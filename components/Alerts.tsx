@@ -4,6 +4,8 @@ import useAlerts from "../lib/hooks/useAlerts";
 
 const Alerts: React.FC = () => {
   const alerts = useAlerts();
+  // TODO: This should instead be sorted by date start and/or end date instead of grabbing the last one
+  // TODO: This is because it will likely be beneficial to queue up a number of events to show in the future.
   const alert = alerts.at(-1);
   const [show, setShow] = useState(true);
   const now = new Date();
@@ -15,7 +17,8 @@ const Alerts: React.FC = () => {
   }
 
   // If alert hasn't started yet or alert has expired then don't show it
-  // Note: This is *exclusive* so the alert will show on the days of the start end dates
+  // Note: This is *not* exclusive. This is because we're comparing date*times* not just dates
+  // Note: So, this will be true on the last day if it's stored as a date only (b/c the hours/minutes/seconds will be past 12:00 AM of the last day)
   if (now < new Date(alert?.start) || now > new Date(alert?.end)) {
     return null;
   }
