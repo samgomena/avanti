@@ -20,7 +20,8 @@ import { Menu, Services } from "../../../lib/types/menu";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import { inflect, serviceToDisplay } from "../../../lib/utils/utils";
 import FormError from "../../../components/Form/FormError";
-import { ChevronDown, ChevronUp, MoreHorizontal } from "react-feather";
+import { ChevronDown, ChevronUp } from "react-feather";
+import Move from "../../../components/Icons/Move";
 
 const validationSchema = Yup.object({
   items: Yup.array().of(
@@ -67,16 +68,20 @@ const onSubmit = async (
 
 const EditMenu: React.FC = () => {
   const menu = useMenu();
+  // const [searchText, setSearchText] = useState("");
+
   return (
     <div className="row justify-content-center">
       <div className="col">
         <h3>Edit menu items</h3>
-        <input
+        {/* TODO: Add search input */}
+        {/* <input
           type="text"
           className="form-control form-control-sm mb-3"
           placeholder="Search..."
-        />
+        /> 
         <hr />
+        */}
         <Formik
           initialValues={menu}
           validationSchema={validationSchema}
@@ -101,21 +106,21 @@ const EditMenu: React.FC = () => {
                 }
               </FieldArray>
               <div className="row fixed-bottom" style={{ position: "sticky" }}>
-                <div className="col-8">
+                <div className="col">
                   <Button
+                    className="w-100"
                     type="submit"
                     variant="primary"
                     disabled={
                       !isValid || isSubmitting || values.items.length === 0
                     }
                   >
-                    {`Submit ${values.items.length} ${inflect("item")(
-                      values.items.length
-                    )}`}
+                    Update
                   </Button>
                 </div>
-                <div className="col-3">
+                <div className="col">
                   <Button
+                    className="w-100"
                     type="reset"
                     variant="secondary"
                     disabled={!dirty}
@@ -155,16 +160,17 @@ function EditMenuItem({ idx, name, service, remove }: EditMenuItemProps) {
         onClick={() => setOpen(!open)}
       >
         <span
+          className="opacity-0 opacity-100-hover"
           style={{
             cursor: "grab",
           }}
         >
-          <MoreHorizontal />
+          <Move />
         </span>
 
         <span>{name}</span>
-        <span className="ml-auto">
-          {open ? <ChevronUp /> : <ChevronDown />}
+        <span className="pl-4">
+          {open ? <ChevronUp size="18" /> : <ChevronDown size="18" />}
         </span>
       </div>
       <Collapse in={open} timeout={50}>
