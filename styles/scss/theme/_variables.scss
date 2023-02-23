@@ -29,7 +29,6 @@ $grays: (
   "900": $gray-900,
 ) !default;
 
-// $brand: #414e56 !default;
 $brand: #2b3a4b !default;
 $blue: #0d6efd !default;
 $indigo: #6610f2 !default;
@@ -59,7 +58,7 @@ $colors: (
   "gray-dark": $gray-800,
 ) !default;
 
-$primary: $brand !default;
+$primary: $orange !default;
 $secondary: $gray-600 !default;
 $success: $green !default;
 $info: $cyan !default;
@@ -83,7 +82,7 @@ $theme-colors: (
 //
 // Quickly modify global styling by enabling or disabling optional features.
 
-$enable-rounded: false !default;
+$enable-rounded: true !default;
 $enable-rfs: false !default;
 $enable-validation-icons: false !default;
 $enable-negative-margins: true !default;
