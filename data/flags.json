@@ -7,7 +7,7 @@
     "description": "Shows the admin page after logging in. Note that the login page is still accessible."
   },
   "reservations": {
-    "enabled": false,
+    "enabled": true,
     "description": "Allows users to make a reservation."
   },
   "showLunch": {

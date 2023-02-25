@@ -35,18 +35,21 @@ export default function Home() {
               </p>
 
               <Link href="/menu">
-                <a className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0 umami--click--Menu-Button-Clicked">
+                <a className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0 me-2 umami--click--Menu-Button-Clicked">
                   Menu
                 </a>
               </Link>
 
               {reservationsEnabled && (
-                <a
-                  className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0"
-                  href="#reservation"
-                >
-                  Make a reservation
-                </a>
+                <Link href="https://www.opentable.com/r/avanti-reservations-west-linn?restref=1277137&lang=en-US&ot_source=Restaurant%20website">
+                  <a
+                    className="btn btn-primary text-white text-primary-hover mb-7 mb-md-0 umami--click--OpenTable-Reserve-Clicked"
+                    rel="noopener noreferer"
+                    target="_blank"
+                  >
+                    Reserve a Table
+                  </a>
+                </Link>
               )}
             </div>
           </div>
