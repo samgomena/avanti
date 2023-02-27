@@ -1,14 +1,16 @@
-import { useRouter } from "next/router";
-import { useFlag } from "../../lib/hooks/useFlags";
-import withAdminNav from "../../lib/withAdminNav";
+import type { GetStaticProps } from "next";
 
 const Info: React.FC = () => {
-  const router = useRouter();
-  const { enabled } = useFlag("adminPage");
-
-  router.push(enabled ? "/admin/info/edit" : "/");
-
   return null;
 };
 
-export default withAdminNav(Info);
+export default Info;
+
+export const getStaticProps: GetStaticProps = () => {
+  return {
+    redirect: {
+      permanent: false,
+      destination: "/admin/info/edit",
+    },
+  };
+};
