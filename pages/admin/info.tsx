@@ -1,4 +1,4 @@
-import type { GetStaticProps } from "next";
+import type { GetStaticProps } from "next/types";
 
 const Info: React.FC = () => {
   return null;
