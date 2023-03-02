@@ -1,50 +1,56 @@
+import Field from "../components/Form/FieldWithError";
 import Header from "../components/Header";
 import Section from "../components/Section";
-import Field from "../components/Form/FieldWithError";
 
 import Button from "react-bootstrap/Button";
 
-import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
+import { GetServerSideProps } from "next";
+import { getSession, signIn } from "next-auth/react";
+import { useState } from "react";
 import * as Yup from "yup";
 
 type LoginValues = {
   email: string;
-  password: string;
 };
 
 const initialValues: LoginValues = {
   email: "",
-  password: "",
 };
 
 const LoginSchema = Yup.object({
   email: Yup.string()
     .email("That's not a valid email!")
     .required("Your email is required to log in!"),
-  password: Yup.string().required("Your password is required to log in!"),
 });
 
 const Login: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
+  const [message, setMessage] = useState("");
 
-  const onSubmit = useCallback(
-    (values: LoginValues, { setSubmitting }: FormikHelpers<LoginValues>) => {
-      setTimeout(() => {
-        console.log(JSON.stringify(values));
-        if (
-          values.email === "email@example.com" &&
-          values.password === "password"
-        ) {
-          setSubmitting(false);
-          router.push("/admin");
-        }
-      }, 1000);
-    },
-    [router]
-  );
+  const onSubmit = async (
+    values: LoginValues,
+    { setSubmitting }: FormikHelpers<LoginValues>
+  ) => {
+    setSubmitting(true);
+    try {
+      const res = await signIn("email", {
+        email: values.email,
+        callbackUrl: "/admin/overview",
+        redirect: false,
+      });
+      if (!res?.error) {
+        setMessage("Check your email for a login link!");
+      } else {
+        setMessage(
+          "An error occured while trying to sign in. Check your email and try again."
+        );
+      }
+    } catch (error) {
+      setMessage("An error occured while trying to sign in.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -74,34 +80,7 @@ const Login: React.FC = () => {
                         />
                       </div>
 
-                      <div className="mb-3 form-group">
-                        <label className="visually-hidden" htmlFor="password">
-                          Password
-                        </label>
-                        <Field
-                          id="password"
-                          className="form-control"
-                          type={showPassword ? "text" : "password"}
-                          name="password"
-                          placeholder="Password"
-                        />
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            onChange={() => setShowPassword(!showPassword)}
-                            type="checkbox"
-                            value=""
-                            id="showPassword"
-                            checked={showPassword}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="showPassword"
-                          >
-                            Show password
-                          </label>
-                        </div>
-                      </div>
+                      {/* TODO: Display message if there is one */}
 
                       <Button
                         type="submit"
@@ -123,3 +102,18 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/admin/overview",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};
