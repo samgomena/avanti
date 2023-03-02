@@ -25,7 +25,10 @@ const LoginSchema = Yup.object({
 });
 
 const Login: React.FC = () => {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<{
+    type: "error" | "success";
+    text: string;
+  }>();
 
   const onSubmit = async (
     values: LoginValues,
@@ -39,14 +42,21 @@ const Login: React.FC = () => {
         redirect: false,
       });
       if (!res?.error) {
-        setMessage("Check your email for a login link!");
+        setMessage({
+          type: "success",
+          text: "Check your email for a login link!",
+        });
       } else {
-        setMessage(
-          "An error occured while trying to sign in. Check your email and try again."
-        );
+        setMessage({
+          type: "error",
+          text: "An error occured while trying to sign in. Check your email and try again.",
+        });
       }
     } catch (error) {
-      setMessage("An error occured while trying to sign in.");
+      setMessage({
+        type: "error",
+        text: "An error occured while trying to sign in.",
+      });
     } finally {
       setSubmitting(false);
     }
@@ -80,15 +90,28 @@ const Login: React.FC = () => {
                         />
                       </div>
 
-                      {/* TODO: Display message if there is one */}
+                      {message && (
+                        <p
+                          className={`text-center fs-6 ${
+                            message.type === "error"
+                              ? "text-danger"
+                              : "text-success"
+                          }`}
+                        >
+                          {message.text}
+                        </p>
+                      )}
 
-                      <Button
-                        type="submit"
-                        variant="outline-primary"
-                        disabled={!isValid || isSubmitting}
-                      >
-                        {isSubmitting ? "logging in" : "login"}
-                      </Button>
+                      {(!message || message.type === "error") && (
+                        <Button
+                          type="submit"
+                          variant="outline-primary"
+                          className="w-100"
+                          disabled={!isValid || isSubmitting}
+                        >
+                          {isSubmitting ? "logging in" : "login"}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </Form>

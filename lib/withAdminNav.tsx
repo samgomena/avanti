@@ -1,6 +1,8 @@
 import { AdminHeader as Header } from "../components/Header";
 import Section from "../components/Section";
 import NavLink from "../components/NavLink";
+import Button from "react-bootstrap/Button";
+import { signOut } from "next-auth/react";
 
 export default function withAdminNav(Component: React.FC) {
   return function WithAdminNav() {
@@ -44,6 +46,17 @@ export default function withAdminNav(Component: React.FC) {
                   </div>
                   <div className="nav-item">
                     <NavLink href="/admin/settings">Settings</NavLink>
+                  </div>
+                  <hr />
+                  <div className="nav-item">
+                    <Button
+                      variant="outline-primary"
+                      className="w-100"
+                      size="sm"
+                      onClick={() => signOut({ callbackUrl: "/login" })}
+                    >
+                      Logout
+                    </Button>
                   </div>
                 </div>
               </div>

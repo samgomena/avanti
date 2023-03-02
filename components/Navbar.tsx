@@ -1,12 +1,15 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
 export default function AvantiNavbar() {
   const router = useRouter();
   const [navbarTheme, setNavbarTheme] = useState<"dark" | "light">("dark");
+
+  const { data: session } = useSession();
 
   const handleScroll = useCallback(() => {
     if (window.scrollY <= 1) {
@@ -33,6 +36,8 @@ export default function AvantiNavbar() {
       setNavbarTheme("dark");
     }
   }, []);
+
+  const isLoggedInPath = session ? "/admin/overview" : "/login";
 
   return (
     <Navbar
@@ -109,8 +114,10 @@ export default function AvantiNavbar() {
             </Nav.Item>
 
             <Nav.Item>
-              <Link href="/login" passHref>
-                <Nav.Link active={router.asPath === "/login"}>Login</Nav.Link>
+              <Link href={isLoggedInPath} passHref>
+                <Nav.Link active={router.asPath === isLoggedInPath}>
+                  {session ? "Admin" : "Login"}
+                </Nav.Link>
               </Link>
             </Nav.Item>
           </Nav>
