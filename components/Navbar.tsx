@@ -115,7 +115,12 @@ export default function AvantiNavbar() {
 
             <Nav.Item>
               <Link href={isLoggedInPath} passHref>
-                <Nav.Link active={router.asPath === isLoggedInPath}>
+                <Nav.Link
+                  active={
+                    router.asPath === "/login" ||
+                    router.asPath.startsWith("/admin")
+                  }
+                >
                   {session ? "Admin" : "Login"}
                 </Nav.Link>
               </Link>
