@@ -9,6 +9,7 @@ import { GetServerSideProps } from "next";
 import { getSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import * as Yup from "yup";
+import { useRouter } from "next/router";
 
 type LoginValues = {
   email: string;
@@ -25,6 +26,7 @@ const LoginSchema = Yup.object({
 });
 
 const Login: React.FC = () => {
+  const router = useRouter();
   const [message, setMessage] = useState<{
     type: "error" | "success";
     text: string;
@@ -38,7 +40,9 @@ const Login: React.FC = () => {
     try {
       const res = await signIn("email", {
         email: values.email,
-        callbackUrl: "/admin/overview",
+        // If a continuation url was passed use that otherwise default to the admin overview page
+        // Use toString() because `wantsUrl` *could* be a `string[]` (ofc it never should be though)
+        callbackUrl: router.query?.wantsUrl?.toString() ?? "/admin/overview",
         redirect: false,
       });
       if (!res?.error) {

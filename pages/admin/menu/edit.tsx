@@ -3,25 +3,27 @@ import Collapse from "react-bootstrap/Collapse";
 
 import {
   ErrorMessage,
-  Formik,
-  Form,
   FastField as Field,
   FieldArray,
-  FormikValues,
+  Form,
+  Formik,
   FormikHelpers,
+  FormikValues,
 } from "formik";
 import { Fragment, useState } from "react";
 import * as Yup from "yup";
 
+import { getSession } from "next-auth/react";
+import type { GetServerSideProps } from "next/types";
+import { ChevronDown, ChevronUp } from "react-feather";
+import BeforeUnload from "../../../components/Form/BeforeUnload";
 import FieldWithError from "../../../components/Form/FieldWithError";
-import withAdminNav from "../../../lib/withAdminNav";
+import FormError from "../../../components/Form/FormError";
+import Move from "../../../components/Icons/Move";
 import useMenu from "../../../lib/hooks/useMenu";
 import { Menu, Services } from "../../../lib/types/menu";
-import BeforeUnload from "../../../components/Form/BeforeUnload";
-import { inflect, serviceToDisplay } from "../../../lib/utils/utils";
-import FormError from "../../../components/Form/FormError";
-import { ChevronDown, ChevronUp } from "react-feather";
-import Move from "../../../components/Icons/Move";
+import { serviceToDisplay } from "../../../lib/utils/utils";
+import withAdminNav from "../../../lib/withAdminNav";
 
 const validationSchema = Yup.object({
   items: Yup.array().of(
@@ -138,8 +140,6 @@ const EditMenu: React.FC = () => {
   );
 };
 
-export default withAdminNav(EditMenu);
-
 type EditMenuItemProps = {
   idx: number;
   name: string;
@@ -225,3 +225,21 @@ function EditMenuItem({ idx, name, service, remove }: EditMenuItemProps) {
     </>
   );
 }
+
+export default withAdminNav(EditMenu);
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/login?wantsUrl=${ctx.resolvedUrl}`,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

@@ -10,6 +10,8 @@ import {
 import { useEffect } from "react";
 import { useFlag } from "../../lib/hooks/useFlags";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next/types";
+import { getSession } from "next-auth/react";
 
 type MenuBucketStats = { [k in Service]: { total: number; avgPrice: number } };
 
@@ -68,3 +70,18 @@ const Overview: React.FC = () => {
 };
 
 export default withAdminNav(Overview);
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/login?wantsUrl=${ctx.resolvedUrl}`,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};

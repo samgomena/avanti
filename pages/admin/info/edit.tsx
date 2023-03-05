@@ -1,12 +1,14 @@
-import Button from "react-bootstrap/Button";
 import { Form, Formik, FormikValues } from "formik";
+import { getSession } from "next-auth/react";
+import type { GetServerSideProps } from "next/types";
+import Button from "react-bootstrap/Button";
+import * as Yup from "yup";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
-import useInfo, { days } from "../../../lib/hooks/useInfo";
-import withAdminNav from "../../../lib/withAdminNav";
 import HoursField from "../../../components/Form/HoursField";
+import useInfo, { days } from "../../../lib/hooks/useInfo";
 import { capitalize } from "../../../lib/utils/utils";
-import * as Yup from "yup";
+import withAdminNav from "../../../lib/withAdminNav";
 
 const validationSchema = Yup.object({
   about: Yup.string().required("This is required!"),
@@ -158,3 +160,19 @@ const EditInfo: React.FC = () => {
 };
 
 export default withAdminNav(EditInfo);
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/login?wantsUrl=${ctx.resolvedUrl}`,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

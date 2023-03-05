@@ -11,6 +11,8 @@ import React from "react";
 import useMenu from "../../../lib/hooks/useMenu";
 import { serviceToDisplay } from "../../../lib/utils/utils";
 import FormError from "../../../components/Form/FormError";
+import { GetServerSideProps } from "next/types";
+import { getSession } from "next-auth/react";
 
 const initialValue: Item = {
   name: "",
@@ -195,3 +197,19 @@ const AddMenuItem: React.FC = () => {
 };
 
 export default withAdminNav(AddMenuItem);
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/login?wantsUrl=${ctx.resolvedUrl}`,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

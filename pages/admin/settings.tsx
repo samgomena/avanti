@@ -1,4 +1,6 @@
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next/types";
 import useSWR from "swr";
 import { useFlag } from "../../lib/hooks/useFlags";
 import fetcher from "../../lib/utils/fetcher";
@@ -55,3 +57,18 @@ const Settings: React.FC = () => {
 };
 
 export default withAdminNav(Settings);
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/login?wantsUrl=${ctx.resolvedUrl}`,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};
