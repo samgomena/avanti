@@ -3,9 +3,12 @@ import Section from "../components/Section";
 import NavLink from "../components/NavLink";
 import Button from "react-bootstrap/Button";
 import { signOut } from "next-auth/react";
+import type { ComponentType } from "react";
 
-export default function withAdminNav(Component: React.FC) {
-  return function WithAdminNav() {
+export default function withAdminNav<
+  T extends JSX.IntrinsicAttributes & Object
+>(Component: React.FC<T>) {
+  return function WithAdminNav(props: T) {
     return (
       <>
         <Header />
@@ -63,7 +66,7 @@ export default function withAdminNav(Component: React.FC) {
               <div className="col-sm-9 col-lg-10">
                 <div className="tab-content">
                   <div className="fade tab-pane active show" role="tabpanel">
-                    <Component />
+                    <Component {...props} />
                   </div>
                 </div>
               </div>
