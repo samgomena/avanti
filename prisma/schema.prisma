@@ -61,7 +61,7 @@ model VerificationToken {
 
 model Info {
   id        String  @id @default(cuid())
-  about     String
+  about     String  @db.Text
   contact   Contact @relation(fields: [contactId], references: [id])
   hours     Hours[]
   contactId String
@@ -98,4 +98,12 @@ model Hours {
   infoId String?
 
   @@index([infoId])
+}
+
+model Alerts {
+  id    String   @id @default(cuid())
+  start DateTime
+  end   DateTime
+  title String?
+  text  String
 }
