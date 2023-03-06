@@ -58,3 +58,44 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Info {
+  id        String  @id @default(cuid())
+  about     String
+  contact   Contact @relation(fields: [contactId], references: [id])
+  hours     Hours[]
+  contactId String
+
+  @@index([contactId])
+}
+
+model Contact {
+  id        String @id @default(cuid())
+  address   String
+  email     String
+  phone     String
+  facebook  String
+  instagram String
+  Info      Info[]
+}
+
+enum Days {
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+  saturday
+  sunday
+}
+
+model Hours {
+  id     String  @id @default(cuid())
+  day    Days
+  open   String?
+  close  String?
+  Info   Info?   @relation(fields: [infoId], references: [id])
+  infoId String?
+
+  @@index([infoId])
+}
