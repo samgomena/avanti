@@ -6,7 +6,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
-import { Modal, ModalProps, Table } from "react-bootstrap";
+import { Badge, Modal, ModalProps, Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import * as Yup from "yup";
 import prisma from "../../lib/prismadb";
@@ -42,7 +42,7 @@ const People: React.FC<PeopleProps> = ({ users }) => {
             <tr>
               <th>Name</th>
               <th>Email</th>
-              <th>Role</th>
+              <th>Email Verified</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -51,9 +51,14 @@ const People: React.FC<PeopleProps> = ({ users }) => {
               <tr key={user.id}>
                 <td>{user.name === null ? "N/A" : user.name}</td>
                 <td>{user.email}</td>
-                <td>Admin</td>
                 <td>
-                  {" "}
+                  {user.emailVerified ? (
+                    <Badge bg="success">Yes</Badge>
+                  ) : (
+                    <Badge bg="danger">No</Badge>
+                  )}
+                </td>
+                <td>
                   <UpdateModal
                     userValues={{
                       id: user.id,
@@ -272,13 +277,19 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const users = await prisma.user.findMany({
+  const _users = await prisma.user.findMany({
     select: {
       id: true,
       email: true,
       name: true,
+      emailVerified: true,
     },
   });
+
+  const users = _users.map((user) => ({
+    ...user,
+    emailVerified: user.emailVerified?.getTime() ?? null,
+  }));
 
   return {
     props: {

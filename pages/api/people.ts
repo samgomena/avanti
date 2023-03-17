@@ -12,32 +12,24 @@ const User = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  if (req.method === "POST") {
-    const name = req.body.name;
-    const email = req.body.email;
+  const id = req.body.id;
+  const name = req.body.name;
+  const email = req.body.email;
 
-    return await createUser(res, {
-      name,
-      email,
-    });
-  }
-
-  if (req.method === "PATCH") {
-    const id = req.body.id;
-    const name = req.body.name;
-    const email = req.body.email;
-    console.log(id, name, email);
-    return await updateUser(res, {
-      id,
-      name,
-      email,
-    });
-  }
-
-  if (req.method === "DELETE") {
-    const userId = req.body.userId;
-
-    return await deleteUser(res, userId);
+  switch (req.method) {
+    case "POST":
+      return await createUser(res, {
+        name,
+        email,
+      });
+    case "PATCH":
+      return await updateUser(res, {
+        id,
+        name,
+        email,
+      });
+    case "DELETE":
+      return await deleteUser(res, id);
   }
 };
 
@@ -53,10 +45,14 @@ const createUser = async (
   { name, email }: UpsertUser
 ) => {
   try {
-    const newUser = await adapter.createUser({
-      email,
-      name,
-      emailVerified: null,
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        name,
+        emailVerified: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     });
 
     res.status(201).json({
@@ -79,7 +75,16 @@ const updateUser = async (
   { id, name, email }: UpsertUser
 ) => {
   try {
-    const updatedUser = await adapter.updateUser({ id, name, email });
+    const updatedUser = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        email,
+        updatedAt: new Date(),
+      },
+    });
     res.status(200).json({
       ok: true,
       error: null,
