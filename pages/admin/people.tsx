@@ -2,6 +2,7 @@ import BeforeUnload from "@/components/Form/BeforeUnload";
 import Field from "@/components/Form/FieldWithError";
 import { User } from "@prisma/client";
 import { Form, Formik, FormikValues } from "formik";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
@@ -260,7 +261,17 @@ const DeleteUser = ({ userId, name }: { userId: string; name: string }) => {
 
 export default withAdminNav<PeopleProps>(People);
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/login?wantsUrl=${ctx.resolvedUrl}`,
+      },
+    };
+  }
+
   const users = await prisma.user.findMany({
     select: {
       id: true,
