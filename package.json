@@ -11,7 +11,7 @@
     "test": "jest --watch",
     "test:ci": "next lint && jest",
     "db:push": "prisma db push",
-    "gen:prisma": "prisma generate"
+    "generate": "prisma generate"
   },
   "repository": {
     "type": "git",
