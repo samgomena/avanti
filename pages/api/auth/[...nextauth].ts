@@ -21,4 +21,19 @@ export default NextAuth({
       from: process.env.EMAIL_FROM,
     }),
   ],
+  callbacks: {
+    async signIn({ user, email }) {
+      // verificationRequest is true if user is trying to sign in (vs clicking a magig link in their email)
+      if (email?.verificationRequest) {
+        const userByEmail = await prisma.user.findUnique({
+          where: {
+            email: user.email!,
+          },
+        });
+        // If they don't exist return false (returning an error to the client and rejecting auth)
+        return userByEmail !== null;
+      }
+      return true;
+    },
+  },
 });
