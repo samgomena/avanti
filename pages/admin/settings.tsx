@@ -1,9 +1,7 @@
+import { User } from "@prisma/client";
 import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { GetServerSideProps } from "next/types";
-import useSWR from "swr";
-import { useFlag } from "../../lib/hooks/useFlags";
-import fetcher from "../../lib/utils/fetcher";
+import prisma from "../../lib/prismadb";
 
 import withAdminNav from "../../lib/withAdminNav";
 
@@ -18,38 +16,29 @@ const formatDate = (date: string) =>
     second: "2-digit",
   });
 
-const Settings: React.FC = () => {
-  const router = useRouter();
-  const { enabled } = useFlag("adminPage");
+type SettingsProps = {
+  user: User;
+};
 
-  !enabled && router.push("/");
-
-  const { data: user } = useSWR("/api/user", fetcher);
-  console.log(user);
-  if (!user) {
-    return <p>Loading...</p>;
-  }
-
+const Settings: React.FC<SettingsProps> = ({ user }) => {
   return (
     <div className="row justify-content-center">
       <div className="col">
         <p>
-          <span>Name:</span>{" "}
+          <span>Name: {user.name}</span>
+        </p>
+        <p>
+          <span>Email: {user.email}</span>
+        </p>
+        <p>
           <span>
-            {user.firstName} {user.lastName}
+            Last updated: {formatDate(user.updatedAt as unknown as string)}
           </span>
         </p>
         <p>
-          <span>Email:</span> <span>{user.email}</span>
-        </p>
-        <p>
-          <span>Permissions:</span> <span>{user.authLevel}</span>
-        </p>
-        <p>
-          <span>Last updated:</span> <span>{formatDate(user.updatedAt)}</span>
-        </p>
-        <p>
-          <span>Created:</span> <span>{formatDate(user.createdAt)}</span>
+          <span>
+            Created: {formatDate(user.createdAt as unknown as string)}
+          </span>
         </p>
       </div>
     </div>
@@ -68,7 +57,27 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   }
+
+  const user = await prisma.user.findUnique({
+    select: {
+      email: true,
+      name: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+    where: {
+      // We know that email can't be null if they're already logged in
+      email: session.user?.email!,
+    },
+  });
+
   return {
-    props: {},
+    props: {
+      user: {
+        ...user,
+        createdAt: user?.createdAt.toISOString(),
+        updatedAt: user?.updatedAt.toISOString(),
+      },
+    },
   };
 };
