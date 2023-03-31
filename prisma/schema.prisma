@@ -94,15 +94,15 @@ enum Days {
 model Hours {
   id     String  @id @default(cuid())
   day    Days
-  open   String?
-  close  String?
+  open   String  @default("")
+  close  String  @default("")
   Info   Info?   @relation(fields: [infoId], references: [id])
   infoId String?
 
   @@index([infoId])
 }
 
-model Alerts {
+model Alert {
   id    String   @id @default(cuid())
   start DateTime
   end   DateTime

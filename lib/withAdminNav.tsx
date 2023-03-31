@@ -42,7 +42,7 @@ export default function withAdminNav<
                     </NavLink>
                   </div>
                   <div className="nav-item">
-                    <NavLink href="/admin/closures">Closures</NavLink>
+                    <NavLink href="/admin/alerts">Alerts</NavLink>
                   </div>
                   <div className="nav-item">
                     <NavLink href="/admin/people">People</NavLink>

@@ -33,11 +33,11 @@ export const inflect =
  * @returns The 12 hour clock representation of the input with an appropriate suffix
  */
 export const to12 = (input: string) => {
+  if (!input) return "";
   // I think this always returns an array with at least one element (""), but default to empty string JIC
   let [hours, minutes] = input.split(":");
-  if (hours === "") {
-    return "";
-  }
+  if (hours === "") return "";
+
   let hoursInt = parseInt(hours, 10);
   const suffix = hoursInt >= 12 && hoursInt < 24 ? "PM" : "AM";
   // TODO: This doesn't handle the case for stuff that happens after midnight, which may be desirable
@@ -57,6 +57,34 @@ export const formatPhone = (phone: string) => {
   const middle = phone.slice(3, 6);
   const end = phone.slice(6);
   return `(${area})-${middle}-${end}`;
+};
+
+export const formatDate = (
+  date: string,
+  options: Intl.DateTimeFormatOptions = { dateStyle: "long" }
+) => {
+  // TODO: `dateStyle` can only be used with `timeStyle` option
+  // Docs: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#parameters
+
+  return new Date(date).toLocaleDateString("en-US", {
+    dateStyle: "long",
+    // day: "numeric",
+    // month: "long",
+    // year: "numeric",
+    // hour12: true,
+    // hour: "2-digit",
+    // minute: "2-digit",
+  });
+};
+
+export const daysBetween = (start: Date, end: Date): number => {
+  const startUTC = new Date(
+    Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate())
+  );
+  const endUTC = new Date(
+    Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate())
+  );
+  return (endUTC.getTime() - startUTC.getTime()) / (1000 * 3600 * 24);
 };
 
 export const compactHours = (hours: Hours) => {

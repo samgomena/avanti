@@ -2,19 +2,9 @@ import { User } from "@prisma/client";
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next/types";
 import prisma from "../../lib/prismadb";
+import { formatDate } from "../../lib/utils/utils";
 
 import withAdminNav from "../../lib/withAdminNav";
-
-const formatDate = (date: string) =>
-  new Date(date).toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-    hour12: true,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
 
 type SettingsProps = {
   user: User;

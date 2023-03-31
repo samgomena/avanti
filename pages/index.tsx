@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { GetStaticProps } from "next/types";
 import { Facebook, Instagram, MapPin } from "react-feather";
 import { ParallaxBanner } from "react-scroll-parallax";
 import Alerts from "../components/Alerts";
@@ -13,7 +14,7 @@ const layers = [
 ];
 
 const iconSize = 24;
-export default function Home() {
+export default function Home({ alerts }: any) {
   const info = useInfo();
   const { enabled: reservationsEnabled } = useFlag("reservations");
 
@@ -23,7 +24,7 @@ export default function Home() {
         <div className="container my-auto">
           <div className="row justify-content-center">
             <div className="col-12 col-md-8 col-lg-6 text-center">
-              <Alerts />
+              <Alerts alerts={alerts} />
               <h1 className="display-1 text-white mb-4">Avanti</h1>
 
               <h2 className="text-xs text-white-75">
@@ -104,3 +105,20 @@ export default function Home() {
     </ParallaxBanner>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const alerts = await prisma?.alert.findMany({
+    orderBy: {
+      start: "desc",
+    },
+  });
+  const _alerts = alerts?.map((alert) => ({
+    ...alert,
+    start: alert.start.toISOString(),
+    end: alert.end.toISOString(),
+  }));
+
+  return {
+    props: { alerts: _alerts },
+  };
+};

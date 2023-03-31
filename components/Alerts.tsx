@@ -1,12 +1,20 @@
+import { Alert as AlertType } from "@prisma/client";
 import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
-import useAlerts from "../lib/hooks/useAlerts";
 
-const Alerts: React.FC = () => {
-  const alerts = useAlerts();
+type AlertProps = {
+  alerts: AlertType[];
+};
+
+const Alerts: React.FC<AlertProps> = ({ alerts }) => {
+  alerts = alerts.map((alert) => ({
+    ...alert,
+    start: new Date(alert.start),
+    end: new Date(alert.end),
+  }));
   // TODO: This should instead be sorted by date start and/or end date instead of grabbing the last one
   // TODO: This is because it will likely be beneficial to queue up a number of events to show in the future.
-  const alert = alerts.at(-1);
+  const alert = alerts.at(0);
   const [show, setShow] = useState(true);
   const now = new Date();
 
