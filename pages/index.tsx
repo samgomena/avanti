@@ -1,10 +1,10 @@
+import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import type { GetStaticProps } from "next/types";
 import { Facebook, Instagram, MapPin } from "react-feather";
 import { ParallaxBanner } from "react-scroll-parallax";
 import Alerts from "../components/Alerts";
 import { useFlag } from "../lib/hooks/useFlags";
-import useInfo from "../lib/hooks/useInfo";
 
 const layers = [
   {
@@ -14,8 +14,8 @@ const layers = [
 ];
 
 const iconSize = 24;
-export default function Home({ alerts }: any) {
-  const info = useInfo();
+// TODO: Don't use any
+export default function Home({ alerts, info }: any) {
   const { enabled: reservationsEnabled } = useFlag("reservations");
 
   return (
@@ -107,7 +107,8 @@ export default function Home({ alerts }: any) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const alerts = await prisma?.alert.findMany({
+  const prisma = new PrismaClient();
+  const alerts = await prisma.alert.findMany({
     orderBy: {
       start: "desc",
     },
@@ -118,7 +119,15 @@ export const getStaticProps: GetStaticProps = async () => {
     end: alert.end.toISOString(),
   }));
 
+  const contact = await prisma.contact.findFirst({
+    select: {
+      address: true,
+      facebook: true,
+      instagram: true,
+    },
+  });
+
   return {
-    props: { alerts: _alerts },
+    props: { alerts: _alerts, info: { contact } },
   };
 };

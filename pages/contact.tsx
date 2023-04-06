@@ -1,4 +1,4 @@
-import { Contact as ContactType } from "@prisma/client";
+import { Contact as ContactType, PrismaClient } from "@prisma/client";
 import { GetStaticProps } from "next";
 import { Facebook, Instagram } from "react-feather";
 import Header from "../components/Header";
@@ -77,7 +77,8 @@ export default function Contact({ info }: ContactProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const info = await prisma?.info.findFirst({
+  const prisma = new PrismaClient();
+  const info = await prisma.info.findFirst({
     select: {
       contact: true,
     },
