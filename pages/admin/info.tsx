@@ -1,4 +1,4 @@
-import type { GetStaticProps } from "next/types";
+import type { GetServerSideProps } from "next/types";
 
 const Info: React.FC = () => {
   return null;
@@ -6,7 +6,7 @@ const Info: React.FC = () => {
 
 export default Info;
 
-export const getStaticProps: GetStaticProps = () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     redirect: {
       permanent: false,

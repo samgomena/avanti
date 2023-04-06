@@ -1,4 +1,4 @@
-import type { GetStaticProps } from "next/types";
+import type { GetServerSideProps } from "next/types";
 
 // TODO: It would probably be a good idea to show a message about what adding/editing does and how it can affect the production site
 const Menu: React.FC = () => {
@@ -7,7 +7,7 @@ const Menu: React.FC = () => {
 
 export default Menu;
 
-export const getStaticProps: GetStaticProps = () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     redirect: {
       permanent: false,
