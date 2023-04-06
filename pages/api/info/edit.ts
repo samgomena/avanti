@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import fs from "fs";
-import { Info } from "../../../lib/types/info";
+import { getSession } from "next-auth/react";
 
 const EditInfo = async (req: NextApiRequest, res: NextApiResponse) => {
   if (process.env.NODE_ENV !== "development") {
@@ -9,21 +8,68 @@ const EditInfo = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const info = JSON.parse(
-    fs.readFileSync(`${process.cwd()}/data/info.json`, "utf-8")
-  ) as Info;
-
-  if (req.method === "GET") {
-    return res.status(200).json(info);
+  const session = await getSession({ req });
+  if (!session) {
+    return res.status(403).json({
+      error: "Forbidden",
+    });
   }
 
-  if (req.method === "POST") {
-    const updatedInfo = JSON.parse(req.body);
-    fs.writeFileSync(
-      `${process.cwd()}/data/info.json`,
-      JSON.stringify(updatedInfo, null, 2)
-    );
-    return res.status(200).json(updatedInfo);
+  // Only allow updates
+  if (req.method !== "POST") {
+    return res.status(405);
+  }
+
+  // TODO: Optimize to only update the fields that have actually changed??
+  // TODO: Probably also don't need to be given/return ids on all the objects since other fields guarantee uniqueness (e.g. hours->day)
+  const infoId = req.body.id;
+  const contactId = req.body.contactId;
+
+  // Update the Info model
+  try {
+    const updates = await prisma?.$transaction([
+      prisma.info.update({
+        where: { id: infoId },
+        data: {
+          about: req.body.about,
+          // Update contact info
+          contact: {
+            update: req.body.contact,
+            connect: { id: contactId },
+          },
+        },
+        include: {
+          contact: true,
+        },
+      }),
+      // Update hours info
+      ...req.body.hours.map(
+        (hour: { id: string; open?: string; close?: string }) =>
+          prisma?.hours.update({
+            where: { id: hour.id },
+            data: { open: hour.open, close: hour.close },
+          })
+      ),
+    ]);
+
+    // "massage" updated data into the format we want (i.e. the shape of the request)
+    const [info, ...hours] = updates ?? [];
+    const updatedInfo = {
+      ...info,
+      hours,
+    };
+
+    return res.status(200).json({
+      ok: true,
+      data: updatedInfo,
+      error: null,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      data: null,
+      error,
+    });
   }
 };
 

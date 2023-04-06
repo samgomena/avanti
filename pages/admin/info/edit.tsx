@@ -1,12 +1,14 @@
+import { Contact, Days } from "@prisma/client";
 import { Form, Formik, FormikValues } from "formik";
 import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import Button from "react-bootstrap/Button";
 import * as Yup from "yup";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
 import HoursField from "../../../components/Form/HoursField";
-import useInfo, { days } from "../../../lib/hooks/useInfo";
+import { days } from "../../../lib/hooks/useInfo";
 import { capitalize } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
 
@@ -33,24 +35,38 @@ const validationSchema = Yup.object({
   ),
 });
 
-const EditInfo: React.FC = () => {
-  const info = useInfo();
+type EditInfoProps = {
+  info: {
+    about: string;
+    contact: Contact;
+    hours: {
+      open: string;
+      close: string;
+      day: Days;
+    }[];
+  };
+};
+
+const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
+  const router = useRouter();
 
   const onSubmit = async (values: FormikValues) => {
-    if (process.env.NODE_ENV !== "development") {
-      console.log(values);
+    const res = await fetch("/api/info/edit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    }).then((res) => res.json());
+
+    if (res.ok) {
+      console.log("Successfully updated info");
+      // Refresh the dataz
+      router.replace(router.asPath);
       return;
     }
 
-    try {
-      const res = await fetch("/api/info/edit", {
-        method: "POST",
-        body: JSON.stringify(values),
-      });
-      console.log("Coolio McFly ; )", await res.json());
-    } catch (error) {
-      console.error("Whoopsies", error);
-    }
+    // TODO: Do something useful if there's an error??
   };
 
   return (
@@ -62,15 +78,7 @@ const EditInfo: React.FC = () => {
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
-          {({
-            isSubmitting,
-            errors,
-            values,
-            isValid,
-            resetForm,
-            dirty,
-            setFieldValue,
-          }) => (
+          {({ isSubmitting, values, isValid, dirty, setFieldValue }) => (
             <Form className="needs-validation" noValidate>
               <BeforeUnload />
               <div className="col">
@@ -141,12 +149,7 @@ const EditInfo: React.FC = () => {
                   </Button>
                 </div>
                 <div className="col-2 col-md-3 col-sm-4">
-                  <Button
-                    type="reset"
-                    variant="secondary"
-                    disabled={!dirty}
-                    onClick={() => resetForm()}
-                  >
+                  <Button type="reset" variant="secondary" disabled={!dirty}>
                     Reset
                   </Button>
                 </div>
@@ -172,7 +175,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
+  const info = await prisma?.info.findFirst({
+    include: {
+      contact: true,
+      hours: true,
+    },
+  });
+
   return {
-    props: {},
+    props: {
+      info,
+    },
   };
 };
