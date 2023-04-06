@@ -19,7 +19,8 @@
       "@/pages/*": ["./pages/*"],
       "@/styles/*": ["./styles/*"]
     },
-    "typeRoots": ["./lib/types"]
+    "typeRoots": ["./lib/types"],
+    "types": ["@types/jest", "@types/node", "@testing-library/jest-dom"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
