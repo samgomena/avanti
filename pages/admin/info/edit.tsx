@@ -1,9 +1,9 @@
+import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import { Contact, Days } from "@prisma/client";
 import { Form, Formik, FormikValues } from "formik";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
-import Button from "react-bootstrap/Button";
 import * as Yup from "yup";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
@@ -75,6 +75,7 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
         <h3>Edit site information</h3>
         <Formik
           initialValues={info}
+          enableReinitialize // Resets form state after successful update (i.e. disables submit/reset buttons)
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
@@ -138,22 +139,11 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
                 ))}
               </div>
 
-              <div className="row">
-                <div className="col-2 col-md-3 col-sm-4">
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    disabled={!isValid || isSubmitting}
-                  >
-                    Submit
-                  </Button>
-                </div>
-                <div className="col-2 col-md-3 col-sm-4">
-                  <Button type="reset" variant="secondary" disabled={!dirty}>
-                    Reset
-                  </Button>
-                </div>
-              </div>
+              <SubmitResetButtons
+                isValid={isValid}
+                isSubmitting={isSubmitting}
+                dirty={dirty}
+              />
             </Form>
           )}
         </Formik>

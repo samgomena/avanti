@@ -24,6 +24,7 @@ import useMenu from "../../../lib/hooks/useMenu";
 import { Menu, Services } from "../../../lib/types/menu";
 import { serviceToDisplay } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
+import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 
 const validationSchema = Yup.object({
   items: Yup.array().of(
@@ -89,7 +90,7 @@ const EditMenu: React.FC = () => {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting, values, isValid, resetForm, dirty }) => (
+          {({ isSubmitting, values, isValid, errors, dirty }) => (
             <Form className="needs-validation" noValidate>
               <BeforeUnload />
               <FieldArray name="items">
@@ -107,31 +108,12 @@ const EditMenu: React.FC = () => {
                   ))
                 }
               </FieldArray>
-              <div className="row fixed-bottom" style={{ position: "sticky" }}>
-                <div className="col">
-                  <Button
-                    className="w-100"
-                    type="submit"
-                    variant="primary"
-                    disabled={
-                      !isValid || isSubmitting || values.items.length === 0
-                    }
-                  >
-                    Update
-                  </Button>
-                </div>
-                <div className="col">
-                  <Button
-                    className="w-100"
-                    type="reset"
-                    variant="secondary"
-                    disabled={!dirty}
-                    onClick={() => resetForm()}
-                  >
-                    Reset
-                  </Button>
-                </div>
-              </div>
+
+              <SubmitResetButtons
+                isValid={isValid}
+                isSubmitting={isSubmitting}
+                dirty={dirty}
+              />
             </Form>
           )}
         </Formik>
