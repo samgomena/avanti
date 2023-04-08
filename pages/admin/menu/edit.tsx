@@ -13,18 +13,18 @@ import {
 import { Fragment, useState } from "react";
 import * as Yup from "yup";
 
+import { SortableList } from "@/components/DnD/SortableList";
+import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import { getSession } from "next-auth/react";
 import type { GetServerSideProps } from "next/types";
 import { ChevronDown, ChevronUp } from "react-feather";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import FieldWithError from "../../../components/Form/FieldWithError";
 import FormError from "../../../components/Form/FormError";
-import Move from "../../../components/Icons/Move";
 import useMenu from "../../../lib/hooks/useMenu";
 import { Menu, Services } from "../../../lib/types/menu";
 import { serviceToDisplay } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
-import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 
 const validationSchema = Yup.object({
   items: Yup.array().of(
@@ -94,21 +94,44 @@ const EditMenu: React.FC = () => {
             <Form className="needs-validation" noValidate>
               <BeforeUnload />
               <FieldArray name="items">
-                {({ remove }) =>
-                  values.items.map(({ name, service }, idx1) => (
-                    <Fragment key={`name-${idx1}`}>
-                      <EditMenuItem
-                        idx={idx1}
-                        name={name}
-                        service={service}
-                        remove={remove}
-                      />
-                      <hr />
-                    </Fragment>
-                  ))
-                }
+                {({ remove, move }) => (
+                  // {/* {values.items.map(({ name, service }, idx1) => (
+                  //       <Fragment key={`name-${idx1}`}>
+                  //         <EditMenuItem
+                  //           idx={idx1}
+                  //           name={name}
+                  //           service={service}
+                  //           remove={remove}
+                  //         />
+                  //         <hr />
+                  //       </Fragment>
+                  //     ))} */}
+                  <SortableList
+                    items={values.items.map((item, idx3) => ({
+                      ...item,
+                      idx: idx3,
+                      id: `name-${idx3}`,
+                    }))}
+                    onChange={(activeIndex, overIndex) => {
+                      move(activeIndex, overIndex);
+                    }}
+                    renderItem={({ id, name, service, idx }) => (
+                      <SortableList.Item id={id}>
+                        <Fragment>
+                          <EditMenuItem
+                            idx={idx}
+                            name={name}
+                            service={service}
+                            handle={<SortableList.DragHandle />}
+                            remove={remove}
+                          />
+                          <hr />
+                        </Fragment>
+                      </SortableList.Item>
+                    )}
+                  />
+                )}
               </FieldArray>
-
               <SubmitResetButtons
                 isValid={isValid}
                 isSubmitting={isSubmitting}
@@ -126,12 +149,20 @@ type EditMenuItemProps = {
   idx: number;
   name: string;
   service: Services;
+  handle: React.ReactNode;
   remove: (_: number) => void;
 };
 
-function EditMenuItem({ idx, name, service, remove }: EditMenuItemProps) {
+function EditMenuItem({
+  idx,
+  name,
+  service,
+  handle,
+  remove,
+}: EditMenuItemProps) {
   const [open, setOpen] = useState(false);
   const { services } = useMenu();
+
   return (
     <>
       <div
@@ -147,11 +178,11 @@ function EditMenuItem({ idx, name, service, remove }: EditMenuItemProps) {
             cursor: "grab",
           }}
         >
-          <Move />
+          {handle}
         </span>
 
         <span>{name}</span>
-        <span className="pl-4">
+        <span className="ms-auto">
           {open ? <ChevronUp size="18" /> : <ChevronDown size="18" />}
         </span>
       </div>
