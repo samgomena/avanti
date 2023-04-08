@@ -18,6 +18,10 @@ const Alerts: React.FC<AlertProps> = ({ alerts }) => {
   const [show, setShow] = useState(true);
   const now = new Date();
 
+  if (!alert) {
+    return null;
+  }
+
   if (!alert?.start || !alert?.end) {
     throw Error(
       `Alert start and/or end is invalid (start=${alert?.start}, end=${alert?.end})`
