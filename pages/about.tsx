@@ -30,7 +30,7 @@ export default function About() {
         <p>
           After initially opening in Tualatin, Oregon in 2018, the restaurant
           was forced to close due to the Coronavirus Pandemic. Soon after, plans
-          began to relocate, and Avanti was set to reopen in West Linn, Oregon
+          began to relocate and Avanti was set to reopen in West Linn, Oregon
           just off the 10th street exit.
         </p>
         <p>
