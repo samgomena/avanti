@@ -4,6 +4,8 @@ import { Form, Formik, FormikValues } from "formik";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
+import { useState } from "react";
+import { Toast, ToastContainer } from "react-bootstrap";
 import * as Yup from "yup";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
@@ -49,6 +51,11 @@ type EditInfoProps = {
 
 const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
   const router = useRouter();
+  const [toastData, setToastData] = useState({
+    type: "",
+    message: "",
+    show: false,
+  });
 
   const onSubmit = async (values: FormikValues) => {
     const res = await fetch("/api/info/edit", {
@@ -63,10 +70,21 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
       console.log("Successfully updated info");
       // Refresh the dataz
       router.replace(router.asPath);
+      setToastData({
+        type: "success",
+        message:
+          "Site information updated successfully! You're changes should be visible in a few seconds",
+        show: true,
+      });
       return;
     }
 
-    // TODO: Do something useful if there's an error??
+    console.log(`There was an error submitting info: ${res.error}`);
+    setToastData({
+      type: "error",
+      message: "There was an error updating info. Maybe try again 🙃",
+      show: true,
+    });
   };
 
   return (
@@ -147,6 +165,20 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
             </Form>
           )}
         </Formik>
+
+        <ToastContainer className="d-inline-block m-4" position="top-end">
+          <Toast
+            bg={toastData.type === "error" ? "danger" : "light"}
+            onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
+            show={toastData.show}
+            delay={10000}
+            autohide
+          >
+            <Toast.Header>
+              <strong className="me-auto">{toastData.message}</strong>
+            </Toast.Header>
+          </Toast>
+        </ToastContainer>
       </div>
     </div>
   );
