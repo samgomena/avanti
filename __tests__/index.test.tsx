@@ -2,11 +2,18 @@ import { render, screen } from "@testing-library/react";
 import Home from "../pages/index";
 import { ParallaxProvider } from "react-scroll-parallax";
 
+const defaultProps = {
+  alerts: [],
+  info: {
+    contact: { facebook: "facebook.com", instagram: "instagram.com" },
+  },
+};
+
 describe("Home - Headings", () => {
   it("fucking renders", () => {
     render(
       <ParallaxProvider>
-        <Home />
+        <Home {...defaultProps} />
       </ParallaxProvider>
     );
 
@@ -18,7 +25,7 @@ describe("Home - Headings", () => {
   it("has correct sub-heading (restaurant)", () => {
     render(
       <ParallaxProvider>
-        <Home />
+        <Home {...defaultProps} />
       </ParallaxProvider>
     );
 
@@ -30,7 +37,7 @@ describe("Home - Headings", () => {
   it("has correct sub-heading (& bar)", () => {
     render(
       <ParallaxProvider>
-        <Home />
+        <Home {...defaultProps} />
       </ParallaxProvider>
     );
 
@@ -42,7 +49,7 @@ describe("Home - Headings", () => {
   it("has correct sub-heading (location)", () => {
     render(
       <ParallaxProvider>
-        <Home />
+        <Home {...defaultProps} />
       </ParallaxProvider>
     );
 
@@ -52,23 +59,24 @@ describe("Home - Headings", () => {
   });
 });
 
-// describe("Home - Reservations", () => {
-//   it("Shows a reservation button if enabled", () => {
-//     jest.mock("../lib/hooks/useFlags");
-//     const useFlag = require("../lib/hooks/useFlags").useFlag;
-//     // useFlag.mockImplementation(() => ({ enabled: true }));
-//     useFlag.mockReturnValue({ enabled: true });
+describe("Home - Reservations", () => {
+  it("Shows a reservation button if enabled", () => {
+    jest.mock("../lib/hooks/useFlags");
+    const useFlag = require("../lib/hooks/useFlags").useFlag;
+    // useFlag.mockImplementation(() => ({ enabled: true }));
+    useFlag.mockReturnValue({ enabled: true });
 
-//     render(
-//       <ParallaxProvider>
-//         <Home />
-//       </ParallaxProvider>
-//     );
+    render(
+      <ParallaxProvider>
+        <Home {...defaultProps} />
+      </ParallaxProvider>
+    );
 
-//     expect(useFlag).toHaveBeenCalledWith("reservations");
-
-//     const reservationButton = screen.getByText("Make a reservation");
-//     expect(reservationButton).toBeInTheDocument();
-//     expect(reservationButton).toHaveAttribute("href", "#reservation");
-//   });
-// });
+    const reservationButton = screen.getByText("Reserve a Table");
+    expect(reservationButton).toBeInTheDocument();
+    expect(reservationButton).toHaveAttribute(
+      "href",
+      "https://www.opentable.com/r/avanti-reservations-west-linn?restref=1277137&lang=en-US&ot_source=Restaurant%20website"
+    );
+  });
+});

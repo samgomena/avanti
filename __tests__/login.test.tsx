@@ -25,7 +25,6 @@ describe("Login - Form", () => {
     );
 
     const emailInput = screen.getByLabelText("Email");
-    const passwordInput = screen.getByLabelText("Password");
     const submitButton = screen.getByText("login");
 
     // "Touch" email field
@@ -33,7 +32,6 @@ describe("Login - Form", () => {
     // await waitFor(() => screen.findByText("Your email is required to log in!"));
 
     fireEvent.change(emailInput, { target: { value: "" } });
-    fireEvent.change(passwordInput, { target: { value: "password" } });
     fireEvent.click(submitButton);
 
     await waitFor(() =>
@@ -51,11 +49,9 @@ describe("Login - Form", () => {
     );
 
     const emailInput = screen.getByLabelText("Email");
-    const passwordInput = screen.getByLabelText("Password");
     const submitButton = screen.getByText("login");
 
     fireEvent.change(emailInput, { target: { value: "notavalidemail" } });
-    fireEvent.change(passwordInput, { target: { value: "password" } });
     fireEvent.click(submitButton);
 
     await waitFor(() =>
@@ -63,43 +59,45 @@ describe("Login - Form", () => {
     );
   });
 
-  it("Errors if no password is entered", async () => {
-    render(
-      <ParallaxProvider>
-        <Login />
-      </ParallaxProvider>
-    );
+  // Removed 4/7/23
+  // Tests for password field if you end up adding that in the future
+  // it("Errors if no password is entered", async () => {
+  //   render(
+  //     <ParallaxProvider>
+  //       <Login />
+  //     </ParallaxProvider>
+  //   );
 
-    const emailInput = screen.getByLabelText("Email");
-    const passwordInput = screen.getByLabelText("Password");
-    const submitButton = screen.getByText("login");
+  //   const emailInput = screen.getByLabelText("Email");
+  //   const passwordInput = screen.getByLabelText("Password");
+  //   const submitButton = screen.getByText("login");
 
-    fireEvent.change(emailInput, { target: { value: "email@example.com" } });
-    fireEvent.change(passwordInput, { target: { value: "" } });
-    fireEvent.click(submitButton);
+  //   fireEvent.change(emailInput, { target: { value: "email@example.com" } });
+  //   fireEvent.change(passwordInput, { target: { value: "" } });
+  //   fireEvent.click(submitButton);
 
-    await waitFor(() =>
-      expect(
-        screen.getByText("Your password is required to log in!")
-      ).toBeInTheDocument()
-    );
-  });
+  //   await waitFor(() =>
+  //     expect(
+  //       screen.getByText("Your password is required to log in!")
+  //     ).toBeInTheDocument()
+  //   );
+  // });
 
-  it("Shows password when show password check is clicked", async () => {
-    render(
-      <ParallaxProvider>
-        <Login />
-      </ParallaxProvider>
-    );
+  // it("Shows password when show password check is clicked", async () => {
+  //   render(
+  //     <ParallaxProvider>
+  //       <Login />
+  //     </ParallaxProvider>
+  //   );
 
-    const emailInput = screen.getByLabelText("Email");
-    const passwordInput = screen.getByLabelText("Password");
-    const showPasswordCheckbox = screen.getByLabelText("Show password");
+  //   const emailInput = screen.getByLabelText("Email");
+  //   const passwordInput = screen.getByLabelText("Password");
+  //   const showPasswordCheckbox = screen.getByLabelText("Show password");
 
-    fireEvent.change(emailInput, { target: { value: "email@example.com" } });
-    fireEvent.change(passwordInput, { target: { value: "password" } });
-    fireEvent.click(showPasswordCheckbox);
+  //   fireEvent.change(emailInput, { target: { value: "email@example.com" } });
+  //   fireEvent.change(passwordInput, { target: { value: "password" } });
+  //   fireEvent.click(showPasswordCheckbox);
 
-    await waitFor(() => expect(passwordInput).toHaveAttribute("type", "text"));
-  });
+  //   await waitFor(() => expect(passwordInput).toHaveAttribute("type", "text"));
+  // });
 });
