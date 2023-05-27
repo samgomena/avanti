@@ -1,24 +1,33 @@
 import Button from "react-bootstrap/Button";
 
-import { ErrorMessage, Formik, Form, Field, FieldArray } from "formik";
+import { ErrorMessage, FieldArray, Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 
-import FieldWithError from "../../../components/Form/FieldWithError";
-import withAdminNav from "../../../lib/withAdminNav";
-import { Item } from "../../../lib/types/menu";
-import BeforeUnload from "../../../components/Form/BeforeUnload";
-import React from "react";
-import useMenu from "../../../lib/hooks/useMenu";
-import { serviceToDisplay } from "../../../lib/utils/utils";
-import FormError from "../../../components/Form/FormError";
-import { GetServerSideProps } from "next/types";
+import PriceField from "@/components/Form/PriceField";
+import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import { getSession } from "next-auth/react";
+import { GetServerSideProps } from "next/types";
+import React, { useState } from "react";
+import { Toast, ToastContainer } from "react-bootstrap";
+import BeforeUnload from "../../../components/Form/BeforeUnload";
+import FieldWithError from "../../../components/Form/FieldWithError";
+import FormError from "../../../components/Form/FormError";
+import { Item } from "../../../lib/types/menu";
+import { inflect } from "../../../lib/utils/utils";
+import withAdminNav from "../../../lib/withAdminNav";
 
 const initialValue: Item = {
   name: "",
   description: "",
+  course: "appetizer",
   service: [],
-  price: {},
+  price: {
+    lunch: null,
+    dinner: null,
+    hh: null,
+    dessert: null,
+    drinks: null,
+  },
 };
 
 const validationSchema = Yup.object({
@@ -26,66 +35,94 @@ const validationSchema = Yup.object({
     Yup.object({
       name: Yup.string().required("A name for this item is required!"),
       description: Yup.string(),
-      // An array of the selected (checked) services
-      // TODO?: An improvement could be to enforce an item to be in (dinner | lunch | hh) | drinks
-      service: Yup.array(Yup.string()).min(
-        1,
-        "At least one service period must be selected!"
-      ),
-      price: Yup.object().when(
-        "service",
-        (service, schema) =>
-          // Dynamically create and return the shape of the price schema
-          schema.shape(
-            // Here, service is an array of the selected (checked) service periods
-            // But we want an object that looks like this { "<service1>": Yup.stuff(), "<service2>": Yup.stuf(), ... }
-            service.reduce(
-              (acc: Object, wutWut: string) => ({
-                ...acc,
-                // So, dynamically define requirements for the price of each selected service
-                [wutWut]: Yup.number()
-                  .moreThan(0, "The price has to be greater than $0!")
-                  .required("A price is required for this service period!"),
-              }),
-              {}
-            )
-          )
-        // ^^^ Is it performant? Nah, not really. Modifying values is *slow* and even slower with a regular
-        // Field instead of FastField but better than accepting potentially invalid data imo
-      ),
+      course: Yup.string()
+        .oneOf(["appetizer", "entree", "drink", "dessert"])
+        .required(
+          "Must be one of 'appetizer', 'entree', 'drink', or 'dessert'"
+        ),
+      price: Yup.object().when("course", (course, schema) => {
+        switch (course) {
+          case "appetizer":
+          case "entree":
+            return schema.shape({
+              dinner: Yup.number()
+                .positive("The price has to be greater than $0!")
+                .nullable(),
+              lunch: Yup.number()
+                .positive("The price has to be greater than $0!")
+                .nullable(),
+            });
+          case "drink":
+            return schema.shape({
+              drinks: Yup.number()
+                .positive("The price has to be greater than $0!")
+                .nullable(),
+            });
+          case "dessert":
+            return schema.shape({
+              dessert: Yup.number()
+                .positive("The price has to be greater than $0!")
+                .nullable(),
+            });
+        }
+      }),
     })
   ),
 });
 
 const initialValues: { items: Item[] } = { items: [initialValue] };
 
-const onSubmit = async (values: any) => {
-  if (process.env.NODE_ENV !== "development") {
-    return;
-  }
+const AddMenuItem: React.FC = () => {
+  const [toastData, setToastData] = useState({
+    type: "",
+    message: "",
+    show: false,
+  });
 
-  try {
+  const onSubmit = async (
+    values: FormikValues,
+    // @ts-expect-error: This should be something like `FormikBag<something, something>` but the docs don't
+    // say anything about it and I don't feel like digging through the sauce rn
+    { resetForm }
+  ) => {
     const res = await fetch("/api/menu/add", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(values),
-    });
-    console.log("Coolio McFly ; )", await res.json());
-  } catch (error) {
-    console.error("Whoopsies", error);
-  }
-};
+    }).then((res) => res.json());
 
-const AddMenuItem: React.FC = () => {
-  const menu = useMenu();
+    if (res.ok) {
+      console.info("Successfully added menu item");
+      // Refresh the dataz
+      setToastData({
+        type: "success",
+        message: "Success! You're changes should be visible in a few seconds",
+        show: true,
+      });
+      resetForm(initialValues);
+      return;
+    }
+
+    console.error(`There was an error submitting info: ${res.error}`);
+    setToastData({
+      type: "error",
+      message: "There was an error creating that. Maybe try again 🙃",
+      show: true,
+    });
+  };
+
   return (
     <div>
       <h3>Add new menu items</h3>
       <Formik
         initialValues={initialValues}
+        enableReinitialize // Resets form state after successful update (i.e. disables submit/reset buttons)
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, values, isValid }) => (
+        {({ isSubmitting, values, isValid, dirty }) => (
           <Form className="needs-validation" noValidate>
             <BeforeUnload />
             <FieldArray name="items">
@@ -108,38 +145,45 @@ const AddMenuItem: React.FC = () => {
                           showLabels={false}
                         />
 
-                        <div className="form-group mb-3" role="group">
-                          {menu.services.map((_service, idx2) => (
-                            <div
-                              className="form-check"
-                              key={`service-${idx1}-${idx2}`}
-                            >
-                              <Field
-                                className="form-check-input"
-                                type="checkbox"
-                                value={_service}
-                                name={`items.${idx1}.service`}
-                              />
-                              <label className="form-check-label">
-                                {serviceToDisplay(_service)}
-                              </label>
+                        <FieldWithError
+                          name={`items.${idx1}.course`}
+                          placeholder="Course"
+                          as="select"
+                          options={[
+                            { name: "Appetizers", value: "appetizer" },
+                            { name: "Entrees", value: "entree" },
+                            { name: "Drinks", value: "drink" },
+                            { name: "Desserts", value: "dessert" },
+                          ]}
+                        />
 
-                              <div className="input-group input-group-sm mb-3">
-                                <span className="input-group-text">$</span>
-                                <Field
-                                  className="form-control form-control-sm"
-                                  // This throws a warning because some service prices are not defined. Likely, you have to define a custom field that accounts for undefined values to fix this.
-                                  name={`items.${idx1}.price.${_service}`}
-                                  type="number"
-                                  placeholder="Price"
-                                />
-                                <ErrorMessage
-                                  component={FormError}
-                                  name={`items.${idx1}.price.${_service}`}
-                                />
-                              </div>
-                            </div>
-                          ))}
+                        <div className="form-group mb-3" role="group">
+                          {(() => {
+                            switch (item.course) {
+                              case "appetizer":
+                              case "entree":
+                                return [
+                                  <PriceField
+                                    key={1}
+                                    service="lunch"
+                                    idx={idx1}
+                                  />,
+                                  <PriceField
+                                    key={2}
+                                    service="dinner"
+                                    idx={idx1}
+                                  />,
+                                ];
+                              case "dessert":
+                                return (
+                                  <PriceField service="dessert" idx={idx1} />
+                                );
+                              case "drink":
+                                return (
+                                  <PriceField service="drinks" idx={idx1} />
+                                );
+                            }
+                          })()}
                           <ErrorMessage
                             component={FormError}
                             name={`items.${idx1}.service`}
@@ -152,6 +196,7 @@ const AddMenuItem: React.FC = () => {
                           variant="outline-secondary"
                           // Not a fucking clue why `btn-lg` actually makes this smaller but it does
                           size="lg"
+                          disabled={length === 1} // Allow deleting the first item if another one has been added
                         >
                           &times;
                         </Button>
@@ -160,38 +205,41 @@ const AddMenuItem: React.FC = () => {
                     </div>
                   ))}
                   <div className="row">
-                    <div className="col-3">
-                      <Button onClick={() => push(initialValue)}>
-                        {values.items.length === 0
-                          ? "Add a new item"
-                          : "Add another"}
-                      </Button>
-                    </div>
+                    <Button
+                      variant="secondary-outline"
+                      onClick={() => {
+                        push(initialValue);
+                      }}
+                    >
+                      Add another
+                    </Button>
                   </div>
                 </div>
               )}
             </FieldArray>
-            <div className="row">
-              <hr />
-              {values.items.length > 0 && (
-                <div className="col-3">
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    disabled={
-                      !isValid || isSubmitting || values.items.length === 0
-                    }
-                  >
-                    {`Submit ${values.items.length} ${
-                      values.items.length === 1 ? "item" : "items"
-                    }`}
-                  </Button>
-                </div>
-              )}
-            </div>
+            <SubmitResetButtons
+              isValid={isValid}
+              isSubmitting={isSubmitting}
+              dirty={dirty}
+              submitText={`Add ${inflect("item")(values.items.length)}`}
+            />
           </Form>
         )}
       </Formik>
+
+      <ToastContainer className="d-inline-block m-4" position="top-end">
+        <Toast
+          bg={toastData.type === "error" ? "danger" : "light"}
+          onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
+          show={toastData.show}
+          delay={8_000} // 8 seconds
+          autohide
+        >
+          <Toast.Header>
+            <strong className="me-auto">{toastData.message}</strong>
+          </Toast.Header>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 };
