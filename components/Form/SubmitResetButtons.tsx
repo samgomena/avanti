@@ -16,7 +16,7 @@ const SubmitResetButtons: React.FC<SubmitResetButtonsProps> = ({
 }) => {
   return (
     <div
-      className="row fixed-bottom pb-2 bg-white"
+      className="row fixed-bottom py-2 bg-white"
       style={{ position: "sticky" }}
     >
       <div className="col">
