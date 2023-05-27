@@ -67,7 +67,7 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
     }).then((res) => res.json());
 
     if (res.ok) {
-      console.log("Successfully updated info");
+      console.info("Successfully updated info");
       // Refresh the dataz
       router.replace(router.asPath);
       setToastData({
@@ -79,7 +79,7 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
       return;
     }
 
-    console.log(`There was an error submitting info: ${res.error}`);
+    console.error(`There was an error submitting info: ${res.error}`);
     setToastData({
       type: "error",
       message: "There was an error updating info. Maybe try again 🙃",
@@ -171,7 +171,7 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
             bg={toastData.type === "error" ? "danger" : "light"}
             onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
             show={toastData.show}
-            delay={10000}
+            delay={8_000} // 8 seconds
             autohide
           >
             <Toast.Header>
