@@ -5,6 +5,7 @@
       "name": "Marinated Olives",
       "description": "",
       "service": ["dinner", "lunch", "hh"],
+      "course": "appetizer",
       "price": {
         "dinner": 8,
         "hh": 4
@@ -14,6 +15,7 @@
       "name": "Marcona Almonds",
       "description": "",
       "service": ["dinner", "lunch", "hh"],
+      "course": "appetizer",
       "price": {
         "dinner": 6,
         "lunch": 5,
@@ -24,6 +26,7 @@
       "name": "Bread Service",
       "description": "",
       "service": ["dinner", "lunch", "hh"],
+      "course": "appetizer",
       "price": {
         "dinner": 5,
         "lunch": 5,
@@ -34,18 +37,25 @@
       "name": "Cheese Plate",
       "description": "A handful of rotating cheeses with seasonal fruit, Marcona almonds, and fig compote",
       "service": ["dinner"],
-      "price": { "dinner": 22 }
+      "course": "appetizer",
+      "price": {
+        "dinner": 22
+      }
     },
     {
       "name": "Arancini",
       "description": "Fried risotto cakes filled with smoked pork and goat cheese",
       "service": ["dinner"],
-      "price": { "dinner": 16 }
+      "course": "appetizer",
+      "price": {
+        "dinner": 16
+      }
     },
     {
       "name": "Coconut Shrimp",
       "description": "Served with wasabi aioli",
       "service": ["dinner", "lunch"],
+      "course": "appetizer",
       "price": {
         "dinner": 14,
         "lunch": 10
@@ -55,6 +65,7 @@
       "name": "Ahi Poke Stack",
       "description": "",
       "service": ["dinner"],
+      "course": "appetizer",
       "price": {
         "dinner": 22
       }
@@ -63,6 +74,7 @@
       "name": "Crab Cakes",
       "description": "Served with remoulade",
       "service": ["dinner"],
+      "course": "appetizer",
       "price": {
         "dinner": 21
       }
@@ -71,18 +83,25 @@
       "name": "Seared Ahi Tuna",
       "description": "Served with wasabi, pickled ginger, and Wakame salad",
       "service": ["dinner"],
-      "price": { "dinner": 20 }
+      "course": "appetizer",
+      "price": {
+        "dinner": 20
+      }
     },
     {
       "name": "Oysters",
       "description": "Half dozen served on the half shell",
       "service": ["dinner"],
-      "price": { "dinner": 19 }
+      "course": "appetizer",
+      "price": {
+        "dinner": 19
+      }
     },
     {
       "name": "Soup of the Day",
       "description": "",
       "service": ["dinner", "lunch"],
+      "course": "appetizer",
       "price": {
         "dinner": 12,
         "lunch": 9
@@ -92,6 +111,7 @@
       "name": "House Salad",
       "description": "Mixed greens with tomato, and candied hazelnuts in a balsamic vinaigrette",
       "service": ["dinner", "lunch"],
+      "course": "appetizer",
       "price": {
         "dinner": 10,
         "lunch": 7
@@ -101,6 +121,7 @@
       "name": "Roasted Beet and Arugula Salad",
       "description": "With chopped hazelnuts in a miso vinaigrette",
       "service": ["dinner", "lunch"],
+      "course": "appetizer",
       "price": {
         "dinner": 12,
         "lunch": 9
@@ -110,6 +131,7 @@
       "name": "Caprese Salad",
       "description": "Heirloom tomato, basil, and fresh mozzarella",
       "service": ["dinner", "lunch"],
+      "course": "appetizer",
       "price": {
         "dinner": 14,
         "lunch": 9
@@ -120,6 +142,7 @@
       "name": "Baby Kale Salad",
       "description": "With parmesan, wheat berries, and tomato in a lemongrass vinaigrette",
       "service": ["dinner", "lunch"],
+      "course": "appetizer",
       "price": {
         "dinner": 10,
         "lunch": 9
@@ -129,6 +152,7 @@
       "name": "Marinated Grilled Prawns",
       "description": "Served with heirloom and roasted tomato risotto, spinach, pesto, and grilled zucchini",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 31
       },
@@ -138,6 +162,7 @@
       "name": "Chicken Breast",
       "description": "Served on a bed of truffle mushroom risotto with cipollini onions, spinach, demi-glace, and grilled broccolini",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 30
       }
@@ -146,6 +171,7 @@
       "name": "Braised Short Ribs",
       "description": "Served in a hoisin burgundy sauce with pomme purée, carrots, parsnips, and cippolini onions",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 37
       }
@@ -154,12 +180,16 @@
       "name": "Panko and Herb-Crusted Mahi Mahi",
       "description": "Served with crème fraîche, rice, sauce chasseur with bacon, mushroom, tomato, shallots, and grilled asparagus",
       "service": ["dinner"],
-      "price": { "dinner": 33 }
+      "course": "entree",
+      "price": {
+        "dinner": 33
+      }
     },
     {
       "name": "Smoked Pork Chop",
       "description": "Brined in apple cider vinegar, served with French onion bread pudding and green beans, finished with mushroom sauce",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 36
       }
@@ -168,6 +198,7 @@
       "name": "Flat Iron Steak",
       "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi-glace",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 35
       }
@@ -176,6 +207,7 @@
       "name": "Pan Seared Scallops",
       "description": "Served with celery root purée, grilled broccoli, and crispy fingerling potatoes with a broken truffle vinaigrette",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 40
       }
@@ -184,6 +216,7 @@
       "name": "Australian Rack of Lamb",
       "description": "Served with goat chesse potato gratin and grilled broccolini",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 46
       }
@@ -192,6 +225,7 @@
       "name": "Creamy Braised Pork Sugo",
       "description": "Served with musrooms and poached apples over penne pasta",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 26
       }
@@ -200,6 +234,7 @@
       "name": "Sautéed Prawns and Capellini",
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 27
       }
@@ -208,6 +243,7 @@
       "name": "Braised Alaskan Halibut",
       "description": "Served with saffron butter poached fingerling potatoes in a tomato basil white wine butter sauce with grilled asparagus",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 37
       },
@@ -217,6 +253,7 @@
       "name": "Mary's Organic Chicken Breast",
       "description": "Served with fingerling potato hash and bacon, chanterelle dijon cream sauce, and grilled broccolini",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 32
       },
@@ -226,6 +263,7 @@
       "name": "Tillamook Cheddar Cheeseburger with Fries",
       "description": "Tomato, lettuce, and onion",
       "service": ["dinner", "lunch"],
+      "course": "entree",
       "price": {
         "dinner": 19,
         "lunch": 15
@@ -235,6 +273,7 @@
       "name": "Tempura Cod Fish & Chips",
       "description": "Served with coleslaw and wasabi ailoi",
       "service": ["dinner", "lunch"],
+      "course": "entree",
       "price": {
         "dinner": 24,
         "lunch": 21
@@ -244,121 +283,181 @@
       "name": "PamaFlower",
       "description": "Absolut Citron, Pama, St. Germain, soda",
       "service": ["drinks"],
-      "price": { "drinks": 11 }
+      "course": "drink",
+      "price": {
+        "drinks": 11
+      }
     },
     {
       "name": "Last Word",
       "description": "Tanqueray, Luxardo, Green Chartreuse, lime",
       "service": ["drinks"],
-      "price": { "drinks": 12 }
+      "course": "drink",
+      "price": {
+        "drinks": 12
+      }
     },
     {
       "name": "Hemingway Daiquiri",
       "description": "Bacardi, Luxardo, grapefruit, lime",
       "service": ["drinks"],
-      "price": { "drinks": 11 }
+      "course": "drink",
+      "price": {
+        "drinks": 11
+      }
     },
     {
       "name": "Grapefruit Drop",
       "description": "Vodka, Campari, grapefruit, lemon",
       "service": ["drinks"],
-      "price": { "drinks": 10 }
+      "course": "drink",
+      "price": {
+        "drinks": 10
+      }
     },
     {
       "name": "Pineapple Mule",
       "description": "Vodka, pineapple, lime, ginger beer",
       "service": ["drinks"],
-      "price": { "drinks": 10 }
+      "course": "drink",
+      "price": {
+        "drinks": 10
+      }
     },
     {
       "name": "Sidecar",
       "description": "Brandy, Triple Sec, lemon",
       "service": ["drinks"],
-      "price": { "drinks": 10 }
+      "course": "drink",
+      "price": {
+        "drinks": 10
+      }
     },
     {
       "name": "Aperol Spritz",
       "description": "Aperol, Prosecco, soda",
       "service": ["drinks"],
-      "price": { "drinks": 11 }
+      "course": "drink",
+      "price": {
+        "drinks": 11
+      }
     },
     {
       "name": "Redemption Boulevard",
       "description": "Redemption High Rye Bourbon, Aperol, Sweet Vermouth",
       "service": ["drinks"],
-      "price": { "drinks": 12 }
+      "course": "drink",
+      "price": {
+        "drinks": 12
+      }
     },
     {
       "name": "Lolita",
       "description": "Vodka, lemon, strawberry, jalapeño, basil",
       "service": ["drinks"],
-      "price": { "drinks": 12 }
+      "course": "drink",
+      "price": {
+        "drinks": 12
+      }
     },
     {
       "name": "Amaro Whiskey Sour",
       "description": "Amaro, Whiskey, Lemon, Egg White",
       "service": ["drinks"],
-      "price": { "drinks": 12 }
+      "course": "drink",
+      "price": {
+        "drinks": 12
+      }
     },
     {
       "name": "Paloma",
       "description": "Silver Tequila, Grapefruit, Lime, Soda",
       "service": ["drinks"],
-      "price": { "drinks": 11 }
+      "course": "drink",
+      "price": {
+        "drinks": 11
+      }
     },
     {
       "name": "Lion's Tail",
       "description": "Bourbon, Allspice Dram, Lime",
       "service": ["drinks"],
-      "price": { "drinks": 12 }
+      "course": "drink",
+      "price": {
+        "drinks": 12
+      }
     },
     {
       "name": "White Queen",
       "description": "Gin, Italicus, Cointreau, Lemon, Egg White",
       "service": ["drinks"],
-      "price": { "drinks": 12 }
+      "course": "drink",
+      "price": {
+        "drinks": 12
+      }
     },
     {
       "name": "Vesper",
       "description": "Aviation Gin, Ketel One, Lillet Blanc",
       "service": ["drinks"],
-      "price": { "drinks": 14 }
+      "course": "drink",
+      "price": {
+        "drinks": 14
+      }
     },
     {
       "name": "Vanilla bean crème brûlée",
       "description": "",
       "service": ["dessert"],
-      "price": { "dessert": 10 }
+      "course": "drink",
+      "price": {
+        "dessert": 10
+      }
     },
     {
       "name": "Crème fraîche cheesecake",
       "description": "Served with a raspberry pinot noir sauce",
       "service": ["dessert"],
-      "price": { "dessert": 11 }
+      "course": "dessert",
+      "price": {
+        "dessert": 11
+      }
     },
     {
       "name": "Pumpkin pie",
       "description": "Served with whipped cream",
       "service": ["dessert"],
-      "price": { "dessert": 12 }
+      "course": "dessert",
+      "price": {
+        "dessert": 12
+      }
     },
     {
       "name": "Chocolate peanut butter tort",
       "description": "",
       "service": ["dessert"],
-      "price": { "dessert": 11 }
+      "course": "dessert",
+      "price": {
+        "dessert": 11
+      }
     },
     {
       "name": "Affogato",
       "description": "Vanilla bean ice cream served with a shot of espresso",
       "service": ["dessert"],
-      "price": { "dessert": 8 }
+      "course": "dessert",
+      "price": {
+        "dessert": 8
+      }
     },
     {
       "name": "Sorbet",
       "description": "A rotating choice of seasonal flavors",
       "service": ["dessert"],
-      "price": { "dessert": 7 }
+      "course": "dessert",
+      "price": {
+        "dessert": 7
+      }
     }
   ]
 }
