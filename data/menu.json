@@ -62,13 +62,30 @@
       }
     },
     {
+      "name": "Fried Calamari",
+      "description": "Served with ponzu and spicy aioli",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 16
+      }
+    },
+    {
+      "name": "Fried Atlantic Jackknife Razor Clams",
+      "description": "Yuzu aioli",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 17
+      }
+    },
+    {
       "name": "Ahi Poke Stack",
       "description": "",
       "service": ["dinner"],
       "course": "appetizer",
       "price": {
         "dinner": 22
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Crab Cakes",
@@ -77,7 +94,8 @@
       "course": "appetizer",
       "price": {
         "dinner": 21
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Seared Ahi Tuna",
@@ -164,7 +182,7 @@
       "service": ["dinner"],
       "course": "entree",
       "price": {
-        "dinner": 30
+        "dinner": 32
       }
     },
     {
@@ -182,7 +200,7 @@
       "service": ["dinner"],
       "course": "entree",
       "price": {
-        "dinner": 33
+        "dinner": 34
       }
     },
     {
@@ -200,7 +218,7 @@
       "service": ["dinner"],
       "course": "entree",
       "price": {
-        "dinner": 35
+        "dinner": 36
       }
     },
     {
@@ -209,7 +227,7 @@
       "service": ["dinner"],
       "course": "entree",
       "price": {
-        "dinner": 40
+        "dinner": 42
       }
     },
     {
@@ -219,6 +237,14 @@
       "course": "entree",
       "price": {
         "dinner": 46
+      }
+    },
+    {
+      "name": "Braised Alaskan Halibut",
+      "description": "Served with saffron butter poached fingerling potatoes in a tomato basil white wine butter sauce with grilled asparagus",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 40
       }
     },
     {
@@ -293,9 +319,8 @@
       "description": "Tanqueray, Luxardo, Green Chartreuse, lime",
       "service": ["drinks"],
       "course": "drink",
-      "price": {
-        "drinks": 12
-      }
+      "price": { "drinks": 12 },
+      "disabled": true
     },
     {
       "name": "Hemingway Daiquiri",
@@ -303,7 +328,7 @@
       "service": ["drinks"],
       "course": "drink",
       "price": {
-        "drinks": 11
+        "drinks": 12
       }
     },
     {
@@ -312,7 +337,7 @@
       "service": ["drinks"],
       "course": "drink",
       "price": {
-        "drinks": 10
+        "drinks": 11
       }
     },
     {
@@ -339,7 +364,7 @@
       "service": ["drinks"],
       "course": "drink",
       "price": {
-        "drinks": 11
+        "drinks": 12
       }
     },
     {
@@ -348,7 +373,7 @@
       "service": ["drinks"],
       "course": "drink",
       "price": {
-        "drinks": 12
+        "drinks": 13
       }
     },
     {
@@ -357,7 +382,7 @@
       "service": ["drinks"],
       "course": "drink",
       "price": {
-        "drinks": 12
+        "drinks": 14
       }
     },
     {
@@ -366,7 +391,7 @@
       "service": ["drinks"],
       "course": "drink",
       "price": {
-        "drinks": 12
+        "drinks": 13
       }
     },
     {
@@ -392,9 +417,13 @@
       "description": "Gin, Italicus, Cointreau, Lemon, Egg White",
       "service": ["drinks"],
       "course": "drink",
-      "price": {
-        "drinks": 12
-      }
+      "price": { "drinks": 14 }
+    },
+    {
+      "name": "Corpse Reviver #2",
+      "description": "Gin, Lillet Blanc, Cointreau, Absinthe, Lemon",
+      "service": ["drinks"],
+      "price": { "drinks": 14 }
     },
     {
       "name": "Vesper",
@@ -406,40 +435,46 @@
       }
     },
     {
-      "name": "Vanilla bean crème brûlée",
+      "name": "Vanilla Bean Crème Brûlée",
       "description": "",
       "service": ["dessert"],
-      "course": "drink",
-      "price": {
-        "dessert": 10
-      }
+      "course": "dessert",
+      "price": { "dessert": 11 }
     },
     {
-      "name": "Crème fraîche cheesecake",
-      "description": "Served with a raspberry pinot noir sauce",
+      "name": "Fallen Chocolate Soufflé",
+      "description": "Server with vanilla bean ice cream and passionfruit caramel sauce",
       "service": ["dessert"],
       "course": "dessert",
-      "price": {
-        "dessert": 11
-      }
+      "price": { "dessert": 12 }
+    },
+    {
+      "name": "Tiramisu",
+      "description": "",
+      "service": ["dessert"],
+      "price": { "dessert": 13 }
     },
     {
       "name": "Pumpkin pie",
       "description": "Served with whipped cream",
       "service": ["dessert"],
       "course": "dessert",
-      "price": {
-        "dessert": 12
-      }
+      "price": { "dessert": 12 },
+      "disabled": true
     },
     {
       "name": "Chocolate peanut butter tort",
       "description": "",
       "service": ["dessert"],
       "course": "dessert",
-      "price": {
-        "dessert": 11
-      }
+      "price": { "dessert": 11 },
+      "disabled": true
+    },
+    {
+      "name": "Crème Fraîche Cheesecake",
+      "description": "Served with a raspberry pinot noir sauce",
+      "service": ["dessert"],
+      "price": { "dessert": 12 }
     },
     {
       "name": "Affogato",
@@ -455,9 +490,8 @@
       "description": "A rotating choice of seasonal flavors",
       "service": ["dessert"],
       "course": "dessert",
-      "price": {
-        "dessert": 7
-      }
+      "price": { "dessert": 7 },
+      "disabled": true
     }
   ]
 }
