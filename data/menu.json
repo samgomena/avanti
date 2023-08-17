@@ -47,7 +47,7 @@
       "description": "Served with wasabi aioli",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 14,
+        "dinner": 16,
         "lunch": 10
       }
     },
@@ -65,7 +65,8 @@
       "service": ["dinner"],
       "price": {
         "dinner": 17
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Ahi Poke Stack",
@@ -81,9 +82,9 @@
       "description": "Served with remoulade",
       "service": ["dinner"],
       "price": {
-        "dinner": 21
+        "dinner": 22
       },
-      "disabled": true
+      "disabled": false
     },
     {
       "name": "Seared Ahi Tuna",
@@ -96,6 +97,13 @@
       "description": "Half dozen served on the half shell",
       "service": ["dinner"],
       "price": { "dinner": 19 }
+    },
+    {
+      "name": "Ahi Tuna Tartare",
+      "description": "Wakame salad, ",
+      "service": ["dinner"],
+      "price": { "dinner": 22 },
+      "disabled": true
     },
     {
       "name": "Soup of the Day",
@@ -111,7 +119,7 @@
       "description": "Mixed greens with tomato, and candied hazelnuts in a balsamic vinaigrette",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 10,
+        "dinner": 11,
         "lunch": 7
       }
     },
@@ -129,10 +137,10 @@
       "description": "With parmesan, wheat berries, and tomato in a lemongrass vinaigrette",
       "service": ["dinner", "lunch"],
       "price": {
-        "dinner": 10,
+        "dinner": 11,
         "lunch": 9
       }
-    },    
+    },
     {
       "name": "Caprese Salad",
       "description": "Heirloom tomato, basil, and fresh mozzarella",
@@ -144,12 +152,11 @@
     },
     {
       "name": "Marinated Grilled Prawns",
-      "description": "Served with heirloom and roasted tomato risotto, spinach, pesto, and grilled zucchini",
+      "description": "Served over risotto with tomato, mascarpone, cipollini onions, pesto, and grilled asparagus",
       "service": ["dinner"],
       "price": {
-        "dinner": 31
-      },
-      "disabled": true
+        "dinner": 33
+      }
     },
     {
       "name": "Chicken Breast",
@@ -157,7 +164,8 @@
       "service": ["dinner"],
       "price": {
         "dinner": 32
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Braised Short Ribs",
@@ -171,7 +179,7 @@
       "name": "Panko and Herb-Crusted Mahi Mahi",
       "description": "Served with crème fraîche, rice, sauce chasseur with bacon, mushroom, tomato, shallots, and grilled asparagus",
       "service": ["dinner"],
-      "price": { "dinner": 34 }
+      "price": { "dinner": 35 }
     },
     {
       "name": "Smoked Pork Chop",
@@ -182,11 +190,19 @@
       }
     },
     {
+      "name": "Pan Roasted Chicken Breast",
+      "description": "Served with goat cheese potato gratin, morel mushroom dijon cream sauce, and grilled asparagus",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 37
+      }
+    },
+    {
       "name": "Flat Iron Steak",
       "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi-glace",
       "service": ["dinner"],
       "price": {
-        "dinner": 36
+        "dinner": 38
       }
     },
     {
@@ -203,6 +219,15 @@
       "service": ["dinner"],
       "price": {
         "dinner": 46
+      },
+      "disabled": true
+    },
+    {
+      "name": "Grilled King Salmon",
+      "description": "Served with wild rice pilaf, smoked tomato beurre blanc , and grilled broccolini",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 38
       }
     },
     {
@@ -226,7 +251,7 @@
       "description": "Served with pinenuts, green onions, and chili flakes in a white wine sauce",
       "service": ["dinner"],
       "price": {
-        "dinner": 27
+        "dinner": 29
       }
     },
     {
