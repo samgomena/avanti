@@ -15,10 +15,7 @@ const Map = dynamic(() => import("../components/Map/Map"), { ssr: false });
 export default function About() {
   return (
     <>
-      <Header
-        title="About Us"
-        image="/assets/photos/avanti_business_logo.jpg"
-      />
+      <Header title="About Us" image="/assets/photos/avanti_menu_item_18.jpg" />
       <Section>
         <Heading heading="Behind the Scenes" />
         <p>
