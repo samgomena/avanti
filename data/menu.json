@@ -65,6 +65,7 @@
       "name": "Fried Calamari",
       "description": "Served with ponzu and spicy aioli",
       "service": ["dinner"],
+      "course": "appetizer",
       "price": {
         "dinner": 16
       }
@@ -73,6 +74,7 @@
       "name": "Fried Atlantic Jackknife Razor Clams",
       "description": "Yuzu aioli",
       "service": ["dinner"],
+      "course": "appetizer",
       "price": {
         "dinner": 17
       }
@@ -243,6 +245,7 @@
       "name": "Braised Alaskan Halibut",
       "description": "Served with saffron butter poached fingerling potatoes in a tomato basil white wine butter sauce with grilled asparagus",
       "service": ["dinner"],
+      "course": "entree",
       "price": {
         "dinner": 40
       }
@@ -423,6 +426,7 @@
       "name": "Corpse Reviver #2",
       "description": "Gin, Lillet Blanc, Cointreau, Absinthe, Lemon",
       "service": ["drinks"],
+      "course": "drink",
       "price": { "drinks": 14 }
     },
     {
@@ -452,6 +456,7 @@
       "name": "Tiramisu",
       "description": "",
       "service": ["dessert"],
+      "course": "dessert",
       "price": { "dessert": 13 }
     },
     {
@@ -474,6 +479,7 @@
       "name": "Crème Fraîche Cheesecake",
       "description": "Served with a raspberry pinot noir sauce",
       "service": ["dessert"],
+      "course": "dessert",
       "price": { "dessert": 12 }
     },
     {
