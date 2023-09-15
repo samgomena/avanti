@@ -202,9 +202,9 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
     }
     console.info({ items: valuesWithNewIdx });
     console.info("Successfully updated menu");
+    // TODO: Gotta reset form state somehow
     // Refresh the dataz 🤞
     router.replace(router.asPath);
-    // TODO: Manually reset specific form state so it's not fucked
   };
 
   const onRemove =
