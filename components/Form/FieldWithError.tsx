@@ -11,12 +11,23 @@ function Field<T = any>({
   options?: { name: string; value: string }[];
 }) {
   return (
-    <div className="form-group mb-3">
-      <label htmlFor={name} className={showLabels ? "" : "visually-hidden"}>
+    <div
+      className={`form-group mb-3 ${
+        rest.type === "checkbox" ? "form-check" : ""
+      }`}
+    >
+      <label
+        htmlFor={name}
+        className={`${rest.type === "checkbox" ? "form-check-label" : ""} ${
+          showLabels ? "" : "visually-hidden"
+        }
+        `}
+      >
         {placeholder}
       </label>
       {rest.as === "select" ? (
         <BaseField
+          id={name}
           className="form-control"
           name={name}
           placeholder={placeholder}
@@ -30,7 +41,10 @@ function Field<T = any>({
         </BaseField>
       ) : (
         <BaseField
-          className="form-control"
+          id={name}
+          className={
+            rest.type === "checkbox" ? "form-check-input" : "form-control"
+          }
           name={name}
           placeholder={placeholder}
           {...rest}

@@ -85,32 +85,41 @@ const AddMenuItem: React.FC = () => {
     // say anything about it and I don't feel like digging through the sauce rn
     { resetForm }
   ) => {
-    const res = await fetch("/api/menu/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    }).then((res) => res.json());
+    try {
+      const res = await fetch("/api/menu/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }).then((res) => res.json());
 
-    if (res.ok) {
-      console.info("Successfully added menu item");
-      // Refresh the dataz
+      if (res.ok) {
+        console.info("Successfully added menu item");
+        // Refresh the dataz
+        setToastData({
+          type: "success",
+          message: "Success! You're changes should be visible in a few seconds",
+          show: true,
+        });
+        resetForm(initialValues);
+        return;
+      }
+
+      console.error(`There was an error submitting info: ${res.error}`);
       setToastData({
-        type: "success",
-        message: "Success! You're changes should be visible in a few seconds",
+        type: "error",
+        message: "There was an error creating that. Maybe try again 🙃",
         show: true,
       });
-      resetForm(initialValues);
-      return;
+    } catch (error) {
+      console.error(`There was an error submitting info: ${error}`);
+      setToastData({
+        type: "error",
+        message: "There was an error creating that. Maybe try again 🙃",
+        show: true,
+      });
     }
-
-    console.error(`There was an error submitting info: ${res.error}`);
-    setToastData({
-      type: "error",
-      message: "There was an error creating that. Maybe try again 🙃",
-      show: true,
-    });
   };
 
   return (

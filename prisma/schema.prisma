@@ -109,3 +109,40 @@ model Alert {
   title String?
   text  String
 }
+
+enum Services {
+  dinner
+  lunch
+  hh
+  drinks
+  dessert
+}
+
+enum Courses {
+  appetizer
+  entree
+  drink
+  dessert
+}
+
+model Menu {
+  id          String    @id @default(cuid())
+  idx         Int
+  name        String
+  description String?   @default("")
+  service     Services? @default(dinner)
+  course      Courses
+  disabled    Boolean?  @default(false)
+  price       Price?
+}
+
+model Price {
+  id      String @id @default(cuid())
+  dinner  Int?
+  lunch   Int?
+  hh      Int?
+  drinks  Int?
+  dessert Int?
+  Menu    Menu   @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  menuId  String @unique
+}
