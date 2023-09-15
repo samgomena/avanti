@@ -5,7 +5,11 @@ class Document extends NextDocument {
     return (
       <Html lang="en">
         <Head>
-          <script async defer data-website-id="cc608202-4eca-436d-affd-90de0b9d1256" src="https://umami-alpha-ebon.vercel.app/umami.js"></script>
+          <script
+            async
+            src="https://umami-alpha-ebon.vercel.app/script.js"
+            data-website-id="cc608202-4eca-436d-affd-90de0b9d1256"
+          ></script>
         </Head>
         <body>
           <Main />
