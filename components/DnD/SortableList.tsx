@@ -61,8 +61,13 @@ export function SortableList<T extends BaseItem>({
     >
       <SortableContext items={items}>
         <ul role="application">
-          {items.map((item) => (
-            <React.Fragment key={item.id}>{renderItem(item)}</React.Fragment>
+          {items.map((item, idx) => (
+            // Copy item and pass the index of the item from the iteration method
+            // Specifically, we *don't* want to use the index contained in the item object because
+            // it doesn't get updated on move.
+            <React.Fragment key={item.id}>
+              {renderItem({ ...item, mvIdx: idx })}
+            </React.Fragment>
           ))}
         </ul>
       </SortableContext>

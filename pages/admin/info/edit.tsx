@@ -114,7 +114,7 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
                 <Field name="contact.phone" placeholder="Phone number" />
 
                 {/* TODO(6/4/22): This needs validation/error handling */}
-                {values.hours.map((entry, idx) => (
+                {values?.hours.map((entry, idx) => (
                   <div key={idx} className="form-group mb-3">
                     <label>
                       {capitalize(entry.day)}
