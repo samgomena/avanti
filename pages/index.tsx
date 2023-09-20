@@ -4,14 +4,34 @@ import { ParallaxBanner } from "react-scroll-parallax";
 import Alerts from "../components/Alerts";
 import { useFlag } from "../lib/hooks/useFlags";
 import useInfo from "../lib/hooks/useInfo";
+import type { BannerLayer } from "react-scroll-parallax/dist/components/ParallaxBanner/types";
 // import Carousel from "react-bootstrap/Carousel";
-// import Image from "next/image";
+
+const gradientOverlay: BannerLayer = {
+  opacity: [0, 0.95],
+  shouldAlwaysCompleteAnimation: true,
+  expanded: true,
+  children: (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        backgroundColor: "#111827",
+      }}
+    />
+  ),
+};
 
 const layers = [
   {
-    image: "/assets/photos/1.jpg",
-    speed: 10,
+    image: "/assets/photos/avanti_restaurant_5.jpg",
+    speed: 12,
   },
+  gradientOverlay,
 ];
 
 const iconSize = 24;
