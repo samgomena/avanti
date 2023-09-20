@@ -132,7 +132,7 @@ model Menu {
   description String?   @default("")
   service     Services? @default(dinner)
   course      Courses
-  disabled    Boolean?  @default(false)
+  disabled    Boolean   @default(false)
   price       Price?
 }
 
