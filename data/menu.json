@@ -57,7 +57,7 @@
       "service": ["dinner", "lunch"],
       "course": "appetizer",
       "price": {
-        "dinner": 14,
+        "dinner": 16,
         "lunch": 10
       }
     },
@@ -77,7 +77,8 @@
       "course": "appetizer",
       "price": {
         "dinner": 17
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Ahi Poke Stack",
@@ -95,9 +96,9 @@
       "service": ["dinner"],
       "course": "appetizer",
       "price": {
-        "dinner": 21
+        "dinner": 22
       },
-      "disabled": true
+      "disabled": false
     },
     {
       "name": "Seared Ahi Tuna",
@@ -118,6 +119,13 @@
       }
     },
     {
+      "name": "Ahi Tuna Tartare",
+      "description": "Wakame salad, ",
+      "service": ["dinner"],
+      "price": { "dinner": 22 },
+      "disabled": true
+    },
+    {
       "name": "Soup of the Day",
       "description": "",
       "service": ["dinner", "lunch"],
@@ -133,7 +141,7 @@
       "service": ["dinner", "lunch"],
       "course": "appetizer",
       "price": {
-        "dinner": 10,
+        "dinner": 11,
         "lunch": 7
       }
     },
@@ -144,6 +152,16 @@
       "course": "appetizer",
       "price": {
         "dinner": 12,
+        "lunch": 9
+      }
+    },
+    {
+      "name": "Baby Kale Salad",
+      "description": "With parmesan, wheat berries, and tomato in a lemongrass vinaigrette",
+      "service": ["dinner", "lunch"],
+      "course": "appetizer",
+      "price": {
+        "dinner": 11,
         "lunch": 9
       }
     },
@@ -170,13 +188,12 @@
     },
     {
       "name": "Marinated Grilled Prawns",
-      "description": "Served with heirloom and roasted tomato risotto, spinach, pesto, and grilled zucchini",
+      "description": "Served over risotto with tomato, mascarpone, cipollini onions, pesto, and grilled asparagus",
       "service": ["dinner"],
       "course": "entree",
       "price": {
-        "dinner": 31
-      },
-      "disabled": true
+        "dinner": 33
+      }
     },
     {
       "name": "Chicken Breast",
@@ -185,7 +202,8 @@
       "course": "entree",
       "price": {
         "dinner": 32
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Braised Short Ribs",
@@ -202,7 +220,7 @@
       "service": ["dinner"],
       "course": "entree",
       "price": {
-        "dinner": 34
+        "dinner": 35
       }
     },
     {
@@ -215,12 +233,20 @@
       }
     },
     {
+      "name": "Pan Roasted Chicken Breast",
+      "description": "Served with goat cheese potato gratin, morel mushroom dijon cream sauce, and grilled asparagus",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 37
+      }
+    },
+    {
       "name": "Flat Iron Steak",
       "description": "Served with pomme purée, roasted cipollini onions and carrots finished with demi-glace",
       "service": ["dinner"],
       "course": "entree",
       "price": {
-        "dinner": 36
+        "dinner": 38
       }
     },
     {
@@ -239,6 +265,15 @@
       "course": "entree",
       "price": {
         "dinner": 46
+      },
+      "disabled": true
+    },
+    {
+      "name": "Grilled King Salmon",
+      "description": "Served with wild rice pilaf, smoked tomato beurre blanc , and grilled broccolini",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 38
       }
     },
     {
@@ -265,7 +300,7 @@
       "service": ["dinner"],
       "course": "entree",
       "price": {
-        "dinner": 27
+        "dinner": 29
       }
     },
     {
