@@ -1,15 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
-import {
-  connect,
-  ErrorMessage,
-  FieldArray,
-  Form,
-  Formik,
-  FormikHelpers,
-  FormikValues,
-} from "formik";
+import { ErrorMessage, FieldArray, Form, Formik, FormikHelpers } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
 
@@ -134,7 +128,6 @@ type EditMenuProps = {
 // });
 
 const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
-  console.log("menu: ", menu);
   const router = useRouter();
   const [toastData, setToastData] = useState({
     type: "",
@@ -191,18 +184,33 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
       }).then((res) => res.json());
       if (res.ok) {
         console.info("Successfully updated menu");
-        // resetForm({ values: { items: res.data } });
+        // Reset form with values submitted.
+        resetForm({ values: { items: res.data } });
+        setToastData({
+          type: "success",
+          message: "Success! You're changes should be visible in a few seconds",
+          show: true,
+        });
       } else {
-        console.error(`There was an error updating menu: ${res.error}`);
+        console.error(`There was an error updating the menu: ${res.error}`);
+        setToastData({
+          type: "error",
+          message: "There was an error updating that. Maybe try again 🙃",
+          show: true,
+        });
         // Bail if we're fucked
         return;
       }
     } catch (error) {
-      console.error(`There was an error updating menu: ${error}`);
+      console.error(`There was an error updating the menu: ${error}`);
+      setToastData({
+        type: "error",
+        message: "There was an error creating that. Maybe try again 🙃",
+        show: true,
+      });
     }
     console.info({ items: valuesWithNewIdx });
     console.info("Successfully updated menu");
-    // TODO: Gotta reset form state somehow
     // Refresh the dataz 🤞
     router.replace(router.asPath);
   };
@@ -286,6 +294,20 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
             </Form>
           )}
         </Formik>
+
+        <ToastContainer className="d-inline-block m-4" position="top-end">
+          <Toast
+            bg={toastData.type === "error" ? "danger" : "light"}
+            onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
+            show={toastData.show}
+            delay={8_000} // 8 seconds
+            autohide
+          >
+            <Toast.Header>
+              <strong className="me-auto">{toastData.message}</strong>
+            </Toast.Header>
+          </Toast>
+        </ToastContainer>
       </div>
     </div>
   );
@@ -439,6 +461,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
+  // Roughly translates to:
+  // SELECT `main`.`Menu`.`id`, `main`.`Menu`.`idx`, `main`.`Menu`.`name`, `main`.`Menu`.`description`, `main`.`Menu`.`service`, `main`.`Menu`.`course`, `main`.`Menu`.`disabled`, `main`.`Menu`.`priceId` FROM `main`.`Menu` WHERE 1=1 ORDER BY `main`.`Menu`.`course` ASC, `main`.`Menu`.`idx` ASC
   const menu = await prisma?.menu.findMany({
     orderBy: [
       {
@@ -450,9 +474,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       price: true,
     },
   });
-
-  // console.log(menu);
-  // SELECT `main`.`Menu`.`id`, `main`.`Menu`.`idx`, `main`.`Menu`.`name`, `main`.`Menu`.`description`, `main`.`Menu`.`service`, `main`.`Menu`.`course`, `main`.`Menu`.`disabled`, `main`.`Menu`.`priceId` FROM `main`.`Menu` WHERE 1=1 ORDER BY `main`.`Menu`.`course` ASC, `main`.`Menu`.`idx` ASC
 
   return {
     props: {

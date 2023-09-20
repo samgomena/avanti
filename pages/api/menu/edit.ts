@@ -27,6 +27,9 @@ const Edit = async (req: NextApiRequest, res: NextApiResponse) => {
       // @ts-expect-error: Fix dis
       ...items.map((item) =>
         prisma?.menu.update({
+          include: {
+            price: true,
+          },
           where: { id: item.id },
           data: {
             idx: item.idx,

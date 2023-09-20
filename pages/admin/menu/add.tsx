@@ -102,7 +102,7 @@ const AddMenuItem: React.FC = () => {
           message: "Success! You're changes should be visible in a few seconds",
           show: true,
         });
-        resetForm(initialValues);
+        resetForm();
         return;
       }
 
