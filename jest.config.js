@@ -1,6 +1,5 @@
-const nextJest = require("next/jest");
+const nextJest = require("next/jest").default;
 
-// @ts-expect-error: This "isn't callable" b/c we're vscode thinks the import is via ES6 but really it's ES5
 const createJestConfig = nextJest({
   dir: "./",
 });
