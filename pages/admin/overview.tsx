@@ -38,15 +38,16 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
           ],
           [] as (number | null)[]
         )
+        // Remove nulls from the list of prices (i.e. when a price isn't defined for a service period)
         // This is a shitty workaround to not have to jump through a bunch of hoops with ts + array.filter
         // See: https://stackoverflow.com/a/59726888/4668680
-        .flatMap((item) => (item ? [item] : []))
+        .flatMap((item) => item ?? [])
         // Finally, calculate stats!
         .reduce(
           (acc, curr, _, { length }) => ({
-            max: curr! >= acc.max ? curr : acc.max,
-            min: curr! <= acc.min ? curr : acc.min,
-            avg: acc.avg + curr! / length,
+            max: curr >= acc.max ? curr : acc.max,
+            min: curr <= acc.min ? curr : acc.min,
+            avg: acc.avg + curr / length,
           }),
           { max: 0, min: 1_000, avg: 0.0 }
         ),
@@ -68,9 +69,9 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
   return (
     <div className="row justify-content-center">
       <div className="col">
-        <h3>Overview</h3>
+        <h3 data-testid="title">Overview</h3>
 
-        <Table striped bordered hover>
+        <Table striped bordered hover data-testid="table">
           <thead>
             <tr>
               <th></th>
@@ -83,19 +84,25 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
             <tr>
               <td>Average</td>
               {data.map((item, idx) => (
-                <td key={`avg_${idx}`}>${item.data.avg.toFixed(2)}</td>
+                <td key={`avg_${idx}`} data-testid={`avg_${idx}`}>
+                  ${item.data.avg.toFixed(2)}
+                </td>
               ))}
             </tr>
             <tr>
               <td>Min</td>
               {data.map((item, idx) => (
-                <td key={`avg_${idx}`}>${item.data.min}</td>
+                <td key={`min_${idx}`} data-testid={`min_${idx}`}>
+                  ${item.data.min}
+                </td>
               ))}
             </tr>
             <tr>
               <td>Max</td>
               {data.map((item, idx) => (
-                <td key={`avg_${idx}`}>${item.data.max}</td>
+                <td key={`max_${idx}`} data-testid={`max_${idx}`}>
+                  ${item.data.max}
+                </td>
               ))}
             </tr>
           </tbody>
@@ -105,6 +112,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
           checked={includeDisabled}
           onChange={(event) => setIncludeDisabled(event.target.checked)}
           label="Include hidden"
+          data-testid="include-hidden-checkbox"
           id="include-hidden-checkbox"
         />
       </div>
