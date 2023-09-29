@@ -2,12 +2,30 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import Navbar from "../Navbar";
 
 const getPath = jest.fn(() => "/test");
+const getSession = jest.fn(() => ({ data: false }));
+
+jest.mock("next-auth/react", () => ({
+  useSession: () => getSession(),
+}));
 
 jest.mock("next/router", () => ({
   useRouter: () => ({
     asPath: getPath(),
   }),
 }));
+
+// TODO: Maybe this better?
+// jest.mock("next/router", () => ({
+//   useRouter() {
+//     return {
+//       asPath: "",
+//     };
+//   },
+// }));
+// const useRouter = jest.spyOn(require("next/router"), "useRouter");
+// useRouter.mockImplementation(() => ({
+//   asPath: "/about",
+// }));
 
 describe("Navbar", () => {
   it("renders", () => {
@@ -30,7 +48,6 @@ describe("Navbar", () => {
     render(<Navbar />);
 
     const navbar = screen.getByRole("navigation");
-
     fireEvent.scroll(window, { target: { scrollY: 100 } });
 
     expect(navbar).toHaveClass("navbar");
@@ -127,6 +144,18 @@ describe("Navbar - Links", () => {
 
     const link = screen.getByText("Login");
     expect(link).toHaveAttribute("href", "/login");
+    expect(link).toHaveClass("nav-link");
+    expect(link).toHaveClass("active");
+  });
+
+  it("renders admin page link with the correct href", () => {
+    getPath.mockImplementation(() => "/admin");
+    getSession.mockImplementation(() => ({ data: true }));
+
+    render(<Navbar />);
+
+    const link = screen.getByText("Admin");
+    expect(link).toHaveAttribute("href", "/admin/overview");
     expect(link).toHaveClass("nav-link");
     expect(link).toHaveClass("active");
   });
