@@ -1,13 +1,13 @@
-import Header from "../components/Header";
-import Heading from "../components/Heading";
-import Section from "../components/Section";
-import MenuItem from "../components/Menu/MenuItem";
-import MenuItemWrapper from "../components/Menu/MenuItemWrapper";
+import Header from "@/components/Header";
+import Heading from "@/components/Heading";
+import MenuDivider from "@/components/Menu/MenuDivider";
+import MenuItem from "@/components/Menu/MenuItem";
+import MenuItems from "@/components/Menu/MenuItems";
+import Section from "@/components/Section";
+import { PrismaClient, type Courses, type Prisma } from "@prisma/client";
+import { GetStaticProps } from "next";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-
-import { useMenuBuckets } from "../lib/hooks/useMenu";
-import { useFlag } from "../lib/hooks/useFlags";
 
 /**
  * Given the time of day and the menu, return the appropriate menu item.
@@ -23,25 +23,25 @@ const getDefaultActiveKey = () => {
   return "dinner";
 };
 
-export default function Menu() {
-  const menu = useMenuBuckets<React.ReactNode>({
-    as: (item, service, idx) => (
-      <MenuItem
-        key={idx}
-        name={item.name}
-        description={item.description}
-        price={item.price[service]}
-      />
-    ),
-  });
+type Bucket =
+  | {
+      name: string;
+      description: string | null;
+      price: {
+        dinner: number | null;
+        drinks: number | null;
+      } | null;
+    }[];
+type MenuProps = {
+  apps: Bucket;
+  entrees: Bucket;
+  drinks: Bucket;
+};
 
+export default function Menu({ apps, entrees, drinks }: MenuProps) {
   // TODO(6/4/22): Default active key is always dinner while lunch/hh are disbaled
   // const defaultActiveKey = useMemo(getDefaultActiveKey, []);
   const defaultActiveKey = "dinner";
-
-  const showLunch = useFlag("showLunch");
-  const showHh = useFlag("showHh");
-  const showDesserts = useFlag("showDesserts");
 
   return (
     <>
@@ -60,27 +60,41 @@ export default function Menu() {
               className="justify-content-center mb-6"
               variant="pills"
             >
-              {showLunch.enabled && (
-                <Tab eventKey="lunch" title="Lunch">
-                  <MenuItemWrapper>{menu.lunch}</MenuItemWrapper>
-                </Tab>
-              )}
               <Tab eventKey="dinner" title="Dinner">
-                <MenuItemWrapper>{menu.dinner}</MenuItemWrapper>
+                <MenuItems>
+                  <MenuDivider>Appetizers</MenuDivider>
+                  {apps.map((item, idx) => (
+                    <MenuItem
+                      key={idx}
+                      name={item.name}
+                      description={item.description ?? ""}
+                      price={item.price!["dinner"]!}
+                    />
+                  ))}
+                  <MenuDivider>Entrees</MenuDivider>
+                  {entrees.map((item, idx) => (
+                    <MenuItem
+                      key={idx}
+                      name={item.name}
+                      description={item.description ?? ""}
+                      price={item.price!["dinner"]!}
+                    />
+                  ))}
+                </MenuItems>
               </Tab>
-              {showHh.enabled && (
-                <Tab eventKey="hh" title="HH">
-                  <MenuItemWrapper>{menu.hh}</MenuItemWrapper>
-                </Tab>
-              )}
+
               <Tab eventKey="drinks" title="Drinks">
-                <MenuItemWrapper>{menu.drinks}</MenuItemWrapper>
+                <MenuItems>
+                  {drinks.map((item, idx) => (
+                    <MenuItem
+                      key={idx}
+                      name={item.name}
+                      description={item.description ?? ""}
+                      price={item.price!["drinks"]!}
+                    />
+                  ))}
+                </MenuItems>
               </Tab>
-              {showDesserts.enabled && (
-                <Tab eventKey="dessert" title="Dessert">
-                  <MenuItemWrapper>{menu.dessert}</MenuItemWrapper>
-                </Tab>
-              )}
             </Tabs>
           </div>
         </div>
@@ -88,3 +102,38 @@ export default function Menu() {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const prisma = new PrismaClient();
+  const getQueryForCourse = (
+    course: Courses,
+    selectPrice: Prisma.PriceSelect
+  ) => {
+    return prisma.menu.findMany({
+      orderBy: [{ idx: "asc" }],
+      where: {
+        disabled: false,
+        course,
+      },
+      select: {
+        name: true,
+        description: true,
+        price: {
+          select: selectPrice,
+        },
+      },
+    });
+  };
+
+  const apps = await getQueryForCourse("appetizer", { dinner: true });
+  const entrees = await getQueryForCourse("entree", { dinner: true });
+  const drinks = await getQueryForCourse("drink", { drinks: true });
+
+  return {
+    props: {
+      apps,
+      entrees,
+      drinks,
+    },
+  };
+};
