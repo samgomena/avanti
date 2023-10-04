@@ -11,6 +11,7 @@ import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
 import HoursField from "../../../components/Form/HoursField";
 import { days } from "../../../lib/hooks/useInfo";
+import prisma from "../../../lib/prismadb";
 import { capitalize } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
 
@@ -197,7 +198,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const info = await prisma?.info.findFirst({
+  const info = await prisma.info.findFirst({
     include: {
       contact: true,
       hours: true,

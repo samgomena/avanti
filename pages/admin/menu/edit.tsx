@@ -1,4 +1,3 @@
-import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
@@ -18,6 +17,7 @@ import { ChevronDown, ChevronUp, X } from "react-feather";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import FieldWithError from "../../../components/Form/FieldWithError";
 import FormError from "../../../components/Form/FormError";
+import prisma from "../../../lib/prismadb";
 import withAdminNav from "../../../lib/withAdminNav";
 
 const validationSchema = Yup.object({
@@ -463,7 +463,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   // Roughly translates to:
   // SELECT `main`.`Menu`.`id`, `main`.`Menu`.`idx`, `main`.`Menu`.`name`, `main`.`Menu`.`description`, `main`.`Menu`.`service`, `main`.`Menu`.`course`, `main`.`Menu`.`disabled`, `main`.`Menu`.`priceId` FROM `main`.`Menu` WHERE 1=1 ORDER BY `main`.`Menu`.`course` ASC, `main`.`Menu`.`idx` ASC
-  const menu = await prisma?.menu.findMany({
+  const menu = await prisma.menu.findMany({
     orderBy: [
       {
         course: "asc",

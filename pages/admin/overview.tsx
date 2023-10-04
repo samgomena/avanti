@@ -3,6 +3,7 @@ import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next/types";
 import { useCallback, useState } from "react";
 import { Form, Table } from "react-bootstrap";
+import prisma from "../../lib/prismadb";
 import withAdminNav from "../../lib/withAdminNav";
 
 type OverviewProps = {
@@ -133,7 +134,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const menu = await prisma?.menu.findMany({
+  const menu = await prisma.menu.findMany({
     select: {
       course: true,
       disabled: true,
