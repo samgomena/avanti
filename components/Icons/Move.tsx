@@ -16,6 +16,7 @@ const Menu = forwardRef<HTMLOrSVGElement, { size?: number; color?: string }>(
         // @ts-expect-error Not sure how to convert this from an HTMLElement to whatever <svg> expects
         ref={ref}
         {...rest}
+        role="listitem"
       >
         <g>
           <path d="m536.04 383.64c0 24.719-20.039 44.758-44.758 44.758-24.723 0-44.762-20.039-44.762-44.758 0-24.723 20.039-44.762 44.762-44.762 24.719 0 44.758 20.039 44.758 44.762" />
