@@ -1,6 +1,8 @@
 import Collapse from "react-bootstrap/Collapse";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 import { ErrorMessage, FieldArray, Form, Formik, FormikHelpers } from "formik";
 import { useState } from "react";
@@ -19,6 +21,7 @@ import FieldWithError from "../../../components/Form/FieldWithError";
 import FormError from "../../../components/Form/FormError";
 import prisma from "../../../lib/prismadb";
 import withAdminNav from "../../../lib/withAdminNav";
+import FilterToggle from "@/components/Menu/FilterToggle";
 
 const validationSchema = Yup.object({
   items: Yup.array(
@@ -134,7 +137,14 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
     message: "",
     show: false,
   });
-  // TODO: This should really be a `Set()`
+
+  const [filter, setFilter] = useState({
+    appetizer: false,
+    entree: false,
+    drink: false,
+    dessert: false,
+  });
+
   const [removed, setRemoved] = useState<Array<{ id: string; idx: number }>>(
     []
   );
@@ -234,6 +244,21 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
         /> 
         <hr />
         */}
+        <FilterToggle<typeof filter>
+          filterKey="appetizer"
+          filter={filter}
+          setFilter={setFilter}
+        >
+          Appetizers
+        </FilterToggle>
+        <FilterToggle filterKey="entree" filter={filter} setFilter={setFilter}>
+          Entrees
+        </FilterToggle>
+        <FilterToggle filterKey="drink" filter={filter} setFilter={setFilter}>
+          {(checked) => (checked ? "Dranks" : "Drinks")}
+        </FilterToggle>
+        <hr />
+
         <Formik
           initialValues={{ items: menu }}
           validationSchema={validationSchema}
@@ -243,8 +268,6 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
           {({ isSubmitting, values, isValid, touched, errors, dirty }) => (
             <Form className="needs-validation" noValidate>
               <BeforeUnload />
-              {/* <Thing /> */}
-              {/* {console.log(touched, values, errors) as React.ReactNode} */}
               <FieldArray name="items">
                 {({ remove, move }) => (
                   <SortableList
@@ -392,7 +415,12 @@ EditMenuItemProps) {
           ) : (
             <X onClick={() => remove(idx)} size={18} />
             )} */}
-          <X onClick={() => remove({ idx, id: item.id })} size={18} />
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Remove {item.name}</Tooltip>}
+          >
+            <X onClick={() => remove({ idx, id: item.id })} size={18} />
+          </OverlayTrigger>
         </span>
       </div>
       <Collapse in={open} timeout={50}>
