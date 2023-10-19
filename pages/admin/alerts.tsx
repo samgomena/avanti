@@ -23,15 +23,20 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
   const futureAlerts = alerts.filter((alert) => new Date(alert.end) > now);
 
   return (
-    <div className="row justify-content-center">
+    <div className="row">
       <div className="col">
         <div className="row">
-          <div className="col-3">
+          <div className="col-3 col-md-9">
             <h3>Alerts</h3>
           </div>
-          <div className="col-6"></div>
-          <div className="col-3">
-            <Button onClick={() => setModalShow(true)}>Create Alert</Button>
+          <div className="col-12 col-md-3">
+            <Button
+              size="sm"
+              className="w-100"
+              onClick={() => setModalShow(true)}
+            >
+              Create Alert
+            </Button>
           </div>
         </div>
 

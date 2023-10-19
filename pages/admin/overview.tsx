@@ -72,7 +72,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
       <div className="col">
         <h3 data-testid="title">Overview</h3>
 
-        <Table striped bordered hover data-testid="table">
+        <Table striped bordered hover responsive data-testid="table">
           <thead>
             <tr>
               <th></th>

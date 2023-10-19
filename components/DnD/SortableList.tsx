@@ -60,7 +60,8 @@ export function SortableList<T extends BaseItem>({
       onDragCancel={() => setActive(null)}
     >
       <SortableContext items={items}>
-        <ul role="application">
+        {/* TODO: className (and potentially others) should be generic */}
+        <ul role="application" className="p-0">
           {items.map((item, idx) => (
             // Copy item and pass the index of the item from the iteration method
             // Specifically, we *don't* want to use the index contained in the item object because

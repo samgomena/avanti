@@ -1,14 +1,12 @@
-import Button from "react-bootstrap/Button";
-
-import { ErrorMessage, FieldArray, Form, Formik, FormikValues } from "formik";
-import * as Yup from "yup";
-
 import PriceField from "@/components/Form/PriceField";
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
+import { ErrorMessage, FieldArray, Form, Formik, FormikValues } from "formik";
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next/types";
 import React, { useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import * as Yup from "yup";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import FieldWithError from "../../../components/Form/FieldWithError";
 import FormError from "../../../components/Form/FormError";
@@ -139,7 +137,7 @@ const AddMenuItem: React.FC = () => {
                 <div className="row mb-3">
                   {values.items.map((item, idx1, { length }) => (
                     <div className="row gx-3 mb-3" key={idx1}>
-                      <div className="col-10">
+                      <div className="col-12 col-md-10">
                         <FieldWithError
                           name={`items.${idx1}.name`}
                           placeholder="Name"
@@ -202,7 +200,7 @@ const AddMenuItem: React.FC = () => {
                       <div className="col">
                         <Button
                           onClick={() => remove(idx1)}
-                          variant="outline-secondary"
+                          variant="outline-light"
                           // Not a fucking clue why `btn-lg` actually makes this smaller but it does
                           size="lg"
                           disabled={length === 1} // Allow deleting the first item if another one has been added

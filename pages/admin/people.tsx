@@ -6,8 +6,11 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
-import { Badge, Modal, ModalProps, Table } from "react-bootstrap";
+import { Badge, Col, Modal, ModalProps, Row, Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import { Check, Edit, UserX, X } from "react-feather";
 import * as Yup from "yup";
 import prisma from "../../lib/prismadb";
 import withAdminNav from "../../lib/withAdminNav";
@@ -16,62 +19,84 @@ type PeopleProps = {
   users: User[];
 };
 
+const colSpan = 5;
+
 const People: React.FC<PeopleProps> = ({ users }) => {
+  const router = useRouter();
   const [showModal, setModalShow] = useState(false);
   return (
     <div className="row justify-content-center">
       <div className="col">
         <div className="row">
-          <div className="col-3">
+          <div className="col-3 col-md-9">
             <h3>People</h3>
           </div>
-          <div className="col-6">
+          {/* <div className="col-6">
             <input
               className="form-control"
               type="text"
               placeholder="Search..."
             />
-          </div>
-          <div className="col-3">
-            <Button onClick={() => setModalShow(true)}>Add new</Button>
+          </div> */}
+          <div className="col-12 col-md-3">
+            <Button className="w-100" onClick={() => setModalShow(true)}>
+              Add new
+            </Button>
           </div>
         </div>
-
-        <Table className="mt-4">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Email Verified</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name === null ? "N/A" : user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  {user.emailVerified ? (
-                    <Badge bg="success">Yes</Badge>
-                  ) : (
-                    <Badge bg="danger">No</Badge>
-                  )}
-                </td>
-                <td>
-                  <UpdateModal
-                    userValues={{
-                      id: user.id,
-                      name: user.name,
-                      email: user.email,
-                    }}
-                  />
-                  <DeleteUser userId={user.id} name={user.name} />
-                </td>
+        <div className="table-responsive">
+          <Table className="mt-4">
+            <thead>
+              <tr>
+                <th colSpan={colSpan}>Name</th>
+                <th colSpan={colSpan}>Email</th>
+                <th colSpan={colSpan} className="d-none d-md-table-cell">
+                  Email Verified
+                </th>
+                <th colSpan={colSpan}>Edit</th>
+                <th colSpan={colSpan}>Delete</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td colSpan={colSpan}>
+                    {user.name === null ? "N/A" : user.name}
+                  </td>
+                  <td colSpan={colSpan}>
+                    {user.email}{" "}
+                    <span className="d-md-inline d-md-none">
+                      {!user.emailVerified ? (
+                        <Check className="text-success" size={12} />
+                      ) : (
+                        <X className="text-danger" size={12} />
+                      )}
+                    </span>
+                  </td>
+                  <td colSpan={colSpan} className="d-none d-md-table-cell">
+                    {user.emailVerified ? (
+                      <Badge bg="success">Yes</Badge>
+                    ) : (
+                      <Badge bg="danger">No</Badge>
+                    )}
+                  </td>
+                  <td colSpan={colSpan}>
+                    <UpdateModal
+                      userValues={{
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                      }}
+                    />
+                  </td>
+                  <td colSpan={colSpan}>
+                    <DeleteUser userId={user.id} name={user.name} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
       </div>
       <AddModal show={showModal} onHide={() => setModalShow(false)} />
     </div>
@@ -103,14 +128,14 @@ const UpdateModal = ({ userValues }: ModalProps) => {
   const [show, setShow] = useState(false);
   return (
     <>
-      <Button
-        size="sm"
-        variant="outline-primary"
-        className="mx-2"
-        onClick={() => setShow(true)}
-      >
-        Update
-      </Button>
+      <OverlayTrigger overlay={<Tooltip>Edit {userValues.name}</Tooltip>}>
+        <Edit
+          role="button"
+          className="me-2 mb-2 mx-2"
+          size={18}
+          onClick={() => setShow(true)}
+        />
+      </OverlayTrigger>
       <UpsertModal
         onHide={() => setShow(false)}
         show={show}
@@ -257,9 +282,14 @@ const DeleteUser = ({ userId, name }: { userId: string; name: string }) => {
         onConfirm={deleteUser}
         name={name}
       />
-      <Button size="sm" variant="outline-primary" onClick={onDelete}>
-        Delete
-      </Button>
+      <OverlayTrigger overlay={<Tooltip>Delete {name}</Tooltip>}>
+        <UserX
+          role="button"
+          className="me-2 mb-2 mx-2"
+          size={18}
+          onClick={onDelete}
+        />
+      </OverlayTrigger>
     </>
   );
 };

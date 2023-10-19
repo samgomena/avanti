@@ -11,8 +11,11 @@ const NavLink: React.FC<{
     <Link href={href}>
       <a
         className={`nav-link ${href === router.asPath && "active"} ${
-          subMenu && "text-center"
+          subMenu && "ms-4 border-start border-secondary-subtle"
         }`}
+        style={{
+          ...(subMenu && { borderRadius: "0" }),
+        }}
       >
         {children}
       </a>
