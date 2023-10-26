@@ -81,7 +81,7 @@ function withAdminNav<T extends JSX.IntrinsicAttributes & Object>(
                   </div>
                 </div>
               </div>
-              <div className="col-sm-9 col-lg-10">
+              <div className="col-md-9 col-lg-10">
                 <div className="tab-content">
                   <div className="fade tab-pane active show" role="tabpanel">
                     <Component {...props} />

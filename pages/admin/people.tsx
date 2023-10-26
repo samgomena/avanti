@@ -6,7 +6,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
-import { Badge, Col, Modal, ModalProps, Row, Table } from "react-bootstrap";
+import { Badge, Modal, ModalProps, Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -22,13 +22,12 @@ type PeopleProps = {
 const colSpan = 5;
 
 const People: React.FC<PeopleProps> = ({ users }) => {
-  const router = useRouter();
   const [showModal, setModalShow] = useState(false);
   return (
     <div className="row justify-content-center">
       <div className="col">
         <div className="row">
-          <div className="col-3 col-md-9">
+          <div className="col-3 col-md-8 col-lg-9">
             <h3>People</h3>
           </div>
           {/* <div className="col-6">
@@ -38,7 +37,7 @@ const People: React.FC<PeopleProps> = ({ users }) => {
               placeholder="Search..."
             />
           </div> */}
-          <div className="col-12 col-md-3">
+          <div className="col-12 col-md-4 col-lg-3">
             <Button className="w-100" onClick={() => setModalShow(true)}>
               Add new
             </Button>

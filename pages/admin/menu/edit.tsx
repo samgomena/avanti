@@ -244,7 +244,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
         /> 
         <hr />
         */}
-        <FilterToggle<typeof filter>
+        <FilterToggle
           filterKey="appetizer"
           filter={filter}
           setFilter={setFilter}
