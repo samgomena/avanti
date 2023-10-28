@@ -4119,10 +4119,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-auth@^4.24.3:
-  version "4.24.3"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.24.3.tgz#1c57e6ec66fa69744cc9d28989a36916da4e6d19"
-  integrity sha512-n1EvmY7MwQMSOkCh6jhI6uBneB6VVtkYELVMEwVaCLD1mBD3IAAucwk+90kgxramW09nSp5drvynwfNCi1JjaQ==
+next-auth@^4.24.4:
+  version "4.24.4"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.24.4.tgz#ec8aa72963c4c8d325ebc21f4c15e3b46647026e"
+  integrity sha512-5DGffi+OpkbU62vPQIJ1z+hFnmow+ec5Qrn9m6eoglIO51m0DlrmLxBduZEwKAYDEg9k2joi1yelgmq1vqK3aQ==
   dependencies:
     "@babel/runtime" "^7.20.13"
     "@panva/hkdf" "^1.0.2"
@@ -4170,10 +4170,10 @@ node-releases@^2.0.6:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.6.tgz#8a7088c63a55e493845683ebf3c828d8c51c5503"
   integrity sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==
 
-nodemailer@^6.9.1:
-  version "6.9.1"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.1.tgz#8249d928a43ed85fec17b13d2870c8f758a126ed"
-  integrity sha512-qHw7dOiU5UKNnQpXktdgQ1d3OFgRAekuvbJLcdG5dnEo/GtcTHRYM7+UfJARdOFU9WUQO8OiIamgWPmiSFHYAA==
+nodemailer@^6.9.7:
+  version "6.9.7"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.7.tgz#ec2f488f62ba1558e7b19239b62778df4a5c4397"
+  integrity sha512-rUtR77ksqex/eZRLmQ21LKVH5nAAsVicAtAYudK7JgwenEDZ0UIQ1adUGqErz7sMkWYxWTTU1aeP2Jga6WQyJw==
 
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
@@ -4413,10 +4413,10 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-parallax-controller@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/parallax-controller/-/parallax-controller-1.5.0.tgz#324859f336566f114b8c08212b8454b6ad17de0f"
-  integrity sha512-X7FKD0bH27hJHdknH/UNEznmw6xjcWz/QA4M6RLlE/gUXfbePKhk+ld/20e58aAfjMqj+Q7RURryISFcDIVmtA==
+parallax-controller@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/parallax-controller/-/parallax-controller-1.7.0.tgz#659e8176922034ac548009ac544951432330aa0a"
+  integrity sha512-tIU/LgH9oIrvC6o+rvGQis8/NXxsHNuF5LODmcc5TjvEDUi2qiR/iisFmyaqI9LImQ3psdAv28k2ZEAnFekiig==
   dependencies:
     bezier-easing "^2.1.0"
 
@@ -4681,12 +4681,12 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-scroll-parallax@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-scroll-parallax/-/react-scroll-parallax-3.2.0.tgz#fad93571a274af796de3db344e358d1db67088b7"
-  integrity sha512-jZYFHbO+pE+IbNacHCpBKqw+WhGTA7t5WmXmQzC8i4DGdSYJ25d64R7ZD02K3CwMWdw5uKuc1LUZX/0OA/HCVA==
+react-scroll-parallax@^3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/react-scroll-parallax/-/react-scroll-parallax-3.4.2.tgz#4f987804581115f3fc50600341611ef5a7ea65d3"
+  integrity sha512-jNltdM1a6y2TRHW4X4nyNT9BAzbLoISTvXaoB9YKGudVcAsGWManMI6UZ6PMd2si6bbWtTROgF/A9IoplZ2OLA==
   dependencies:
-    parallax-controller "^1.5.0"
+    parallax-controller "^1.7.0"
 
 react-transition-group@^4.4.5:
   version "4.4.5"
