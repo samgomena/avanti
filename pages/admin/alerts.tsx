@@ -23,13 +23,13 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
   const futureAlerts = alerts.filter((alert) => new Date(alert.end) > now);
 
   return (
-    <div className="row">
+    <div className="row justify-content-center">
       <div className="col">
         <div className="row">
-          <div className="col-3 col-md-9">
+          <div className="col-3 col-md-8 col-lg-9">
             <h3>Alerts</h3>
           </div>
-          <div className="col-12 col-md-3">
+          <div className="col-12 col-md-4 col-lg-3">
             <Button
               size="sm"
               className="w-100"
@@ -45,7 +45,7 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
             <h5>Upcoming</h5>
             {futureAlerts.length === 0 && (
               <div className="text-center">
-                <em>There are no upcoming alerts</em>
+                <em>You have no upcoming alerts</em>
               </div>
             )}
             {futureAlerts.map((alert) => (
