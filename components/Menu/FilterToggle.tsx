@@ -1,4 +1,4 @@
-import { CSSProperties, SetStateAction } from "react";
+import { CSSProperties, SetStateAction, useId } from "react";
 import ToggleButton from "react-bootstrap/ToggleButton";
 
 type FilterToggleProps<T> = {
@@ -14,6 +14,7 @@ export default function FilterToggle<T extends Record<string, boolean>>({
   filterKey,
   children,
 }: FilterToggleProps<T>) {
+  const id = useId();
   return (
     <ToggleButton
       style={
@@ -24,6 +25,7 @@ export default function FilterToggle<T extends Record<string, boolean>>({
           "--bs-btn-border-radius": "1rem",
         } as CSSProperties
       }
+      id={id}
       className="me-1"
       value={filterKey}
       variant="outline-secondary"

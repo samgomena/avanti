@@ -1,11 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "./auth/[...nextauth]";
 
 const prisma = new PrismaClient();
 
 const Alerts = async (req: NextApiRequest, res: NextApiResponse) => {
-  // TODO: Auth
   if (process.env.NODE_ENV !== "development") {
+    return res.status(403).json({
+      error: "Forbidden",
+    });
+  }
+
+  const session = await getServerSession(req, res, authConfig);
+  if (!session) {
     return res.status(403).json({
       error: "Forbidden",
     });

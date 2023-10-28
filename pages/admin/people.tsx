@@ -257,7 +257,7 @@ const DeleteUser = ({ userId, name }: { userId: string; name: string }) => {
   const deleteUser = async () => {
     const res = await fetch("/api/people", {
       method: "DELETE",
-      body: JSON.stringify({ userId }),
+      body: JSON.stringify({ id: userId }),
       headers: {
         "Content-Type": "application/json",
       },

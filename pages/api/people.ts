@@ -1,12 +1,21 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
+import { authConfig } from "./auth/[...nextauth]";
 
 const prisma = new PrismaClient();
 const adapter = PrismaAdapter(prisma);
 
 const User = async (req: NextApiRequest, res: NextApiResponse) => {
   if (process.env.NODE_ENV !== "development") {
+    return res.status(403).json({
+      error: "Forbidden",
+    });
+  }
+
+  const session = await getServerSession(req, res, authConfig);
+  if (!session) {
     return res.status(403).json({
       error: "Forbidden",
     });
@@ -44,6 +53,7 @@ const createUser = async (
   res: NextApiResponse,
   { name, email }: UpsertUser
 ) => {
+  console.log(name, email);
   try {
     const newUser = await prisma.user.create({
       data: {
@@ -105,6 +115,9 @@ const deleteUser = async (res: NextApiResponse, userId: string) => {
     // `deleteUser` is defined for the prisma adapter
     // See: https://github.com/nextauthjs/next-auth/blob/a220245d0341c40e49d40f4f1c52955ff008dbca/packages/adapter-prisma/src/index.ts#L236
     const deleted = await adapter.deleteUser!(userId);
+    // const user = await prisma.user.findUnique({ where: { id: userId } });
+    // console.log("Found user:", user);
+    // const deleted = await prisma.user.delete({ where: { id: userId } });
 
     res.status(200).json({
       ok: true,

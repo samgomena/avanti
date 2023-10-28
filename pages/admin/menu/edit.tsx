@@ -5,22 +5,22 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
 import { ErrorMessage, FieldArray, Form, Formik, FormikHelpers } from "formik";
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import * as Yup from "yup";
 
 import { SortableList } from "@/components/DnD/SortableList";
 import PriceField from "@/components/Form/PriceField";
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
-import { Menu, Price } from "@prisma/client";
+import { Courses, Menu, Price } from "@prisma/client";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { ChevronDown, ChevronUp, X } from "react-feather";
-import BeforeUnload from "../../../components/Form/BeforeUnload";
-import FieldWithError from "../../../components/Form/FieldWithError";
-import FormError from "../../../components/Form/FormError";
-import prisma from "../../../lib/prismadb";
-import withAdminNav from "../../../lib/withAdminNav";
+import BeforeUnload from "@/components/Form/BeforeUnload";
+import FieldWithError from "@/components/Form/FieldWithError";
+import FormError from "@/components/Form/FormError";
+import prisma from "@/lib/prismadb";
+import withAdminNav from "@/lib/withAdminNav";
 import FilterToggle from "@/components/Menu/FilterToggle";
 
 const validationSchema = Yup.object({
@@ -33,32 +33,37 @@ const validationSchema = Yup.object({
         .required(
           "Must be one of 'appetizer', 'entree', 'drink', or 'dessert'"
         ),
-      price: Yup.object().when("course", (course, schema) => {
-        switch (course) {
-          case "appetizer":
-          case "entree":
-            return schema.shape({
+      price: Yup.object()
+        .when("course", {
+          is: (course: Courses) => ["appetizer", "entree"].includes(course),
+          then: (schema) =>
+            schema.shape({
               dinner: Yup.number()
                 .positive("The price has to be greater than $0!")
                 .nullable(),
               lunch: Yup.number()
                 .positive("The price has to be greater than $0!")
                 .nullable(),
-            });
-          case "drink":
-            return schema.shape({
+            }),
+        })
+        .when("course", {
+          is: (course: Courses) => course === "drink",
+          then: (schema) =>
+            schema.shape({
               drinks: Yup.number()
                 .positive("The price has to be greater than $0!")
                 .nullable(),
-            });
-          case "dessert":
-            return schema.shape({
+            }),
+        })
+        .when("course", {
+          is: (course: Courses) => course === "dessert",
+          then: (schema) =>
+            schema.shape({
               dessert: Yup.number()
                 .positive("The price has to be greater than $0!")
                 .nullable(),
-            });
-        }
-      }),
+            }),
+        }),
       disabled: Yup.boolean(),
     })
   ),
@@ -373,9 +378,13 @@ EditMenuItemProps) {
 
   return (
     <div
-      className={`p-2 ${
+      className={`${item.disabled ? "ps-2 p-0" : "p-2"} ${
         hasError && !open ? "border-start border-2 border-danger" : ""
       }`}
+      style={{
+        marginTop: item.disabled ? "-0.5rem" : undefined,
+        marginBottom: item.disabled ? "-0.5rem" : undefined,
+      }}
     >
       <div
         className="fs-5 w-100 d-flex"
@@ -393,16 +402,19 @@ EditMenuItemProps) {
           {dragHandle}
         </span>
 
-        <span
-          style={{
-            cursor: "pointer",
-            // TODO: Allow separating removed and edited
-            // TODO: wtf does that mean gd ^
-            textDecoration: `${item.disabled ? "line-through" : ""}`,
-          }}
+        <div
+          className={item.disabled ? "fs-md opacity-50" : ""}
+          style={
+            {
+              cursor: "pointer",
+              // TODO: Allow separating removed and edited
+              // TODO: wtf does that mean gd ^
+              textDecoration: `${item.disabled ? "line-through" : ""}`,
+            } as CSSProperties
+          }
         >
           {item.name} - ${formatItemPrice(item)}
-        </span>
+        </div>
         {/* TODO: Maybe have a delete button here? */}
         {/* <div className="btn-close" onClick={() => remove(idx)}></div> */}
         <span className="ms-auto" style={{ cursor: "pointer" }}>

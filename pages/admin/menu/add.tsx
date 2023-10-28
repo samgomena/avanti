@@ -13,6 +13,7 @@ import FormError from "../../../components/Form/FormError";
 import { Item } from "../../../lib/types/menu";
 import { inflect } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
+import { Courses } from "@prisma/client";
 
 const initialValue: Item = {
   name: "",
@@ -38,32 +39,37 @@ const validationSchema = Yup.object({
         .required(
           "Must be one of 'appetizer', 'entree', 'drink', or 'dessert'"
         ),
-      price: Yup.object().when("course", (course, schema) => {
-        switch (course) {
-          case "appetizer":
-          case "entree":
-            return schema.shape({
+      price: Yup.object()
+        .when("course", {
+          is: (course: Courses) => ["appetizer", "entree"].includes(course),
+          then: (schema) =>
+            schema.shape({
               dinner: Yup.number()
                 .positive("The price has to be greater than $0!")
                 .nullable(),
               lunch: Yup.number()
                 .positive("The price has to be greater than $0!")
                 .nullable(),
-            });
-          case "drink":
-            return schema.shape({
+            }),
+        })
+        .when("course", {
+          is: (course: Courses) => course === "drink",
+          then: (schema) =>
+            schema.shape({
               drinks: Yup.number()
                 .positive("The price has to be greater than $0!")
                 .nullable(),
-            });
-          case "dessert":
-            return schema.shape({
+            }),
+        })
+        .when("course", {
+          is: (course: Courses) => course === "dessert",
+          then: (schema) =>
+            schema.shape({
               dessert: Yup.number()
                 .positive("The price has to be greater than $0!")
                 .nullable(),
-            });
-        }
-      }),
+            }),
+        }),
     })
   ),
 });

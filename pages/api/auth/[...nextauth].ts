@@ -1,9 +1,9 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import prisma from "../../../lib/prismadb";
 
-export default NextAuth({
+export const authConfig: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   pages: {
     signIn: "/login",
@@ -36,4 +36,6 @@ export default NextAuth({
       return true;
     },
   },
-});
+};
+
+export default NextAuth(authConfig);
