@@ -11,7 +11,10 @@
     "test": "jest --watch --silent",
     "test:ci": "next lint && jest",
     "db:push": "prisma db push",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "COMMENT: This is done to fix builds on vercel": "",
+    "COMMENT: See: https://pris.ly/d/vercel-build": "",
+    "postinstall": "prisma generate"
   },
   "repository": {
     "type": "git",
