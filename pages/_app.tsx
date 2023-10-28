@@ -2,7 +2,6 @@ import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Suspense } from "react";
-import SSRProvider from "react-bootstrap/SSRProvider";
 import Layout from "../components/Layout";
 import "../styles/scss/theme.scss";
 
@@ -12,13 +11,11 @@ export default function App({
 }: AppProps<{ session: Session }>) {
   return (
     <Suspense>
-      <SSRProvider>
-        <SessionProvider session={pageProps.session}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </SessionProvider>
-      </SSRProvider>
+      <SessionProvider session={pageProps.session}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </SessionProvider>
     </Suspense>
   );
 }
