@@ -81,14 +81,15 @@ export default function Masonry({
       column.map((item, idx) => (
         <div
           key={idx}
-          style={{
-            marginTop: idx > 0 ? `${gutter}px` : undefined,
-          }}
+          // TODO(9/7/2023): This looks ugly now and it's maybe because <Image /> was updated?
+          // style={{
+          //   marginTop: idx > 0 ? `${gutter}px` : undefined,
+          // }}
         >
           {item}
         </div>
       )),
-    [gutter]
+    []
   );
 
   const renderColumns = useCallback(

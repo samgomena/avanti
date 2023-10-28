@@ -10,18 +10,18 @@ import { useMenuBuckets } from "../lib/hooks/useMenu";
 import { useFlag } from "../lib/hooks/useFlags";
 
 /**
- * Given the time of day and the menu, return the appropriate menu item.
+ * Given the time of day and the menu, return the appropriate menu selection
  */
-const getDefaultActiveKey = () => {
-  const hour = new Date().getHours();
-  if (hour >= 11 && hour <= 15) {
-    return "lunch";
-  } else if (hour >= 17 && hour <= 23) {
-    return "dinner";
-  }
+// const getDefaultActiveKey = () => {
+//   const hour = new Date().getHours();
+//   if (hour >= 11 && hour <= 15) {
+//     return "lunch";
+//   } else if (hour >= 17 && hour <= 23) {
+//     return "dinner";
+//   }
 
-  return "dinner";
-};
+//   return "dinner";
+// };
 
 export default function Menu() {
   const menu = useMenuBuckets<React.ReactNode>({
@@ -45,7 +45,7 @@ export default function Menu() {
 
   return (
     <>
-      <Header title="Our Menu" image="/assets/photos/porkchop_in_window.jpg" />
+      <Header title="Our Menu" image="/assets/photos/avanti_menu_item_21.jpg" />
       <Section>
         <Heading
           heading="Menu"

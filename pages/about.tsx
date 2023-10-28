@@ -17,7 +17,7 @@ export default function About() {
     <>
       <Header
         title="About Us"
-        image="/assets/photos/avanti_business_logo.jpg"
+        image="/assets/photos/avanti_restaurant_14.jpg"
       />
       <Section>
         <Heading heading="Behind the Scenes" />

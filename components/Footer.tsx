@@ -42,7 +42,10 @@ export default function Footer() {
                 <div className="me-3 fs-sm">
                   <Mail size={16} />
                 </div>
-                <a href={`mailto:${info.contact.email}`}>
+                <a
+                  className="text-truncate"
+                  href={`mailto:${info.contact.email}`}
+                >
                   {info.contact.email}
                 </a>
               </li>
