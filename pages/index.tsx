@@ -113,6 +113,7 @@ export const getStaticProps: GetStaticProps = async () => {
       start: "desc",
     },
   });
+  // TODO: These need to be loaded not statically probably lol whoops
   const _alerts = alerts?.map((alert) => ({
     ...alert,
     start: alert.start.toISOString(),

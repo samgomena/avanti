@@ -1,27 +1,36 @@
 import Collapse from "react-bootstrap/Collapse";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
-import { ErrorMessage, FieldArray, Form, Formik, FormikHelpers } from "formik";
-import { CSSProperties, useState } from "react";
+import {
+  ErrorMessage,
+  FieldArray,
+  Form,
+  Formik,
+  FormikHelpers,
+  useFormikContext,
+} from "formik";
+import { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
 
 import { SortableList } from "@/components/DnD/SortableList";
+import BeforeUnload from "@/components/Form/BeforeUnload";
+import FieldWithError from "@/components/Form/FieldWithError";
+import FormError from "@/components/Form/FormError";
 import PriceField from "@/components/Form/PriceField";
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
+import FilterToggle from "@/components/Menu/FilterToggle";
+import prisma from "@/lib/prismadb";
+import withAdminNav from "@/lib/withAdminNav";
 import { Courses, Menu, Price } from "@prisma/client";
+import classNames from "classnames";
+import { diff } from "deep-object-diff";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { ChevronDown, ChevronUp, X } from "react-feather";
-import BeforeUnload from "@/components/Form/BeforeUnload";
-import FieldWithError from "@/components/Form/FieldWithError";
-import FormError from "@/components/Form/FormError";
-import prisma from "@/lib/prismadb";
-import withAdminNav from "@/lib/withAdminNav";
-import FilterToggle from "@/components/Menu/FilterToggle";
 
 const validationSchema = Yup.object({
   items: Yup.array(
@@ -78,62 +87,13 @@ type EditMenuProps = {
   menu: MenuWithPrice[];
 };
 
-// TODO: Track changes across form updates; to the best of my knowledge, formik doesn't make this easy
-// TODO: It may be *easier* binding to the `onChange` handler (which isn't exposed through `connect` AFAICT).
-// TODO: At the very least this *doesn't work* but it's close-ish to working
-// const Thing = connect<{}, { items: MenuWithPrice[] }>((props) => {
-//   console.log(props.formik);
-//   const { touched, values, initialValues, status, setStatus } = props.formik;
-//   console.log(touched.items, status);
+const Diff = ({ lhs, rhs }: { lhs: object; rhs: object }) => {
+  const { setStatus } = useFormikContext();
+  const _diff = useMemo(() => diff(lhs, rhs), [lhs, rhs]);
+  useEffect(() => setStatus(_diff), [_diff]);
 
-//   touched.items?.forEach((item, idx) => {
-//     // Formik stores touched values in an array of length `items` where all values are undefined until they're touched
-//     // Thus, we iterate through the array looking for defined items (i.e. everything that's been touched)
-//     if (item !== undefined) {
-//       // Grab the initial and current values; together we use these to check if the value has been updated
-//       const initial = initialValues.items[idx];
-//       const current = values.items[idx];
-//       console.log("item", item);
-//       // Item is an object where the key is the field that has been touched and the value is a boolean of whether or not it has been touched
-//       // In practice, this is always true (once it has been touched) and it's unclear why it exists 🙃
-//       Object.entries(item).forEach(([itemKey, value]) => {
-//         // Look at the values of the item. They, as far as I know, can be booleans, objects, or arrays
-//         // We're not using any array values as far as I know so we only check objects and booleans
-//         console.log("value", value);
-//         switch (typeof value) {
-//           // TODO: Only support objects (not arrays tho) nested one deep
-//           case "object":
-//             // TODO:
-//             Object.keys(value).forEach((key) => {
-//               if (initial[itemKey][key] !== current[itemKey][key]) {
-//                 console.log(
-//                   initial[itemKey][key],
-//                   "!==",
-//                   current[itemKey][key]
-//                 );
-//               }
-//             });
-//             break;
-//           case "boolean":
-//             console.log(initial[itemKey], current[itemKey]);
-//             if (initial[itemKey] !== current[itemKey]) {
-//             }
-//             break;
-//         }
-//       });
-//       // Check diff of initial vs current from touched item
-//       console.log(item, initial, current);
-//       // for (const field in item) {
-//       //   console.log(field);
-//       // }
-//     }
-//   });
-
-//   // for (const item of touched.items) {
-//   //   console.log("item", item);
-//   // }
-//   return null;
-// });
+  return null;
+};
 
 const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
   const router = useRouter();
@@ -150,10 +110,14 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
     dessert: false,
   });
 
+  const [toggle, setToggle] = useState({
+    disabled: false,
+  });
+
+  const [searchText, setSearchText] = useState("");
   const [removed, setRemoved] = useState<Array<{ id: string; idx: number }>>(
     []
   );
-  // const [searchText, setSearchText] = useState("");
 
   const onSubmit = async (
     values: {
@@ -241,28 +205,6 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
     <div className="row justify-content-center">
       <div className="col">
         <h3>Edit menu items</h3>
-        {/* TODO: Add search input */}
-        {/* <input
-          type="text"
-          className="form-control form-control-sm mb-3"
-          placeholder="Search..."
-        /> 
-        <hr />
-        */}
-        <FilterToggle
-          filterKey="appetizer"
-          filter={filter}
-          setFilter={setFilter}
-        >
-          Appetizers
-        </FilterToggle>
-        <FilterToggle filterKey="entree" filter={filter} setFilter={setFilter}>
-          Entrees
-        </FilterToggle>
-        <FilterToggle filterKey="drink" filter={filter} setFilter={setFilter}>
-          {(checked) => (checked ? "Dranks" : "Drinks")}
-        </FilterToggle>
-        <hr />
 
         <Formik
           initialValues={{ items: menu }}
@@ -270,9 +212,71 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
           onSubmit={onSubmit}
           onReset={() => setRemoved([])}
         >
-          {({ isSubmitting, values, isValid, touched, errors, dirty }) => (
+          {({
+            isSubmitting,
+            values,
+            initialValues,
+            isValid,
+            errors,
+            dirty,
+          }) => (
             <Form className="needs-validation" noValidate>
+              <div
+                className="bg-white position-sticky py-2"
+                style={{ top: "72px" }}
+              >
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  placeholder="Search..."
+                />
+              </div>
+              <div className="mt-2">
+                <FilterToggle
+                  filterKey="appetizer"
+                  filter={filter}
+                  setFilter={setFilter}
+                >
+                  Appetizers
+                </FilterToggle>
+                <FilterToggle
+                  filterKey="entree"
+                  filter={filter}
+                  setFilter={setFilter}
+                >
+                  Entrees
+                </FilterToggle>
+                <FilterToggle
+                  filterKey="drink"
+                  filter={filter}
+                  setFilter={setFilter}
+                >
+                  {(checked) => (checked ? "Dranks" : "Drinks")}
+                </FilterToggle>
+                <FilterToggle
+                  filterKey="dessert"
+                  filter={filter}
+                  setFilter={setFilter}
+                >
+                  Desserts
+                </FilterToggle>
+                <span className="border-start mx-2" />
+                <FilterToggle
+                  filterKey="disabled"
+                  filter={toggle}
+                  setFilter={setToggle}
+                >
+                  {(checked) => (checked ? "Show disabled" : "Hide disabled")}
+                </FilterToggle>
+                <hr />
+              </div>
+
+              {/* Helper components */}
               <BeforeUnload />
+              <Diff lhs={initialValues} rhs={values} />
+
               <FieldArray name="items">
                 {({ remove, move }) => (
                   <SortableList
@@ -283,7 +287,25 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                     }}
                     renderItem={(item) => (
                       <SortableList.Item id={item.id}>
-                        <>
+                        <div
+                          className={classNames(
+                            // Filtering logic
+                            {
+                              // Don't filter items if there are *no* fitlers applied -- otherwise filter that bish
+                              "d-none":
+                                Object.values(filter).some(Boolean) &&
+                                !filter[item.course],
+                            },
+                            // Toggle logic
+                            { "d-none": item.disabled && toggle["disabled"] },
+                            // Search logic
+                            {
+                              "d-none":
+                                item.name.toLowerCase().indexOf(searchText) ===
+                                -1,
+                            }
+                          )}
+                        >
                           <EditMenuItem
                             mvIdx={item.mvIdx}
                             hasError={errors.items?.[item.idx] !== undefined}
@@ -293,9 +315,10 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                             // TODO: Allow separating removed and edited
                             // removed={removed.includes(item.idx)}
                           />
+                          {/* TODO: Allow adding items in the middle of the thing */}
                           {/* <div className="d-flex justify-center items-center">
-                            <hr style={{ flex: 1 }} />
                             <button
+                              onClick={() => insert(item.mvIdx, initialValue)}
                               className="btn btn-outline-secondary btn-sm opacity-0 opacity-100-hover"
                               style={
                                 {
@@ -308,7 +331,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                             </button>
                           </div> */}
                           <hr style={{ flex: 1 }} />
-                        </>
+                        </div>
                       </SortableList.Item>
                     )}
                   />
@@ -373,14 +396,15 @@ function EditMenuItem({
 // removed,
 EditMenuItemProps) {
   const [open, setOpen] = useState(false);
-  // TODO: Use this to show an edited state. Formik doesn't really support this out of the box so you'll have to get creative
-  // const { values } = useFormikContext();
-
+  const { status } = useFormikContext();
   return (
     <div
-      className={`${item.disabled ? "ps-2 p-0" : "p-2"} ${
-        hasError && !open ? "border-start border-2 border-danger" : ""
-      }`}
+      className={classNames({
+        "px-2 p-0": item.disabled,
+        "p-2": !item.disabled,
+        "border-start border-2 border-danger": hasError && !open,
+      })}
+      // Makes disabled items shorter
       style={{
         marginTop: item.disabled ? "-0.5rem" : undefined,
         marginBottom: item.disabled ? "-0.5rem" : undefined,
@@ -388,9 +412,7 @@ EditMenuItemProps) {
     >
       <div
         className="fs-5 w-100 d-flex"
-        style={{
-          cursor: "pointer",
-        }}
+        role="button"
         onClick={() => setOpen(!open)}
       >
         <span
@@ -402,21 +424,24 @@ EditMenuItemProps) {
           {dragHandle}
         </span>
 
-        <div
-          className={item.disabled ? "fs-md opacity-50" : ""}
-          style={
+        <span
+          className={classNames(
+            { "fs-md text-decoration-line-through": item.disabled },
             {
-              cursor: "pointer",
-              // TODO: Allow separating removed and edited
-              // TODO: wtf does that mean gd ^
-              textDecoration: `${item.disabled ? "line-through" : ""}`,
-            } as CSSProperties
-          }
+              // Status isn't defined at first so we have to default to empty here
+              "fst-italic": Object.keys(status?.items ?? {}).includes(`${idx}`),
+            }
+          )}
+          role="button"
+          style={{
+            // Make text color opaque when disabled
+            // Adding opacity to the entire element causes it to "shine through" to anything above it
+            // which is problematic for the search bar 🫠
+            color: item.disabled ? "rgba(0, 0, 0, 0.3)" : "",
+          }}
         >
           {item.name} - ${formatItemPrice(item)}
-        </div>
-        {/* TODO: Maybe have a delete button here? */}
-        {/* <div className="btn-close" onClick={() => remove(idx)}></div> */}
+        </span>
         <span className="ms-auto" style={{ cursor: "pointer" }}>
           {open ? <ChevronUp size="18" /> : <ChevronDown size="18" />}
           <span className="border-start mx-2" />
