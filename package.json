@@ -16,6 +16,12 @@
     "COMMENT: See: https://pris.ly/d/vercel-build": "",
     "postinstall": "prisma generate"
   },
+  "resolutions": {
+    "internal-slot": "^1.0.5"
+  },
+  "resolutionsComments": {
+    "intenal-slots" : "Required to fix eslint issue with react/display-name. See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3624"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/samgomena/avanti.git"
