@@ -4,6 +4,7 @@ import MenuDivider from "@/components/Menu/MenuDivider";
 import MenuItem from "@/components/Menu/MenuItem";
 import MenuItems from "@/components/Menu/MenuItems";
 import Section from "@/components/Section";
+import type { Bucket } from "@/lib/types/menu";
 import { PrismaClient, type Courses, type Prisma } from "@prisma/client";
 import { GetStaticProps } from "next";
 import Tab from "react-bootstrap/Tab";
@@ -23,15 +24,6 @@ const getDefaultActiveKey = () => {
   return "dinner";
 };
 
-type Bucket =
-  | {
-      name: string;
-      description: string | null;
-      price: {
-        dinner: number | null;
-        drinks: number | null;
-      } | null;
-    }[];
 type MenuProps = {
   apps: Bucket;
   entrees: Bucket;
@@ -42,6 +34,8 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
   // TODO(6/4/22): Default active key is always dinner while lunch/hh are disbaled
   // const defaultActiveKey = useMemo(getDefaultActiveKey, []);
   const defaultActiveKey = "dinner";
+
+  console.log(apps, entrees, drinks);
 
   return (
     <>
