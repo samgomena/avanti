@@ -13,6 +13,7 @@ export default function FilterToggle<T extends Record<string, boolean>>({
   setFilter,
   filterKey,
   children,
+  ...rest
 }: FilterToggleProps<T>) {
   const id = useId();
   return (
@@ -35,6 +36,7 @@ export default function FilterToggle<T extends Record<string, boolean>>({
       onClick={(_e) =>
         setFilter((prev) => ({ ...prev, [filterKey]: !filter[filterKey] }))
       }
+      {...rest}
     >
       {typeof children === "function" ? children(filter[filterKey]) : children}
     </ToggleButton>
