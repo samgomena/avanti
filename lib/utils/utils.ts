@@ -1,3 +1,4 @@
+import { Menu, Price } from "@prisma/client";
 import type { Hours } from "../types/info";
 import { Service } from "../types/menu";
 
@@ -75,6 +76,18 @@ export const formatDate = (
     // hour: "2-digit",
     // minute: "2-digit",
   });
+};
+
+export const formatItemPrice = (item: Menu & { price: Price }) => {
+  switch (item.course) {
+    case "appetizer":
+    case "entree":
+      return item.price.dinner;
+    case "drink":
+      return item.price.drinks;
+    case "dessert":
+      return item.price.dessert;
+  }
 };
 
 export const daysBetween = (start: Date, end: Date): number => {

@@ -22,8 +22,8 @@ import FormError from "@/components/Form/FormError";
 import PriceField from "@/components/Form/PriceField";
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import FilterToggle from "@/components/Menu/FilterToggle";
-import prisma from "@/lib/prismadb";
-import withAdminNav from "@/lib/withAdminNav";
+import prisma from "../../../lib/prismadb";
+import withAdminNav from "../../../lib/withAdminNav";
 import { Courses, Menu, Price } from "@prisma/client";
 import classNames from "classnames";
 import { diff } from "deep-object-diff";
@@ -31,6 +31,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { ChevronDown, ChevronUp, X } from "react-feather";
+import { formatItemPrice } from "@/lib/utils/utils";
 
 const validationSchema = Yup.object({
   items: Yup.array(
@@ -78,7 +79,7 @@ const validationSchema = Yup.object({
   ),
 });
 
-type MenuWithPrice = Menu & {
+export type MenuWithPrice = Menu & {
   price: Price;
   mvIdx: number;
 };
@@ -204,7 +205,9 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
   return (
     <div className="row justify-content-center">
       <div className="col">
-        <h3>Edit menu items</h3>
+        <div className="col-3 col-md-8 col-lg-9">
+          <h3 data-testid="title">Edit Menu Items</h3>
+        </div>
 
         <Formik
           initialValues={{ items: menu }}
@@ -238,6 +241,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                   filterKey="appetizer"
                   filter={filter}
                   setFilter={setFilter}
+                  data-testid="filter-appetizers"
                 >
                   Appetizers
                 </FilterToggle>
@@ -245,6 +249,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                   filterKey="entree"
                   filter={filter}
                   setFilter={setFilter}
+                  data-testid="filter-entrees"
                 >
                   Entrees
                 </FilterToggle>
@@ -252,6 +257,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                   filterKey="drink"
                   filter={filter}
                   setFilter={setFilter}
+                  data-testid="filter-drinks"
                 >
                   {(checked) => (checked ? "Dranks" : "Drinks")}
                 </FilterToggle>
@@ -259,6 +265,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                   filterKey="dessert"
                   filter={filter}
                   setFilter={setFilter}
+                  data-testid="filter-desserts"
                 >
                   Desserts
                 </FilterToggle>
@@ -267,8 +274,9 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                   filterKey="disabled"
                   filter={toggle}
                   setFilter={setToggle}
+                  data-testid="toggle-disabled"
                 >
-                  {(checked) => (checked ? "Show disabled" : "Hide disabled")}
+                  Hide Disabled
                 </FilterToggle>
                 <hr />
               </div>
@@ -305,6 +313,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                                 -1,
                             }
                           )}
+                          data-testid={`edit-item-container-${item.idx}`}
                         >
                           <EditMenuItem
                             mvIdx={item.mvIdx}
@@ -362,18 +371,6 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
       </div>
     </div>
   );
-};
-
-const formatItemPrice = (item: MenuWithPrice) => {
-  switch (item.course) {
-    case "appetizer":
-    case "entree":
-      return item.price.dinner;
-    case "drink":
-      return item.price.drinks;
-    case "dessert":
-      return item.price.dessert;
-  }
 };
 
 type EditMenuItemProps = {

@@ -70,7 +70,9 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
   return (
     <div className="row justify-content-center">
       <div className="col">
-        <h3 data-testid="title">Overview</h3>
+        <div className="col-3 col-md-8 col-lg-9">
+          <h3 data-testid="title">Overview</h3>
+        </div>
 
         <Table striped bordered hover responsive data-testid="table">
           <thead>
