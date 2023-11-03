@@ -14,6 +14,10 @@ const Settings: React.FC<SettingsProps> = ({ user }) => {
   return (
     <div className="row justify-content-center">
       <div className="col">
+        <div className="col-3 col-md-8 col-lg-9">
+          <h3 data-testid="title">Settings</h3>
+        </div>
+
         <p>
           <span>Name: {user.name}</span>
         </p>
