@@ -17,7 +17,7 @@ export default function Contact({ info }: ContactProps) {
     <>
       <Header
         title="Contact Us"
-        image="/assets/photos/avanti_business_logo.jpg"
+        image="/assets/photos/avanti_menu_item_33.jpg"
       />
       <Section>
         <Heading

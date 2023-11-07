@@ -11,18 +11,18 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
 /**
- * Given the time of day and the menu, return the appropriate menu item.
+ * Given the time of day and the menu, return the appropriate menu selection
  */
-const getDefaultActiveKey = () => {
-  const hour = new Date().getHours();
-  if (hour >= 11 && hour <= 15) {
-    return "lunch";
-  } else if (hour >= 17 && hour <= 23) {
-    return "dinner";
-  }
+// const getDefaultActiveKey = () => {
+//   const hour = new Date().getHours();
+//   if (hour >= 11 && hour <= 15) {
+//     return "lunch";
+//   } else if (hour >= 17 && hour <= 23) {
+//     return "dinner";
+//   }
 
-  return "dinner";
-};
+//   return "dinner";
+// };
 
 type MenuProps = {
   apps: Bucket;
@@ -39,7 +39,7 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
 
   return (
     <>
-      <Header title="Our Menu" image="/assets/photos/porkchop_in_window.jpg" />
+      <Header title="Our Menu" image="/assets/photos/avanti_menu_item_21.jpg" />
       <Section>
         <Heading
           heading="Menu"

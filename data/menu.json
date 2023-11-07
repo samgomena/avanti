@@ -184,7 +184,8 @@
       "price": {
         "dinner": 10,
         "lunch": 9
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Marinated Grilled Prawns",
@@ -193,7 +194,8 @@
       "course": "entree",
       "price": {
         "dinner": 33
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Chicken Breast",
@@ -206,12 +208,28 @@
       "disabled": true
     },
     {
+      "name": "Roasted Butternut Squash Risotto",
+      "description": "Served with pancetta, goat cheese, spinach, cipollini onions, and chopped hazelnuts",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 28
+      }
+    },
+    {
       "name": "Braised Short Ribs",
       "description": "Served in a hoisin burgundy sauce with pomme purée, carrots, parsnips, and cippolini onions",
       "service": ["dinner"],
       "course": "entree",
       "price": {
         "dinner": 37
+      }
+    },
+    {
+      "name": "Pan Roasted Sturgeon",
+      "description": "Served over a bed of creamed wild rice with grilled broccolini and tomato hazelnut pesto",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 36
       }
     },
     {
@@ -234,7 +252,7 @@
     },
     {
       "name": "Pan Roasted Chicken Breast",
-      "description": "Served with goat cheese potato gratin, morel mushroom dijon cream sauce, and grilled asparagus",
+      "description": "Served with goat cheese potato gratin, chanterelle mushroom dijon cream sauce, and grilled asparagus",
       "service": ["dinner"],
       "price": {
         "dinner": 37
@@ -270,10 +288,18 @@
     },
     {
       "name": "Grilled King Salmon",
-      "description": "Served with wild rice pilaf, smoked tomato beurre blanc , and grilled broccolini",
+      "description": "Served with wild rice pilaf, smoked tomato beurre blanc, and grilled broccolini",
       "service": ["dinner"],
       "price": {
         "dinner": 38
+      }
+    },
+    {
+      "name": "Penne Bolognese",
+      "description": "Made with house ground beef and pork and served with a grilled baguette",
+      "service": ["dinner"],
+      "price": {
+        "dinner": 28
       }
     },
     {
@@ -283,7 +309,8 @@
       "course": "entree",
       "price": {
         "dinner": 40
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Creamy Braised Pork Sugo",
@@ -292,7 +319,8 @@
       "course": "entree",
       "price": {
         "dinner": 26
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Sautéed Prawns and Capellini",
@@ -329,8 +357,8 @@
       "service": ["dinner", "lunch"],
       "course": "entree",
       "price": {
-        "dinner": 19,
-        "lunch": 15
+        "lunch": 15,
+        "dinner": 19
       }
     },
     {
@@ -339,8 +367,8 @@
       "service": ["dinner", "lunch"],
       "course": "entree",
       "price": {
-        "dinner": 24,
-        "lunch": 21
+        "lunch": 21,
+        "dinner": 24
       }
     },
     {
@@ -348,9 +376,8 @@
       "description": "Absolut Citron, Pama, St. Germain, soda",
       "service": ["drinks"],
       "course": "drink",
-      "price": {
-        "drinks": 11
-      }
+      "price": { "drinks": 11 },
+      "disabled": true
     },
     {
       "name": "Last Word",

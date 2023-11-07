@@ -68,7 +68,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Header title="Login" image="" />
+      <Header title="Login" image="/assets/photos/wine_on_bar.jpg" />
       <Section>
         <div className="row justify-content-lg-center">
           <div className="col-lg-8">
