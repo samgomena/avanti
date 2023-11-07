@@ -17,10 +17,10 @@
     "postinstall": "prisma generate"
   },
   "resolutions": {
-    "internal-slot": "^1.0.5"
+    "internal-slot": "^1.0.6"
   },
   "resolutionsComments": {
-    "intenal-slots" : "Required to fix eslint issue with react/display-name. See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3624"
+    "intenal-slot": "Required to fix eslint issue with react/display-name. See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3624"
   },
   "repository": {
     "type": "git",
@@ -48,7 +48,7 @@
     "react-dom": "18.2.0",
     "react-feather": "^2.0.10",
     "react-leaflet": "^4.2.1",
-    "react-scroll-parallax": "^3.4.2",
+    "react-scroll-parallax": "^3.4.3",
     "sass": "^1.69.5",
     "yup": "^1.3.2"
   },
@@ -56,16 +56,16 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "@types/bootstrap": "^5.2.8",
-    "@types/jest": "^29.5.6",
+    "@types/jest": "^29.5.7",
     "@types/leaflet": "^1.9.7",
-    "@types/node": "^20.8.9",
-    "@types/react": "^18.2.33",
+    "@types/node": "^20.8.10",
+    "@types/react": "^18.2.36",
     "@types/testing-library__jest-dom": "^6.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^8.52.0",
-    "eslint-config-next": "^14.0.0",
+    "eslint": "^8.53.0",
+    "eslint-config-next": "^14.0.1",
     "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest": "^29.7.0",
