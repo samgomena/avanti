@@ -35,8 +35,6 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
   // const defaultActiveKey = useMemo(getDefaultActiveKey, []);
   const defaultActiveKey = "dinner";
 
-  console.log(apps, entrees, drinks);
-
   return (
     <>
       <Header title="Our Menu" image="/assets/photos/avanti_menu_item_21.jpg" />

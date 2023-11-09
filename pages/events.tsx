@@ -16,10 +16,7 @@ export default function Events() {
           <div className="col-12">
             <p>
               If you would like to schedule a private event, please
-              <Link href="/contact">
-                <a> contact us</a>
-              </Link>
-              .
+              <Link href="/contact"> contact us</Link>.
             </p>
           </div>
         </div>

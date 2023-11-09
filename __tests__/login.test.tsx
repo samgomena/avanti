@@ -2,6 +2,10 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Login from "../pages/login";
 import { ParallaxProvider } from "react-scroll-parallax";
 
+jest.mock("next/router", () => ({
+  useRouter: () => ({}),
+}));
+
 describe("Login", () => {
   it("fucking renders", () => {
     render(
@@ -26,10 +30,6 @@ describe("Login - Form", () => {
 
     const emailInput = screen.getByLabelText("Email");
     const submitButton = screen.getByText("login");
-
-    // "Touch" email field
-    // fireEvent.blur(emailInput);
-    // await waitFor(() => screen.findByText("Your email is required to log in!"));
 
     fireEvent.change(emailInput, { target: { value: "" } });
     fireEvent.click(submitButton);

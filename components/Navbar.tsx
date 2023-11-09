@@ -48,7 +48,7 @@ export default function AvantiNavbar() {
       onToggle={handleToggle}
     >
       <div className="container">
-        <Link href="/" passHref>
+        <Link href="/" passHref legacyBehavior>
           <Navbar.Brand href="/" className="d-lg-none">
             Avanti
           </Navbar.Brand>
@@ -63,14 +63,14 @@ export default function AvantiNavbar() {
         <Navbar.Collapse>
           <Nav>
             <Nav.Item>
-              <Link href="/about" passHref>
+              <Link href="/about" passHref legacyBehavior>
                 <Nav.Link active={router.asPath === "/about"}>
                   About Us
                 </Nav.Link>
               </Link>
             </Nav.Item>
             <Nav.Item>
-              <Link href="/menu" passHref>
+              <Link href="/menu" passHref legacyBehavior>
                 <Nav.Link
                   active={router.asPath === "/menu"}
                   data-umami-event="Menu-Navbar-Clicked"
@@ -80,7 +80,7 @@ export default function AvantiNavbar() {
               </Link>
             </Nav.Item>
             <Nav.Item>
-              <Link href="/events" passHref>
+              <Link href="/events" passHref legacyBehavior>
                 <Nav.Link active={router.asPath === "/events"}>
                   Special Events
                 </Nav.Link>
@@ -88,7 +88,7 @@ export default function AvantiNavbar() {
             </Nav.Item>
           </Nav>
 
-          <Link href="/" passHref>
+          <Link href="/" passHref legacyBehavior>
             <Navbar.Brand
               href="/"
               className="navbar-brand d-none d-lg-flex mx-lg-auto"
@@ -99,14 +99,14 @@ export default function AvantiNavbar() {
 
           <Nav>
             <Nav.Item>
-              <Link href="/gallery" passHref>
+              <Link href="/gallery" passHref legacyBehavior>
                 <Nav.Link active={router.asPath === "/gallery"}>
                   Some Photos
                 </Nav.Link>
               </Link>
             </Nav.Item>
             <Nav.Item>
-              <Link href="/contact" passHref>
+              <Link href="/contact" passHref legacyBehavior>
                 <Nav.Link active={router.asPath === "/contact"}>
                   Contact Us
                 </Nav.Link>
@@ -114,7 +114,7 @@ export default function AvantiNavbar() {
             </Nav.Item>
 
             <Nav.Item>
-              <Link href={isLoggedInPath} passHref>
+              <Link href={isLoggedInPath} passHref legacyBehavior>
                 <Nav.Link
                   active={
                     router.asPath === "/login" ||
