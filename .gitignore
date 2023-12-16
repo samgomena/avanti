@@ -18,7 +18,8 @@
 # misc
 .DS_Store
 *.code-workspace
-scripts/
+scripts/*
+!scripts/db-keepalive.js
 
 # debug
 npm-debug.log*
