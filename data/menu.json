@@ -175,7 +175,8 @@
       "service": ["dinner"],
       "price": {
         "dinner": 28
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Braised Short Ribs",
