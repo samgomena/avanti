@@ -20,12 +20,18 @@ const initialValue: Item = {
   description: "",
   course: "appetizer",
   service: [],
+  // Set these to strings so form reset works after submit
   price: {
-    lunch: null,
-    dinner: null,
-    hh: null,
-    dessert: null,
-    drinks: null,
+    // @ts-expect-error
+    lunch: "",
+    // @ts-expect-error
+    dinner: "",
+    // @ts-expect-error
+    hh: "",
+    // @ts-expect-error
+    dessert: "",
+    // @ts-expect-error
+    drinks: "",
   },
 };
 

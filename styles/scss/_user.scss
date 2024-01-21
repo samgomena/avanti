@@ -22,3 +22,7 @@ footer a {
 .opacity-100-hover:hover {
   opacity: 100 !important;
 }
+
+.group:hover .group-hover {
+  opacity: 100 !important;
+}

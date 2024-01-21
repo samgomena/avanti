@@ -78,11 +78,11 @@ const Add = async (req: NextApiRequest, res: NextApiResponse) => {
             disabled: false,
             price: {
               create: {
-                dinner: item.price.dinner,
-                lunch: item.price.lunch,
-                hh: item.price.hh,
-                drinks: item.price.drinks,
-                dessert: item.price.dessert,
+                dinner: item.price.dinner === "" ? null : item.price.dinner,
+                lunch: item.price.lunch === "" ? null : item.price.lunch,
+                hh: item.price.hh === "" ? null : item.price.hh,
+                drinks: item.price.drinks === "" ? null : item.price.drinks,
+                dessert: item.price.dessert === "" ? null : item.price.dessert,
               },
             },
           },

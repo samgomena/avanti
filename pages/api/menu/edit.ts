@@ -1,4 +1,3 @@
-import { Services } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
 import { authConfig } from "../auth/[...nextauth]";
@@ -24,7 +23,7 @@ const Edit = async (req: NextApiRequest, res: NextApiResponse) => {
   const items = req.body.items;
 
   try {
-    const fuckingWhat = await prisma?.$transaction([
+    const menu = await prisma?.$transaction([
       // @ts-expect-error: Fix dis
       ...items.map((item) =>
         prisma?.menu.update({
@@ -33,82 +32,58 @@ const Edit = async (req: NextApiRequest, res: NextApiResponse) => {
           },
           where: { id: item.id },
           data: {
-            idx: item.idx,
-            name: item.name,
-            description: item.description,
-            course: item.course,
-            service: Services.dinner,
-            disabled: item.disabled,
+            ...item,
             price: {
               update: {
-                dinner: item.price.dinner,
-                lunch: item.price.lunch,
-                hh: item.price.hh,
-                drinks: item.price.drinks,
-                dessert: item.price.dessert,
+                ...item.price,
               },
             },
           },
         })
       ),
+      // Fetch entire menu as our last order of business because the frontend is stoopid and can't
+      // selectively update the form with partial data
+      prisma?.menu.findMany({
+        orderBy: [
+          {
+            course: "asc",
+          },
+          { idx: "asc" },
+        ],
+        select: {
+          id: true,
+          idx: true,
+          name: true,
+          description: true,
+          course: true,
+          disabled: true,
+          price: {
+            select: {
+              id: true,
+              lunch: true,
+              dinner: true,
+              drinks: true,
+              dessert: true,
+            },
+          },
+        },
+      }),
     ]);
+
     return res.status(200).json({
       ok: true,
-      data: fuckingWhat,
+      // $transaction returns an array of the results of each query, so we want the last item which is the updated menu
+      data: menu?.at(-1),
       error: null,
     });
   } catch (error) {
-    console.error(error);
+    console.error(`There was an error editing the menu:`, error);
     return res.status(500).json({
       ok: false,
       data: null,
       error,
     });
   }
-
-  // for (const item of items) {
-  //   try {
-  //     const updated = await prisma?.menu.updateMany({
-  //       data: items
-  //     })
-  //     await prisma?.$transaction(async (tx) => {
-  //       const updated = await tx?.menu.update({
-  //         where: { id: item.id },
-  //         data: {
-  //           idx: item.idx,
-  //           name: item.name,
-  //           description: item.description,
-  //           course: item.course,
-  //           service: Services.dinner,
-  //           disabled: false,
-  //           price: {
-  //             update: {
-  //               dinner: item.price.dinner,
-  //               lunch: item.price.lunch,
-  //               hh: item.price.hh,
-  //               drinks: item.price.drinks,
-  //               dessert: item.price.dessert,
-  //             },
-  //           },
-  //         },
-  //       });
-  //       console.log(updated);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     return res.status(500).json({
-  //       ok: false,
-  //       data: null,
-  //       error,
-  //     });
-  //   }
-  // }
-
-  return res.status(200).json({
-    ok: true,
-    data: [],
-    error: null,
-  });
 };
 
 export default Edit;
