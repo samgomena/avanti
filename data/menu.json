@@ -213,7 +213,8 @@
       "service": ["dinner"],
       "price": {
         "dinner": 28
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Braised Short Ribs",
@@ -230,7 +231,8 @@
       "service": ["dinner"],
       "price": {
         "dinner": 36
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Panko and Herb-Crusted Mahi Mahi",
