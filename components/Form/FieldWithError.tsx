@@ -7,7 +7,7 @@ function Field<T = any>({
   showLabels = true,
   options = undefined,
   ...rest
-}: FieldAttributes<T> & { showLabels?: boolean } & {
+}: FieldAttributes<T> & { showLabels?: boolean; placeholder?: string } & {
   options?: { name: string; value: string }[];
 }) {
   return (
