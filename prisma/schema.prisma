@@ -42,15 +42,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String
-  email         String    @unique
+  email         String       @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now())
+  Deployment    Deployment[]
+  ChangeSet     ChangeSet[]
 }
 
 model VerificationToken {
@@ -138,6 +140,12 @@ model Menu {
 
 model Price {
   id      String @id @default(cuid())
+  // TODO: These should be strings.. not sure how to change the DDL to reflect that w/o wiping the table though
+  // dinner  String @default("")
+  // lunch   String @default("")
+  // hh      String @default("")
+  // drinks  String @default("")
+  // dessert String @default("")
   dinner  Int?
   lunch   Int?
   hh      Int?
@@ -145,4 +153,39 @@ model Price {
   dessert Int?
   Menu    Menu   @relation(fields: [menuId], references: [id], onDelete: Cascade)
   menuId  String @unique
+}
+
+// TODO: Potential CR log
+enum DeploymentStatus {
+  OPEN
+  PENDING
+  CLOSED
+  REVERTED
+}
+
+model Deployment {
+  id             String           @id @default(cuid())
+  pendingChanges Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  deployedAt     DateTime
+  deployedBy     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  changeSet      ChangeSet[]
+  status         DeploymentStatus
+
+  @@index([userId])
+}
+
+model ChangeSet {
+  id           String      @id @default(cuid())
+  changes      Json
+  madeAt       DateTime
+  madeBy       User        @relation(fields: [userId], references: [id])
+  Deployment   Deployment? @relation(fields: [deploymentId], references: [id])
+  deploymentId String
+  userId       String
+
+  @@index([deploymentId])
+  @@index([userId])
 }

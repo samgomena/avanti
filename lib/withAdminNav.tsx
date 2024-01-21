@@ -21,6 +21,7 @@ function withAdminNav<T extends JSX.IntrinsicAttributes & Object>(
               className="form-select d-md-none mb-4"
             >
               <option value="/admin/overview">Overview</option>
+              <option value="/admin/deployments">Deployments</option>
               <optgroup label="Info">
                 <option value="/admin/info/edit">Edit</option>
               </optgroup>
@@ -37,6 +38,9 @@ function withAdminNav<T extends JSX.IntrinsicAttributes & Object>(
                 <div className="flex flex-column nav nav-pills" role="tablist">
                   <div className="nav-item">
                     <NavLink href="/admin/overview">Overview</NavLink>
+                  </div>
+                  <div className="nav-item">
+                    <NavLink href="/admin/deployments">Deployments</NavLink>
                   </div>
                   <div className="nav-item">
                     <NavLink href="/admin/info">Info</NavLink>
