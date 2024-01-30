@@ -24,6 +24,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
   let sumCourse = useCallback(
     (course: Courses) =>
       menu
+        // Grab only the items for the course we're getting stats for
         .filter((item) => item.course === course)
         // Either remove disabled entries or include everything
         .filter((item) => (includeDisabled ? true : item.disabled === false))
@@ -43,6 +44,8 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
         // This is a shitty workaround to not have to jump through a bunch of hoops with ts + array.filter
         // See: https://stackoverflow.com/a/59726888/4668680
         .flatMap((item) => item ?? [])
+        // Remove empty string values
+        .filter(Boolean)
         // Finally, calculate stats!
         .reduce(
           (acc, curr, _, { length }) => ({

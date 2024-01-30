@@ -140,17 +140,11 @@ model Menu {
 
 model Price {
   id      String @id @default(cuid())
-  // TODO: These should be strings.. not sure how to change the DDL to reflect that w/o wiping the table though
-  // dinner  String @default("")
-  // lunch   String @default("")
-  // hh      String @default("")
-  // drinks  String @default("")
-  // dessert String @default("")
-  dinner  Int?
-  lunch   Int?
-  hh      Int?
-  drinks  Int?
-  dessert Int?
+  dinner  String @default("") @db.VarChar(4)
+  lunch   String @default("") @db.VarChar(4)
+  hh      String @default("") @db.VarChar(4)
+  drinks  String @default("") @db.VarChar(4)
+  dessert String @default("") @db.VarChar(4)
   Menu    Menu   @relation(fields: [menuId], references: [id], onDelete: Cascade)
   menuId  String @unique
 }

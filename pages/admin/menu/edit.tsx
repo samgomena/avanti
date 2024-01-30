@@ -143,7 +143,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
   });
 
   const [toggle, setToggle] = useState({
-    disabled: false,
+    disabled: true,
   });
 
   const [searchText, setSearchText] = useState("");
@@ -384,31 +384,34 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                               // removed={removed.includes(item.idx)}
                             />
                             {/* TODO: Allow adding items in the middle of the thing */}
-                            {/* <div className="d-flex group-hover opacity-0 opacity-100-hover">
-                              <hr style={{ flex: 1, width: "45%" }} />
-                              <div className="d-flex justify-center items-center">
-                                <button
-                                  onClick={() =>
-                                    insert(item.mvIdx, initialValue)
-                                  }
-                                  className="btn btn-outline-secondary btn-sm"
-                                  style={
-                                    {
-                                      "--bs-btn-padding-y": "0.25rem",
-                                      "--bs-btn-padding-x": "0.75rem",
-                                    } as React.CSSProperties
-                                  }
-                                >
-                                  +
-                                </button>
+                            {/* <div>
+                              <div className="d-flex group-hover opacity-0 opacity-100-hover">
+                                <hr style={{ flex: 1, width: "40%" }} />
+                                <div className="d-flex justify-center items-center">
+                                  <button
+                                    onClick={() =>
+                                      insert(item.mvIdx, initialValue)
+                                    }
+                                    className="btn btn-outline-secondary btn-sm"
+                                    style={
+                                      {
+                                        "--bs-btn-padding-y": "0.25rem",
+                                        "--bs-btn-padding-x": "0.75rem",
+                                      } as React.CSSProperties
+                                    }
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                                <hr
+                                  style={{
+                                    flex: 1,
+                                    width: "40%",
+                                    alignItems: "end",
+                                  }}
+                                />
                               </div>
-                              <hr
-                                style={{
-                                  flex: 1,
-                                  width: "50%",
-                                  alignItems: "end",
-                                }}
-                              />
+                              {/* <hr style={{ flex: 1 }} />
                             </div> */}
                             <hr style={{ flex: 1 }} />
                           </div>
@@ -429,15 +432,16 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
 
         <ToastContainer className="d-inline-block m-4" position="top-end">
           <Toast
-            bg={toastData.type === "error" ? "danger" : "light"}
+            style={{ border: "none" }}
+            bg={toastData.type === "error" ? "danger-subtle" : "success-subtle"}
             onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
             show={toastData.show}
             delay={8_000} // 8 seconds
             autohide
           >
-            <Toast.Header>
+            <Toast.Body>
               <strong className="me-auto">{toastData.message}</strong>
-            </Toast.Header>
+            </Toast.Body>
           </Toast>
         </ToastContainer>
       </div>

@@ -3,7 +3,7 @@ export type Course = "appetizer" | "entree" | "drink" | "dessert";
 
 export type Services = Service[];
 
-export type Price = { [k in Service]: number | null };
+export type Price = { [k in Service]: string };
 
 export type Item = {
   idx?: number;

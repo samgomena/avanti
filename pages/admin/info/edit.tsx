@@ -169,15 +169,16 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
 
         <ToastContainer className="d-inline-block m-4" position="top-end">
           <Toast
-            bg={toastData.type === "error" ? "danger" : "light"}
+            style={{ border: "none" }}
+            bg={toastData.type === "error" ? "danger-subtle" : "success-subtle"}
             onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
             show={toastData.show}
             delay={8_000} // 8 seconds
             autohide
           >
-            <Toast.Header>
+            <Toast.Body>
               <strong className="me-auto">{toastData.message}</strong>
-            </Toast.Header>
+            </Toast.Body>
           </Toast>
         </ToastContainer>
       </div>

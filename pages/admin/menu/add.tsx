@@ -20,17 +20,11 @@ const initialValue: Item = {
   description: "",
   course: "appetizer",
   service: [],
-  // Set these to strings so form reset works after submit
   price: {
-    // @ts-expect-error
     lunch: "",
-    // @ts-expect-error
     dinner: "",
-    // @ts-expect-error
     hh: "",
-    // @ts-expect-error
     dessert: "",
-    // @ts-expect-error
     drinks: "",
   },
 };
@@ -248,15 +242,17 @@ const AddMenuItem: React.FC = () => {
 
       <ToastContainer className="d-inline-block m-4" position="top-end">
         <Toast
-          bg={toastData.type === "error" ? "danger" : "light"}
+          // Turn off silly styling from template
+          style={{ border: "none" }}
+          bg={toastData.type === "error" ? "danger-subtle" : "success-subtle"}
           onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
           show={toastData.show}
           delay={8_000} // 8 seconds
           autohide
         >
-          <Toast.Header>
+          <Toast.Body>
             <strong className="me-auto">{toastData.message}</strong>
-          </Toast.Header>
+          </Toast.Body>
         </Toast>
       </ToastContainer>
     </div>

@@ -919,26 +919,56 @@ describe("Renders menu items correctly", () => {
 });
 
 describe("Filters", () => {
-  it("toggles disabled items", () => {
-    render(<EditMenu menu={menu} />);
+  describe("Disabled toggles", () => {
+    it("toggles disabled items off (default on)", () => {
+      render(<EditMenu menu={menu} />);
 
-    // TODO: Should make sure the thing is actually checked
-    // const inputLabel = screen.getByLabelText("Hide Disabled");
-    // expect(inputLabel.previousSibling).toBeChecked();
+      // TODO: Should make sure the thing is actually checked
+      // const inputLabel = screen.getByLabelText("Hide Disabled");
+      // expect(inputLabel.previousSibling).toBeChecked();
 
-    const toggle = screen.getByTestId("toggle-disabled");
-    act(() => toggle.click());
+      const toggle = screen.getByTestId("toggle-disabled");
+      // Don't need to act here because it's already toggled on
+      // act(() => toggle.click());
 
-    expect(toggle).toHaveTextContent("Hide Disabled");
-    menu
-      .filter((item: Menu) => item.disabled)
-      .forEach((item: Menu) => {
-        const element = screen.getByTestId(`edit-item-container-${item.idx}`);
-        // We actually need to make sure it exists in the dom, otherwise moving items doesn't work
-        expect(element).toBeInTheDocument();
-        // However, we want to make sure it's not actually rendered to anything
-        expect(element).toHaveClass("d-none");
+      expect(toggle).toHaveTextContent("Hide Disabled");
+      menu
+        .filter((item: Menu) => item.disabled)
+        .forEach((item: Menu) => {
+          const element = screen.getByTestId(`edit-item-container-${item.idx}`);
+          // We actually need to make sure it exists in the dom, otherwise moving items doesn't work
+          expect(element).toBeInTheDocument();
+          // However, we want to make sure it's not actually rendered to anything
+          expect(element).toHaveClass("d-none");
+        });
+    });
+
+    it("toggles disabled items on", () => {
+      render(<EditMenu menu={menu} />);
+
+      // TODO: Should make sure the thing is actually checked
+      // const inputLabel = screen.getByLabelText("Hide Disabled");
+      // expect(inputLabel.previousSibling).toBeChecked();
+
+      const toggle = screen.getByTestId("toggle-disabled");
+      act(() => {
+        // Toggle off
+        toggle.click();
+        // Toggle on again
+        toggle.click();
       });
+
+      expect(toggle).toHaveTextContent("Hide Disabled");
+      menu
+        .filter((item: Menu) => !item.disabled)
+        .forEach((item: Menu) => {
+          const element = screen.getByTestId(`edit-item-container-${item.idx}`);
+          // Still want to make sure it exists in the dom
+          expect(element).toBeInTheDocument();
+          // However, we want to make sure it's actually rendering something
+          expect(element).not.toHaveClass("d-none");
+        });
+    });
   });
 
   it("toggles item courses", () => {
@@ -951,20 +981,22 @@ describe("Filters", () => {
         course === "drinks" ? "Dranks" : capitalize(course)
       );
 
-      menu.forEach((item: Menu) => {
-        const element = screen.getByTestId(`edit-item-container-${item.idx}`);
-        // We actually need to make sure it exists in the dom, otherwise moving items doesn't work
-        expect(element).toBeInTheDocument();
+      menu
+        .filter((item: Menu) => !item.disabled)
+        .forEach((item: Menu) => {
+          const element = screen.getByTestId(`edit-item-container-${item.idx}`);
+          // We actually need to make sure it exists in the dom, otherwise moving items doesn't work
+          expect(element).toBeInTheDocument();
 
-        // `item.course` is singular but course here is plural
-        if (`${item.course}s` === course) {
-          expect(element).toBeVisible();
-          expect(element).not.toHaveClass("d-none");
-        } else {
-          // However, we want to make sure it's not actually rendering anything
-          expect(element).toHaveClass("d-none");
-        }
-      });
+          // `item.course` is singular but course is plural here
+          if (`${item.course}s` === course) {
+            expect(element).toBeVisible();
+            expect(element).not.toHaveClass("group d-none");
+          } else {
+            // However, we want to make sure it's not actually rendering anything
+            expect(element).toHaveClass("d-none");
+          }
+        });
       act(() => filter.click());
     });
   });

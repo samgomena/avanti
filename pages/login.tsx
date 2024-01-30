@@ -10,6 +10,7 @@ import { getSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
+import { Spinner } from "react-bootstrap";
 
 type LoginValues = {
   email: string;
@@ -53,7 +54,7 @@ const Login: React.FC = () => {
       } else {
         setMessage({
           type: "error",
-          text: "An error occured while trying to sign in. Check your email and try again.",
+          text: "An error occured while trying to sign in. Please try again.",
         });
       }
     } catch (error) {
@@ -108,12 +109,25 @@ const Login: React.FC = () => {
 
                       {(!message || message.type === "error") && (
                         <Button
+                          className="w-100"
                           type="submit"
                           variant="outline-primary"
-                          className="w-100"
                           disabled={!isValid || isSubmitting}
                         >
-                          {isSubmitting ? "logging in" : "login"}
+                          {isSubmitting ? (
+                            <Spinner
+                              animation="border"
+                              variant="light"
+                              role="status"
+                              size="sm"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </Spinner>
+                          ) : (
+                            "login"
+                          )}
                         </Button>
                       )}
                     </div>
