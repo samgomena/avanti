@@ -10,11 +10,11 @@ type OverviewProps = {
   course: Courses;
   disabled: boolean;
   price: {
-    dinner: number | null;
-    lunch: number | null;
-    hh: number | null;
-    drinks: number | null;
-    dessert: number | null;
+    dinner: string;
+    lunch: string;
+    hh: string;
+    drinks: string;
+    dessert: string;
   };
 }[];
 
@@ -38,7 +38,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
             curr.price.drinks,
             curr.price.dessert,
           ],
-          [] as (number | null)[]
+          [] as string[]
         )
         // Remove nulls from the list of prices (i.e. when a price isn't defined for a service period)
         // This is a shitty workaround to not have to jump through a bunch of hoops with ts + array.filter
@@ -46,6 +46,8 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
         .flatMap((item) => item ?? [])
         // Remove empty string values
         .filter(Boolean)
+        // Convert array of strings to numbers
+        .map(Number)
         // Finally, calculate stats!
         .reduce(
           (acc, curr, _, { length }) => ({
@@ -53,6 +55,8 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
             min: curr <= acc.min ? curr : acc.min,
             avg: acc.avg + curr / length,
           }),
+          // Set max to 0 so that items is always greater than it
+          // Set min to 1_000 so that items is always less than it
           { max: 0, min: 1_000, avg: 0.0 }
         ),
     [menu, includeDisabled]
