@@ -17,12 +17,13 @@
     "COMMENT: See: https://pris.ly/d/vercel-build": "",
     "postinstall": "prisma generate"
   },
-  "type": "module",
   "resolutions": {
-    "internal-slot": "^1.0.6"
+    "internal-slot": "^1.0.6",
+    "string-width": "4.2.3"
   },
   "resolutionsComments": {
-    "intenal-slot": "Required to fix eslint issue with react/display-name. See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3624"
+    "intenal-slot": "Required to fix eslint issue with react/display-name. See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3624",
+    "string-width": "This fails to test in CI because it's importing the cjs version or something?? See: https://github.com/yarnpkg/yarn/issues/8994"
   },
   "repository": {
     "type": "git",
