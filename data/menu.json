@@ -302,7 +302,8 @@
       "service": ["dinner"],
       "price": {
         "dinner": 28
-      }
+      },
+      "disabled": true
     },
     {
       "name": "Braised Alaskan Halibut",
