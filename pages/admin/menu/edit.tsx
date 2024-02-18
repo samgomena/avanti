@@ -183,7 +183,11 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
           deleteReqsSuccessful = true;
         } else {
           console.error(
-            `There was an error (from the server) removing items ${res.error}`
+            `There was an error (from the server) removing items ${JSON.stringify(
+              res.error,
+              null,
+              2
+            )}`
           );
         }
       } catch (error) {
@@ -219,7 +223,11 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
         updateReqsSuccessful = true;
       } else {
         console.error(
-          `There was an error (from the server) while updating the menu: ${res.error}`
+          `There was an error (from the server) while updating the menu: ${JSON.stringify(
+            res.error,
+            null,
+            2
+          )}`
         );
       }
     } catch (error) {
@@ -254,7 +262,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
     (formikRemove: <T>(index: number) => T | undefined) =>
     ({ id, idx }: { id: string; idx: number }) => {
       formikRemove(idx);
-      setRemoved([...removed, { id, idx }]);
+      setRemoved((prev) => [...prev, { id, idx }]);
     };
 
   return (
@@ -271,6 +279,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
             initialValues={{ items: menu }}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
+            onReset={() => setRemoved([])}
           >
             {({
               isSubmitting,
