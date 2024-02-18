@@ -23,7 +23,7 @@
   },
   "resolutionsComments": {
     "intenal-slot": "Required to fix eslint issue with react/display-name. See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3624",
-    "string-width": "This fails to test in CI because it's importing the cjs version or something?? See: https://github.com/yarnpkg/yarn/issues/8994"
+    "string-width": "This fails to test in CI because it's importing the cjs version or something?? See: https://github.com/yargs/cliui/pull/143"
   },
   "repository": {
     "type": "git",
