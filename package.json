@@ -17,6 +17,7 @@
     "COMMENT: See: https://pris.ly/d/vercel-build": "",
     "postinstall": "prisma generate"
   },
+  "type": "module",
   "resolutions": {
     "internal-slot": "^1.0.6"
   },
