@@ -52,10 +52,14 @@ const mapper = (
     key={idx}
     src={src}
     alt={alt}
-    placeholder="blur"
     // TODO: This "fixes" blurry images in chrome but makes them look considerably worse in Safari
     // See: https://stackoverflow.com/questions/37906602/blurry-downscaled-images-in-chrome
     // style={{ imageRendering: "-webkit-optimize-contrast" }}
+    placeholder="blur"
+    style={{
+      maxWidth: "100%",
+      height: "auto",
+    }}
   />
 );
 

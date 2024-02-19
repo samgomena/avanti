@@ -1,12 +1,15 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
 export default function AvantiNavbar() {
   const router = useRouter();
   const [navbarTheme, setNavbarTheme] = useState<"dark" | "light">("dark");
+
+  const { data: session } = useSession();
 
   const handleScroll = useCallback(() => {
     if (window.scrollY <= 1) {
@@ -34,6 +37,8 @@ export default function AvantiNavbar() {
     }
   }, []);
 
+  const isLoggedInPath = session ? "/admin/overview" : "/login";
+
   return (
     <Navbar
       collapseOnSelect
@@ -43,7 +48,7 @@ export default function AvantiNavbar() {
       onToggle={handleToggle}
     >
       <div className="container">
-        <Link href="/" passHref>
+        <Link href="/" passHref legacyBehavior>
           <Navbar.Brand href="/" className="d-lg-none">
             Avanti
           </Navbar.Brand>
@@ -58,14 +63,14 @@ export default function AvantiNavbar() {
         <Navbar.Collapse>
           <Nav>
             <Nav.Item>
-              <Link href="/about" passHref>
+              <Link href="/about" passHref legacyBehavior>
                 <Nav.Link active={router.asPath === "/about"}>
                   About Us
                 </Nav.Link>
               </Link>
             </Nav.Item>
             <Nav.Item>
-              <Link href="/menu" passHref>
+              <Link href="/menu" passHref legacyBehavior>
                 <Nav.Link
                   active={router.asPath === "/menu"}
                   data-umami-event="Menu-Navbar-Clicked"
@@ -75,7 +80,7 @@ export default function AvantiNavbar() {
               </Link>
             </Nav.Item>
             <Nav.Item>
-              <Link href="/events" passHref>
+              <Link href="/events" passHref legacyBehavior>
                 <Nav.Link active={router.asPath === "/events"}>
                   Special Events
                 </Nav.Link>
@@ -83,7 +88,7 @@ export default function AvantiNavbar() {
             </Nav.Item>
           </Nav>
 
-          <Link href="/" passHref>
+          <Link href="/" passHref legacyBehavior>
             <Navbar.Brand
               href="/"
               className="navbar-brand d-none d-lg-flex mx-lg-auto"
@@ -94,14 +99,14 @@ export default function AvantiNavbar() {
 
           <Nav>
             <Nav.Item>
-              <Link href="/gallery" passHref>
+              <Link href="/gallery" passHref legacyBehavior>
                 <Nav.Link active={router.asPath === "/gallery"}>
                   Some Photos
                 </Nav.Link>
               </Link>
             </Nav.Item>
             <Nav.Item>
-              <Link href="/contact" passHref>
+              <Link href="/contact" passHref legacyBehavior>
                 <Nav.Link active={router.asPath === "/contact"}>
                   Contact Us
                 </Nav.Link>
@@ -109,8 +114,15 @@ export default function AvantiNavbar() {
             </Nav.Item>
 
             <Nav.Item>
-              <Link href="/login" passHref>
-                <Nav.Link active={router.asPath === "/login"}>Login</Nav.Link>
+              <Link href={isLoggedInPath} passHref legacyBehavior>
+                <Nav.Link
+                  active={
+                    router.asPath === "/login" ||
+                    router.asPath.startsWith("/admin")
+                  }
+                >
+                  {session ? "Admin" : "Login"}
+                </Nav.Link>
               </Link>
             </Nav.Item>
           </Nav>

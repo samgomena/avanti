@@ -15,11 +15,13 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/components/*": ["./components/*"],
-      "@/pages/*": ["./pages/*"],
-      "@/styles/*": ["./styles/*"]
-    }
+      "@/*": ["./*"]
+      // "@/components/*": ["./components/*"],
+      // "@/pages/*": ["./pages/*"],
+      // "@/styles/*": ["./styles/*"]
+    },
+    "types": ["@types/jest", "@types/node", "@testing-library/jest-dom"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./lib/types"],
   "exclude": ["node_modules"]
 }

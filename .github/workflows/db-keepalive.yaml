@@ -1,0 +1,22 @@
+name: Prevent Database From Sleeping
+on:
+  schedule:
+    # Every 6 days at midnight
+    - cron: "0 0 */6 * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Execute query
+        run: yarn db:prevent-sleep

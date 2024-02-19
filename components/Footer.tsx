@@ -1,11 +1,12 @@
 import useInfo from "../lib/hooks/useInfo";
-import { to12 } from "../lib/utils/utils";
-import { formatPhone } from "../lib/utils/utils";
+import { compactHours, formatPhone, to12 } from "../lib/utils/utils";
 
 import { Mail, MapPin, Phone } from "react-feather";
+import { useMemo } from "react";
 
 export default function Footer() {
   const info = useInfo();
+  const compactedHours = useMemo(() => compactHours(info.hours), [info.hours]);
   return (
     <footer className="py-7 py-md-9 bg-black">
       <div className="container px-4">
@@ -53,17 +54,21 @@ export default function Footer() {
           </div>
           <div className="col-sm-4">
             <h3 className="text-xs text-primary">Hours</h3>
-
-            {info.hoursPreview.map(({ day, open, close }) => (
-              <div className="mb-3" key={day}>
-                <div className="text-xs">{day}</div>
-                {open === null || close === null ? (
+            {compactedHours.map((entry, idx) => (
+              <div className="mb-3" key={idx}>
+                <div className="text-xs">
+                  {/* Show single day if it's not a "range" otherwise show `day1 - dayN` */}
+                  {entry[0].day === entry.at(-1)?.day
+                    ? entry[0].day
+                    : entry[0].day + " - " + entry.at(-1)?.day}
+                </div>
+                {entry[0].open === "" && entry[0].close === "" ? (
                   <div className="font-serif">
                     <em>Closed</em>
                   </div>
                 ) : (
                   <div className="font-serif">
-                    {to12(open)} - {to12(close)}
+                    {to12(entry[0].open)} - {to12(entry[0].close)}
                   </div>
                 )}
               </div>

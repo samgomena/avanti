@@ -1,21 +1,21 @@
 name: Run tests for PRs
 on:
   pull_request:
-  
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install dependencies
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: yarn
+          node-version: 20
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
       - name: Run tests
-        run: yarn test:ci
+        run: pnpm test:ci

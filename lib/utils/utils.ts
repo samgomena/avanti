@@ -1,11 +1,15 @@
-export const serviceToDisplay = (code: string) => {
+import { Menu, Price } from "@prisma/client";
+import type { Hours } from "../types/info";
+import { Service } from "../types/menu";
+
+export const serviceToDisplay = (code: Service) => {
   switch (code) {
-    case "dinner":
-    case "lunch":
-    case "drinks":
-      return capitalize(code);
+    // Handle special cases
     case "hh":
       return "Happy Hour";
+    // Err'thing else should just be capitalized
+    default:
+      return capitalize(code);
   }
 };
 
@@ -30,13 +34,13 @@ export const inflect =
  * @returns The 12 hour clock representation of the input with an appropriate suffix
  */
 export const to12 = (input: string) => {
+  if (!input) return "";
   // I think this always returns an array with at least one element (""), but default to empty string JIC
   let [hours, minutes] = input.split(":");
-  if (hours === "") {
-    return "";
-  }
+  if (hours === "") return "";
+
   let hoursInt = parseInt(hours, 10);
-  const suffix = hoursInt >= 12 ? "PM" : "AM";
+  const suffix = hoursInt >= 12 && hoursInt < 24 ? "PM" : "AM";
   // TODO: This doesn't handle the case for stuff that happens after midnight, which may be desirable
   // I.e. 25:00 => 1:00 AM
   hoursInt = hoursInt > 12 ? hoursInt - 12 : hoursInt;
@@ -45,9 +49,89 @@ export const to12 = (input: string) => {
   return `${hoursInt}:${minutes} ${suffix}`;
 };
 
-export const formatPhone = (number: string) => {
-  const area = number.slice(0, 3);
-  const middle = number.slice(3, 6);
-  const end = number.slice(6);
+export const formatPhone = (phone: string) => {
+  if (phone === "") {
+    return "";
+  }
+
+  const area = phone.slice(0, 3);
+  const middle = phone.slice(3, 6);
+  const end = phone.slice(6);
   return `(${area})-${middle}-${end}`;
 };
+
+export const formatDate = (
+  date: string,
+  options: Intl.DateTimeFormatOptions = { dateStyle: "long" }
+) => {
+  // TODO: `dateStyle` can only be used with `timeStyle` option
+  // Docs: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#parameters
+
+  return new Date(date).toLocaleDateString("en-US", {
+    dateStyle: "long",
+    // day: "numeric",
+    // month: "long",
+    // year: "numeric",
+    // hour12: true,
+    // hour: "2-digit",
+    // minute: "2-digit",
+  });
+};
+
+export const formatItemPrice = (item: Menu & { price: Price }) => {
+  switch (item.course) {
+    case "appetizer":
+    case "entree":
+      return item.price.dinner;
+    case "drink":
+      return item.price.drinks;
+    case "dessert":
+      return item.price.dessert;
+  }
+};
+
+export const daysBetween = (start: Date, end: Date): number => {
+  const startUTC = new Date(
+    Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate())
+  );
+  const endUTC = new Date(
+    Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate())
+  );
+  return (endUTC.getTime() - startUTC.getTime()) / (1000 * 3600 * 24);
+};
+
+export const compactHours = (hours: Hours) => {
+  const result = [];
+
+  for (let i = 0; i < hours.length; i++) {
+    const { open, close } = hours[i];
+
+    // At the end of the hours array, add the entry and break out of the loop
+    if (i + 1 === hours.length) {
+      result.push([hours[i]]);
+      break;
+    }
+
+    const bucket = [];
+    let nextOpen = hours[i + 1].open;
+    let nextClose = hours[i + 1].close;
+    // While the following days have the same open and close times, add them to the bucket
+    while (open === nextOpen && close === nextClose) {
+      bucket.push(hours[i]);
+      i++;
+
+      // Check if we're at the end *again* this happens if the hours are the same for at least the last two days of the week
+      if (i + 1 === hours.length) {
+        break;
+      }
+
+      nextOpen = hours[i + 1].open;
+      nextClose = hours[i + 1].close;
+    }
+    // The next day has different open and close times, but we still need to add the current day to the bucket
+    result.push([...bucket, hours[i]]);
+  }
+  return result;
+};
+
+export const isProd = () => process.env.NODE_ENV === "production";

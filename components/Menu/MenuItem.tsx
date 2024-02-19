@@ -1,13 +1,13 @@
 type Props = {
   name: string;
   description: string;
-  price?: number;
+  price: number;
 };
 
 const MenuItem: React.FC<Props> = ({ name, description, price }) => {
   return (
     <div className="col-12 col-md-6">
-      <div className="py-3 border-bottom">
+      <div className="py-3">
         <div className="row">
           {/* Image would go in here */}
           {/* <div className="col-3 align-self-center"></div> */}

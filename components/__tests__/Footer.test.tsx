@@ -1,18 +1,19 @@
 import { render, screen } from "@testing-library/react";
+import { Info } from "../../lib/types/info";
 import Footer from "../Footer";
 
-const fakeInfo = {
+const fakeInfo: Info = {
   about: "Test about us text",
   contact: {
     address: "Test address",
     email: "test@example.com",
     phone: "1234567890",
   },
-  hoursPreview: [
+  hours: [
     {
       day: "monday",
-      open: null,
-      close: null,
+      open: "",
+      close: "",
     },
     {
       day: "tuesday",
@@ -105,6 +106,44 @@ describe("Footer", () => {
         "href",
         "tel:" + fakeInfo.contact.phone
       );
+    });
+
+    describe("Hours are compacted properly", () => {
+      it("renders compacted days", () => {
+        render(<Footer />);
+
+        const monday = screen.getByText("monday");
+        expect(monday).toBeInTheDocument();
+
+        const tuesdaysToThursday = screen.getByText("tuesday - thursday");
+        expect(tuesdaysToThursday).toBeInTheDocument();
+
+        const fridayToSaturday = screen.getByText("friday - saturday");
+        expect(fridayToSaturday).toBeInTheDocument();
+
+        const sunday = screen.getByText("sunday");
+        expect(sunday).toBeInTheDocument();
+      });
+
+      it("renders hours in proper format", () => {
+        const { container } = render(<Footer />);
+
+        const monday = screen.getByText("monday");
+        expect(monday.nextSibling?.textContent).toBe("Closed");
+
+        const tuesdaysToThursday = screen.getByText("tuesday - thursday");
+        expect(tuesdaysToThursday.nextSibling?.textContent).toBe(
+          "4:00 PM - 9:00 PM"
+        );
+
+        const fridayToSaturday = screen.getByText("friday - saturday");
+        expect(fridayToSaturday.nextSibling?.textContent).toBe(
+          "4:00 PM - 10:00 PM"
+        );
+
+        const sunday = screen.getByText("sunday");
+        expect(sunday.nextSibling?.textContent).toBe("4:00 PM - 9:00 PM");
+      });
     });
   });
 });

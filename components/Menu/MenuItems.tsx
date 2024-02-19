@@ -1,8 +1,8 @@
-type MenuItemWrapperProps = {
+type MenuItemsProps = {
   children: React.ReactNode;
 };
 
-const MenuItemWrapper: React.FC<MenuItemWrapperProps> = ({ children }) => {
+const MenuItems: React.FC<MenuItemsProps> = ({ children }) => {
   return (
     <div className="row">
       <div className="col-12">
@@ -12,4 +12,4 @@ const MenuItemWrapper: React.FC<MenuItemWrapperProps> = ({ children }) => {
   );
 };
 
-export default MenuItemWrapper;
+export default MenuItems;

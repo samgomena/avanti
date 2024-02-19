@@ -1,0 +1,185 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String       @id @default(cuid())
+  name          String
+  email         String       @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now())
+  Deployment    Deployment[]
+  ChangeSet     ChangeSet[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Info {
+  id        String  @id @default(cuid())
+  about     String  @db.Text
+  contact   Contact @relation(fields: [contactId], references: [id])
+  hours     Hours[]
+  contactId String
+
+  @@index([contactId])
+}
+
+model Contact {
+  id        String @id @default(cuid())
+  address   String
+  email     String
+  phone     String
+  facebook  String
+  instagram String
+  Info      Info[]
+}
+
+enum Days {
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+  saturday
+  sunday
+}
+
+model Hours {
+  id     String  @id @default(cuid())
+  day    Days
+  open   String  @default("")
+  close  String  @default("")
+  Info   Info?   @relation(fields: [infoId], references: [id])
+  infoId String?
+
+  @@index([infoId])
+}
+
+model Alert {
+  id    String   @id @default(cuid())
+  start DateTime
+  end   DateTime
+  title String?
+  text  String
+}
+
+enum Services {
+  dinner
+  lunch
+  hh
+  drinks
+  dessert
+}
+
+enum Courses {
+  appetizer
+  entree
+  drink
+  dessert
+}
+
+model Menu {
+  id          String    @id @default(cuid())
+  idx         Int
+  name        String
+  description String?   @default("")
+  service     Services? @default(dinner)
+  course      Courses
+  disabled    Boolean   @default(false)
+  price       Price?
+}
+
+model Price {
+  id      String @id @default(cuid())
+  dinner  String @default("") @db.VarChar(4)
+  lunch   String @default("") @db.VarChar(4)
+  hh      String @default("") @db.VarChar(4)
+  drinks  String @default("") @db.VarChar(4)
+  dessert String @default("") @db.VarChar(4)
+  Menu    Menu   @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  menuId  String @unique
+}
+
+// TODO: Potential CR log
+enum DeploymentStatus {
+  OPEN
+  PENDING
+  CLOSED
+  REVERTED
+}
+
+model Deployment {
+  id             String           @id @default(cuid())
+  pendingChanges Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  deployedAt     DateTime
+  deployedBy     User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  changeSet      ChangeSet[]
+  status         DeploymentStatus
+
+  @@index([userId])
+}
+
+model ChangeSet {
+  id           String      @id @default(cuid())
+  changes      Json
+  madeAt       DateTime
+  madeBy       User        @relation(fields: [userId], references: [id])
+  Deployment   Deployment? @relation(fields: [deploymentId], references: [id])
+  deploymentId String
+  userId       String
+
+  @@index([deploymentId])
+  @@index([userId])
+}

@@ -1,50 +1,71 @@
+import Field from "../components/Form/FieldWithError";
 import Header from "../components/Header";
 import Section from "../components/Section";
-import Field from "../components/Form/FieldWithError";
 
 import Button from "react-bootstrap/Button";
 
-import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
+import { GetServerSideProps } from "next";
+import { getSession, signIn } from "next-auth/react";
+import { useState } from "react";
 import * as Yup from "yup";
+import { useRouter } from "next/router";
+import { Spinner } from "react-bootstrap";
 
 type LoginValues = {
   email: string;
-  password: string;
 };
 
 const initialValues: LoginValues = {
   email: "",
-  password: "",
 };
 
 const LoginSchema = Yup.object({
   email: Yup.string()
     .email("That's not a valid email!")
     .required("Your email is required to log in!"),
-  password: Yup.string().required("Your password is required to log in!"),
 });
 
 const Login: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const [message, setMessage] = useState<{
+    type: "error" | "success";
+    text: string;
+  }>();
 
-  const onSubmit = useCallback(
-    (values: LoginValues, { setSubmitting }: FormikHelpers<LoginValues>) => {
-      setTimeout(() => {
-        console.log(JSON.stringify(values));
-        if (
-          values.email === "email@example.com" &&
-          values.password === "password"
-        ) {
-          setSubmitting(false);
-          router.push("/admin");
-        }
-      }, 1000);
-    },
-    [router]
-  );
+  const onSubmit = async (
+    values: LoginValues,
+    { setSubmitting }: FormikHelpers<LoginValues>
+  ) => {
+    setSubmitting(true);
+    try {
+      const res = await signIn("email", {
+        email: values.email,
+        // If a continuation url was passed use that otherwise default to the admin overview page
+        // Use toString() because `wantsUrl` *could* be a `string[]` (ofc it never should be though)
+        callbackUrl: router.query?.wantsUrl?.toString() ?? "/admin/overview",
+        redirect: false,
+      });
+      if (!res?.error) {
+        setMessage({
+          type: "success",
+          text: "Check your email for a login link!",
+        });
+      } else {
+        setMessage({
+          type: "error",
+          text: "An error occured while trying to sign in. Please try again.",
+        });
+      }
+    } catch (error) {
+      setMessage({
+        type: "error",
+        text: "An error occured while trying to sign in.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -74,42 +95,41 @@ const Login: React.FC = () => {
                         />
                       </div>
 
-                      <div className="mb-3 form-group">
-                        <label className="visually-hidden" htmlFor="password">
-                          Password
-                        </label>
-                        <Field
-                          id="password"
-                          className="form-control"
-                          type={showPassword ? "text" : "password"}
-                          name="password"
-                          placeholder="Password"
-                        />
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            onChange={() => setShowPassword(!showPassword)}
-                            type="checkbox"
-                            value=""
-                            id="showPassword"
-                            checked={showPassword}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="showPassword"
-                          >
-                            Show password
-                          </label>
-                        </div>
-                      </div>
+                      {message && (
+                        <p
+                          className={`text-center fs-6 ${
+                            message.type === "error"
+                              ? "text-danger"
+                              : "text-success"
+                          }`}
+                        >
+                          {message.text}
+                        </p>
+                      )}
 
-                      <Button
-                        type="submit"
-                        variant="outline-primary"
-                        disabled={!isValid || isSubmitting}
-                      >
-                        {isSubmitting ? "logging in" : "login"}
-                      </Button>
+                      {(!message || message.type === "error") && (
+                        <Button
+                          className="w-100"
+                          type="submit"
+                          variant="outline-primary"
+                          disabled={!isValid || isSubmitting}
+                        >
+                          {isSubmitting ? (
+                            <Spinner
+                              animation="border"
+                              variant="light"
+                              role="status"
+                              size="sm"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </Spinner>
+                          ) : (
+                            "login"
+                          )}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </Form>
@@ -123,3 +143,18 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/admin/overview",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+};

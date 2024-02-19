@@ -1,10 +1,10 @@
+import { PrismaClient, type Alert } from "@prisma/client";
 import Link from "next/link";
+import type { GetStaticProps } from "next/types";
 import { Facebook, Instagram, MapPin } from "react-feather";
 import { ParallaxBanner } from "react-scroll-parallax";
-import Alerts from "../components/Alerts";
-import { useFlag } from "../lib/hooks/useFlags";
-import useInfo from "../lib/hooks/useInfo";
 import type { BannerLayer } from "react-scroll-parallax/dist/components/ParallaxBanner/types";
+import Alerts from "../components/Alerts";
 // import Carousel from "react-bootstrap/Carousel";
 
 const gradientOverlay: BannerLayer = {
@@ -34,11 +34,22 @@ const layers = [
   gradientOverlay,
 ];
 
-const iconSize = 24;
-export default function Home() {
-  const info = useInfo();
-  const { enabled: reservationsEnabled } = useFlag("reservations");
+type Info = {
+  contact: {
+    address: string;
+    facebook: string;
+    instagram: string;
+  };
+};
 
+const iconSize = 24;
+export default function Home({
+  alerts,
+  info,
+}: {
+  alerts: Alert[];
+  info: Info;
+}) {
   return (
     <>
       <ParallaxBanner layers={layers} className="h-100">
@@ -46,7 +57,7 @@ export default function Home() {
           <div className="container my-auto">
             <div className="row justify-content-center">
               <div className="col-12 col-md-8 col-lg-6 text-center">
-                <Alerts />
+                <Alerts alerts={alerts} />
                 <h1 className="display-1 text-white mb-4">Avanti</h1>
 
                 <h2 className="text-xs text-white-75">
@@ -57,27 +68,23 @@ export default function Home() {
                   Located in West Linn, Oregon
                 </p>
 
-                <Link href="/menu">
-                  <a
-                    className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0 me-2"
-                    data-umami-event="Menu-Button-Clicked"
-                  >
-                    Menu
-                  </a>
+                <Link
+                  href="/menu"
+                  className="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0 me-2"
+                  data-umami-event="Menu-Button-Clicked"
+                >
+                  Menu
                 </Link>
 
-                {reservationsEnabled && (
-                  <Link href="https://www.opentable.com/r/avanti-reservations-west-linn?restref=1277137&lang=en-US&ot_source=Restaurant%20website">
-                    <a
-                      className="btn btn-primary text-white text-primary-hover mb-7 mb-md-0"
-                      data-umami-event="OpenTable-Reserve-Clicked"
-                      rel="noopener noreferer"
-                      target="_blank"
-                    >
-                      Reserve a Table
-                    </a>
-                  </Link>
-                )}
+                <Link
+                  href="https://www.opentable.com/r/avanti-reservations-west-linn?restref=1277137&lang=en-US&ot_source=Restaurant%20website"
+                  className="btn btn-primary text-white text-primary-hover mb-7 mb-md-0"
+                  data-umami-event="OpenTable-Reserve-Clicked"
+                  rel="noopener noreferer"
+                  target="_blank"
+                >
+                  Reserve a Table
+                </Link>
               </div>
             </div>
           </div>
@@ -159,3 +166,30 @@ export default function Home() {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const prisma = new PrismaClient();
+  const alerts = await prisma.alert.findMany({
+    orderBy: {
+      start: "desc",
+    },
+  });
+  // TODO: These need to be loaded not statically probably lol whoops
+  const _alerts = alerts?.map((alert) => ({
+    ...alert,
+    start: alert.start.toISOString(),
+    end: alert.end.toISOString(),
+  }));
+
+  const contact = await prisma.contact.findFirst({
+    select: {
+      address: true,
+      facebook: true,
+      instagram: true,
+    },
+  });
+
+  return {
+    props: { alerts: _alerts, info: { contact } },
+  };
+};

@@ -33,14 +33,19 @@ describe("NavLink", () => {
 
   it("renders with the correct classnames when subMenu", () => {
     render(
-      <NavLink href="/test" subMenu>
+      <NavLink href="/not-active" subMenu>
         Test
       </NavLink>
     );
 
     const link = screen.getByText("Test");
-    expect(link).toHaveClass("nav-link");
-    expect(link).toHaveClass("text-center");
+    expect(link).not.toHaveClass("active");
+    expect(link).toHaveClass(
+      "nav-link",
+      "ms-4",
+      "border-start",
+      "border-secondary-subtle"
+    );
   });
 
   it("renders with the correct classnames when active and subMenu", () => {
@@ -51,8 +56,12 @@ describe("NavLink", () => {
     );
 
     const link = screen.getByText("Test");
-    expect(link).toHaveClass("nav-link");
-    expect(link).toHaveClass("active");
-    expect(link).toHaveClass("text-center");
+    expect(link).toHaveClass(
+      "nav-link",
+      "active",
+      "ms-4",
+      "border-start",
+      "border-secondary-subtle"
+    );
   });
 });

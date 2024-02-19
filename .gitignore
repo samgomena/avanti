@@ -18,6 +18,8 @@
 # misc
 .DS_Store
 *.code-workspace
+scripts/*
+!scripts/db-keepalive.js
 
 # debug
 npm-debug.log*
@@ -25,6 +27,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env.local
 .env.development.local
 .env.test.local
