@@ -12,10 +12,7 @@ export default async function deployments(
   try {
     const response = await fetch("https://api.vercel.com/v13/deployments", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.VERCEL_TOKEN}`,
-      },
+      headers: {},
       body: JSON.stringify({
         lol: true,
       }),
