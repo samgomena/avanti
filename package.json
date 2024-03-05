@@ -11,7 +11,7 @@
     "test": "jest --watch --silent",
     "test:ci": "next lint && jest",
     "db:push": "prisma db push",
-    "db:prevent-sleep": "node ./scripts/db-keepalive.js",
+    "db:keepalive": "node ./scripts/db-keepalive.js",
     "generate": "prisma generate",
     "COMMENT: This is done to fix builds on vercel": "",
     "COMMENT: See: https://pris.ly/d/vercel-build": "",

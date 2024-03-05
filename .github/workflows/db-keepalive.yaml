@@ -3,6 +3,7 @@ on:
   schedule:
     # Every 6 days at midnight
     - cron: "0 0 */6 * *"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,4 +21,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run tests
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: pnpm db:prevent-sleep
