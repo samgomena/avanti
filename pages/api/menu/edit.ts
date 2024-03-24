@@ -35,7 +35,19 @@ const Edit = async (req: NextApiRequest, res: NextApiResponse) => {
             ...item,
             price: {
               update: {
-                ...item.price,
+                // Map item prices to strings because the frontend doesn't do it
+                ...Object.entries(
+                  // The price object is null/undefined if we haven't updated the items price
+                  item.price ?? {}
+                ).reduce(
+                  (acc, [key, val]) => ({
+                    ...acc,
+                    // `val` will be null/undefined for fields where the course doesn't have a price
+                    // E.g. drinks won't have a `lunch` or `dinner` price but will have a `drinks` price obvi
+                    [key]: val?.toString() ?? "",
+                  }),
+                  {}
+                ),
               },
             },
           },
