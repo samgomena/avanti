@@ -18,9 +18,10 @@ jobs:
         with:
           version: 8
 
-      - name: Install dependencies
-        run: pnpm install
-      - name: Run tests
+      # - name: Install dependencies
+      #   run: pnpm install
+      - name: Run jobs
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: pnpm db:keepalive
+        # run: pnpm db:keepalive
+        run: echo "I do nothing anymore"
