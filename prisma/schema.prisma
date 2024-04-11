@@ -6,9 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  relationMode = "foreignKeys"
 }
 
 model Account {
@@ -17,18 +17,17 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-  @@index([userId])
 }
 
 model Session {
@@ -37,8 +36,6 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
 }
 
 model User {
@@ -69,8 +66,6 @@ model Info {
   contact   Contact @relation(fields: [contactId], references: [id])
   hours     Hours[]
   contactId String
-
-  @@index([contactId])
 }
 
 model Contact {
@@ -100,8 +95,6 @@ model Hours {
   close  String  @default("")
   Info   Info?   @relation(fields: [infoId], references: [id])
   infoId String?
-
-  @@index([infoId])
 }
 
 model Alert {
@@ -140,11 +133,11 @@ model Menu {
 
 model Price {
   id      String @id @default(cuid())
-  dinner  String @default("") @db.VarChar(4)
-  lunch   String @default("") @db.VarChar(4)
-  hh      String @default("") @db.VarChar(4)
-  drinks  String @default("") @db.VarChar(4)
-  dessert String @default("") @db.VarChar(4)
+  dinner  String @default("")
+  lunch   String @default("")
+  hh      String @default("")
+  drinks  String @default("")
+  dessert String @default("")
   Menu    Menu   @relation(fields: [menuId], references: [id], onDelete: Cascade)
   menuId  String @unique
 }
@@ -167,8 +160,6 @@ model Deployment {
   userId         String
   changeSet      ChangeSet[]
   status         DeploymentStatus
-
-  @@index([userId])
 }
 
 model ChangeSet {
@@ -179,7 +170,4 @@ model ChangeSet {
   Deployment   Deployment? @relation(fields: [deploymentId], references: [id])
   deploymentId String
   userId       String
-
-  @@index([deploymentId])
-  @@index([userId])
 }
