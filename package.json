@@ -42,7 +42,7 @@
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "deep-object-diff": "^1.1.9",
-    "formik": "^2.4.5",
+    "formik": "^2.4.6",
     "internal-slot": "^1.0.7",
     "leaflet": "^1.9.4",
     "next": "^14.1.4",
