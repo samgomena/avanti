@@ -54,7 +54,7 @@
     "react-feather": "^2.0.10",
     "react-leaflet": "^4.2.1",
     "react-scroll-parallax": "^3.4.5",
-    "sass": "^1.74.1",
+    "sass": "^1.76.0",
     "sharp": "^0.33.3",
     "yup": "^1.4.0"
   },
