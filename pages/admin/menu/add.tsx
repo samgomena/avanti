@@ -1,80 +1,108 @@
 import PriceField from "@/components/Form/PriceField";
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
-import { ErrorMessage, FieldArray, Form, Formik, FormikValues } from "formik";
+import { api } from "@/lib/api";
+import { Courses } from "@prisma/client";
+import {
+  ErrorMessage,
+  FieldArray,
+  Form,
+  Formik,
+  type FormikHelpers,
+} from "formik";
 import { getSession } from "next-auth/react";
-import { GetServerSideProps } from "next/types";
-import React, { useState } from "react";
+import type { GetServerSideProps } from "next/types";
+import type React from "react";
+import { useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import * as Yup from "yup";
+import { z } from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import FieldWithError from "../../../components/Form/FieldWithError";
 import FormError from "../../../components/Form/FormError";
-import { Item } from "../../../lib/types/menu";
+import type { Item } from "../../../lib/types/menu";
 import { inflect } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
-import { Courses } from "@prisma/client";
 
 const initialValue: Item = {
   name: "",
   description: "",
-  course: "appetizer",
+  course: "entree",
   service: [],
   price: {
-    lunch: "",
-    dinner: "",
-    hh: "",
-    dessert: "",
-    drinks: "",
+    // This is stupid but the easiest solution. Because we use a number input below (and our validation schema is typed as a number)
+    // we have to cast the value to number. We store the initial values as empty strings here because we don't want to show an initial 0
+    // in the input box. Which is because we don't want end users submitting prices of 0 for stuff.
+    lunch: "", // as unknown as number,
+    dinner: "", // as unknown as number,
+    hh: "", // as unknown as number,
+    dessert: "", // as unknown as number,
+    drinks: "", // as unknown as number,
   },
 };
 
-const validationSchema = Yup.object({
-  items: Yup.array(
-    Yup.object({
-      name: Yup.string().required("A name for this item is required!"),
-      description: Yup.string(),
-      course: Yup.string()
-        .oneOf(["appetizer", "entree", "drink", "dessert"])
-        .required(
-          "Must be one of 'appetizer', 'entree', 'drink', or 'dessert'"
-        ),
-      price: Yup.object()
-        .when("course", {
-          is: (course: Courses) => ["appetizer", "entree"].includes(course),
-          then: (schema) =>
-            schema.shape({
-              dinner: Yup.number()
-                .positive("The price has to be greater than $0!")
-                .nullable(),
-              lunch: Yup.number()
-                .positive("The price has to be greater than $0!")
-                .nullable(),
-            }),
-        })
-        .when("course", {
-          is: (course: Courses) => course === "drink",
-          then: (schema) =>
-            schema.shape({
-              drinks: Yup.number()
-                .positive("The price has to be greater than $0!")
-                .nullable(),
-            }),
-        })
-        .when("course", {
-          is: (course: Courses) => course === "dessert",
-          then: (schema) =>
-            schema.shape({
-              dessert: Yup.number()
-                .positive("The price has to be greater than $0!")
-                .nullable(),
-            }),
+export const validationSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        name: z.string({ required_error: "A name for this item is required!" }),
+        description: z.string().optional(),
+        course: z.nativeEnum(Courses),
+        price: z.object({
+          lunch: z.string().optional(),
+          dinner: z.string().optional(),
+          hh: z.string().optional(),
+          dessert: z.string().optional(),
+          drinks: z.string().optional(),
         }),
-    })
-  ),
+      })
+    )
+    // Use `superRefine` here to handle special cases for prices on different courses
+    // specifically, we care about enforcing a price on either lunch or dinner for appetizers and entrees
+    .superRefine((data, ctx) => {
+      data.forEach((item, idx) => {
+        switch (item.course) {
+          case "appetizer":
+          case "entree":
+            if (!item.price.lunch && !item.price.dinner) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A price is required for either lunch or dinner",
+                path: [idx, "price", "lunch"],
+              });
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A price is required for either lunch or dinner",
+                path: [idx, "price", "dinner"],
+              });
+            }
+            break;
+          case "dessert":
+            if (!item.price.dessert) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A price is required for this course",
+                path: [idx, "price", "dessert"],
+              });
+            }
+            break;
+          case "drink":
+            if (!item.price.drinks) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A price is required for this course",
+                path: [idx, "price", "drinks"],
+              });
+            }
+            break;
+        }
+      });
+    }),
 });
 
-const initialValues: { items: Item[] } = { items: [initialValue] };
+const initialValues: { items: Item[] } = {
+  items: [initialValue],
+};
 
 const AddMenuItem: React.FC = () => {
   const [toastData, setToastData] = useState({
@@ -83,47 +111,37 @@ const AddMenuItem: React.FC = () => {
     show: false,
   });
 
-  const onSubmit = async (
-    values: FormikValues,
-    // @ts-expect-error: This should be something like `FormikBag<something, something>` but the docs don't
-    // say anything about it and I don't feel like digging through the sauce rn
-    { resetForm }
-  ) => {
-    try {
-      const res = await fetch("/api/menu/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }).then((res) => res.json());
+  const mutation = api.menu.add.useMutation({
+    onSuccess: () => {
+      console.info("Successfully added menu item");
 
-      if (res.ok) {
-        console.info("Successfully added menu item");
-        // Refresh the dataz
-        setToastData({
-          type: "success",
-          message: "Success! You're changes should be visible in a few seconds",
-          show: true,
-        });
-        resetForm();
-        return;
-      }
-
-      console.error(`There was an error submitting info: ${res.error}`);
       setToastData({
-        type: "error",
-        message: "There was an error creating that. Maybe try again 🙃",
+        type: "success",
+        message: "Success! You're changes should be visible in a few seconds",
         show: true,
       });
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error(`There was an error submitting info: ${error}`);
       setToastData({
         type: "error",
         message: "There was an error creating that. Maybe try again 🙃",
         show: true,
       });
-    }
+    },
+  });
+
+  const onSubmit = (
+    values: z.infer<typeof validationSchema>,
+    {
+      resetForm,
+    }: FormikHelpers<{
+      items: Item[];
+    }>
+  ) => {
+    mutation.mutate(values, {
+      onSuccess: () => resetForm(),
+    });
   };
 
   return (
@@ -131,17 +149,18 @@ const AddMenuItem: React.FC = () => {
       <h3>Add new menu items</h3>
       <Formik
         initialValues={initialValues}
-        enableReinitialize // Resets form state after successful update (i.e. disables submit/reset buttons)
-        validationSchema={validationSchema}
+        enableReinitialize
+        validationSchema={toFormikValidationSchema(validationSchema)}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, values, isValid, dirty }) => (
+        {({ values, isValid, dirty }) => (
           <Form className="needs-validation" noValidate>
             <BeforeUnload />
             <FieldArray name="items">
               {({ remove, push }) => (
                 <div className="row mb-3">
                   {values.items.map((item, idx1, { length }) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <div className="row gx-3 mb-3" key={idx1}>
                       <div className="col-12 col-md-10">
                         <FieldWithError
@@ -232,7 +251,7 @@ const AddMenuItem: React.FC = () => {
             </FieldArray>
             <SubmitResetButtons
               isValid={isValid}
-              isSubmitting={isSubmitting}
+              isSubmitting={mutation.isPending}
               dirty={dirty}
               submitText={`Add ${inflect("item")(values.items.length)}`}
             />

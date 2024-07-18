@@ -1,48 +1,79 @@
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
-import { Contact, Days } from "@prisma/client";
-import { Form, Formik, FormikValues } from "formik";
+import type { Contact, Days } from "@prisma/client";
+import { Form, Formik } from "formik";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
-import * as Yup from "yup";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
 import HoursField from "../../../components/Form/HoursField";
 import { days } from "../../../lib/hooks/useInfo";
-import prisma from "../../../lib/prismadb";
+import { db } from "@/server/db";
 import { capitalize } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+import { z } from "zod";
+import { api } from "@/lib/api";
 
-const validationSchema = Yup.object({
-  about: Yup.string().required("This is required!"),
-  contact: Yup.object({
-    address: Yup.string().required("An address is required!"),
-    phone: Yup.string()
-      .matches(
+export const validationSchema = z.object({
+  about: z.string({ required_error: "This is required!" }),
+  contact: z.object({
+    address: z.string({ required_error: "An address is required!" }),
+    phone: z
+      .string({ required_error: "A phone number is required!" })
+      .regex(
         /^\(?(\d\d\d)\)?-?(\d\d\d)-?(\d\d\d\d)$/g,
         "That's not a valid phone number!\nTip: Don't add a country code!"
-      )
-      .required("A phone number is required!"),
-    email: Yup.string()
-      .email("That's not a valid email address!")
-      .required("An email address is required!"),
+      ),
+    email: z
+      .string({ required_error: "An email is required!" })
+      .email("That's not a valid email address!"),
   }),
-  hours: Yup.array(
-    Yup.object({
-      days: Yup.string().oneOf(days),
-      open: Yup.string(),
-      close: Yup.string(),
-    })
-  ),
+  hours: z
+    .array(
+      z.object({
+        id: z.string(),
+        day: z.enum(days),
+        // open and close are optional iff they're both undefined.
+        // Below, we do the error handling for when one or the other is not.
+        open: z.string().optional(),
+        close: z.string().optional(),
+      })
+    )
+    // We (have to) use superRefine here to specify errors messages on the specific day that has an error
+    .superRefine((data, ctx) => {
+      data.forEach(({ open, close }, idx) => {
+        // Hours are valid iff an opening and closing are either both defined or neither defined...
+        // So, we convert to boolean and check if they're the same
+        // Javascript doesn't have logical XOR which is why this looks so fucked up
+        if (!open !== !close) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: !open
+              ? "An opening time is required if there's a closing time"
+              : "A closing time is required if there's an opening time",
+            path: [idx, !open ? "open" : "close"],
+          });
+        }
+      });
+    }),
+  // Supplemental fields:
+  // These are returned by prisma and we keep them in formik state because they're required by the backend
+  id: z.string(),
+  contactId: z.string(),
 });
 
-type EditInfoProps = {
+// In the future it would be nice to use InferFromGetStaticProps or whatever but it doesn't seem like there's a way to export the database type from prisma
+export type EditInfoProps = {
   info: {
+    id: string;
     about: string;
     contact: Contact;
+    contactId: string;
     hours: {
+      id: string;
       open: string;
       close: string;
       day: Days;
@@ -58,16 +89,8 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
     show: false,
   });
 
-  const onSubmit = async (values: FormikValues) => {
-    const res = await fetch("/api/info/edit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    }).then((res) => res.json());
-
-    if (res.ok) {
+  const mutation = api.info.update.useMutation({
+    onSuccess: () => {
       console.info("Successfully updated info");
       // Refresh the dataz
       router.replace(router.asPath);
@@ -77,26 +100,30 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
           "Site information updated successfully! You're changes should be visible in a few seconds",
         show: true,
       });
-      return;
-    }
+    },
+    onError: (error) => {
+      console.error(`There was an error submitting info: ${error}`);
+      setToastData({
+        type: "error",
+        message: "There was an error updating info. Maybe try again 🙃",
+        show: true,
+      });
+    },
+  });
 
-    console.error(`There was an error submitting info: ${res.error}`);
-    setToastData({
-      type: "error",
-      message: "There was an error updating info. Maybe try again 🙃",
-      show: true,
-    });
+  const onSubmit = async (values: typeof info) => {
+    mutation.mutate(values);
   };
 
   return (
     <div className="row justify-content-center">
       <div className="col">
         <h3>Edit site information</h3>
-        <Formik
+        <Formik<typeof info>
           initialValues={info}
           enableReinitialize // Resets form state after successful update (i.e. disables submit/reset buttons)
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
+          onSubmit={(data) => onSubmit(data)}
+          validationSchema={toFormikValidationSchema(validationSchema)}
         >
           {({ isSubmitting, values, isValid, dirty, setFieldValue }) => (
             <Form className="needs-validation" noValidate>
@@ -114,9 +141,8 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
                 <Field name="contact.email" placeholder="Email" />
                 <Field name="contact.phone" placeholder="Phone number" />
 
-                {/* TODO(6/4/22): This needs validation/error handling */}
                 {values?.hours.map((entry, idx) => (
-                  <div key={idx} className="form-group mb-3">
+                  <div key={entry.day} className="form-group mb-3">
                     <label>
                       {capitalize(entry.day)}
                       {(entry.open !== "" || entry.close !== "") && (
@@ -157,10 +183,9 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
                   </div>
                 ))}
               </div>
-
               <SubmitResetButtons
                 isValid={isValid}
-                isSubmitting={isSubmitting}
+                isSubmitting={isSubmitting || mutation.isPending}
                 dirty={dirty}
               />
             </Form>
@@ -199,16 +224,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const info = await prisma.info.findFirst({
+  const info = await db.info.findFirst({
     include: {
       contact: true,
       hours: true,
     },
   });
 
+  // Sort hours by day of week
+  const hours = info?.hours.toSorted(
+    (a, b) => days.indexOf(a.day) - days.indexOf(b.day)
+  );
+
   return {
     props: {
-      info,
+      info: { ...info, hours },
     },
   };
 };

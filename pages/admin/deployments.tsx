@@ -1,5 +1,5 @@
 import withAdminNav from "@/lib/withAdminNav";
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 
 const Deployments: React.FC = () => {

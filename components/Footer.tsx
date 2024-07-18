@@ -1,8 +1,7 @@
+import { useMemo } from "react";
+import { Mail, MapPin, Phone } from "react-feather";
 import useInfo from "../lib/hooks/useInfo";
 import { compactHours, formatPhone, to12 } from "../lib/utils/utils";
-
-import { Mail, MapPin, Phone } from "react-feather";
-import { useMemo } from "react";
 
 export default function Footer() {
   const info = useInfo();
@@ -55,12 +54,12 @@ export default function Footer() {
           <div className="col-sm-4">
             <h3 className="text-xs text-primary">Hours</h3>
             {compactedHours.map((entry, idx) => (
-              <div className="mb-3" key={idx}>
+              <div className="mb-3" key={entry.idx}>
                 <div className="text-xs">
                   {/* Show single day if it's not a "range" otherwise show `day1 - dayN` */}
                   {entry[0].day === entry.at(-1)?.day
                     ? entry[0].day
-                    : entry[0].day + " - " + entry.at(-1)?.day}
+                    : `${entry[0].day} - ${entry.at(-1)?.day}`}
                 </div>
                 {entry[0].open === "" && entry[0].close === "" ? (
                   <div className="font-serif">
@@ -80,7 +79,7 @@ export default function Footer() {
             <div className="d-flex align-items-sm-center align-items-start">
               <hr className="hr-sm me-3" style={{ height: "1px" }} /> Copyright
               &copy; &nbsp;
-              {new Date().getFullYear()}&nbsp;Avanti, Inc. All rights reserved.
+              {new Date().getFullYear()}&nbsp;Avanti, LLC. All rights reserved.
             </div>
           </div>
         </div>

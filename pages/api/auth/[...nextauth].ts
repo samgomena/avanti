@@ -1,10 +1,10 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
-import prisma from "../../../lib/prismadb";
+import { db } from "@/server/db";
 
 export const authConfig: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   pages: {
     signIn: "/login",
   },
@@ -25,7 +25,7 @@ export const authConfig: NextAuthOptions = {
     async signIn({ user, email }) {
       // verificationRequest is true if user is trying to sign in (vs clicking a magig link in their email)
       if (email?.verificationRequest) {
-        const userByEmail = await prisma.user.findUnique({
+        const userByEmail = await db.user.findUnique({
           where: {
             email: user.email!,
           },

@@ -1,9 +1,9 @@
-import { Courses } from "@prisma/client";
+import type { Courses } from "@prisma/client";
 import { getSession } from "next-auth/react";
-import { GetServerSideProps } from "next/types";
+import type { GetServerSideProps } from "next/types";
 import { useCallback, useState } from "react";
 import { Form, Table } from "react-bootstrap";
-import prisma from "../../lib/prismadb";
+import { db } from "@/server/db";
 import withAdminNav from "../../lib/withAdminNav";
 
 type OverviewProps = {
@@ -21,7 +21,7 @@ type OverviewProps = {
 const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
   const [includeDisabled, setIncludeDisabled] = useState(false);
 
-  let sumCourse = useCallback(
+  const sumCourse = useCallback(
     (course: Courses) =>
       menu
         // Grab only the items for the course we're getting stats for
@@ -31,6 +31,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
         // Reduce price object into array of values; in the future it could be cool to show values per service period
         .reduce(
           (acc, curr) => [
+            // biome-ignore lint/performance/noAccumulatingSpread: There's like 50 items, it doesn't matter
             ...acc,
             curr.price.dinner,
             curr.price.lunch,
@@ -84,7 +85,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
         <Table striped bordered hover responsive data-testid="table">
           <thead>
             <tr>
-              <th></th>
+              <th />
               {data.map((item) => (
                 <th key={item.title}>{item.title}</th>
               ))}
@@ -94,6 +95,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
             <tr>
               <td>Average</td>
               {data.map((item, idx) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                 <td key={`avg_${idx}`} data-testid={`avg_${idx}`}>
                   ${item.data.avg.toFixed(2)}
                 </td>
@@ -102,6 +104,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
             <tr>
               <td>Min</td>
               {data.map((item, idx) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                 <td key={`min_${idx}`} data-testid={`min_${idx}`}>
                   ${item.data.min}
                 </td>
@@ -110,6 +113,7 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
             <tr>
               <td>Max</td>
               {data.map((item, idx) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                 <td key={`max_${idx}`} data-testid={`max_${idx}`}>
                   ${item.data.max}
                 </td>
@@ -143,7 +147,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const menu = await prisma.menu.findMany({
+  const menu = await db.menu.findMany({
     select: {
       course: true,
       disabled: true,

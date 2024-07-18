@@ -1,7 +1,7 @@
 import { ErrorMessage, Field } from "formik";
 import FormError from "./FormError";
 import { useId } from "react";
-import { Service } from "../../lib/types/menu";
+import type { Service } from "../../lib/types/menu";
 import { serviceToDisplay } from "../../lib/utils/utils";
 
 const PriceField = ({ service, idx }: { service: Service; idx: number }) => {
@@ -15,7 +15,10 @@ const PriceField = ({ service, idx }: { service: Service; idx: number }) => {
         <Field
           className="form-control form-control-sm"
           name={`items.${idx}.price.${service}`}
-          type="number"
+          // This should be a number we store them as string in the DB schema
+          // See the FAQ.md for why that's the case
+          // type="number"
+          min="0"
           placeholder="Price"
         />
         <ErrorMessage
