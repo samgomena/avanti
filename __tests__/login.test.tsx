@@ -1,8 +1,9 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Login from "../pages/login";
 import { ParallaxProvider } from "react-scroll-parallax";
+import { vi } from "vitest";
 
-jest.mock("next/router", () => ({
+vi.mock("next/router", () => ({
   useRouter: () => ({}),
 }));
 
@@ -55,7 +56,9 @@ describe("Login - Form", () => {
     fireEvent.click(submitButton);
 
     await waitFor(() =>
-      expect(screen.getByText("That's not a valid email!")).toBeInTheDocument()
+      expect(
+        screen.getByText("That's not a valid email address!")
+      ).toBeInTheDocument()
     );
   });
 

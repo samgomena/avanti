@@ -54,7 +54,7 @@ export default function Footer() {
           <div className="col-sm-4">
             <h3 className="text-xs text-primary">Hours</h3>
             {compactedHours.map((entry, idx) => (
-              <div className="mb-3" key={entry.idx}>
+              <div className="mb-3" key={idx}>
                 <div className="text-xs">
                   {/* Show single day if it's not a "range" otherwise show `day1 - dayN` */}
                   {entry[0].day === entry.at(-1)?.day

@@ -1,11 +1,33 @@
 import { render, screen } from "@testing-library/react";
 import Home from "../pages/index";
 import { ParallaxProvider } from "react-scroll-parallax";
+import { vi } from "vitest";
+import type { Alert, Contact, Info } from "@prisma/client";
 
-const defaultProps = {
-  alerts: [],
+const defaultProps: {
+  alerts: Alert[];
+  info: Info & { contact: Omit<Contact, "id"> };
+} = {
+  alerts: [
+    {
+      id: "123",
+      title: "Watch out!!!",
+      text: "A very important alert",
+      start: new Date("2024-07-18"),
+      end: new Date("2024-07-19"),
+    },
+  ],
   info: {
-    contact: { facebook: "facebook.com", instagram: "instagram.com" },
+    id: "123",
+    contactId: "1234",
+    about: "what",
+    contact: {
+      facebook: "facebook.com",
+      instagram: "instagram.com",
+      email: "test@avantiwestlinn.com",
+      address: "42 P Wallaby way",
+      phone: "1234567890",
+    },
   },
 };
 
@@ -61,10 +83,11 @@ describe("Home - Headings", () => {
 
 describe("Home - Reservations", () => {
   it("Shows a reservation button if enabled", () => {
-    jest.mock("../lib/hooks/useFlags");
-    const useFlag = require("../lib/hooks/useFlags").useFlag;
-    // useFlag.mockImplementation(() => ({ enabled: true }));
-    useFlag.mockReturnValue({ enabled: true });
+    vi.mock("../lib/hooks/useFlags");
+    // TODO: This is already enabled so the test is useless but maybe good reference?
+    // const useFlag = require("@/lib/hooks/useFlags").useFlag;
+    // // useFlag.mockImplementation(() => ({ enabled: true }));
+    // useFlag.mockReturnValue({ enabled: true });
 
     render(
       <ParallaxProvider>
@@ -80,3 +103,16 @@ describe("Home - Reservations", () => {
     );
   });
 });
+
+// TODO
+// describe("Home - Alerts", () => {
+//   it("Shows an alert", () => {
+//     render(
+//       <ParallaxProvider>
+//         <Home {...defaultProps} />
+//       </ParallaxProvider>
+//     );
+
+//     expect(screen.getByText("Woah!")).toBeInTheDocument();
+//   });
+// });

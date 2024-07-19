@@ -1,13 +1,14 @@
 import { getServerSideProps } from "@/pages/admin/overview";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { GetServerSidePropsContext } from "next";
+import type { GetServerSidePropsContext } from "next";
 import { getSession } from "next-auth/react";
-import { ParsedUrlQuery } from "querystring";
-import { Course } from "../../lib/types/menu";
+import type { ParsedUrlQuery } from "node:querystring";
+import type { Course } from "../../lib/types/menu";
 import Overview from "../../pages/admin/overview";
+import { vi, Vitest } from "vitest";
 
-jest.mock("next-auth/react");
-jest.mock("next/router", () => ({
+vi.mock("next-auth/react");
+vi.mock("next/router", () => ({
   useRouter: () => ({
     asPath: "/test",
   }),
@@ -144,8 +145,8 @@ describe("Overview table renders stats", () => {
 });
 
 test("Kicks you out when you're not logged in", async () => {
-  global.fetch = jest.fn(() => {}) as unknown as typeof global.fetch;
-  (getSession as jest.Mock).mockReturnValue(false);
+  global.fetch = vi.fn(() => {}) as unknown as typeof global.fetch;
+  vi.mocked(getSession).mockReturnValue(Promise.resolve(null));
 
   const context = {
     params: {} as ParsedUrlQuery,

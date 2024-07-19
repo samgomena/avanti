@@ -1,11 +1,12 @@
-import { Alert } from "@prisma/client";
+import type { Alert } from "@prisma/client";
 import { fireEvent, render, screen } from "@testing-library/react";
 import Alerts from "../Alerts";
+import { vi } from "vitest";
 
 const title = "Test Alert";
 const text = "This is a test alert";
 
-jest.useFakeTimers().setSystemTime(new Date("2020-06-01T00:00:00.000Z"));
+vi.useFakeTimers().setSystemTime(new Date("2020-06-01T00:00:00.000Z"));
 
 describe("Alerts", () => {
   it("Renders", () => {

@@ -1,8 +1,9 @@
+import { vi } from "vitest";
 import { render, fireEvent } from "@testing-library/react";
 import FilterToggle from "../../Menu/FilterToggle";
 
 test("filter items when FilterToggle is clicked", () => {
-  const setFilter = jest.fn();
+  const setFilter = vi.fn();
   const { getByTestId } = render(
     <FilterToggle
       filterKey="appetizer"
@@ -21,7 +22,7 @@ test("filter items when FilterToggle is clicked", () => {
 });
 
 test("filter items when multiple FilterToggle components are clicked", () => {
-  const setFilter = jest.fn();
+  const setFilter = vi.fn();
   const filter = { appetizer: false, entree: false };
   const { getByTestId } = render(
     <>
