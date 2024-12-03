@@ -39,10 +39,11 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Install dependencies
+      - name: Install dependencies & Set up database
         run: |
           npm install -g pnpm
           pnpm install
+          pnpm exec prisma db push
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
