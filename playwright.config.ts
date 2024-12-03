@@ -74,7 +74,10 @@ export default defineConfig({
     // },
   ],
   webServer: {
-    command: process.env.CI ? "pnpm start" : "pnpm dev",
+    // TODO: Should we be testing against a prod build in CI?
+    // If so, we should copy the build over from the build step
+    // command: process.env.CI ? "pnpm start" : "pnpm dev",
+    command: "pnpm dev",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
   },
