@@ -211,70 +211,46 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
     if (dryRun) {
       return;
     }
-    const hasDeletedItems = Object.keys(diff?.deleted ?? {}).length > 0;
+
+    const removedItems = removed.map(({ id, idx }) => ({
+      id,
+      idx,
+      operation: "delete" as const,
+    }));
 
     // @ts-expect-error: We can't type the diff object any more concretely than `unknown` currently
     const valuesWithNewIdx = Object.entries(diff?.updated.items ?? {}).map(
       ([key, value]) => {
         // key is the index (from the db) of the item that we want to update
-        // @ts-expect-error: We can't type the diff object any more concretely than `unknown` currently
-        const obj = { ...value, idx: Number(key) };
-        // Some updates don't add `id` to the diff but we need the id to be able to update the object
-        // so if it doesn't exist we have to add it manually
-        // @ts-expect-error: We can't type the diff object any more concretely than `unknown` currently
-        if (!value.id) {
-          obj.id = values.items[Number(key)].id;
-        }
+        const obj = {
+          id: values.items[Number(key)].id,
+          operation: "update" as const,
+          // @ts-expect-error: We can't type the value object b/c the diff object doesn't let up
+          data: { ...value, idx: Number(key) } as MenuItemWithPrice,
+        };
         return obj;
       }
     );
 
-    // If stuff
-    if (hasDeletedItems) {
-      deleteMutation.mutate(removed, {
-        onSuccess: () => {
-          updateMutation.mutate(
-            { items: valuesWithNewIdx },
-            {
-              onSuccess: (res) => {
-                resetForm({ values: { items: res.data as MenuWithPrice[] } });
-                setToastData({
-                  type: "success",
-                  message:
-                    "Success! You're changes should be visible in a few seconds",
-                  show: true,
-                });
-              },
-            }
-          );
-        },
-        onError: (error) => {
-          setToastData({
-            type: "error",
-            message: "There was an error while updating... Maybe try again? 🙃",
-            show: true,
-          });
-        },
-      });
-      return;
-    }
-    // Nothing was deleted so we only need to update
-    updateMutation.mutate(
-      { items: valuesWithNewIdx },
-      {
-        onSuccess: (res) => {
-          resetForm({ values: { items: res.data as MenuWithPrice[] } });
-          setToastData({
-            type: "success",
-            message:
-              "Success! You're changes should be visible in a few seconds",
-            show: true,
-          });
-        },
-      }
-    );
+    const dataToSend = [...removedItems, ...valuesWithNewIdx];
+
+    updateMutation.mutate([...removedItems, ...valuesWithNewIdx], {
+      onSuccess: (res) => {
+        resetForm({
+          values: { items: res.data.menu as MenuWithPrice[] },
+        });
+        setToastData({
+          type: "success",
+          message: "Success! You're changes should be visible in a few seconds",
+          show: true,
+        });
+      },
+    });
   };
 
+  // This is a helper function that augements the remove function from Formik's FieldArray.
+  // Formik removes items from it's internal state when they're removed (obvi) so we have to
+  // additionally store the removed item ids separately so we can send them to the API when be deleted.
   const onRemove =
     (formikRemove: <T>(index: number) => T | undefined) =>
     ({ id, idx }: { id: string; idx: number }) => {
@@ -365,13 +341,23 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                 </div>
 
                 {/* Helper components */}
-                <BeforeUnload />
+                {/* <BeforeUnload /> */}
                 <Diff lhs={initialValues} rhs={values} />
 
                 <FieldArray name="items">
                   {({ remove, move, insert }) => (
                     <SortableList
                       items={values.items}
+                      // TODO: Maybe disable disabled when dragging
+                      // onDragStart={() =>
+                      //   setToggle({
+                      //     disabled: false,
+                      //     initialDisabled: toggle.disabled,
+                      //   })
+                      // }
+                      // onDragEnd={() =>
+                      //   setToggle({ disabled: toggle.initialDisabled })
+                      // }
                       // TODO: Need to update indexes; probably the easiest solution would be to just iterate through all the items and set their idx using the loops idx.
                       onChange={(activeIndex, overIndex) => {
                         move(activeIndex, overIndex);
@@ -411,13 +397,18 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                             />
                             {/* TODO: Allow adding items in the middle of the thing */}
                             {/* <div>
-                              <div className="d-flex group-hover opacity-0 opacity-100-hover">
-                                <hr style={{ flex: 1, width: "40%" }} />
-                                <div className="d-flex justify-center items-center">
+                              <div className="d-flex">
+                                <hr style={{ flex: 1, width: "50%" }} />
+                                <div className="d-flex justify-center items-center group-hover opacity-0 opacity-100-hover">
                                   <button
-                                    onClick={() =>
-                                      insert(item.mvIdx, initialValue)
-                                    }
+                                    onClick={() => {
+                                      insert(item.mvIdx + 1, {
+                                        ...initialValue,
+                                        course: item.course,
+                                        idx: item.mvIdx + 1,
+                                      });
+                                    }}
+                                    type="button"
                                     className="btn btn-outline-secondary btn-sm"
                                     style={
                                       {
@@ -432,12 +423,11 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                                 <hr
                                   style={{
                                     flex: 1,
-                                    width: "40%",
+                                    width: "50%",
                                     alignItems: "end",
                                   }}
                                 />
                               </div>
-                              {/* <hr style={{ flex: 1 }} />
                             </div> */}
                             <hr style={{ flex: 1 }} />
                           </div>
@@ -545,10 +535,11 @@ EditMenuItemProps) {
             // Make text color opaque when disabled
             // Adding opacity to the entire element causes it to "shine through" to anything above it
             // which is problematic for the search bar 🫠
-            color: item.disabled ? "rgba(0, 0, 0, 0.3)" : "",
+            color: item.disabled === true ? "rgba(0, 0, 0, 0.3)" : "",
           }}
         >
-          {item.name} - ${formatItemPrice(item)}
+          {item.name} - ${formatItemPrice(item)} idx: {item.idx}, move idx:{" "}
+          {item.mvIdx}
         </span>
         <span className="ms-auto" style={{ cursor: "pointer" }}>
           {open ? <ChevronUp size="18" /> : <ChevronDown size="18" />}

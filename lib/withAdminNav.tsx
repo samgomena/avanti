@@ -100,4 +100,5 @@ function withAdminNav<T extends JSX.IntrinsicAttributes & Object>(
   };
 }
 
+withAdminNav.displayName = "WithAdminNav";
 export default withAdminNav;

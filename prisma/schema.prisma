@@ -128,6 +128,7 @@ model Menu {
   service     Services? @default(dinner)
   course      Courses
   disabled    Boolean   @default(false)
+  // TODO: Why is this optional?
   price       Price?
 }
 
