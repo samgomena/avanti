@@ -43,7 +43,8 @@ jobs:
         run: |
           npm install -g pnpm
           pnpm install
-          pnpm exec prisma db push
+          pnpm prisma db push
+          pnpm prisma db seed
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps

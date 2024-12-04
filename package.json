@@ -30,6 +30,9 @@
     "type": "git",
     "url": "https://github.com/samgomena/avanti.git"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "author": "Sam Gomena",
   "license": "ISC",
   "homepage": "https://avantitualatin.com",
@@ -92,6 +95,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "prisma": "^5.17.0",
     "smtp-tester": "^2.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "vitest": "^2.0.3"
   }

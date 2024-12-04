@@ -91,6 +91,8 @@ enum Days {
 model Hours {
   id     String  @id @default(cuid())
   day    Days
+  // 24 hr format
+  // E.g. 16:00, 22:00, 00:00
   open   String  @default("")
   close  String  @default("")
   Info   Info?   @relation(fields: [infoId], references: [id])
