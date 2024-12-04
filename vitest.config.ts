@@ -5,10 +5,7 @@ import { fileURLToPath } from "node:url";
 export default defineConfig({
   plugins: [react()],
   test: {
-    include: [
-      "**/__tests__/*.{test,spec}.?(c|m)[jt]s?(x)",
-      "__tests__/*.{test,spec}.?(c|m)[jt]s?(x)",
-    ],
+    exclude: ["tests/**/*", "node_modules/**/*"],
     globals: true,
     environment: "jsdom",
     setupFiles: ["vitest.setup.ts"],
