@@ -60,8 +60,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       updatedAt: true,
     },
     where: {
-      // biome-ignore lint/style/noNonNullAssertion: We know that email can't be null if they're already logged in
-      email: session.user?.email!,
+      // We know that email can't be null if they're already logged in
+      email: session.user?.email ?? "",
     },
   });
 

@@ -214,7 +214,7 @@ export const menuRouter = createTRPCRouter({
 
       const results = await ctx.db.$transaction(async (tx) => {
         const deletedIds: string[] = [];
-        const updatedItems: any[] = [];
+        const updatedItems: object[] = [];
 
         // Process deletions
         for (const item of input) {

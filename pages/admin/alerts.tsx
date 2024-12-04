@@ -173,8 +173,7 @@ const UpsertModal: React.FC<UpsertProps> = ({
   const createMutation = api.alerts.create.useMutation({
     onSuccess: () => {
       // Close the modal
-      // biome-ignore lint/style/noNonNullAssertion: we pass this explicitly, so it's always defined but borrow the type from react-bootstrap so have to ignore the warno
-      onHide!();
+      onHide?.();
       // Refresh the dataz
       router.replace(router.asPath);
     },
@@ -183,8 +182,7 @@ const UpsertModal: React.FC<UpsertProps> = ({
   const updateMutation = api.alerts.update.useMutation({
     onSuccess: () => {
       // Close the modal
-      // biome-ignore lint/style/noNonNullAssertion: we pass this explicitly, so it's always defined but borrow the type from react-bootstrap so have to ignore the warno
-      onHide!();
+      onHide?.();
       // Refresh the dataz
       router.replace(router.asPath);
     },

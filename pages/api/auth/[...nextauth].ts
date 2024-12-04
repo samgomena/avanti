@@ -23,11 +23,11 @@ export const authConfig: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, email }) {
-      // verificationRequest is true if user is trying to sign in (vs clicking a magig link in their email)
+      // verificationRequest is true if user is trying to sign in (vs clicking a magic link in their email)
       if (email?.verificationRequest) {
         const userByEmail = await db.user.findUnique({
           where: {
-            email: user.email!,
+            email: user.email ?? "",
           },
         });
         // If they don't exist return false (returning an error to the client and rejecting auth)

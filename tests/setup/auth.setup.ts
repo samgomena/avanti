@@ -21,7 +21,7 @@ test.describe("authenticate", () => {
     await page.locator('input[name="email"]').fill(testUserEmail);
     await page.getByRole("button", { name: "login" }).click({ delay: 100 });
 
-    await page.waitForSelector(`text=Check your email for a login link!`);
+    await page.waitForSelector("text=Check your email for a login link!");
 
     let emailLink = null;
 
@@ -43,7 +43,7 @@ test.describe("authenticate", () => {
 
     expect(emailLink).toBeTruthy();
 
-    const res = await page.goto(emailLink!);
+    const res = await page.goto(emailLink ?? "/error");
     expect(res?.url()?.endsWith("/admin/overview")).toBeTruthy();
 
     await page.context().storageState({ path: authFile });
