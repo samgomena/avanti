@@ -56,28 +56,30 @@ export const alertsRouter = createTRPCRouter({
     }
   }),
 
-  delete: protectedProcedure.input(z.object({ id: z.string() })).mutation(async (opts) => {
-    const { input, ctx } = opts;
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async (opts) => {
+      const { input, ctx } = opts;
 
-    try {
-      const deleted = await ctx.db.alert.delete({
-        where: {
-          id: input.id,
-        },
-      });
-      return {
-        ok: true,
-        data: deleted,
-        error: null,
-      };
-    } catch (error) {
-      if (typeof error === "string") {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: error,
+      try {
+        const deleted = await ctx.db.alert.delete({
+          where: {
+            id: input.id,
+          },
         });
+        return {
+          ok: true,
+          data: deleted,
+          error: null,
+        };
+      } catch (error) {
+        if (typeof error === "string") {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error,
+          });
+        }
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
-      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
-    }
-  }),
+    }),
 });

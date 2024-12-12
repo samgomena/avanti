@@ -232,8 +232,6 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
       }
     );
 
-    const dataToSend = [...removedItems, ...valuesWithNewIdx];
-
     updateMutation.mutate([...removedItems, ...valuesWithNewIdx], {
       onSuccess: (res) => {
         resetForm({
@@ -538,8 +536,7 @@ EditMenuItemProps) {
             color: item.disabled === true ? "rgba(0, 0, 0, 0.3)" : "",
           }}
         >
-          {item.name} - ${formatItemPrice(item)} idx: {item.idx}, move idx:{" "}
-          {item.mvIdx}
+          {item.name} - ${formatItemPrice(item)}
         </span>
         <span className="ms-auto" style={{ cursor: "pointer" }}>
           {open ? <ChevronUp size="18" /> : <ChevronDown size="18" />}

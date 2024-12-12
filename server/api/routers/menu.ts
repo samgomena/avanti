@@ -2,78 +2,8 @@ import { validationSchema as addValidationSchema } from "@/pages/admin/menu/add"
 // import { validationSchema as editValidationSchema } from "@/pages/admin/menu/edit";
 import { TRPCError } from "@trpc/server";
 import { protectedProcedure, createTRPCRouter } from "../trpc";
-import { Courses, Services } from "@prisma/client";
+import { type Courses, Services } from "@prisma/client";
 import { z } from "zod";
-
-// This is copied directly from pages/admin/menu/edit but edited to make the fields optional.
-// This is because over there we use the schema to validate the form but only send deltas to
-// the backend here, which breaks the schema validation
-const editValidationSchema = z.object({
-  items: z
-    .array(
-      z.object({
-        name: z.string().optional(),
-        description: z.string().optional(),
-        course: z.nativeEnum(Courses).optional(),
-        price: z
-          .object({
-            lunch: z.string().optional(),
-            dinner: z.string().optional(),
-            hh: z.string().optional(),
-            dessert: z.string().optional(),
-            drinks: z.string().optional(),
-            id: z.string(),
-          })
-          .optional(),
-        disabled: z.boolean().optional(),
-        // These are the only two fields that are required
-        id: z.string(),
-        idx: z.number(),
-      })
-    )
-    // Use `superRefine` here to handle special cases for prices on different courses
-    // specifically, we care about enforcing a price on either lunch or dinner for appetizers and entrees
-    .superRefine((data, ctx) => {
-      data.forEach((item, idx) => {
-        if (!item.price) return;
-        switch (item.course) {
-          case "appetizer":
-          case "entree":
-            if (!item.price.lunch && !item.price.dinner) {
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: "A price is required for either lunch or dinner",
-                path: [idx, "price", "lunch"],
-              });
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: "A price is required for either lunch or dinner",
-                path: [idx, "price", "dinner"],
-              });
-            }
-            break;
-          case "dessert":
-            if (!item.price.dessert) {
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: "A price is required for this course",
-                path: [idx, "price", "dessert"],
-              });
-            }
-            break;
-          case "drink":
-            if (!item.price.drinks) {
-              ctx.addIssue({
-                code: z.ZodIssueCode.custom,
-                message: "A price is required for this course",
-                path: [idx, "price", "drinks"],
-              });
-            }
-            break;
-        }
-      });
-    }),
-});
 
 const updateMenuItemSchema = z.array(
   z.object({
@@ -212,113 +142,133 @@ export const menuRouter = createTRPCRouter({
     .mutation(async (opts) => {
       const { input, ctx } = opts;
 
-      const results = await ctx.db.$transaction(async (tx) => {
-        const deletedIds: string[] = [];
-        const updatedItems: object[] = [];
+      try {
+        const results = await ctx.db.$transaction(
+          async (tx) => {
+            const deletedIds: string[] = [];
+            const updatedItems: object[] = [];
 
-        // Process deletions
-        for (const item of input) {
-          if (item.operation === "delete") {
-            await tx.menu.delete({ where: { id: item.id } });
-            deletedIds.push(item.id);
-          }
-        }
+            // Process deletions
+            for (const item of input) {
+              if (item.operation === "delete") {
+                await tx.menu.delete({ where: { id: item.id } });
+                deletedIds.push(item.id);
+              }
+            }
 
-        // TODO: Process additions
-        // for (const item of input.filter((i) => i.operation === "add")) {
-        //   // Shift existing items to make space
-        //   await tx.menu.updateMany({
-        //     where: { idx: { gte: item.data.idx } },
-        //     data: { idx: { increment: 1 } },
-        //   });
+            // TODO: Process additions
+            // for (const item of input.filter((i) => i.operation === "add")) {
+            //   // Shift existing items to make space
+            //   await tx.menu.updateMany({
+            //     where: { idx: { gte: item.data.idx } },
+            //     data: { idx: { increment: 1 } },
+            //   });
 
-        //   const newItem = await tx.menu.create({
-        //     data: {
-        //       ...item.data,
-        //       price: item.data.price ? { create: item.data.price } : undefined,
-        //     },
-        //     include: { price: true },
-        //   });
-        //   addedItems.push(newItem);
-        // }
+            //   const newItem = await tx.menu.create({
+            //     data: {
+            //       ...item.data,
+            //       price: item.data.price ? { create: item.data.price } : undefined,
+            //     },
+            //     include: { price: true },
+            //   });
+            //   addedItems.push(newItem);
+            // }
 
-        // Process updates
-        for (const item of input) {
-          if (item.operation === "update" && item.data) {
-            const updatedMenu = await tx.menu.update({
-              where: { id: item.id },
-              data: {
-                idx: item.data.idx,
-                name: item.data.name,
-                description: item.data.description,
-                service: item.data.service,
-                course: item.data.course,
-                disabled: item.data.disabled,
-                price: item.data.price
-                  ? {
-                      update: item.data.price,
-                    }
-                  : undefined,
-              },
-              include: { price: true },
+            // Process updates
+            for (const item of input) {
+              if (item.operation === "update" && item.data) {
+                const updatedMenu = await tx.menu.update({
+                  where: { id: item.id },
+                  data: {
+                    idx: item.data.idx,
+                    name: item.data.name,
+                    description: item.data.description,
+                    service: item.data.service,
+                    course: item.data.course,
+                    disabled: item.data.disabled,
+                    price: item.data.price
+                      ? {
+                          update: item.data.price,
+                        }
+                      : undefined,
+                  },
+                  include: { price: true },
+                });
+                updatedItems.push(updatedMenu);
+              }
+            }
+
+            // Reorder remaining items
+            const allItems = await tx.menu.findMany({
+              orderBy: { idx: "asc" },
             });
-            updatedItems.push(updatedMenu);
-          }
-        }
 
-        // Reorder remaining items
-        const allItems = await tx.menu.findMany({
-          orderBy: { idx: "asc" },
-        });
-
-        await Promise.all(
-          allItems.map((item, index) =>
-            tx.menu.update({
-              where: { id: item.id },
-              data: { idx: index },
-            })
-          )
-        );
-        // Fetch entire menu as our last order of business because the frontend is stoopid and can't
-        // selectively update the form with partial data
-        const menu = await tx.menu.findMany({
-          orderBy: [
-            {
-              course: "asc",
-            },
-            { idx: "asc" },
-          ],
-          select: {
-            id: true,
-            idx: true,
-            name: true,
-            description: true,
-            course: true,
-            disabled: true,
-            price: {
+            await Promise.all(
+              allItems.map(({ id }, idx) =>
+                tx.menu.update({
+                  where: { id },
+                  data: { idx },
+                })
+              )
+            );
+            // Fetch entire menu as our last order of business because the frontend is stoopid and can't
+            // selectively update the form with partial data
+            const menu = await tx.menu.findMany({
+              orderBy: [
+                {
+                  course: "asc",
+                },
+                { idx: "asc" },
+              ],
               select: {
                 id: true,
-                lunch: true,
-                dinner: true,
-                drinks: true,
-                dessert: true,
+                idx: true,
+                name: true,
+                description: true,
+                course: true,
+                disabled: true,
+                price: {
+                  select: {
+                    id: true,
+                    lunch: true,
+                    dinner: true,
+                    drinks: true,
+                    dessert: true,
+                  },
+                },
               },
-            },
+            });
+
+            return {
+              // deletedIds,
+              // updatedItems,
+              menu,
+            };
           },
-        });
-
+          // TODO: This is really, really slow and we will eventually need to fix it.
+          // The biggest issue is that we have to perform every update one by one. Prisma doesn't support batch updates natively.
+          // See:
+          // - https://github.com/prisma/prisma/discussions/19765
+          // - https://gist.github.com/aalin/ea23b786e3d55329f6257c0f6576418b
+          // Or, alternatively use raw SQL but upgrade to v6 so it's typed and safe
+          // - https://www.prisma.io/blog/prisma-6-better-performance-more-flexibility-and-type-safe-sql#typed-sql-type-safe-raw-sql-queries
+          { timeout: 60_000 }
+        );
         return {
-          deletedIds,
-          updatedItems,
-          menu,
+          ok: true,
+          data: results,
+          error: null,
         };
-      });
-
-      return {
-        ok: true,
-        data: results,
-        error: null,
-      };
+      } catch (error) {
+        if (typeof error === "string") {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error,
+          });
+        }
+        console.error(error);
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
+      }
     }),
   delete: protectedProcedure
     .input(

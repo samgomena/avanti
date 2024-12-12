@@ -59,32 +59,34 @@ export const peopleRouter = createTRPCRouter({
     }
   }),
 
-  delete: protectedProcedure.input(z.object({ id: z.string() })).mutation(async (opts) => {
-    const { input, ctx } = opts;
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async (opts) => {
+      const { input, ctx } = opts;
 
-    try {
-      const adapter = PrismaAdapter(ctx.db);
-      // Note: `deleteUser` is defined for the prisma adapter
-      // See: https://github.com/nextauthjs/next-auth/blob/a7a48a142f47e4c03d39df712a2bf810342cf202/packages/adapter-prisma/src/index.ts#L46
-      const deleted = await adapter.deleteUser?.(input.id);
+      try {
+        const adapter = PrismaAdapter(ctx.db);
+        // Note: `deleteUser` is defined for the prisma adapter
+        // See: https://github.com/nextauthjs/next-auth/blob/a7a48a142f47e4c03d39df712a2bf810342cf202/packages/adapter-prisma/src/index.ts#L46
+        const deleted = await adapter.deleteUser?.(input.id);
 
-      // Alternatively, can use something like this instead if the above doesn't work for some reason
-      // The benefit of the above is the adapter invalidates sessions on delete
-      // const deleted = await prisma.user.delete({ where: { id: userId } });
+        // Alternatively, can use something like this instead if the above doesn't work for some reason
+        // The benefit of the above is the adapter invalidates sessions on delete
+        // const deleted = await prisma.user.delete({ where: { id: userId } });
 
-      return {
-        ok: true,
-        error: null,
-        data: deleted,
-      };
-    } catch (error) {
-      if (typeof error === "string") {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: error,
-        });
+        return {
+          ok: true,
+          error: null,
+          data: deleted,
+        };
+      } catch (error) {
+        if (typeof error === "string") {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error,
+          });
+        }
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
-      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
-    }
-  }),
+    }),
 });
