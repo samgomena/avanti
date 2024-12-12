@@ -1,7 +1,7 @@
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { getSession } from "next-auth/react";
-import { GetServerSideProps } from "next/types";
-import prisma from "../../lib/prismadb";
+import type { GetServerSideProps } from "next/types";
+import { db } from "@/server/db";
 import { formatDate } from "../../lib/utils/utils";
 
 import withAdminNav from "../../lib/withAdminNav";
@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await db.user.findUnique({
     select: {
       email: true,
       name: true,
@@ -61,7 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
     where: {
       // We know that email can't be null if they're already logged in
-      email: session.user?.email!,
+      email: session.user?.email ?? "",
     },
   });
 

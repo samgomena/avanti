@@ -1,10 +1,10 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
-import prisma from "../../../lib/prismadb";
+import { db } from "@/server/db";
 
 export const authConfig: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   pages: {
     signIn: "/login",
   },
@@ -12,7 +12,7 @@ export const authConfig: NextAuthOptions = {
     EmailProvider({
       server: {
         host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
+        port: Number(process.env.EMAIL_SERVER_PORT),
         auth: {
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASSWORD,
@@ -23,11 +23,11 @@ export const authConfig: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, email }) {
-      // verificationRequest is true if user is trying to sign in (vs clicking a magig link in their email)
+      // verificationRequest is true if user is trying to sign in (vs clicking a magic link in their email)
       if (email?.verificationRequest) {
-        const userByEmail = await prisma.user.findUnique({
+        const userByEmail = await db.user.findUnique({
           where: {
-            email: user.email!,
+            email: user.email ?? "",
           },
         });
         // If they don't exist return false (returning an error to the client and rejecting auth)

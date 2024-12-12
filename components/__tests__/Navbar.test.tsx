@@ -1,14 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Navbar from "../Navbar";
+import { vi } from "vitest";
 
-const getPath = jest.fn(() => "/test");
-const getSession = jest.fn(() => ({ data: false }));
+const getPath = vi.fn(() => "/test");
+const getSession = vi.fn(() => ({ data: false }));
 
-jest.mock("next-auth/react", () => ({
+vi.mock("next-auth/react", () => ({
   useSession: () => getSession(),
 }));
 
-jest.mock("next/router", () => ({
+vi.mock("next/router", () => ({
   useRouter: () => ({
     asPath: getPath(),
   }),

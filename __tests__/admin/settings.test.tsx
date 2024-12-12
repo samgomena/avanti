@@ -1,8 +1,9 @@
 import Settings from "@/pages/admin/settings";
 import { render, screen } from "@testing-library/react";
 import { formatDate } from "../../lib/utils/utils";
+import { vi } from "vitest";
 
-jest.mock("next/router", () => ({
+vi.mock("next/router", () => ({
   useRouter: () => ({
     asPath: "/test",
   }),

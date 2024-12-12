@@ -1,16 +1,15 @@
+import { Form, Formik, type FormikHelpers } from "formik";
+import type { GetServerSideProps } from "next";
+import { getSession, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { Spinner } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import { z } from "zod";
 import Field from "../components/Form/FieldWithError";
 import Header from "../components/Header";
 import Section from "../components/Section";
-
-import Button from "react-bootstrap/Button";
-
-import { Form, Formik, FormikHelpers } from "formik";
-import { GetServerSideProps } from "next";
-import { getSession, signIn } from "next-auth/react";
-import { useState } from "react";
-import * as Yup from "yup";
-import { useRouter } from "next/router";
-import { Spinner } from "react-bootstrap";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 
 type LoginValues = {
   email: string;
@@ -20,10 +19,10 @@ const initialValues: LoginValues = {
   email: "",
 };
 
-const LoginSchema = Yup.object({
-  email: Yup.string()
-    .email("That's not a valid email!")
-    .required("Your email is required to log in!"),
+const validationSchema = z.object({
+  email: z
+    .string({ required_error: "Your email is required to log in!" })
+    .email({ message: "That's not a valid email address!" }),
 });
 
 const Login: React.FC = () => {
@@ -76,7 +75,7 @@ const Login: React.FC = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={onSubmit}
-              validationSchema={LoginSchema}
+              validationSchema={toFormikValidationSchema(validationSchema)}
             >
               {({ isSubmitting, isValid }) => (
                 <Form className="needs-validation" noValidate>

@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import NavLink from "../NavLink";
+import { vi } from "vitest";
 
-jest.mock("next/router", () => ({
+vi.mock("next/router", () => ({
   useRouter: () => ({
     asPath: "/test",
   }),

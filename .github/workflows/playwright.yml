@@ -1,0 +1,60 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  CI: true
+  DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
+  EMAIL_SERVER_USER: ""
+  EMAIL_SERVER_PASSWORD: ""
+  EMAIL_SERVER_HOST: localhost
+  EMAIL_SERVER_PORT: 4025
+  EMAIL_FROM: test@example.com
+
+jobs:
+  test:
+    services:
+      postgres:
+        image: postgres:13
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies & Set up database
+        run: |
+          npm install -g pnpm
+          pnpm install
+          pnpm prisma db push
+          pnpm prisma db seed
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: pnpm exec playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

@@ -1,14 +1,16 @@
 import BeforeUnload from "@/components/Form/BeforeUnload";
 import Field from "@/components/Form/FieldWithError";
-import { Alert as AlertType } from "@prisma/client";
-import { Form, Formik, FormikValues } from "formik";
+import { api } from "@/lib/api";
+import { db } from "@/server/db";
+import type { Alert as AlertType } from "@prisma/client";
+import { Form, Formik, type FormikValues } from "formik";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
-import { Alert, Button, Modal, ModalProps } from "react-bootstrap";
-import * as Yup from "yup";
-import prisma from "../../lib/prismadb";
+import { Alert, Button, Modal, type ModalProps } from "react-bootstrap";
+import { z } from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 import { daysBetween, formatDate } from "../../lib/utils/utils";
 import withAdminNav from "../../lib/withAdminNav";
 
@@ -57,8 +59,10 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
                 {alert.title && <Alert.Heading>{alert.title}</Alert.Heading>}
                 {alert.text}
                 <div>
-                  {formatDate(alert.start as unknown as string)} -{" "}
-                  {formatDate(alert.end as unknown as string)}
+                  <em>
+                    ({formatDate(alert.start as unknown as string)} -{" "}
+                    {formatDate(alert.end as unknown as string)})
+                  </em>
                 </div>
                 <div>
                   <span>
@@ -71,6 +75,11 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
               </Alert>
             ))}
             <h5 className="mt-4">Past Alerts</h5>
+            {pastAlerts.length === 0 && (
+              <div className="text-center">
+                <em>There are no past alerts</em>
+              </div>
+            )}
             {pastAlerts.map((alert) => (
               <Alert
                 key={alert.id}
@@ -80,8 +89,14 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
                 {alert.title && <Alert.Heading>{alert.title}</Alert.Heading>}
                 {alert.text}
                 <div>
-                  {formatDate(alert.start as unknown as string)} -{" "}
-                  {formatDate(alert.end as unknown as string)}
+                  <em>
+                    {/* 
+                      TODO: Dates from the DB are UTC but presented here as TZ aware.
+                      TODO: This causes the start/end dates to display the day before they technically are.
+                    */}
+                    ({formatDate(alert.start as unknown as string)} -{" "}
+                    {formatDate(alert.end as unknown as string)})
+                  </em>
                 </div>
               </Alert>
             ))}
@@ -95,11 +110,12 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
 
 export default withAdminNav(Alerts);
 
-const validationSchema = Yup.object({
-  start: Yup.date().required("A start date is required"),
-  end: Yup.date().required("An end date is required"),
-  title: Yup.string(),
-  text: Yup.string().required("This field is required"),
+export const validationSchema = z.object({
+  start: z.string({ required_error: "A start date is required" }).date(),
+  end: z.string({ required_error: "An end date is required" }).date(),
+  title: z.string().optional(),
+  text: z.string({ required_error: "This field is required" }),
+  id: z.string().optional(),
 });
 
 const initialNewAlert = {
@@ -154,30 +170,32 @@ const UpsertModal: React.FC<UpsertProps> = ({
 }) => {
   const router = useRouter();
 
-  const onSubmit = async (values: FormikValues) => {
-    const res = await fetch("/api/alerts", {
-      method: action === "create" ? "POST" : "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    }).then((res) => res.json());
-
-    if (res.ok) {
-      console.log(
-        `Successfully ${action === "create" ? "created" : "updated"} alert ${
-          res.data.name
-        } (${res.data.email})`
-      );
+  const createMutation = api.alerts.create.useMutation({
+    onSuccess: () => {
       // Close the modal
-      // Also, we know this is always defined because it's passed explicitly
-      onHide!();
+      onHide?.();
       // Refresh the dataz
       router.replace(router.asPath);
-      return;
-    }
+    },
+  });
 
-    // TODO: Do something useful if there's an error??
+  const updateMutation = api.alerts.update.useMutation({
+    onSuccess: () => {
+      // Close the modal
+      onHide?.();
+      // Refresh the dataz
+      router.replace(router.asPath);
+    },
+    onError: console.error,
+  });
+
+  // TODO: Type dis better than `FormikValues`
+  const onSubmit = async (values: FormikValues) => {
+    action === "create"
+      ? // @ts-expect-error
+        createMutation.mutate({ ...values })
+      : // @ts-expect-error
+        updateMutation.mutate({ ...values });
   };
 
   const today = new Date();
@@ -193,9 +211,9 @@ const UpsertModal: React.FC<UpsertProps> = ({
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
-        validationSchema={validationSchema}
+        validationSchema={toFormikValidationSchema(validationSchema)}
       >
-        {({ isValid, isSubmitting, values }) => (
+        {({ isValid, values }) => (
           <Form className="needs-validation" noValidate>
             <BeforeUnload />
             <Modal.Body>
@@ -235,7 +253,14 @@ const UpsertModal: React.FC<UpsertProps> = ({
               )}
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit" disabled={!isValid || isSubmitting}>
+              <Button
+                type="submit"
+                disabled={
+                  !isValid ||
+                  createMutation.isPending ||
+                  updateMutation.isPending
+                }
+              >
                 {action === "create" ? "Add" : "Update"}
               </Button>
               <Button onClick={onHide} variant="secondary">
@@ -283,31 +308,20 @@ const DeleteAlert = ({ alertId }: { alertId: string }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
-  const deleteAlert = async () => {
-    console.log("Deleting", alertId);
-    const res = await fetch("/api/alerts", {
-      method: "DELETE",
-      body: JSON.stringify({ id: alertId }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
-
-    console.log(res);
-
-    if (res.ok) {
-      console.info(`Successfully deleted alert`);
+  const deleteMutation = api.alerts.delete.useMutation({
+    onSuccess: () => {
+      console.info("Successfully deleted alert");
       // Refresh the dataz
       router.replace(router.asPath);
-    }
-  };
+    },
+  });
 
   return (
     <>
       <ConfirmDeleteModal
         show={show}
         onHide={() => setShow(false)}
-        onConfirm={() => deleteAlert()}
+        onConfirm={() => deleteMutation.mutate({ id: alertId })}
       />
       <Alert.Link onClick={() => setShow(true)}>Delete</Alert.Link>
     </>
@@ -325,7 +339,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const _alerts = await prisma.alert.findMany({
+  const _alerts = await db.alert.findMany({
     orderBy: {
       start: "desc",
     },

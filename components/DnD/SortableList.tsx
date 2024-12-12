@@ -23,6 +23,8 @@ interface BaseItem {
 
 interface SortableListProps<T extends BaseItem> {
   items: T[];
+  onDragStart?(): void;
+  onDragEnd?(): void;
   onChange(activeIndex: number, overIndex: number): void;
   renderItem(item: T): ReactNode;
 }
@@ -30,13 +32,14 @@ interface SortableListProps<T extends BaseItem> {
 export function SortableList<T extends BaseItem>({
   items,
   onChange,
+  onDragStart,
+  onDragEnd,
   renderItem,
 }: SortableListProps<T>) {
   const [active, setActive] = useState<Active | null>(null);
-  const activeItem = useMemo(
-    () => items.find((item) => item.id === active?.id),
-    [active, items]
-  );
+  // TODO: Should this be memoized? It breaks adding stuff to the list
+  const activeItem = items.find((item) => item.id === active?.id);
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -48,8 +51,12 @@ export function SortableList<T extends BaseItem>({
     <DndContext
       sensors={sensors}
       modifiers={[restrictToVerticalAxis]}
-      onDragStart={({ active }) => setActive(active)}
+      onDragStart={({ active }) => {
+        onDragStart?.();
+        setActive(active);
+      }}
       onDragEnd={({ active, over }) => {
+        onDragEnd?.();
         if (over && active.id !== over?.id) {
           const activeIndex = items.findIndex(({ id }) => id === active.id);
           const overIndex = items.findIndex(({ id }) => id === over.id);

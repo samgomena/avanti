@@ -3,8 +3,13 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 import Tooltip from "react-bootstrap/Tooltip";
-
-import { ErrorMessage, FieldArray, Form, Formik, FormikHelpers } from "formik";
+import {
+  ErrorMessage,
+  FieldArray,
+  Form,
+  Formik,
+  type FormikHelpers,
+} from "formik";
 import {
   createContext,
   useContext,
@@ -14,8 +19,9 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import * as Yup from "yup";
-
+import { z } from "zod";
+import { api } from "@/lib/api";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 import { SortableList } from "@/components/DnD/SortableList";
 import BeforeUnload from "@/components/Form/BeforeUnload";
 import FieldWithError from "@/components/Form/FieldWithError";
@@ -25,59 +31,92 @@ import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import FilterToggle from "@/components/Menu/FilterToggle";
 import HelpModal from "@/components/Menu/HelpModal";
 import { formatItemPrice } from "@/lib/utils/utils";
-import { Courses, Menu, Price } from "@prisma/client";
+import { Courses, type Menu, type Price } from "@prisma/client";
 import classNames from "classnames";
-import { DetailedDiff, detailedDiff } from "deep-object-diff";
+import { type DetailedDiff, detailedDiff } from "deep-object-diff";
 import { getSession } from "next-auth/react";
 import type { GetServerSideProps } from "next/types";
 import { ChevronDown, ChevronUp, X } from "react-feather";
-import prisma from "../../../lib/prismadb";
+import { db } from "@/server/db";
 import withAdminNav from "../../../lib/withAdminNav";
 
-const validationSchema = Yup.object({
-  items: Yup.array(
-    Yup.object({
-      name: Yup.string().required("A name for this item is required!"),
-      description: Yup.string(),
-      course: Yup.string()
-        .oneOf(["appetizer", "entree", "drink", "dessert"])
-        .required(
-          "Must be one of 'appetizer', 'entree', 'drink', or 'dessert'"
-        ),
-      price: Yup.object()
-        .when("course", {
-          is: (course: Courses) => ["appetizer", "entree"].includes(course),
-          then: (schema) =>
-            schema.shape({
-              dinner: Yup.number()
-                .positive("The price has to be greater than $0!")
-                .nullable(),
-              lunch: Yup.number()
-                .positive("The price has to be greater than $0!")
-                .nullable(),
-            }),
-        })
-        .when("course", {
-          is: (course: Courses) => course === "drink",
-          then: (schema) =>
-            schema.shape({
-              drinks: Yup.number()
-                .positive("The price has to be greater than $0!")
-                .nullable(),
-            }),
-        })
-        .when("course", {
-          is: (course: Courses) => course === "dessert",
-          then: (schema) =>
-            schema.shape({
-              dessert: Yup.number()
-                .positive("The price has to be greater than $0!")
-                .nullable(),
-            }),
+const initialValue = {
+  name: "",
+  description: "",
+  course: "appetizer" as Courses,
+  price: {
+    // This is stupid but the easiest solution. Because we use a number input below (and our validation schema is typed as a number)
+    // we have to cast the value to number. We store the initial values as empty strings here because we don't want to show an initial 0
+    // in the input box. Which is because we don't want end users submitting prices of 0 for stuff.
+    lunch: "" as unknown as number,
+    dinner: "" as unknown as number,
+    hh: "" as unknown as number,
+    dessert: "" as unknown as number,
+    drinks: "" as unknown as number,
+  },
+  disabled: false,
+};
+
+export const validationSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        name: z.string({ required_error: "A name for this item is required!" }),
+        description: z.string().optional(),
+        course: z.nativeEnum(Courses),
+        price: z.object({
+          lunch: z.string().optional(),
+          dinner: z.string().optional(),
+          hh: z.string().optional(),
+          dessert: z.string().optional(),
+          drinks: z.string().optional(),
+          id: z.string(),
         }),
-      disabled: Yup.boolean(),
-    })
-  ),
+        disabled: z.boolean(),
+        id: z.string(),
+      })
+    )
+    // Use `superRefine` here to handle special cases for prices on different courses
+    // specifically, we care about enforcing a price on either lunch or dinner for appetizers and entrees
+    .superRefine((data, ctx) => {
+      data.forEach((item, idx) => {
+        switch (item.course) {
+          case "appetizer":
+          case "entree":
+            if (!item.price.lunch && !item.price.dinner) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A price is required for either lunch or dinner",
+                path: [idx, "price", "lunch"],
+              });
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A price is required for either lunch or dinner",
+                path: [idx, "price", "dinner"],
+              });
+            }
+            break;
+          case "dessert":
+            if (!item.price.dessert) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A price is required for this course",
+                path: [idx, "price", "dessert"],
+              });
+            }
+            break;
+          case "drink":
+            if (!item.price.drinks) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A price is required for this course",
+                path: [idx, "price", "drinks"],
+              });
+            }
+            break;
+        }
+      });
+    }),
 });
 
 export type MenuWithPrice = Menu & {
@@ -87,19 +126,6 @@ export type MenuWithPrice = Menu & {
 
 type EditMenuProps = {
   menu: MenuWithPrice[];
-};
-
-const initialValue = {
-  name: "",
-  description: "",
-  course: "appetizer" as Courses,
-  price: {
-    lunch: "",
-    dinner: "",
-    drinks: "",
-    dessert: "",
-  },
-  disabled: false,
 };
 
 const DiffStatus = createContext<{
@@ -121,7 +147,10 @@ const Diff = ({ lhs, rhs }: { lhs: object; rhs: object }) => {
     () => detailedDiff(lhs, rhs),
     [lhs, rhs]
   );
+  /* eslint-disable react-hooks/exhaustive-deps */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: setDiff comes from useState and thus already memoized??
   useEffect(() => setDiff(_diff), [_diff]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return null;
 };
@@ -153,6 +182,24 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
 
   const [diff, setDiff] = useState<DetailedDiff | undefined>(undefined);
 
+  const deleteMutation = api.menu.delete.useMutation({
+    onSuccess: console.log,
+    onError: console.error,
+  });
+
+  const updateMutation = api.menu.edit.useMutation({
+    onError: (error) => {
+      console.error(
+        `There was an error (from the server) updating items: ${error}`
+      );
+      setToastData({
+        type: "error",
+        message: "There was an error while updating... Maybe try again? 🙃",
+        show: true,
+      });
+    },
+  });
+
   const onSubmit = async (
     values: {
       items: MenuWithPrice[];
@@ -160,104 +207,48 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
     { resetForm }: FormikHelpers<{ items: MenuWithPrice[] }>
   ) => {
     // TODO: Maybe expose this as an option in the UI?
-    // TODO: Could potentially show a menu preview?
+    // TODO: Could potentially show a preview/diff of the changes?
     if (dryRun) {
       return;
     }
-    const hasDeletedItems = Object.keys(diff?.deleted ?? {}).length > 0;
-    let deleteReqsSuccessful = false;
-    let updateReqsSuccessful = false;
-    // If items have been removed from the menu we need to handle those first otherwise the idx of
-    // any updated items will be off.
-    if (hasDeletedItems) {
-      try {
-        const res = await fetch("/api/menu/delete", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(removed),
-        }).then((res) => res.json());
-        if (res.ok) {
-          console.info("Successfully removed item(s)");
-          deleteReqsSuccessful = true;
-        } else {
-          console.error(
-            `There was an error (from the server) removing items ${JSON.stringify(
-              res.error,
-              null,
-              2
-            )}`
-          );
-        }
-      } catch (error) {
-        console.error(`There was a general error removing items ${error}`);
-      }
-    }
+
+    const removedItems = removed.map(({ id, idx }) => ({
+      id,
+      idx,
+      operation: "delete" as const,
+    }));
+
     // @ts-expect-error: We can't type the diff object any more concretely than `unknown` currently
     const valuesWithNewIdx = Object.entries(diff?.updated.items ?? {}).map(
       ([key, value]) => {
         // key is the index (from the db) of the item that we want to update
-        // @ts-expect-error: We can't type the diff object any more concretely than `unknown` currently
-        const obj = { ...value, idx: Number(key) };
-        // Some updates don't add `id` to the diff but we need the id to be able to update the object
-        // so if it doesn't exist we have to add it manually
-        // @ts-expect-error: We can't type the diff object any more concretely than `unknown` currently
-        if (!value.id) {
-          obj.id = values.items[Number(key)].id;
-        }
+        const obj = {
+          id: values.items[Number(key)].id,
+          operation: "update" as const,
+          // @ts-expect-error: We can't type the value object b/c the diff object doesn't let up
+          data: { ...value, idx: Number(key) } as MenuItemWithPrice,
+        };
         return obj;
       }
     );
-    let res;
-    try {
-      res = await fetch("/api/menu/edit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ items: valuesWithNewIdx }),
-      }).then((res) => res.json());
-      if (res.ok) {
-        console.info("Successfully updated menu");
-        updateReqsSuccessful = true;
-      } else {
-        console.error(
-          `There was an error (from the server) while updating the menu: ${JSON.stringify(
-            res.error,
-            null,
-            2
-          )}`
-        );
-      }
-    } catch (error) {
-      console.error(`There was a general error updating the menu: ${error}`);
-    }
 
-    if (hasDeletedItems && deleteReqsSuccessful && updateReqsSuccessful) {
-      // Reset form. This also resets the diff!
-      resetForm({ values: { items: res.data } });
-      setToastData({
-        type: "success",
-        message: "Success! You're changes should be visible in a few seconds",
-        show: true,
-      });
-    } else if (updateReqsSuccessful) {
-      resetForm({ values: { items: res.data } });
-      setToastData({
-        type: "success",
-        message: "Success! You're changes should be visible in a few seconds",
-        show: true,
-      });
-    } else {
-      setToastData({
-        type: "error",
-        message: "There was an error while updating... Maybe try again? 🙃",
-        show: true,
-      });
-    }
+    updateMutation.mutate([...removedItems, ...valuesWithNewIdx], {
+      onSuccess: (res) => {
+        resetForm({
+          values: { items: res.data.menu as MenuWithPrice[] },
+        });
+        setToastData({
+          type: "success",
+          message: "Success! You're changes should be visible in a few seconds",
+          show: true,
+        });
+      },
+    });
   };
 
+  // This is a helper function that augements the remove function from Formik's FieldArray.
+  // Formik removes items from it's internal state when they're removed (obvi) so we have to
+  // additionally store the removed item ids separately so we can send them to the API when be deleted.
   const onRemove =
     (formikRemove: <T>(index: number) => T | undefined) =>
     ({ id, idx }: { id: string; idx: number }) => {
@@ -277,7 +268,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
         <DiffStatus.Provider value={{ diff, setDiff }}>
           <Formik
             initialValues={{ items: menu }}
-            validationSchema={validationSchema}
+            validationSchema={toFormikValidationSchema(validationSchema)}
             onSubmit={onSubmit}
             onReset={() => setRemoved([])}
           >
@@ -348,13 +339,23 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                 </div>
 
                 {/* Helper components */}
-                <BeforeUnload />
+                {/* <BeforeUnload /> */}
                 <Diff lhs={initialValues} rhs={values} />
 
                 <FieldArray name="items">
                   {({ remove, move, insert }) => (
                     <SortableList
                       items={values.items}
+                      // TODO: Maybe disable disabled when dragging
+                      // onDragStart={() =>
+                      //   setToggle({
+                      //     disabled: false,
+                      //     initialDisabled: toggle.disabled,
+                      //   })
+                      // }
+                      // onDragEnd={() =>
+                      //   setToggle({ disabled: toggle.initialDisabled })
+                      // }
                       // TODO: Need to update indexes; probably the easiest solution would be to just iterate through all the items and set their idx using the loops idx.
                       onChange={(activeIndex, overIndex) => {
                         move(activeIndex, overIndex);
@@ -394,13 +395,18 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                             />
                             {/* TODO: Allow adding items in the middle of the thing */}
                             {/* <div>
-                              <div className="d-flex group-hover opacity-0 opacity-100-hover">
-                                <hr style={{ flex: 1, width: "40%" }} />
-                                <div className="d-flex justify-center items-center">
+                              <div className="d-flex">
+                                <hr style={{ flex: 1, width: "50%" }} />
+                                <div className="d-flex justify-center items-center group-hover opacity-0 opacity-100-hover">
                                   <button
-                                    onClick={() =>
-                                      insert(item.mvIdx, initialValue)
-                                    }
+                                    onClick={() => {
+                                      insert(item.mvIdx + 1, {
+                                        ...initialValue,
+                                        course: item.course,
+                                        idx: item.mvIdx + 1,
+                                      });
+                                    }}
+                                    type="button"
                                     className="btn btn-outline-secondary btn-sm"
                                     style={
                                       {
@@ -415,12 +421,11 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                                 <hr
                                   style={{
                                     flex: 1,
-                                    width: "40%",
+                                    width: "50%",
                                     alignItems: "end",
                                   }}
                                 />
                               </div>
-                              {/* <hr style={{ flex: 1 }} />
                             </div> */}
                             <hr style={{ flex: 1 }} />
                           </div>
@@ -431,7 +436,9 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                 </FieldArray>
                 <SubmitResetButtons
                   isValid={isValid}
-                  isSubmitting={isSubmitting}
+                  isSubmitting={
+                    deleteMutation.isPending || updateMutation.isPending
+                  }
                   dirty={dirty}
                 />
               </Form>
@@ -479,7 +486,6 @@ function EditMenuItem({
 // removed,
 EditMenuItemProps) {
   const [open, setOpen] = useState(false);
-  // const { status } = useFormikContext();
   const { diff: status } = useContext(DiffStatus);
   return (
     <div
@@ -498,6 +504,8 @@ EditMenuItemProps) {
         className="fs-5 w-100 d-flex"
         role="button"
         onClick={() => setOpen(!open)}
+        // Lets spacebar toggle open/close states
+        onKeyDown={(e) => e.key === " " && setOpen(!open)}
       >
         <span
           className="opacity-0 opacity-100-hover group-hover"
@@ -525,7 +533,7 @@ EditMenuItemProps) {
             // Make text color opaque when disabled
             // Adding opacity to the entire element causes it to "shine through" to anything above it
             // which is problematic for the search bar 🫠
-            color: item.disabled ? "rgba(0, 0, 0, 0.3)" : "",
+            color: item.disabled === true ? "rgba(0, 0, 0, 0.3)" : "",
           }}
         >
           {item.name} - ${formatItemPrice(item)}
@@ -609,13 +617,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   // Roughly translates to:
   // SELECT `main`.`Menu`.`id`, `main`.`Menu`.`idx`, `main`.`Menu`.`name`, `main`.`Menu`.`description`, `main`.`Menu`.`service`, `main`.`Menu`.`course`, `main`.`Menu`.`disabled`, `main`.`Menu`.`priceId` FROM `main`.`Menu` WHERE 1=1 ORDER BY `main`.`Menu`.`course` ASC, `main`.`Menu`.`idx` ASC
-  const menu = await prisma.menu.findMany({
-    orderBy: [
-      {
-        course: "asc",
-      },
-      { idx: "asc" },
-    ],
+  const menu = await db.menu.findMany({
+    orderBy: [{ course: "asc" }, { idx: "asc" }],
     select: {
       id: true,
       idx: true,

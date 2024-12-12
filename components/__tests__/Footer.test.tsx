@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { Info } from "../../lib/types/info";
+import type { Info } from "../../lib/types/info";
 import Footer from "../Footer";
+import { vi } from "vitest";
 
 const fakeInfo: Info = {
   about: "Test about us text",
@@ -47,9 +48,10 @@ const fakeInfo: Info = {
     },
   ],
 };
-jest.mock("../../lib/hooks/useInfo", () => ({
+
+vi.mock("../../lib/hooks/useInfo", () => ({
   __esModule: true,
-  default: jest.fn(() => fakeInfo),
+  default: vi.fn(() => fakeInfo),
 }));
 
 describe("Footer", () => {

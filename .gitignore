@@ -32,3 +32,10 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Playwright testing stuff
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/tests/.auth

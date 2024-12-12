@@ -14,14 +14,14 @@
 
 - It's really annoying to scroll through all the stuff, especially if you're just updating one item
   - Status
-    - [ ] Prototyped
-    - [ ] Implemented
-    - [ ] Tested (Beta or otherwise)
-    - [ ] Released
+    - [x] Prototyped
+    - [x] Implemented
+    - [x] Tested (Beta or otherwise)
+    - [x] Released
 
 ## Feature Flags
 
-- ... ehh we should really just at the very least have some sort of rudimentary ff system in place. Rolling stuff out has been painful and so far most of this shit has only been tested locally manually or in prod
+- ... ehh we should really just at the very least have some sort of rudimentary ff system in place. Rolling stuff out has been painful and so far most of this shit has only been tested locally and manually or in prod
   - Status
     - [ ] Prototyped
     - [ ] Implemented

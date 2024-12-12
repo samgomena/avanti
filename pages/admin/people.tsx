@@ -1,18 +1,20 @@
 import BeforeUnload from "@/components/Form/BeforeUnload";
 import Field from "@/components/Form/FieldWithError";
-import { User } from "@prisma/client";
-import { Form, Formik, FormikValues } from "formik";
+import { api } from "@/lib/api";
+import { db } from "@/server/db";
+import type { User } from "@prisma/client";
+import { Form, Formik, type FormikValues } from "formik";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
-import { Badge, Modal, ModalProps, Table } from "react-bootstrap";
+import { Badge, Modal, type ModalProps, Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { Check, Edit, UserX, X } from "react-feather";
-import * as Yup from "yup";
-import prisma from "../../lib/prismadb";
+import { z } from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 import withAdminNav from "../../lib/withAdminNav";
 
 type PeopleProps = {
@@ -107,11 +109,12 @@ const initialNewUser = {
   name: "",
 };
 
-const validationSchema = Yup.object({
-  name: Yup.string().required("A name is required!"),
-  email: Yup.string()
-    .email("That's not a valid email address!")
-    .required("An email address is required!"),
+export const validationSchema = z.object({
+  name: z.string({ required_error: "A name is required!" }),
+  email: z
+    .string({ required_error: "An email address is required!" })
+    .email({ message: "That's not a valid email address!" }),
+  id: z.string().optional(),
 });
 
 const AddModal = ({ show, onHide }: ModalProps) => (
@@ -158,30 +161,43 @@ const UpsertModal: React.FC<UpsertProps> = ({
 }) => {
   const router = useRouter();
 
-  const onSubmit = async (values: FormikValues) => {
-    const res = await fetch("/api/people", {
-      method: action === "create" ? "POST" : "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    }).then((res) => res.json());
-
-    if (res.ok) {
+  const createMutation = api.people.create.useMutation({
+    onSuccess: ({ data }) => {
       console.log(
         `Successfully ${action === "create" ? "created" : "updated"} user ${
-          res.data.name
-        } (${res.data.email})`
+          data.name
+        } (${data.email})`
       );
       // Close the modal
-      // Also, we know this is always defined because it's passed explicitly
-      onHide!();
+      onHide?.();
       // Refresh the dataz
       router.replace(router.asPath);
-      return;
-    }
+    },
+    onError: console.error,
+  });
 
+  const updateMutation = api.people.update.useMutation({
+    onSuccess: ({ data }) => {
+      console.log(
+        `Successfully ${action === "create" ? "created" : "updated"} user ${
+          data.name
+        } (${data.email})`
+      );
+      // Close the modal
+      onHide?.();
+      // Refresh the dataz
+      router.replace(router.asPath);
+    },
     // TODO: Do something useful if there's an error??
+    onError: console.error,
+  });
+
+  const onSubmit = async (values: FormikValues) => {
+    action === "create"
+      ? // @ts-expect-error
+        createMutation.mutate({ ...values })
+      : // @ts-expect-error
+        updateMutation.mutate({ ...values });
   };
 
   return (
@@ -194,7 +210,7 @@ const UpsertModal: React.FC<UpsertProps> = ({
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
-        validationSchema={validationSchema}
+        validationSchema={toFormikValidationSchema(validationSchema)}
       >
         {({ isValid, isSubmitting }) => (
           <Form className="needs-validation" noValidate>
@@ -204,7 +220,14 @@ const UpsertModal: React.FC<UpsertProps> = ({
               <Field name="email" placeholder="Email" />
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit" disabled={!isValid || isSubmitting}>
+              <Button
+                type="submit"
+                disabled={
+                  !isValid ||
+                  createMutation.isPending ||
+                  updateMutation.isPending
+                }
+              >
                 {action === "create" ? "Add" : "Update"}
               </Button>
               <Button onClick={onHide} variant="secondary">
@@ -254,31 +277,21 @@ const DeleteUser = ({ userId, name }: { userId: string; name: string }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
 
-  const deleteUser = async () => {
-    const res = await fetch("/api/people", {
-      method: "DELETE",
-      body: JSON.stringify({ id: userId }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
-
-    if (res.ok) {
-      console.info(`Successfully deleted ${res.data.name} (${res.data.email})`);
+  const deleteMutation = api.people.delete.useMutation({
+    onSuccess: ({ data }) => {
+      console.info(`Successfully deleted ${data?.name} (${data?.email})`);
       // Refresh the dataz
       router.replace(router.asPath);
-    }
-  };
+    },
+    onError: console.error,
+  });
 
-  const onDelete = () => {
-    setShow(true);
-  };
   return (
     <>
       <ConfirmDeleteModal
         show={show}
         onHide={() => setShow(false)}
-        onConfirm={deleteUser}
+        onConfirm={() => deleteMutation.mutate({ id: userId })}
         name={name}
       />
       <OverlayTrigger overlay={<Tooltip>Delete {name}</Tooltip>}>
@@ -286,7 +299,7 @@ const DeleteUser = ({ userId, name }: { userId: string; name: string }) => {
           role="button"
           className="me-2 mb-2 mx-2"
           size={18}
-          onClick={onDelete}
+          onClick={() => setShow(true)}
         />
       </OverlayTrigger>
     </>
@@ -306,7 +319,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const _users = await prisma.user.findMany({
+  const _users = await db.user.findMany({
     select: {
       id: true,
       email: true,

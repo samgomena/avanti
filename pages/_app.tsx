@@ -1,14 +1,12 @@
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import type { AppProps } from "next/app";
+import type { AppType } from "next/app";
 import { Suspense } from "react";
-import Layout from "../components/Layout";
-import "../styles/scss/theme.scss";
+import Layout from "@/components/Layout";
+import { api } from "@/lib/api";
+import "@/styles/scss/theme.scss";
 
-export default function App({
-  Component,
-  pageProps,
-}: AppProps<{ session: Session }>) {
+const App: AppType<{ session: Session }> = ({ Component, pageProps }) => {
   return (
     <Suspense>
       <SessionProvider session={pageProps.session}>
@@ -18,4 +16,6 @@ export default function App({
       </SessionProvider>
     </Suspense>
   );
-}
+};
+
+export default api.withTRPC(App);

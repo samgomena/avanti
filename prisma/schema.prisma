@@ -91,6 +91,8 @@ enum Days {
 model Hours {
   id     String  @id @default(cuid())
   day    Days
+  // 24 hr format
+  // E.g. 16:00, 22:00, 00:00
   open   String  @default("")
   close  String  @default("")
   Info   Info?   @relation(fields: [infoId], references: [id])
@@ -128,6 +130,7 @@ model Menu {
   service     Services? @default(dinner)
   course      Courses
   disabled    Boolean   @default(false)
+  // TODO: Why is this optional?
   price       Price?
 }
 

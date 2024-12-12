@@ -6,7 +6,6 @@ const useBeforeUnload = (
 ) => {
   const handler = useCallback(
     (event: BeforeUnloadEvent) => {
-      console.log(enabled);
       const isEnabled = typeof enabled === "function" ? enabled() : enabled;
 
       if (!isEnabled) {
