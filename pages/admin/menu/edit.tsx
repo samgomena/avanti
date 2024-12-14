@@ -339,14 +339,14 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                 </div>
 
                 {/* Helper components */}
-                {/* <BeforeUnload /> */}
+                <BeforeUnload />
                 <Diff lhs={initialValues} rhs={values} />
 
                 <FieldArray name="items">
                   {({ remove, move, insert }) => (
                     <SortableList
                       items={values.items}
-                      // TODO: Maybe disable disabled when dragging
+                      // TODO: Maybe disable disabled when dragging?
                       // onDragStart={() =>
                       //   setToggle({
                       //     disabled: false,
@@ -356,7 +356,6 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                       // onDragEnd={() =>
                       //   setToggle({ disabled: toggle.initialDisabled })
                       // }
-                      // TODO: Need to update indexes; probably the easiest solution would be to just iterate through all the items and set their idx using the loops idx.
                       onChange={(activeIndex, overIndex) => {
                         move(activeIndex, overIndex);
                       }}
@@ -367,7 +366,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                               "group",
                               // Filtering logic
                               {
-                                // Don't filter items if there are *no* fitlers applied -- otherwise filter that bish
+                                // Don't filter items if there are *no* fitlers applied -- otherwise filter that ish
                                 "d-none":
                                   Object.values(filter).some(Boolean) &&
                                   !filter[item.course],
