@@ -1,15 +1,24 @@
-import { ErrorMessage, Field as BaseField, FieldAttributes } from "formik";
+import { ErrorMessage, Field as BaseField, type FieldAttributes } from "formik";
 import FormError from "./FormError";
 
-function Field<T = any>({
+interface Option {
+  name: string;
+  value: string;
+}
+
+interface FieldProps<T> extends FieldAttributes<T> {
+  showLabels?: boolean;
+  placeholder?: string;
+  options?: Option[];
+}
+
+function Field<T = object>({
   name,
   placeholder,
   showLabels = true,
-  options = undefined,
+  options,
   ...rest
-}: FieldAttributes<T> & { showLabels?: boolean; placeholder?: string } & {
-  options?: { name: string; value: string }[];
-}) {
+}: FieldProps<T> & FieldAttributes<T>) {
   return (
     <div
       className={`form-group mb-3 ${
@@ -33,7 +42,7 @@ function Field<T = any>({
           placeholder={placeholder}
           {...rest}
         >
-          {options?.map((option) => (
+          {options?.map((option: Option) => (
             <option key={option.value} value={option.value}>
               {option.name}
             </option>

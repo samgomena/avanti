@@ -18,6 +18,7 @@
 # misc
 .DS_Store
 *.code-workspace
+tsconfig.tsbuildinfo
 scripts/*
 !scripts/db-keepalive.js
 

@@ -4,8 +4,9 @@ import Button from "react-bootstrap/Button";
 import { AdminHeader as Header } from "../components/Header";
 import NavLink from "../components/NavLink";
 import Section from "../components/Section";
+import type { JSX } from "react";
 
-function withAdminNav<T extends JSX.IntrinsicAttributes & Object>(
+function withAdminNav<T extends JSX.IntrinsicAttributes & object>(
   Component: React.FC<T>
 ) {
   return function WithAdminNav(props: T) {
