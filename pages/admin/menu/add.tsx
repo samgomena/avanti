@@ -12,8 +12,6 @@ import {
 import { getSession } from "next-auth/react";
 import type { GetServerSideProps } from "next/types";
 import type React from "react";
-import { useState } from "react";
-import { Toast, ToastContainer } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -23,6 +21,7 @@ import FormError from "../../../components/Form/FormError";
 import type { Item } from "../../../lib/types/menu";
 import { inflect } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
+import { toast } from "sonner";
 
 const initialValue: Item = {
   name: "",
@@ -105,28 +104,19 @@ const initialValues: { items: Item[] } = {
 };
 
 const AddMenuItem: React.FC = () => {
-  const [toastData, setToastData] = useState({
-    type: "",
-    message: "",
-    show: false,
-  });
-
   const mutation = api.menu.add.useMutation({
     onSuccess: () => {
       console.info("Successfully added menu item");
-
-      setToastData({
-        type: "success",
-        message: "Success! You're changes should be visible in a few seconds",
-        show: true,
+      toast.success("Sucess", {
+        description: "You're changes should be visible in a few seconds",
       });
     },
     onError: (error) => {
-      console.error(`There was an error submitting info: ${error}`);
-      setToastData({
-        type: "error",
-        message: "There was an error creating that. Maybe try again 🙃",
-        show: true,
+      console.error(
+        `There was an error (from the server) submitting info: ${error}`
+      );
+      toast.error("Uh oh.", {
+        description: "There was an error creating that. Maybe try again 🙃",
       });
     },
   });
@@ -258,22 +248,6 @@ const AddMenuItem: React.FC = () => {
           </Form>
         )}
       </Formik>
-
-      <ToastContainer className="d-inline-block m-4" position="top-end">
-        <Toast
-          // Turn off silly styling from template
-          style={{ border: "none" }}
-          bg={toastData.type === "error" ? "danger-subtle" : "success-subtle"}
-          onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
-          show={toastData.show}
-          delay={8_000} // 8 seconds
-          autohide
-        >
-          <Toast.Body>
-            <strong className="me-auto">{toastData.message}</strong>
-          </Toast.Body>
-        </Toast>
-      </ToastContainer>
     </div>
   );
 };

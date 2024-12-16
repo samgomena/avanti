@@ -1,7 +1,5 @@
 import Collapse from "react-bootstrap/Collapse";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
 import Tooltip from "react-bootstrap/Tooltip";
 import {
   ErrorMessage,
@@ -39,6 +37,7 @@ import type { GetServerSideProps } from "next/types";
 import { ChevronDown, ChevronUp, X } from "react-feather";
 import { db } from "@/server/db";
 import withAdminNav from "../../../lib/withAdminNav";
+import { toast } from "sonner";
 
 const initialValue = {
   name: "",
@@ -156,12 +155,6 @@ const Diff = ({ lhs, rhs }: { lhs: object; rhs: object }) => {
 };
 
 const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
-  const [toastData, setToastData] = useState({
-    type: "",
-    message: "",
-    show: false,
-  });
-
   const dryRun = false;
 
   const [filter, setFilter] = useState({
@@ -183,7 +176,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
   const [diff, setDiff] = useState<DetailedDiff | undefined>(undefined);
 
   const deleteMutation = api.menu.delete.useMutation({
-    onSuccess: console.log,
+    onSuccess: console.info,
     onError: console.error,
   });
 
@@ -192,10 +185,8 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
       console.error(
         `There was an error (from the server) updating items: ${error}`
       );
-      setToastData({
-        type: "error",
-        message: "There was an error while updating... Maybe try again? 🙃",
-        show: true,
+      toast.error("Uh oh!", {
+        description: "There was an error while updating... Maybe try again? 🙃",
       });
     },
   });
@@ -237,10 +228,8 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
         resetForm({
           values: { items: res.data.menu as MenuWithPrice[] },
         });
-        setToastData({
-          type: "success",
-          message: "Success! You're changes should be visible in a few seconds",
-          show: true,
+        toast.success("Sucess", {
+          description: "You're changes should be visible in a few seconds",
         });
       },
     });
@@ -444,21 +433,6 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
             )}
           </Formik>
         </DiffStatus.Provider>
-
-        <ToastContainer className="d-inline-block m-4" position="top-end">
-          <Toast
-            style={{ border: "none" }}
-            bg={toastData.type === "error" ? "danger-subtle" : "success-subtle"}
-            onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
-            show={toastData.show}
-            delay={8_000} // 8 seconds
-            autohide
-          >
-            <Toast.Body>
-              <strong className="me-auto">{toastData.message}</strong>
-            </Toast.Body>
-          </Toast>
-        </ToastContainer>
       </div>
       <HelpModal />
     </div>

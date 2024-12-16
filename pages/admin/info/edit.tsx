@@ -4,8 +4,6 @@ import { Form, Formik } from "formik";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
-import { useState } from "react";
-import { Toast, ToastContainer } from "react-bootstrap";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
 import HoursField from "../../../components/Form/HoursField";
@@ -16,6 +14,7 @@ import withAdminNav from "../../../lib/withAdminNav";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
 import { api } from "@/lib/api";
+import { toast } from "sonner";
 
 export const validationSchema = z.object({
   about: z.string({ required_error: "This is required!" }),
@@ -83,30 +82,21 @@ export type EditInfoProps = {
 
 const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
   const router = useRouter();
-  const [toastData, setToastData] = useState({
-    type: "",
-    message: "",
-    show: false,
-  });
 
   const mutation = api.info.update.useMutation({
     onSuccess: () => {
       console.info("Successfully updated info");
       // Refresh the dataz
       router.replace(router.asPath);
-      setToastData({
-        type: "success",
-        message:
+      toast.success("Sucess", {
+        description:
           "Site information updated successfully! You're changes should be visible in a few seconds",
-        show: true,
       });
     },
     onError: (error) => {
       console.error(`There was an error submitting info: ${error}`);
-      setToastData({
-        type: "error",
-        message: "There was an error updating info. Maybe try again 🙃",
-        show: true,
+      toast.error("Uh oh.", {
+        description: "There was an error updating info. Maybe try again 🙃",
       });
     },
   });
@@ -191,21 +181,6 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
             </Form>
           )}
         </Formik>
-
-        <ToastContainer className="d-inline-block m-4" position="top-end">
-          <Toast
-            style={{ border: "none" }}
-            bg={toastData.type === "error" ? "danger-subtle" : "success-subtle"}
-            onClose={() => setToastData((prev) => ({ ...prev, show: false }))}
-            show={toastData.show}
-            delay={8_000} // 8 seconds
-            autohide
-          >
-            <Toast.Body>
-              <strong className="me-auto">{toastData.message}</strong>
-            </Toast.Body>
-          </Toast>
-        </ToastContainer>
       </div>
     </div>
   );
