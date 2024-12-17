@@ -2,6 +2,7 @@ import Head from "next/head";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { ParallaxProvider } from "react-scroll-parallax";
+import { Toaster } from "sonner";
 
 export const siteTitle = "Avanti - Restaurant & Bar";
 
@@ -64,6 +65,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <Navbar />
         {children}
       </div>
+      {/* Offset layout so it shows up below nav bar */}
+      <Toaster position="top-center" richColors offset="100px" />
       <Footer />
     </ParallaxProvider>
   );
