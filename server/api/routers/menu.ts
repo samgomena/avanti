@@ -1,5 +1,4 @@
 import { validationSchema as addValidationSchema } from "@/pages/admin/menu/add";
-// import { validationSchema as editValidationSchema } from "@/pages/admin/menu/edit";
 import { TRPCError } from "@trpc/server";
 import { protectedProcedure, createTRPCRouter } from "../trpc";
 import { type Courses, Services } from "@prisma/client";

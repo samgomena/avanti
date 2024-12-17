@@ -7,7 +7,7 @@ on:
 
 env:
   CI: true
-  DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
   EMAIL_SERVER_USER: ""
   EMAIL_SERVER_PASSWORD: ""
   EMAIL_SERVER_HOST: localhost

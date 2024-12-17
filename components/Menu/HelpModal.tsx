@@ -12,6 +12,11 @@ const HelpModal: React.FC = () => {
         style={{ bottom: "1rem", left: "1rem", cursor: "pointer" }}
         className="position-fixed p-2"
         onClick={() => setShow(true)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            setShow(true);
+          }
+        }}
       >
         <HelpCircle size={28} />
       </div>

@@ -4,7 +4,6 @@ import { testUserEmail } from "./constants";
 
 teardown("delete database", async () => {
   console.log("deleting test database...");
-
   await db.user.delete({
     where: {
       email: testUserEmail,
