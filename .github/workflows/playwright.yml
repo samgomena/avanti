@@ -35,22 +35,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: lts/*
+      - uses: oven-sh/setup-bun@v1
 
       - name: Install dependencies & Set up database
         run: |
-          npm install -g pnpm
-          pnpm install
-          pnpm prisma db push
-          pnpm prisma db seed
+          # npm install -g pnpm
+          # pnpm install
+          # pnpm prisma db push
+          # pnpm prisma db seed
+          bun install
+          bun prisma db push
+          bun prisma db seed
 
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: bunx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: pnpm exec playwright test
+        run: bunx playwright test
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}

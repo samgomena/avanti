@@ -1,8 +1,8 @@
 name: Prevent Database From Sleeping
 on:
-  schedule:
-    # Every 6 days at midnight
-    - cron: "0 0 */6 * *"
+  # schedule:
+  #   # Every 6 days at midnight
+  #   - cron: "0 0 */6 * *"
   workflow_dispatch:
 
 jobs:
@@ -11,17 +11,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 20
+      # - uses: pnpm/action-setup@v3
+      #   with:
+      #     version: 8
 
       # - name: Install dependencies
       #   run: pnpm install
       - name: Run jobs
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         # run: pnpm db:keepalive
         run: echo "I do nothing anymore"
