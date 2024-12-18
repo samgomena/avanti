@@ -18,15 +18,6 @@
     "COMMENT: See: https://pris.ly/d/vercel-build": "",
     "postinstall": "npx prisma generate"
   },
-  "resolutions": {
-    "internal-slot": "^1.0.6",
-    "string-width": "4.2.3",
-    "@types/react": "19.0.1"
-  },
-  "resolutionsComments": {
-    "intenal-slot": "Required to fix eslint issue with react/display-name. See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3624",
-    "string-width": "This fails to test in CI because it's importing the cjs version or something?? See: https://github.com/yargs/cliui/pull/143"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/samgomena/avanti.git"
