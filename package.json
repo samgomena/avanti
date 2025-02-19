@@ -89,6 +89,6 @@
     "smtp-tester": "^2.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
-    "vitest": "^2.0.3"
+    "vitest": "^3.0.6"
   }
 }
