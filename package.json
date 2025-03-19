@@ -40,7 +40,7 @@
     "@trpc/client": "11.0.0-rc.342",
     "@trpc/next": "11.0.0-rc.342",
     "@trpc/react-query": "11.0.0-rc.342",
-    "@trpc/server": "11.0.0-rc.342",
+    "@trpc/server": "11.0.0-rc.839",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
     "deep-object-diff": "^1.1.9",
