@@ -39,7 +39,7 @@
     "@tanstack/react-query-devtools": "^5.62.7",
     "@trpc/client": "11.0.0-rc.342",
     "@trpc/next": "11.0.0-rc.342",
-    "@trpc/react-query": "11.0.0-rc.342",
+    "@trpc/react-query": "11.0.0-rc.844",
     "@trpc/server": "11.0.0-rc.342",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
