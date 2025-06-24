@@ -1,4 +1,8 @@
-import type { Active, UniqueIdentifier } from "@dnd-kit/core";
+import type {
+  Active,
+  UniqueIdentifier,
+  CollisionDetection,
+} from "@dnd-kit/core";
 import {
   DndContext,
   KeyboardSensor,
@@ -23,6 +27,7 @@ interface BaseItem {
 
 interface SortableListProps<T extends BaseItem> {
   items: T[];
+  collisionDetection?: CollisionDetection;
   onDragStart?(): void;
   onDragEnd?(): void;
   onChange(activeIndex: number, overIndex: number): void;
@@ -31,6 +36,7 @@ interface SortableListProps<T extends BaseItem> {
 
 export function SortableList<T extends BaseItem>({
   items,
+  collisionDetection,
   onChange,
   onDragStart,
   onDragEnd,
@@ -50,6 +56,7 @@ export function SortableList<T extends BaseItem>({
   return (
     <DndContext
       sensors={sensors}
+      collisionDetection={collisionDetection}
       modifiers={[restrictToVerticalAxis]}
       onDragStart={({ active }) => {
         onDragStart?.();
