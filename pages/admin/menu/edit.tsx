@@ -460,21 +460,8 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                                 borderWidth: (() => {
                                   const currentIdx = item.mvIdx;
                                   const nextItem = values.items[currentIdx + 1];
-                                  if (
-                                    nextItem &&
-                                    nextItem.course !== item.course
-                                  ) {
-                                    console.log(
-                                      nextItem.course,
-                                      item.course,
-                                      nextItem.name,
-                                      currentIdx,
-                                      nextItem.idx
-                                    );
-                                  }
                                   // If next item exists and is from a different course, make border thicker
-                                  return nextItem &&
-                                    nextItem.course !== item.course
+                                  return nextItem?.course !== item.course
                                     ? "3px"
                                     : "1px";
                                 })(),
