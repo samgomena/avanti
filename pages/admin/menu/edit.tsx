@@ -6,6 +6,7 @@ import {
   FieldArray,
   Form,
   Formik,
+  useFormikContext,
   type FormikHelpers,
 } from "formik";
 import {
@@ -36,7 +37,7 @@ import classNames from "classnames";
 import { type DetailedDiff, detailedDiff } from "deep-object-diff";
 import { getSession } from "next-auth/react";
 import type { GetServerSideProps } from "next/types";
-import { ChevronDown, ChevronUp, X } from "react-feather";
+import { ChevronDown, ChevronUp, EyeOff, X } from "react-feather";
 import { db } from "@/server/db";
 import withAdminNav from "../../../lib/withAdminNav";
 import { toast } from "sonner";
@@ -511,6 +512,7 @@ function EditMenuItem({
 EditMenuItemProps) {
   const [open, setOpen] = useState(false);
   const { diff: status } = useContext(DiffStatus);
+  const { setFieldValue } = useFormikContext();
   return (
     <div
       className={classNames({
@@ -562,7 +564,7 @@ EditMenuItemProps) {
         >
           {item.name} - ${formatItemPrice(item)}
         </span>
-        <span className="ms-auto" style={{ cursor: "pointer" }}>
+        <span className="ms-auto d-flex" style={{ cursor: "pointer" }}>
           {open ? <ChevronUp size="18" /> : <ChevronDown size="18" />}
           <span className="border-start mx-2" />
           <OverlayTrigger
@@ -570,6 +572,19 @@ EditMenuItemProps) {
             overlay={<Tooltip>Remove {item.name}</Tooltip>}
           >
             <X onClick={() => remove({ idx, id: item.id })} size={18} />
+          </OverlayTrigger>
+          <span className="mx-1" />
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Hide {item.name}</Tooltip>}
+          >
+            <EyeOff
+              onClick={(e) => {
+                e.stopPropagation();
+                setFieldValue(`items.${idx}.disabled`, !item.disabled);
+              }}
+              size={16}
+            />
           </OverlayTrigger>
         </span>
       </div>
