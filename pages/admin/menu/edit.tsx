@@ -6,6 +6,7 @@ import {
   FieldArray,
   Form,
   Formik,
+  useFormikContext,
   type FormikHelpers,
 } from "formik";
 import {
@@ -21,6 +22,8 @@ import { z } from "zod";
 import { api } from "@/lib/api";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { SortableList } from "@/components/DnD/SortableList";
+import { closestCenter } from "@dnd-kit/core";
+import type { CollisionDetection } from "@dnd-kit/core";
 import BeforeUnload from "@/components/Form/BeforeUnload";
 import FieldWithError from "@/components/Form/FieldWithError";
 import FormError from "@/components/Form/FormError";
@@ -34,7 +37,7 @@ import classNames from "classnames";
 import { type DetailedDiff, detailedDiff } from "deep-object-diff";
 import { getSession } from "next-auth/react";
 import type { GetServerSideProps } from "next/types";
-import { ChevronDown, ChevronUp, X } from "react-feather";
+import { ChevronDown, ChevronUp, EyeOff, X } from "react-feather";
 import { db } from "@/server/db";
 import withAdminNav from "../../../lib/withAdminNav";
 import { toast } from "sonner";
@@ -154,6 +157,33 @@ const Diff = ({ lhs, rhs }: { lhs: object; rhs: object }) => {
   return null;
 };
 
+// Custom collision detection that only allows dropping within the same course
+const createCourseRestrictedCollisionDetection = (
+  items: MenuWithPrice[]
+): CollisionDetection => {
+  return (args) => {
+    const { active, droppableContainers } = args;
+
+    // Find the active item (the one being dragged)
+    const activeItem = items.find((item) => item.id === active.id);
+    if (!activeItem) {
+      return closestCenter(args);
+    }
+
+    // Filter droppable containers to only include items from the same course
+    const sameCourseContainers = droppableContainers.filter((container) => {
+      const containerItem = items.find((item) => item.id === container.id);
+      return containerItem?.course === activeItem.course;
+    });
+
+    // Call the default collision detection with filtered containers
+    return closestCenter({
+      ...args,
+      droppableContainers: sameCourseContainers,
+    });
+  };
+};
+
 const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
   const dryRun = false;
 
@@ -165,8 +195,12 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
   });
 
   const [toggle, setToggle] = useState({
-    disabled: true,
+    disabled: false,
   });
+
+  const [originalToggleState, setOriginalToggleState] = useState<{
+    disabled: boolean;
+  } | null>(null);
 
   const [searchText, setSearchText] = useState("");
   const [removed, setRemoved] = useState<Array<{ id: string; idx: number }>>(
@@ -335,16 +369,21 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                   {({ remove, move, insert }) => (
                     <SortableList
                       items={values.items}
-                      // TODO: Maybe disable disabled when dragging?
-                      // onDragStart={() =>
-                      //   setToggle({
-                      //     disabled: false,
-                      //     initialDisabled: toggle.disabled,
-                      //   })
-                      // }
-                      // onDragEnd={() =>
-                      //   setToggle({ disabled: toggle.initialDisabled })
-                      // }
+                      collisionDetection={createCourseRestrictedCollisionDetection(
+                        values.items
+                      )}
+                      onDragStart={() => {
+                        // Save the current toggle state and show all disabled items
+                        setOriginalToggleState(toggle);
+                        setToggle({ disabled: false });
+                      }}
+                      onDragEnd={() => {
+                        // Restore the original toggle state
+                        if (originalToggleState) {
+                          setToggle(originalToggleState);
+                          setOriginalToggleState(null);
+                        }
+                      }}
                       onChange={(activeIndex, overIndex) => {
                         move(activeIndex, overIndex);
                       }}
@@ -415,7 +454,20 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                                 />
                               </div>
                             </div> */}
-                            <hr style={{ flex: 1 }} />
+                            <hr
+                              style={{
+                                flex: 1,
+                                // Make hr wider between different course sections
+                                borderWidth: (() => {
+                                  const currentIdx = item.mvIdx;
+                                  const nextItem = values.items[currentIdx + 1];
+                                  // If next item exists and is from a different course, make border thicker
+                                  return nextItem?.course !== item.course
+                                    ? "3px"
+                                    : "1px";
+                                })(),
+                              }}
+                            />
                           </div>
                         </SortableList.Item>
                       )}
@@ -460,6 +512,7 @@ function EditMenuItem({
 EditMenuItemProps) {
   const [open, setOpen] = useState(false);
   const { diff: status } = useContext(DiffStatus);
+  const { setFieldValue } = useFormikContext();
   return (
     <div
       className={classNames({
@@ -511,7 +564,7 @@ EditMenuItemProps) {
         >
           {item.name} - ${formatItemPrice(item)}
         </span>
-        <span className="ms-auto" style={{ cursor: "pointer" }}>
+        <span className="ms-auto d-flex" style={{ cursor: "pointer" }}>
           {open ? <ChevronUp size="18" /> : <ChevronDown size="18" />}
           <span className="border-start mx-2" />
           <OverlayTrigger
@@ -519,6 +572,19 @@ EditMenuItemProps) {
             overlay={<Tooltip>Remove {item.name}</Tooltip>}
           >
             <X onClick={() => remove({ idx, id: item.id })} size={18} />
+          </OverlayTrigger>
+          <span className="mx-1" />
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Hide {item.name}</Tooltip>}
+          >
+            <EyeOff
+              onClick={(e) => {
+                e.stopPropagation();
+                setFieldValue(`items.${idx}.disabled`, !item.disabled);
+              }}
+              size={16}
+            />
           </OverlayTrigger>
         </span>
       </div>
