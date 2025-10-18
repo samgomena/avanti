@@ -2,8 +2,8 @@ import { PrismaClient, type Alert } from "@prisma/client";
 import Link from "next/link";
 import type { GetStaticProps } from "next/types";
 import { Facebook, Instagram, MapPin } from "react-feather";
-import { ParallaxBanner } from "react-scroll-parallax";
-import type { BannerLayer } from "react-scroll-parallax/dist/components/ParallaxBanner/types";
+import { type BannerLayer, ParallaxBanner } from "react-scroll-parallax";
+
 import Alerts from "../components/Alerts";
 // import Carousel from "react-bootstrap/Carousel";
 
