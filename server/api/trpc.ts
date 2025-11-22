@@ -50,9 +50,9 @@ export const protectedProcedure = t.procedure.use((opts) => {
   const { ctx, next } = opts;
 
   // TODO: Pin to dev server until we have more tests
-  if (process.env.NODE_ENV !== "development") {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
+  // if (process.env.NODE_ENV !== "development") {
+  //   throw new TRPCError({ code: "UNAUTHORIZED" });
+  // }
 
   // TODO: Only allow updates?
   // if (ctx.req.method !== "POST") {
