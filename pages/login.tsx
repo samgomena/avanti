@@ -49,7 +49,8 @@ const Login: React.FC = () => {
       // Track email sent event with Umami
       if (typeof window !== "undefined" && window.umami) {
         window.umami.track("Login-Email-Sent", {
-          email: values.email,
+          [values.email]: "true",
+          email_sent_at: new Date().toISOString(),
         });
       }
       const res = await signIn("email", {
