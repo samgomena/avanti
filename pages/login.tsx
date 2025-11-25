@@ -11,6 +11,14 @@ import Header from "../components/Header";
 import Section from "../components/Section";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 
+declare global {
+  interface Window {
+    umami?: {
+      track: (eventName: string, eventData?: Record<string, unknown>) => void;
+    };
+  }
+}
+
 type LoginValues = {
   email: string;
 };
@@ -38,6 +46,13 @@ const Login: React.FC = () => {
   ) => {
     setSubmitting(true);
     try {
+      // Track email sent event with Umami
+      if (typeof window !== "undefined" && window.umami) {
+        window.umami.track("Login-Email-Sent", {
+          [values.email]: "true",
+          email_sent_at: new Date().toISOString(),
+        });
+      }
       const res = await signIn("email", {
         email: values.email,
         // If a continuation url was passed use that otherwise default to the admin overview page
