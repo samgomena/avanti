@@ -37,7 +37,7 @@ describe("Login - Form", () => {
 
     await waitFor(() =>
       expect(
-        screen.getByText("Your email is required to log in!")
+        screen.getByText("That's not a valid email address!")
       ).toBeInTheDocument()
     );
   });
