@@ -6,11 +6,11 @@ interface Option {
   value: string;
 }
 
-interface FieldProps<T> extends FieldAttributes<T> {
+type FieldProps<T> = {
   showLabels?: boolean;
   placeholder?: string;
   options?: Option[];
-}
+} & FieldAttributes<T>;
 
 function Field<T = object>({
   name,

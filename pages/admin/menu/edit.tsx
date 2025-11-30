@@ -63,9 +63,9 @@ export const validationSchema = z.object({
   items: z
     .array(
       z.object({
-        name: z.string({ required_error: "A name for this item is required!" }),
+        name: z.string({ error: "A name for this item is required!" }),
         description: z.string().optional(),
-        course: z.nativeEnum(Courses),
+        course: z.enum(Courses),
         price: z.object({
           lunch: z.string().optional(),
           dinner: z.string().optional(),

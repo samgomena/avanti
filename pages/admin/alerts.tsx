@@ -111,10 +111,10 @@ const Alerts: React.FC<AlertsProps> = ({ alerts }) => {
 export default withAdminNav(Alerts);
 
 export const validationSchema = z.object({
-  start: z.string({ required_error: "A start date is required" }).date(),
-  end: z.string({ required_error: "An end date is required" }).date(),
+  start: z.string({ error: "A start date is required" }).date(),
+  end: z.string({ error: "An end date is required" }).date(),
   title: z.string().optional(),
-  text: z.string({ required_error: "This field is required" }),
+  text: z.string({ error: "This field is required" }),
   id: z.string().optional(),
 });
 

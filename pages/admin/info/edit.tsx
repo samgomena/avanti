@@ -17,17 +17,17 @@ import { api } from "@/lib/api";
 import { toast } from "sonner";
 
 export const validationSchema = z.object({
-  about: z.string({ required_error: "This is required!" }),
+  about: z.string({ error: "This is required!" }),
   contact: z.object({
-    address: z.string({ required_error: "An address is required!" }),
+    address: z.string({ error: "An address is required!" }),
     phone: z
-      .string({ required_error: "A phone number is required!" })
+      .string({ error: "A phone number is required!" })
       .regex(
         /^\(?(\d\d\d)\)?-?(\d\d\d)-?(\d\d\d\d)$/g,
         "That's not a valid phone number!\nTip: Don't add a country code!"
       ),
     email: z
-      .string({ required_error: "An email is required!" })
+      .string({ error: "An email is required!" })
       .email("That's not a valid email address!"),
   }),
   hours: z
