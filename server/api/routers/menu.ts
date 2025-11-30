@@ -286,8 +286,9 @@ export const menuRouter = createTRPCRouter({
               );
             }
 
-            // Reorder remaining items. This is an amalgamation of the links and some AI generated code to glue it together.
-            // See: https://github.com/prisma/prisma/discussions/19765 (This link was actually tab-completed from cursor lol)
+            // Reset the index of the remaining items.
+            // This is an amalgamation of the links and some AI generated code to glue it together.
+            // See: https://github.com/prisma/prisma/discussions/19765
             // See: https://gist.github.com/aalin/ea23b786e3d55329f6257c0f6576418b
             // See: https://stackoverflow.com/a/6258586/4668680
             await tx.$executeRaw`
@@ -300,22 +301,6 @@ export const menuRouter = createTRPCRouter({
               WHERE m.id = t.id
             `;
 
-            // const allItems = await tx.menu.findMany({
-            //   orderBy: { idx: "asc" },
-            //   select: {
-            //     id: true,
-            //     idx: true,
-            //   },
-            // });
-
-            // await Promise.all(
-            //   allItems.map(({ id }, idx) =>
-            //     tx.menu.update({
-            //       where: { id },
-            //       data: { idx },
-            //     })
-            //   )
-            // );
             // Fetch entire menu as our last order of business because the frontend is stoopid and can't
             // selectively update the form with partial data
             const menu = await tx.menu.findMany({
