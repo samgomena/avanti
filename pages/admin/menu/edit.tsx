@@ -13,6 +13,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useId,
   useMemo,
   useState,
   type Dispatch,
@@ -187,7 +188,7 @@ const createCourseRestrictedCollisionDetection = (
 const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
   const dryRun = false;
 
-  const [filter, setFilter] = useState({
+  const [filter, setFilter] = useState<Record<Courses, boolean>>({
     appetizer: false,
     entree: false,
     drink: false,
@@ -247,11 +248,23 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
     const valuesWithNewIdx = Object.entries(diff?.updated.items ?? {}).map(
       ([key, value]) => {
         // key is the index (from the db) of the item that we want to update
+        const currentItem = values.items[Number(key)];
+        // If price is in the diff, ensure we include price.id from current values
+        // The server needs price.id to know which Price record to update
+        const data = {
+          ...(value as Record<string, unknown>),
+          idx: Number(key),
+        };
+        // @ts-expect-error: We can't type the value object b/c the diff object doesn't let up
+        if (data.price && currentItem.price?.id) {
+          // @ts-expect-error: We can't type the value object b/c the diff object doesn't let up
+          data.price.id = currentItem.price.id;
+        }
         const obj = {
-          id: values.items[Number(key)].id,
+          id: currentItem.id,
           operation: "update" as const,
           // @ts-expect-error: We can't type the value object b/c the diff object doesn't let up
-          data: { ...value, idx: Number(key) } as MenuItemWithPrice,
+          data: data as MenuItemWithPrice,
         };
         return obj;
       }
@@ -387,7 +400,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                       onChange={(activeIndex, overIndex) => {
                         move(activeIndex, overIndex);
                       }}
-                      renderItem={(item) => (
+                      renderItem={(item: MenuWithPrice) => (
                         <SortableList.Item id={item.id}>
                           <div
                             className={classNames(
@@ -460,11 +473,42 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                                 // Make hr wider between different course sections
                                 borderWidth: (() => {
                                   const currentIdx = item.mvIdx;
-                                  const nextItem = values.items[currentIdx + 1];
-                                  // If next item exists and is from a different course, make border thicker
-                                  return nextItem?.course !== item.course
-                                    ? "3px"
-                                    : "1px";
+                                  // Helper function to check if an item would be visible
+                                  const isItemVisible = (
+                                    checkItem: MenuWithPrice
+                                  ) => {
+                                    const isFilteredOut =
+                                      Object.values(filter).some(Boolean) &&
+                                      !filter[checkItem.course];
+                                    const isHiddenByToggle =
+                                      checkItem.disabled && toggle.disabled;
+                                    const isHiddenBySearch =
+                                      checkItem.name
+                                        .toLowerCase()
+                                        .indexOf(searchText) === -1;
+                                    return (
+                                      !isFilteredOut &&
+                                      !isHiddenByToggle &&
+                                      !isHiddenBySearch
+                                    );
+                                  };
+
+                                  // Check if there are any more visible items from the same course after this one
+                                  const hasMoreVisibleItemsInSameCourse =
+                                    values.items
+                                      .slice(currentIdx)
+                                      .some((nextItem) => {
+                                        return (
+                                          isItemVisible(nextItem) &&
+                                          nextItem.course === item.course
+                                        );
+                                      });
+
+                                  // Show thick border if this is the last visible item in its course
+                                  // or if the next visible item is from a different course
+                                  return hasMoreVisibleItemsInSameCourse
+                                    ? "1px"
+                                    : "3px";
                                 })(),
                               }}
                             />
@@ -614,12 +658,14 @@ EditMenuItemProps) {
 
           <div className="form-group mb-3" role="group">
             {(() => {
+              const idOne = useId();
+              const idTwo = useId();
               switch (item.course) {
                 case "appetizer":
                 case "entree":
                   return [
-                    <PriceField key={1} service="lunch" idx={idx} />,
-                    <PriceField key={2} service="dinner" idx={idx} />,
+                    <PriceField key={idOne} service="lunch" idx={idx} />,
+                    <PriceField key={idTwo} service="dinner" idx={idx} />,
                   ];
                 case "dessert":
                   return <PriceField service="dessert" idx={idx} />;
