@@ -15,6 +15,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
+import PhoneField from "@/components/Form/PhoneField";
 
 export const validationSchema = z.object({
   about: z.string({ error: "This is required!" }),
@@ -127,9 +128,9 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
                 />
 
                 <Field name="contact.address" placeholder="Address" />
-                {/* <PhoneField name="contact.phone" placeholder="Phone number" /> */}
+                <PhoneField name="contact.phone" placeholder="Phone number" />
                 <Field name="contact.email" placeholder="Email" />
-                <Field name="contact.phone" placeholder="Phone number" />
+                {/* <Field name="contact.phone" placeholder="Phone number" /> */}
 
                 {values?.hours.map((entry, idx) => (
                   <div key={entry.day} className="form-group mb-3">
