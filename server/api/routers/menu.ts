@@ -18,6 +18,7 @@ const updateMenuItemSchema = z.array(
         disabled: z.boolean().optional(),
         price: z
           .object({
+            id: z.string(),
             dinner: z.string().optional(),
             lunch: z.string().optional(),
             hh: z.string().optional(),
@@ -144,15 +145,19 @@ export const menuRouter = createTRPCRouter({
       try {
         const results = await ctx.db.$transaction(
           async (tx) => {
-            const deletedIds: string[] = [];
-            const updatedItems: object[] = [];
+            const deletions = input
+              .filter((i) => i.operation === "delete")
+              .map((i) => i.id);
 
             // Process deletions
-            for (const item of input) {
-              if (item.operation === "delete") {
-                await tx.menu.delete({ where: { id: item.id } });
-                deletedIds.push(item.id);
-              }
+            if (deletions.length > 0) {
+              await tx.menu.deleteMany({
+                where: {
+                  id: {
+                    in: deletions,
+                  },
+                },
+              });
             }
 
             // TODO: Process additions
@@ -173,43 +178,129 @@ export const menuRouter = createTRPCRouter({
             //   addedItems.push(newItem);
             // }
 
-            // Process updates
+            const menuRows = [];
+            const priceRows = [];
+
             for (const item of input) {
-              if (item.operation === "update" && item.data) {
-                const updatedMenu = await tx.menu.update({
-                  where: { id: item.id },
-                  data: {
-                    idx: item.data.idx,
-                    name: item.data.name,
-                    description: item.data.description,
-                    service: item.data.service,
-                    course: item.data.course,
-                    disabled: item.data.disabled,
-                    price: item.data.price
-                      ? {
-                          update: item.data.price,
-                        }
-                      : undefined,
-                  },
-                  include: { price: true },
+              if (item.operation !== "update" || !item.data) continue;
+              const d = item.data;
+
+              // Collect only fields that exist in delta
+              menuRows.push({
+                id: item.id,
+                idx: d.idx ?? null,
+                name: d.name ?? null,
+                description: d.description ?? null,
+                service: d.service ?? null,
+                course: d.course ?? null,
+                disabled: d.disabled ?? null,
+              });
+
+              if (d.price) {
+                priceRows.push({
+                  id: d.price.id,
+                  dinner: d.price.dinner ?? null,
+                  lunch: d.price.lunch ?? null,
+                  hh: d.price.hh ?? null,
+                  drinks: d.price.drinks ?? null,
+                  dessert: d.price.dessert ?? null,
                 });
-                updatedItems.push(updatedMenu);
               }
             }
 
-            // Reorder remaining items
-            const allItems = await tx.menu.findMany({
-              orderBy: { idx: "asc" },
-            });
+            // Update menu rows in bulk
+            if (menuRows.length > 0) {
+              await tx.$executeRawUnsafe(
+                `
+                UPDATE "Menu" AS m
+                SET
+                  idx         = COALESCE(v.idx, m.idx),
+                  name        = COALESCE(v.name, m.name),
+                  description = COALESCE(v.description, m.description),
+                  course      = COALESCE(v.course, m.course),
+                  disabled    = COALESCE(v.disabled, m.disabled)
+                FROM (
+                  VALUES
+                  ${menuRows
+                    .map(
+                      (_, i) => `(
+                        $${i * 6 + 1}::text,       -- id
+                        $${i * 6 + 2}::int,        -- idx
+                        $${i * 6 + 3}::text,       -- name
+                        $${i * 6 + 4}::text,       -- description
+                        $${i * 6 + 5}::"Courses",  -- course
+                        $${i * 6 + 6}::boolean     -- disabled
+                      )`
+                    )
+                    .join(",")}
+                ) AS v(id, idx, name, description, course, disabled)
+                WHERE m.id = v.id;
+                `,
+                ...menuRows.flatMap((r) => [
+                  r.id,
+                  r.idx,
+                  r.name,
+                  r.description,
+                  r.course,
+                  r.disabled,
+                ])
+              );
+            }
 
-            await Promise.all(
-              allItems.map(({ id }, idx) =>
-                tx.menu.update({
-                  where: { id },
-                  data: { idx },
-                })
-              )
-            );
+            // Update price rows in bulk
+            if (priceRows.length > 0) {
+              await tx.$executeRawUnsafe(
+                `
+                UPDATE "Price" AS p
+                SET
+                  dinner  = COALESCE(v.dinner, p.dinner),
+                  lunch   = COALESCE(v.lunch, p.lunch),
+                  hh      = COALESCE(v.hh, p.hh),
+                  drinks  = COALESCE(v.drinks, p.drinks),
+                  dessert = COALESCE(v.dessert, p.dessert)
+                FROM (
+                  VALUES
+                  ${priceRows
+                    .map(
+                      (_, i) => `(
+                        $${i * 6 + 1}::text, -- id
+                        $${i * 6 + 2}::text, -- dinner
+                        $${i * 6 + 3}::text, -- lunch
+                        $${i * 6 + 4}::text, -- hh
+                        $${i * 6 + 5}::text, -- drinks
+                        $${i * 6 + 6}::text  -- dessert
+                      )`
+                    )
+                    .join(",")}
+                ) AS v(id, dinner, lunch, hh, drinks, dessert)
+                WHERE p.id = v.id;
+                `,
+                ...priceRows.flatMap((r) => [
+                  r.id,
+                  r.dinner,
+                  r.lunch,
+                  r.hh,
+                  r.drinks,
+                  r.dessert,
+                ])
+              );
+            }
+
+            // Reset the index of the remaining items.
+            // This is an amalgamation of the links and some AI generated code to glue it together.
+            // See: https://github.com/prisma/prisma/discussions/19765
+            // See: https://gist.github.com/aalin/ea23b786e3d55329f6257c0f6576418b
+            // See: https://stackoverflow.com/a/6258586/4668680
+            await tx.$executeRaw`
+              UPDATE "Menu" AS m
+              SET "idx" = t.new_idx
+              FROM (
+                SELECT id, ROW_NUMBER() OVER (ORDER BY idx ASC) - 1 AS new_idx
+                FROM "Menu"
+              ) AS t
+              WHERE m.id = t.id
+            `;
+
             // Fetch entire menu as our last order of business because the frontend is stoopid and can't
             // selectively update the form with partial data
             const menu = await tx.menu.findMany({
