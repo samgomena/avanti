@@ -64,7 +64,7 @@
     "zod-formik-adapter": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.24.1",
+    "@babel/eslint-parser": "^7.28.5",
     "@playwright/test": "^1.57.0",
     "@tanstack/eslint-plugin-query": "^5.91.2",
     "@testing-library/jest-dom": "^6.9.1",
