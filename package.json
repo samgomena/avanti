@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.1",
-    "@playwright/test": "^1.45.2",
+    "@playwright/test": "^1.57.0",
     "@tanstack/eslint-plugin-query": "^5.91.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
