@@ -658,14 +658,12 @@ EditMenuItemProps) {
 
           <div className="form-group mb-3" role="group">
             {(() => {
-              const idOne = useId();
-              const idTwo = useId();
               switch (item.course) {
                 case "appetizer":
                 case "entree":
                   return [
-                    <PriceField key={idOne} service="lunch" idx={idx} />,
-                    <PriceField key={idTwo} service="dinner" idx={idx} />,
+                    <PriceField key="lunch" service="lunch" idx={idx} />,
+                    <PriceField key="dinner" service="dinner" idx={idx} />,
                   ];
                 case "dessert":
                   return <PriceField service="dessert" idx={idx} />;
