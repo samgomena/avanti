@@ -110,9 +110,9 @@ const initialNewUser = {
 };
 
 export const validationSchema = z.object({
-  name: z.string({ required_error: "A name is required!" }),
+  name: z.string({ error: "A name is required!" }),
   email: z
-    .string({ required_error: "An email address is required!" })
+    .string({ error: "An email address is required!" })
     .email({ message: "That's not a valid email address!" }),
   id: z.string().optional(),
 });

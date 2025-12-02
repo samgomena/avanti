@@ -1,5 +1,4 @@
 import { MapContainer, TileLayer, Popup } from "react-leaflet";
-import useHasMounted from "../../lib/hooks/useHasMounted";
 
 import "leaflet/dist/leaflet.css";
 import useInfo from "../../lib/hooks/useInfo";
@@ -13,12 +12,10 @@ const templateUrl =
 const attribution = `&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | <a href="https://carto.com/basemaps/">CartoDB</a>`;
 
 const Map: React.FC = () => {
-  const info = useInfo();
-  const hasMounted = useHasMounted();
+  // Leaflet requires a client component to render AFAIK it doesn't support SSR
+  "use client";
 
-  if (!hasMounted) {
-    return null;
-  }
+  const info = useInfo();
 
   return (
     <MapContainer

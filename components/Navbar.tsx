@@ -7,7 +7,13 @@ import Navbar from "react-bootstrap/Navbar";
 
 export default function AvantiNavbar() {
   const router = useRouter();
-  const [navbarTheme, setNavbarTheme] = useState<"dark" | "light">("dark");
+  const [navbarTheme, setNavbarTheme] = useState<"dark" | "light">(() => {
+    // Initialize based on scroll position (handles scroll restoration on page reload)
+    if (typeof window !== "undefined" && window.scrollY > 1) {
+      return "light";
+    }
+    return "dark";
+  });
 
   const { data: session } = useSession();
 
@@ -20,11 +26,6 @@ export default function AvantiNavbar() {
   }, []);
 
   useEffect(() => {
-    // Handle case where user has already scrolled down and page reloads with scroll restoration
-    if (window.scrollY > 1) {
-      setNavbarTheme("light");
-    }
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);

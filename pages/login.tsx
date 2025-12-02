@@ -28,9 +28,7 @@ const initialValues: LoginValues = {
 };
 
 const validationSchema = z.object({
-  email: z
-    .string({ required_error: "Your email is required to log in!" })
-    .email({ message: "That's not a valid email address!" }),
+  email: z.email({ error: "That's not a valid email address!" }),
 });
 
 const Login: React.FC = () => {

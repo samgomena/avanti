@@ -4,11 +4,12 @@ import * as matchers from "@testing-library/jest-dom/matchers";
 
 expect.extend(matchers);
 
-global.ResizeObserver = vitest.fn().mockImplementation(() => ({
-  observe: vitest.fn(),
-  unobserve: vitest.fn(),
-  disconnect: vitest.fn(),
-}));
+global.ResizeObserver = class ResizeObserver {
+  observe = vitest.fn();
+  unobserve = vitest.fn();
+  disconnect = vitest.fn();
+  constructor() {}
+};
 
 afterEach(() => {
   cleanup();
