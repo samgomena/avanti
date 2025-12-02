@@ -1,0 +1,38 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Backend Architecture and Database
+
+## Database Setup
+- **Schema**: [prisma/schema.prisma](mdc:prisma/schema.prisma) - Prisma database schema
+- **Seed Data**: [prisma/seed.ts](mdc:prisma/seed.ts) - Database seeding script
+- **Database Client**: [server/db.ts](mdc:server/db.ts) - Prisma client configuration
+
+## Authentication
+- **Auth Config**: [server/auth.ts](mdc:server/auth.ts) - NextAuth.js configuration
+- **Auth Provider**: NextAuth.js with Prisma adapter
+- **Session Management**: Built-in NextAuth.js sessions
+
+## API Layer
+- **tRPC Router**: [server/api/](mdc:server/api) - Type-safe API endpoints
+- **API Client**: [lib/api.ts](mdc:lib/api.ts) - Client-side API utilities
+- **React Query**: TanStack Query for data fetching and caching
+
+## Backend Scripts
+- **Prisma Generate**: Automatic client generation
+
+## Database Commands
+- `npm run db:push` - Push schema changes to database
+- `npm run generate` - Generate Prisma client
+- `npm run db:keepalive` - Keep database connection alive
+
+## Type Safety
+- **Types**: [lib/types/](mdc:lib/types) - TypeScript type definitions
+- **Zod Schemas**: Used for runtime validation
+- **tRPC**: End-to-end type safety from client to server
+
+## Utilities
+- **Hooks**: [lib/hooks/](mdc:lib/hooks) - Custom React hooks
+- **Utils**: [lib/utils/](mdc:lib/utils) - Utility functions

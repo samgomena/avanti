@@ -1,0 +1,32 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Avanti Restaurant Website - Project Overview
+
+## Project Description
+This is a Next.js web application for Avanti, a restaurant in West Linn, Oregon. The website features a modern React interface with Bootstrap styling, authentication, menu management, and admin functionality.
+
+## Core Technology Stack
+- **Framework**: Next.js 15.1.1 with React 19.0.0
+- **Styling**: Bootstrap 5.3.3 with React Bootstrap and Sass
+- **Database**: Prisma ORM with PostgreSQL
+- **Authentication**: NextAuth.js with Prisma adapter
+- **State Management**: TanStack Query (React Query)
+- **Type Checking**: TypeScript
+- **Testing**: Vitest, Jest, Playwright
+- **UI Components**: Custom components with React Bootstrap
+
+## Key Entry Points
+- Main entry: [pages/index.tsx](mdc:pages/index.tsx) - Home page with hero section
+- App configuration: [pages/_app.tsx](mdc:pages/_app.tsx) - Next.js app wrapper
+- Authentication setup: [pages/api/auth/[...nextauth].ts](mdc:pages/api/auth/[...nextauth].ts)
+- Database schema: [prisma/schema.prisma](mdc:prisma/schema.prisma)
+- Main layout: [components/Layout.tsx](mdc:components/Layout.tsx)
+
+## Package Configuration
+- Dependencies managed in [package.json](mdc:package.json)
+- TypeScript config in [tsconfig.json](mdc:tsconfig.json)
+- Next.js config in [next.config.js](mdc:next.config.js)
+- Biome config in [biome.jsonc](mdc:biome.jsonc)
