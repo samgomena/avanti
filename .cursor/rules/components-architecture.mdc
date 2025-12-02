@@ -1,0 +1,36 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Components Architecture
+
+## Layout Components
+- **Layout**: [components/Layout.tsx](mdc:components/Layout.tsx) - Main page layout wrapper
+- **Navbar**: [components/Navbar.tsx](mdc:components/Navbar.tsx) - Navigation bar component
+- **Footer**: [components/Footer.tsx](mdc:components/Footer.tsx) - Site footer
+- **Header**: [components/Header.tsx](mdc:components/Header.tsx) - Page header component
+
+## UI Components
+- **Section**: [components/Section.tsx](mdc:components/Section.tsx) - Content section wrapper
+- **Heading**: [components/Heading.tsx](mdc:components/Heading.tsx) - Styled heading component
+- **NavLink**: [components/NavLink.tsx](mdc:components/NavLink.tsx) - Navigation link component
+- **Alerts**: [components/Alerts.tsx](mdc:components/Alerts.tsx) - Toast notifications
+
+## Feature Components
+- **Form Components**: [components/Form/](mdc:components/Form) - Form-related components
+- **Menu Components**: [components/Menu/](mdc:components/Menu) - Menu display components
+- **Map Components**: [components/Map/](mdc:components/Map) - Leaflet map components
+- **Icons**: [components/Icons/](mdc:components/Icons) - Custom icon components
+- **Masonry**: [components/Masonry/](mdc:components/Masonry) - Gallery layout components
+- **Drag & Drop**: [components/DnD/](mdc:components/DnD) - Sortable components
+
+## Admin Components
+- **Admin HOC**: [lib/withAdminNav.tsx](mdc:lib/withAdminNav.tsx) - Higher-order component for admin navigation
+
+## Component Guidelines
+- Uses React Bootstrap for consistent styling
+- TypeScript for type safety
+- Responsive design with Bootstrap classes
+- Reusable components follow single responsibility principle
+- Test files located in `components/__tests__/` directories

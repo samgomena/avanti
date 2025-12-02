@@ -1,0 +1,44 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Development Workflow and Testing
+
+## Development Scripts
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build production version
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run test` - Run Vitest tests
+- `npm run test-e2e` - Run Playwright end-to-end tests
+- `npm run test:ci` - Run CI tests (lint + unit tests)
+
+## Code Quality Tools
+- **ESLint**: [eslintrc.js](mdc:eslintrc.js) and [.eslintrc](mdc:.eslintrc) - Linting configuration
+- **Biome**: [biome.jsonc](mdc:biome.jsonc) - Fast linter and formatter
+- **TypeScript**: [tsconfig.json](mdc:tsconfig.json) - Type checking configuration
+
+## Testing Setup
+- **Unit Tests**: Vitest configuration in [vitest.config.ts](mdc:vitest.config.ts)
+- **Test Setup**: [vitest.setup.ts](mdc:vitest.setup.ts) - Test environment setup
+- **Jest Config**: [jest.config.ts](mdc:jest.config.ts) - Alternative Jest setup
+- **Jest Setup**: [jest.setup.js](mdc:jest.setup.js) - Jest environment
+- **E2E Tests**: [playwright.config.ts](mdc:playwright.config.ts) - Playwright configuration
+- **Test Files**: `__tests__/` directories throughout the project
+
+## Asset Management
+- **Static Assets**: [public/](mdc:public) - Public static files
+- **Styles**: [styles/](mdc:styles) - Sass/CSS files
+- **Images**: Optimized with Next.js Image component
+
+## Development Environment
+- **Node.js**: Uses latest LTS version
+- **Package Manager**: npm (with bun.lockb indicating Bun compatibility)
+- **Hot Reload**: Turbopack for fast development builds
+- **Environment Variables**: Uses dotenv for local development
+
+## Build and Deployment
+- **Vercel**: Optimized for Vercel deployment
+- **Post-install**: Automatic Prisma client generation
+- **Production**: Optimized builds with Next.js

@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Next.js Pages and Routing Structure
+
+## Public Pages
+- **Home**: [pages/index.tsx](mdc:pages/index.tsx) - Main landing page with hero section
+- **Menu**: [pages/menu.tsx](mdc:pages/menu.tsx) - Restaurant menu display
+- **About**: [pages/about.tsx](mdc:pages/about.tsx) - Restaurant information
+- **Contact**: [pages/contact.tsx](mdc:pages/contact.tsx) - Contact form and information
+- **Gallery**: [pages/gallery.tsx](mdc:pages/gallery.tsx) - Photo gallery
+- **Events**: [pages/events.tsx](mdc:pages/events.tsx) - Special events page
+- **Login**: [pages/login.tsx](mdc:pages/login.tsx) - Authentication page
+
+## Admin Pages
+- **Admin Dashboard**: [pages/admin.tsx](mdc:pages/admin.tsx) - Admin entry point
+- **Admin Routes**: [pages/admin/](mdc:pages/admin) - Protected admin functionality
+
+## Special Pages
+- **404 Error**: [pages/404.tsx](mdc:pages/404.tsx) - Custom error page
+- **Document**: [pages/_document.tsx](mdc:pages/_document.tsx) - HTML document wrapper
+- **App**: [pages/_app.tsx](mdc:pages/_app.tsx) - App-level configuration
+
+## API Routes
+- **Authentication**: [pages/api/auth/](mdc:pages/api/auth) - NextAuth.js endpoints
+- **API Routes**: [pages/api/](mdc:pages/api) - Backend API endpoints
+
+## Routing Notes
+- Uses Next.js file-based routing
+- Admin routes are protected with authentication middleware
+- API routes handle backend functionality and database operations

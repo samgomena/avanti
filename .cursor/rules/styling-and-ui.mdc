@@ -1,0 +1,47 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Styling and UI Framework
+
+## CSS Framework
+- **Bootstrap 5.3.3**: Main CSS framework for layouts and components
+- **React Bootstrap**: React components with Bootstrap styling
+- **Sass**: CSS preprocessor for custom styles in [styles/](mdc:styles)
+
+## UI Component Libraries
+- **React Bootstrap**: Pre-built Bootstrap components for React
+- **Feather Icons**: [react-feather](mdc:https:/github.com/feathericons/react-feather) for consistent iconography
+- **Custom Icons**: [components/Icons/](mdc:components/Icons) - Custom icon components
+
+## Responsive Design
+- **Bootstrap Grid**: 12-column responsive grid system
+- **Breakpoints**: Mobile-first responsive design
+- **Container Classes**: Bootstrap containers for consistent spacing
+
+## Interactive Features
+- **React Leaflet**: [components/Map/](mdc:components/Map) - Interactive maps
+- **Drag & Drop**: [@dnd-kit](mdc:https:/dndkit.com) for sortable interfaces in [components/DnD/](mdc:components/DnD)
+- **Parallax Scrolling**: react-scroll-parallax for visual effects
+- **Toast Notifications**: Sonner library with [components/Alerts.tsx](mdc:components/Alerts.tsx)
+
+## Form Styling
+- **Formik**: Form handling with validation
+- **React Bootstrap Forms**: Styled form components
+- **Form Components**: [components/Form/](mdc:components/Form) - Custom form elements
+
+## Gallery and Media
+- **Masonry Layout**: [components/Masonry/](mdc:components/Masonry) - Pinterest-style layouts
+- **Next.js Image**: Optimized image loading and responsive images
+- **Gallery**: [pages/gallery.tsx](mdc:pages/gallery.tsx) - Photo gallery implementation
+
+## Theme and Branding
+- **Custom Sass**: Restaurant-specific styling
+- **Bootstrap Customization**: Custom variables and overrides
+- **Consistent Color Palette**: Brand colors throughout the application
+
+## Performance
+- **CSS Optimization**: Next.js automatic CSS optimization
+- **Critical CSS**: Inline critical styles for faster loading
+- **Image Optimization**: WebP and responsive images with Next.js
