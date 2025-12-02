@@ -14,11 +14,16 @@ export default function useSavedChanges(field: AllowedFields) {
     initialValue
   );
 
-  const submitSavedChanges = (values: unknown) =>
-    console.log({ ...savedChanges, [field]: values });
+  const submitSavedChanges = (values: unknown) => {
+    if (process.env.NODE_ENV !== "production") {
+      console.log({ ...savedChanges, [field]: values });
+    }
+  };
 
   const commitSavedChanges = () => (values: unknown) => {
-    console.log(values);
+    if (process.env.NODE_ENV !== "production") {
+      console.log(values);
+    }
     setSavedChanges({ ...savedChanges, [field]: values });
   };
 

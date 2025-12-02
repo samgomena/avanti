@@ -2,6 +2,7 @@ import { useState } from "react";
 
 // Taken from https://usehooks.com/useLocalStorage/
 export default function useLocalStorage<T>(key: string, initialValue: T) {
+  "use client";
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {
@@ -12,7 +13,9 @@ export default function useLocalStorage<T>(key: string, initialValue: T) {
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       // If error also return initialValue
-      // console.log(error);
+      if (process.env.NODE_ENV !== "production") {
+        console.error(error);
+      }
       return initialValue;
     }
   });
@@ -29,8 +32,9 @@ export default function useLocalStorage<T>(key: string, initialValue: T) {
       // Save to local storage
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
-      // A more advanced implementation would handle the error case
-      console.log(error);
+      if (process.env.NODE_ENV !== "production") {
+        console.error(error);
+      }
     }
   };
 
