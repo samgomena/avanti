@@ -78,7 +78,7 @@
     "cheerio": "1.1.2",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
-    "eslint-config-next": "16.0.10",
+    "eslint-config-next": "16.1.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.37.5",
