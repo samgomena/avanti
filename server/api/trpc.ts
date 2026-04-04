@@ -49,7 +49,17 @@ export const publicProcedure = t.procedure;
 export const protectedProcedure = t.procedure.use((opts) => {
   const { ctx, next } = opts;
 
-  if (!ctx.session?.user) {
+  // TODO: Pin to dev server until we have more tests
+  // if (process.env.NODE_ENV !== "development") {
+  //   throw new TRPCError({ code: "UNAUTHORIZED" });
+  // }
+
+  // TODO: Only allow updates?
+  // if (ctx.req.method !== "POST") {
+  //   throw new TRPCError({ code: "METHOD_NOT_SUPPORTED" });
+  // }
+
+  if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
