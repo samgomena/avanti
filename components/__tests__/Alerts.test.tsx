@@ -1,4 +1,4 @@
-import type { Alert } from "@prisma/client";
+import type { AlertListItem } from "../Alerts";
 import { fireEvent, render, screen } from "@testing-library/react";
 import Alerts from "../Alerts";
 import { vi } from "vitest";
@@ -12,12 +12,13 @@ describe("Alerts", () => {
   it("Renders", () => {
     const alerts = [
       {
+        id: "a1",
         title,
         text,
         start: "2020-05-01T00:00:00.000Z",
         end: "2020-07-01T00:00:00.000Z",
       },
-    ] as unknown as Alert[];
+    ] as AlertListItem[];
 
     render(<Alerts alerts={alerts} />);
     const alert = screen.getByText(title);
@@ -27,11 +28,13 @@ describe("Alerts", () => {
   it("Doesn't show a title if it's not provided", () => {
     const alerts = [
       {
+        id: "a2",
+        title: null,
         text,
         start: "2020-05-01T00:00:00.000Z",
         end: "2020-07-01T00:00:00.000Z",
       },
-    ] as unknown as Alert[];
+    ] as AlertListItem[];
 
     render(<Alerts alerts={alerts} />);
     const alert = screen.getByText(text);
@@ -41,12 +44,13 @@ describe("Alerts", () => {
   it("Closes alert when close button is clicked", () => {
     const alerts = [
       {
+        id: "a3",
         title,
         text,
         start: "2020-05-01T00:00:00.000Z",
         end: "2020-07-01T00:00:00.000Z",
       },
-    ] as unknown as Alert[];
+    ] as AlertListItem[];
 
     render(<Alerts alerts={alerts} />);
     const alert = screen.getByText(title);
@@ -61,13 +65,14 @@ describe("Alerts", () => {
     it("Alert hasn't started yet", () => {
       const alerts = [
         {
+          id: "a4",
           title,
           text,
           // Note: System time is 2020-06-01T00:00:00.000Z
           start: "2020-06-02T00:00:00.000Z",
           end: "2020-07-01T00:00:00.000Z",
         },
-      ] as unknown as Alert[];
+      ] as AlertListItem[];
 
       render(<Alerts alerts={alerts} />);
       const alert = screen.queryByText(title);
@@ -77,13 +82,14 @@ describe("Alerts", () => {
     it("Alert has already happened", () => {
       const alerts = [
         {
+          id: "a5",
           title,
           text,
           // Note: System time is 2020-06-01T00:00:00.000Z
           start: "2020-05-01T00:00:00.000Z",
           end: "2020-05-31T00:00:00.000Z",
         },
-      ] as unknown as Alert[];
+      ] as AlertListItem[];
 
       render(<Alerts alerts={alerts} />);
       const alert = screen.queryByText(title);
@@ -93,13 +99,14 @@ describe("Alerts", () => {
     it("Alert is happening - first day", () => {
       const alerts = [
         {
+          id: "a6",
           title,
           text,
           // Note: System time is 2020-06-01T00:00:00.000Z
           start: "2020-06-01T00:00:00.000Z",
           end: "2020-07-01T00:00:00.000Z",
         },
-      ] as unknown as Alert[];
+      ] as AlertListItem[];
 
       render(<Alerts alerts={alerts} />);
       const alert = screen.queryByText(title);
@@ -109,13 +116,14 @@ describe("Alerts", () => {
     it("Alert is happening - last day", () => {
       const alerts = [
         {
+          id: "a7",
           title,
           text,
           // Note: System time is 2020-06-01T00:00:00.000Z
           start: "2020-05-01T00:00:00.000Z",
           end: "2020-06-01T00:00:00.000Z",
         },
-      ] as unknown as Alert[];
+      ] as AlertListItem[];
 
       render(<Alerts alerts={alerts} />);
       const alert = screen.queryByText(title);
@@ -125,13 +133,14 @@ describe("Alerts", () => {
     it("Alert is happening - one day only", () => {
       const alerts = [
         {
+          id: "a8",
           title,
           text,
           // Note: System time is 2020-06-01T00:00:00.000Z
           start: "2020-06-01T00:00:00.000Z",
           end: "2020-06-01T00:00:00.000Z",
         },
-      ] as unknown as Alert[];
+      ] as AlertListItem[];
 
       render(<Alerts alerts={alerts} />);
       const alert = screen.queryByText(title);

@@ -4,8 +4,11 @@ import MenuDivider from "@/components/Menu/MenuDivider";
 import MenuItem from "@/components/Menu/MenuItem";
 import MenuItems from "@/components/Menu/MenuItems";
 import Section from "@/components/Section";
+import { drizzleDb } from "@/lib/db/libsql";
+import { menu } from "@/lib/db/schema";
 import type { Bucket } from "@/lib/types/menu";
-import { PrismaClient, type Courses, type Prisma } from "@prisma/client";
+import type { Course } from "@/lib/db/schema";
+import { and, asc, eq } from "drizzle-orm";
 import { GetStaticProps } from "next";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -29,6 +32,33 @@ type MenuProps = {
   entrees: Bucket;
   drinks: Bucket;
 };
+
+async function loadBucketForCourse(course: Course): Promise<Bucket> {
+  const rows = await drizzleDb.query.menu.findMany({
+    where: and(eq(menu.disabled, false), eq(menu.course, course)),
+    orderBy: [asc(menu.idx)],
+    columns: {
+      name: true,
+      description: true,
+    },
+    with: {
+      price: {
+        columns: { dinner: true, drinks: true },
+      },
+    },
+  });
+
+  return rows.map((row) => ({
+    name: row.name,
+    description: row.description,
+    price: row.price
+      ? {
+          dinner: row.price.dinner || null,
+          drinks: row.price.drinks || null,
+        }
+      : null,
+  }));
+}
 
 export default function Menu({ apps, entrees, drinks }: MenuProps) {
   // TODO(6/4/22): Default active key is always dinner while lunch/hh are disbaled
@@ -60,7 +90,7 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
                       key={idx}
                       name={item.name}
                       description={item.description ?? ""}
-                      price={item.price!["dinner"]!}
+                      price={item.price?.dinner ?? ""}
                     />
                   ))}
                   <MenuDivider>Entrees</MenuDivider>
@@ -69,7 +99,7 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
                       key={idx}
                       name={item.name}
                       description={item.description ?? ""}
-                      price={item.price!["dinner"]!}
+                      price={item.price?.dinner ?? ""}
                     />
                   ))}
                 </MenuItems>
@@ -82,7 +112,7 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
                       key={idx}
                       name={item.name}
                       description={item.description ?? ""}
-                      price={item.price!["drinks"]!}
+                      price={item.price?.drinks ?? ""}
                     />
                   ))}
                 </MenuItems>
@@ -96,30 +126,11 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const prisma = new PrismaClient();
-  const getQueryForCourse = (
-    course: Courses,
-    selectPrice: Prisma.PriceSelect
-  ) => {
-    return prisma.menu.findMany({
-      orderBy: [{ idx: "asc" }],
-      where: {
-        disabled: false,
-        course,
-      },
-      select: {
-        name: true,
-        description: true,
-        price: {
-          select: selectPrice,
-        },
-      },
-    });
-  };
-
-  const apps = await getQueryForCourse("appetizer", { dinner: true });
-  const entrees = await getQueryForCourse("entree", { dinner: true });
-  const drinks = await getQueryForCourse("drink", { drinks: true });
+  const [apps, entrees, drinks] = await Promise.all([
+    loadBucketForCourse("appetizer"),
+    loadBucketForCourse("entree"),
+    loadBucketForCourse("drink"),
+  ]);
 
   return {
     props: {

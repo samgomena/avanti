@@ -1,18 +1,21 @@
-import { Contact as ContactType, PrismaClient } from "@prisma/client";
 import { GetStaticProps } from "next";
 import { Facebook, Instagram } from "react-feather";
 import Header from "../components/Header";
 import Heading from "../components/Heading";
 import Section from "../components/Section";
 import { formatPhone } from "../lib/utils/utils";
+import { drizzleDb } from "@/lib/db/libsql";
+import type { Contact, Info } from "@/lib/db/types";
 
 type ContactProps = {
-  info: {
-    contact: Omit<ContactType, "id">;
-  };
+  info: (Info & { contact: Contact }) | null;
 };
 
 export default function Contact({ info }: ContactProps) {
+  if (!info?.contact) {
+    return null;
+  }
+
   return (
     <>
       <Header
@@ -77,16 +80,13 @@ export default function Contact({ info }: ContactProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const prisma = new PrismaClient();
-  const info = await prisma.info.findFirst({
-    select: {
-      contact: true,
-    },
+  const row = await drizzleDb.query.info.findFirst({
+    with: { contact: true },
   });
 
   return {
     props: {
-      info,
+      info: row ?? null,
     },
   };
 };

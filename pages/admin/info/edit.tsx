@@ -1,5 +1,6 @@
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
-import type { Contact, Days } from "@prisma/client";
+import type { Contact } from "@/lib/db/types";
+import type { Day } from "@/lib/db/schema";
 import { Form, Formik } from "formik";
 import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import { useRouter } from "next/router";
@@ -8,7 +9,7 @@ import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
 import HoursField from "../../../components/Form/HoursField";
 import { days } from "../../../lib/hooks/useInfo";
-import { db } from "@/server/db";
+import { drizzleDb } from "@/lib/db/libsql";
 import { capitalize } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -76,7 +77,7 @@ export type EditInfoProps = {
       id: string;
       open: string;
       close: string;
-      day: Days;
+      day: Day;
     }[];
   };
 };
@@ -200,8 +201,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const info = await db.info.findFirst({
-    include: {
+  const info = await drizzleDb.query.info.findFirst({
+    with: {
       contact: true,
       hours: true,
     },

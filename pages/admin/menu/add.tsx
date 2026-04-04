@@ -1,7 +1,7 @@
 import PriceField from "@/components/Form/PriceField";
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import { api } from "@/lib/api";
-import { Courses } from "@prisma/client";
+import { courseValues } from "@/lib/db/schema";
 import {
   ErrorMessage,
   FieldArray,
@@ -46,7 +46,7 @@ export const validationSchema = z.object({
       z.object({
         name: z.string({ error: "A name for this item is required!" }),
         description: z.string().optional(),
-        course: z.enum(Courses),
+        course: z.enum(courseValues),
         price: z.object({
           lunch: z.string().optional(),
           dinner: z.string().optional(),

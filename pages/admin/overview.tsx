@@ -1,13 +1,13 @@
-import type { Courses } from "@prisma/client";
+import type { Course } from "@/lib/db/schema";
 import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import type { GetServerSideProps } from "next/types";
 import { useCallback, useState } from "react";
 import { Form, Table } from "react-bootstrap";
-import { db } from "@/server/db";
+import { drizzleDb } from "@/lib/db/libsql";
 import withAdminNav from "../../lib/withAdminNav";
 
 type OverviewProps = {
-  course: Courses;
+  course: Course;
   disabled: boolean;
   price: {
     dinner: string;
@@ -15,14 +15,14 @@ type OverviewProps = {
     hh: string;
     drinks: string;
     dessert: string;
-  };
+  } | null;
 }[];
 
 const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
   const [includeDisabled, setIncludeDisabled] = useState(false);
 
   const sumCourse = useCallback(
-    (course: Courses) =>
+    (course: Course) =>
       menu
         // Grab only the items for the course we're getting stats for
         .filter((item) => item.course === course)
@@ -30,15 +30,21 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
         .filter((item) => (includeDisabled ? true : item.disabled === false))
         // Reduce price object into array of values; in the future it could be cool to show values per service period
         .reduce(
-          (acc, curr) => [
-            // biome-ignore lint/performance/noAccumulatingSpread: There's like 50 items, it doesn't matter
-            ...acc,
-            curr.price.dinner,
-            curr.price.lunch,
-            curr.price.hh,
-            curr.price.drinks,
-            curr.price.dessert,
-          ],
+          (acc, curr) => {
+            const p = curr.price;
+            if (!p) {
+              return acc;
+            }
+            return [
+              // biome-ignore lint/performance/noAccumulatingSpread: There's like 50 items, it doesn't matter
+              ...acc,
+              p.dinner,
+              p.lunch,
+              p.hh,
+              p.drinks,
+              p.dessert,
+            ];
+          },
           [] as string[]
         )
         // Remove nulls from the list of prices (i.e. when a price isn't defined for a service period)
@@ -147,12 +153,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const menu = await db.menu.findMany({
-    select: {
+  const menu = await drizzleDb.query.menu.findMany({
+    columns: {
       course: true,
       disabled: true,
+    },
+    with: {
       price: {
-        select: {
+        columns: {
           dinner: true,
           lunch: true,
           hh: true,

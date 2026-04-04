@@ -33,20 +33,22 @@ import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import FilterToggle from "@/components/Menu/FilterToggle";
 import HelpModal from "@/components/Menu/HelpModal";
 import { formatItemPrice } from "@/lib/utils/utils";
-import { Courses, type Menu, type Price } from "@prisma/client";
+import { courseValues, menu, type Course } from "@/lib/db/schema";
+import type { Menu as DbMenu, Price } from "@/lib/db/types";
 import classNames from "classnames";
 import { type DetailedDiff, detailedDiff } from "deep-object-diff";
 import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import type { GetServerSideProps } from "next/types";
 import { ChevronDown, ChevronUp, EyeOff, X } from "react-feather";
-import { db } from "@/server/db";
+import { drizzleDb } from "@/lib/db/libsql";
+import { asc } from "drizzle-orm";
 import withAdminNav from "../../../lib/withAdminNav";
 import { toast } from "sonner";
 
 const initialValue = {
   name: "",
   description: "",
-  course: "appetizer" as Courses,
+  course: "appetizer" as Course,
   price: {
     // This is stupid but the easiest solution. Because we use a number input below (and our validation schema is typed as a number)
     // we have to cast the value to number. We store the initial values as empty strings here because we don't want to show an initial 0
@@ -66,7 +68,7 @@ export const validationSchema = z.object({
       z.object({
         name: z.string({ error: "A name for this item is required!" }),
         description: z.string().optional(),
-        course: z.enum(Courses),
+        course: z.enum(courseValues),
         price: z.object({
           lunch: z.string().optional(),
           dinner: z.string().optional(),
@@ -122,7 +124,7 @@ export const validationSchema = z.object({
     }),
 });
 
-export type MenuWithPrice = Menu & {
+export type MenuWithPrice = DbMenu & {
   price: Price;
   mvIdx: number;
 };
@@ -188,7 +190,7 @@ const createCourseRestrictedCollisionDetection = (
 const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
   const dryRun = false;
 
-  const [filter, setFilter] = useState<Record<Courses, boolean>>({
+  const [filter, setFilter] = useState<Record<Course, boolean>>({
     appetizer: false,
     entree: false,
     drink: false,
@@ -700,17 +702,19 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   // Roughly translates to:
   // SELECT `main`.`Menu`.`id`, `main`.`Menu`.`idx`, `main`.`Menu`.`name`, `main`.`Menu`.`description`, `main`.`Menu`.`service`, `main`.`Menu`.`course`, `main`.`Menu`.`disabled`, `main`.`Menu`.`priceId` FROM `main`.`Menu` WHERE 1=1 ORDER BY `main`.`Menu`.`course` ASC, `main`.`Menu`.`idx` ASC
-  const menu = await db.menu.findMany({
-    orderBy: [{ course: "asc" }, { idx: "asc" }],
-    select: {
+  const menuRows = await drizzleDb.query.menu.findMany({
+    orderBy: [asc(menu.course), asc(menu.idx)],
+    columns: {
       id: true,
       idx: true,
       name: true,
       description: true,
       course: true,
       disabled: true,
+    },
+    with: {
       price: {
-        select: {
+        columns: {
           id: true,
           lunch: true,
           dinner: true,
@@ -723,7 +727,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      menu,
+      menu: menuRows,
     },
   };
 };

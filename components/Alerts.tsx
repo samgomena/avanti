@@ -1,9 +1,15 @@
-import { Alert as AlertType } from "@prisma/client";
+import type { Alert as AlertType } from "@/lib/db/types";
 import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 
+/** Static props often JSON-serialize dates as ISO strings; the DB uses `Date`. */
+export type AlertListItem = Omit<AlertType, "start" | "end"> & {
+  start: string | Date;
+  end: string | Date;
+};
+
 type AlertProps = {
-  alerts: AlertType[];
+  alerts: AlertListItem[];
 };
 
 const Alerts: React.FC<AlertProps> = ({ alerts }) => {

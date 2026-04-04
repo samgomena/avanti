@@ -1,8 +1,10 @@
 import BeforeUnload from "@/components/Form/BeforeUnload";
 import Field from "@/components/Form/FieldWithError";
 import { api } from "@/lib/api";
-import { db } from "@/server/db";
-import type { Alert as AlertType } from "@prisma/client";
+import { drizzleDb } from "@/lib/db/libsql";
+import { alert } from "@/lib/db/schema";
+import type { Alert as AlertType } from "@/lib/db/types";
+import { desc } from "drizzle-orm";
 import { Form, Formik, type FormikValues } from "formik";
 import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import { useRouter } from "next/router";
@@ -339,11 +341,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const _alerts = await db.alert.findMany({
-    orderBy: {
-      start: "desc",
-    },
-  });
+  const _alerts = await drizzleDb.select().from(alert).orderBy(desc(alert.start));
 
   const alerts = _alerts.map((alert) => ({
     ...alert,
