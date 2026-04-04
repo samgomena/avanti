@@ -2,31 +2,33 @@ import { render, screen } from "@testing-library/react";
 import Home from "../pages/index";
 import { ParallaxProvider } from "react-scroll-parallax";
 import { vi } from "vitest";
-import type { Alert, Contact, Info } from "@prisma/client";
+import type { Alert } from "@/lib/db/types";
+
+type SerializedAlert = Omit<Alert, "start" | "end"> & {
+  start: string;
+  end: string;
+};
 
 const defaultProps: {
-  alerts: Alert[];
-  info: Info & { contact: Omit<Contact, "id"> };
+  alerts: SerializedAlert[];
+  info: {
+    contact: { address: string; facebook: string; instagram: string };
+  };
 } = {
   alerts: [
     {
       id: "123",
       title: "Watch out!!!",
       text: "A very important alert",
-      start: new Date("2024-07-18"),
-      end: new Date("2024-07-19"),
+      start: new Date("2024-07-18").toISOString(),
+      end: new Date("2024-07-19").toISOString(),
     },
   ],
   info: {
-    id: "123",
-    contactId: "1234",
-    about: "what",
     contact: {
       facebook: "facebook.com",
       instagram: "instagram.com",
-      email: "test@avantiwestlinn.com",
       address: "42 P Wallaby way",
-      phone: "1234567890",
     },
   },
 };

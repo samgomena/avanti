@@ -5,7 +5,7 @@ import type { GetServerSidePropsContext } from "next";
 import type { ParsedUrlQuery } from "node:querystring";
 import type { Course } from "../../lib/types/menu";
 import Overview from "../../pages/admin/overview";
-import { vi, Vitest } from "vitest";
+import { vi } from "vitest";
 
 vi.mock("@/lib/auth-session", () => ({
   getAuthSessionFromGssp: vi.fn(),

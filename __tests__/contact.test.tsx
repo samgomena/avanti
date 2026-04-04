@@ -2,8 +2,12 @@ import { render, screen } from "@testing-library/react";
 import Contact from "../pages/contact";
 import { ParallaxProvider } from "react-scroll-parallax";
 
-const defaultContactProps = {
+const defaultInfo = {
+  id: "info-1",
+  about: "",
+  contactId: "contact-1",
   contact: {
+    id: "contact-1",
     address: "",
     phone: "",
     email: "",
@@ -16,7 +20,7 @@ describe("Contact", () => {
   it("fucking renders", () => {
     render(
       <ParallaxProvider>
-        <Contact info={defaultContactProps} />
+        <Contact info={defaultInfo} />
       </ParallaxProvider>
     );
 
@@ -32,8 +36,9 @@ describe("Contact renders info", () => {
       <ParallaxProvider>
         <Contact
           info={{
+            ...defaultInfo,
             contact: {
-              ...defaultContactProps.contact,
+              ...defaultInfo.contact,
               email: "test@example.com",
             },
           }}
@@ -55,8 +60,9 @@ describe("Contact renders info", () => {
       <ParallaxProvider>
         <Contact
           info={{
+            ...defaultInfo,
             contact: {
-              ...defaultContactProps.contact,
+              ...defaultInfo.contact,
               phone: "1234567890",
             },
           }}
@@ -78,8 +84,9 @@ describe("Contact renders info", () => {
       <ParallaxProvider>
         <Contact
           info={{
+            ...defaultInfo,
             contact: {
-              ...defaultContactProps.contact,
+              ...defaultInfo.contact,
               address: "123 1st ave",
             },
           }}
@@ -107,8 +114,9 @@ describe("Contact renders info", () => {
         <ParallaxProvider>
           <Contact
             info={{
+              ...defaultInfo,
               contact: {
-                ...defaultContactProps.contact,
+                ...defaultInfo.contact,
                 facebook: "facebook",
                 instagram: "instagram",
               },
@@ -127,8 +135,9 @@ describe("Contact renders info", () => {
         <ParallaxProvider>
           <Contact
             info={{
+              ...defaultInfo,
               contact: {
-                ...defaultContactProps.contact,
+                ...defaultInfo.contact,
                 facebook: "https://example.com/facebook",
               },
             }}
@@ -148,8 +157,9 @@ describe("Contact renders info", () => {
         <ParallaxProvider>
           <Contact
             info={{
+              ...defaultInfo,
               contact: {
-                ...defaultContactProps.contact,
+                ...defaultInfo.contact,
                 instagram: "https://example.com/instagram",
               },
             }}

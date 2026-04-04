@@ -19,6 +19,8 @@ test.skip("protected example router", async () => {
         userId: "user-1",
         expiresAt: new Date(),
         token: "token",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     },
   });
