@@ -9,7 +9,7 @@ import {
   Formik,
   type FormikHelpers,
 } from "formik";
-import { getSession } from "next-auth/react";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import type { GetServerSideProps } from "next/types";
 import type React from "react";
 import Button from "react-bootstrap/Button";
@@ -255,8 +255,8 @@ const AddMenuItem: React.FC = () => {
 export default withAdminNav(AddMenuItem);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,

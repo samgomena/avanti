@@ -1,13 +1,19 @@
-import type { User } from "@prisma/client";
-import { getSession } from "next-auth/react";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
+import { drizzleDb } from "@/lib/db/libsql";
+import { user as userTable } from "@/lib/db/schema";
 import type { GetServerSideProps } from "next/types";
-import { db } from "@/server/db";
+import { eq } from "drizzle-orm";
 import { formatDate } from "../../lib/utils/utils";
 
 import withAdminNav from "../../lib/withAdminNav";
 
 type SettingsProps = {
-  user: User;
+  user: {
+    email: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
 };
 
 const Settings: React.FC<SettingsProps> = ({ user }) => {
@@ -25,14 +31,10 @@ const Settings: React.FC<SettingsProps> = ({ user }) => {
           <span>Email: {user.email}</span>
         </p>
         <p>
-          <span>
-            Last updated: {formatDate(user.updatedAt as unknown as string)}
-          </span>
+          <span>Last updated: {formatDate(user.updatedAt)}</span>
         </p>
         <p>
-          <span>
-            Created: {formatDate(user.createdAt as unknown as string)}
-          </span>
+          <span>Created: {formatDate(user.createdAt)}</span>
         </p>
       </div>
     </div>
@@ -42,8 +44,8 @@ const Settings: React.FC<SettingsProps> = ({ user }) => {
 export default withAdminNav(Settings);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,
@@ -52,25 +54,33 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const user = await db.user.findUnique({
-    select: {
-      email: true,
-      name: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-    where: {
-      // We know that email can't be null if they're already logged in
-      email: session.user?.email ?? "",
-    },
-  });
+  const [row] = await drizzleDb
+    .select({
+      email: userTable.email,
+      name: userTable.name,
+      createdAt: userTable.createdAt,
+      updatedAt: userTable.updatedAt,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, session.user.id))
+    .limit(1);
+
+  if (!row) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/login?wantsUrl=${ctx.resolvedUrl}`,
+      },
+    };
+  }
 
   return {
     props: {
       user: {
-        ...user,
-        createdAt: user?.createdAt.toISOString(),
-        updatedAt: user?.updatedAt.toISOString(),
+        email: row.email,
+        name: row.name,
+        createdAt: row.createdAt.toISOString(),
+        updatedAt: row.updatedAt.toISOString(),
       },
     },
   };

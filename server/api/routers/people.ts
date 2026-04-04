@@ -1,23 +1,32 @@
 import { validationSchema } from "@/pages/admin/people";
+import { drizzleDb } from "@/lib/db/libsql";
+import { account, session, user } from "@/lib/db/schema";
 import { TRPCError } from "@trpc/server";
-import { protectedProcedure, createTRPCRouter } from "../trpc";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+
+import { protectedProcedure, createTRPCRouter } from "../trpc";
 
 export const peopleRouter = createTRPCRouter({
   create: protectedProcedure.input(validationSchema).mutation(async (opts) => {
-    const { input, ctx } = opts;
+    const { input } = opts;
 
     try {
-      const newUser = await ctx.db.user.create({
-        data: {
-          email: input.email,
+      const id = crypto.randomUUID();
+      const now = new Date();
+
+      const [newUser] = await drizzleDb
+        .insert(user)
+        .values({
+          id,
           name: input.name,
-          emailVerified: null,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      });
+          email: input.email,
+          emailVerified: false,
+          image: null,
+          createdAt: now,
+          updatedAt: now,
+        })
+        .returning();
 
       return {
         ok: true,
@@ -32,19 +41,26 @@ export const peopleRouter = createTRPCRouter({
     }
   }),
   update: protectedProcedure.input(validationSchema).mutation(async (opts) => {
-    const { input, ctx } = opts;
+    const { input } = opts;
+
+    if (!input.id) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: "User id required" });
+    }
 
     try {
-      const updatedUser = await ctx.db.user.update({
-        where: {
-          id: input.id,
-        },
-        data: {
+      const [updatedUser] = await drizzleDb
+        .update(user)
+        .set({
           name: input.name,
           email: input.email,
           updatedAt: new Date(),
-        },
-      });
+        })
+        .where(eq(user.id, input.id))
+        .returning();
+
+      if (!updatedUser) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      }
 
       return {
         ok: true,
@@ -52,6 +68,9 @@ export const peopleRouter = createTRPCRouter({
         error: null,
       };
     } catch (error) {
+      if (error instanceof TRPCError) {
+        throw error;
+      }
       if (typeof error === "string") {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error });
       }
@@ -62,24 +81,32 @@ export const peopleRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async (opts) => {
-      const { input, ctx } = opts;
+      const { input } = opts;
 
       try {
-        const adapter = PrismaAdapter(ctx.db);
-        // Note: `deleteUser` is defined for the prisma adapter
-        // See: https://github.com/nextauthjs/next-auth/blob/a7a48a142f47e4c03d39df712a2bf810342cf202/packages/adapter-prisma/src/index.ts#L46
-        const deleted = await adapter.deleteUser?.(input.id);
+        const [existing] = await drizzleDb
+          .select()
+          .from(user)
+          .where(eq(user.id, input.id))
+          .limit(1);
 
-        // Alternatively, can use something like this instead if the above doesn't work for some reason
-        // The benefit of the above is the adapter invalidates sessions on delete
-        // const deleted = await prisma.user.delete({ where: { id: userId } });
+        if (!existing) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+        }
+
+        await drizzleDb.delete(session).where(eq(session.userId, input.id));
+        await drizzleDb.delete(account).where(eq(account.userId, input.id));
+        await drizzleDb.delete(user).where(eq(user.id, input.id));
 
         return {
           ok: true,
           error: null,
-          data: deleted,
+          data: existing,
         };
       } catch (error) {
+        if (error instanceof TRPCError) {
+          throw error;
+        }
         if (typeof error === "string") {
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",

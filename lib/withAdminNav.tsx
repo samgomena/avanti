@@ -1,4 +1,4 @@
-import { signOut } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/router";
 import Button from "react-bootstrap/Button";
 import { AdminHeader as Header } from "../components/Header";
@@ -79,7 +79,15 @@ function withAdminNav<T extends JSX.IntrinsicAttributes & object>(
                       variant="outline-primary"
                       className="w-100"
                       size="sm"
-                      onClick={() => signOut({ callbackUrl: "/login" })}
+                      onClick={() =>
+                        authClient.signOut({
+                          fetchOptions: {
+                            onSuccess: () => {
+                              void router.push("/login");
+                            },
+                          },
+                        })
+                      }
                     >
                       Logout
                     </Button>

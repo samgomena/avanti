@@ -1,5 +1,5 @@
 import type { Courses } from "@prisma/client";
-import { getSession } from "next-auth/react";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import type { GetServerSideProps } from "next/types";
 import { useCallback, useState } from "react";
 import { Form, Table } from "react-bootstrap";
@@ -137,8 +137,8 @@ const Overview: React.FC<{ menu: OverviewProps }> = ({ menu }) => {
 export default withAdminNav(Overview);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,

@@ -4,7 +4,7 @@ import { api } from "@/lib/api";
 import { db } from "@/server/db";
 import type { Alert as AlertType } from "@prisma/client";
 import { Form, Formik, type FormikValues } from "formik";
-import { getSession } from "next-auth/react";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
@@ -329,8 +329,8 @@ const DeleteAlert = ({ alertId }: { alertId: string }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,

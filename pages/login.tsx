@@ -1,6 +1,7 @@
 import { Form, Formik, type FormikHelpers } from "formik";
 import type { GetServerSideProps } from "next";
-import { getSession, signIn } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Spinner } from "react-bootstrap";
@@ -51,14 +52,15 @@ const Login: React.FC = () => {
           email_sent_at: new Date().toISOString(),
         });
       }
-      const res = await signIn("email", {
+      const callbackURL =
+        router.query?.wantsUrl?.toString() ?? "/admin/overview";
+
+      const { error } = await authClient.signIn.magicLink({
         email: values.email,
-        // If a continuation url was passed use that otherwise default to the admin overview page
-        // Use toString() because `wantsUrl` *could* be a `string[]` (ofc it never should be though)
-        callbackUrl: router.query?.wantsUrl?.toString() ?? "/admin/overview",
-        redirect: false,
+        callbackURL,
       });
-      if (!res?.error) {
+
+      if (!error) {
         setMessage({
           type: "success",
           text: "Check your email for a login link!",
@@ -157,8 +159,8 @@ const Login: React.FC = () => {
 export default Login;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (session?.user) {
     return {
       redirect: {
         permanent: false,

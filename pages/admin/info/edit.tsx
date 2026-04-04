@@ -1,7 +1,7 @@
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import type { Contact, Days } from "@prisma/client";
 import { Form, Formik } from "formik";
-import { getSession } from "next-auth/react";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
@@ -190,8 +190,8 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
 export default withAdminNav(EditInfo);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,

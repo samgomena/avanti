@@ -36,7 +36,7 @@ import { formatItemPrice } from "@/lib/utils/utils";
 import { Courses, type Menu, type Price } from "@prisma/client";
 import classNames from "classnames";
 import { type DetailedDiff, detailedDiff } from "deep-object-diff";
-import { getSession } from "next-auth/react";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import type { GetServerSideProps } from "next/types";
 import { ChevronDown, ChevronUp, EyeOff, X } from "react-feather";
 import { db } from "@/server/db";
@@ -688,8 +688,8 @@ EditMenuItemProps) {
 export default withAdminNav(EditMenu);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,
