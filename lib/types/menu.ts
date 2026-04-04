@@ -27,7 +27,7 @@ export type Bucket =
       name: string;
       description: string | null;
       price: {
-        dinner: number | null;
-        drinks: number | null;
+        dinner: string | null;
+        drinks: string | null;
       } | null;
     }[];
