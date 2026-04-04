@@ -1,13 +1,15 @@
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import { getServerSideProps } from "@/pages/admin/overview";
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { GetServerSidePropsContext } from "next";
-import { getSession } from "next-auth/react";
 import type { ParsedUrlQuery } from "node:querystring";
 import type { Course } from "../../lib/types/menu";
 import Overview from "../../pages/admin/overview";
 import { vi, Vitest } from "vitest";
 
-vi.mock("next-auth/react");
+vi.mock("@/lib/auth-session", () => ({
+  getAuthSessionFromGssp: vi.fn(),
+}));
 vi.mock("next/router", () => ({
   useRouter: () => ({
     asPath: "/test",
@@ -146,7 +148,7 @@ describe("Overview table renders stats", () => {
 
 test("Kicks you out when you're not logged in", async () => {
   global.fetch = vi.fn(() => {}) as unknown as typeof global.fetch;
-  vi.mocked(getSession).mockReturnValue(Promise.resolve(null));
+  vi.mocked(getAuthSessionFromGssp).mockResolvedValue(null);
 
   const context = {
     params: {} as ParsedUrlQuery,
