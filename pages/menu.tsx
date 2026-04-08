@@ -30,10 +30,14 @@ import Tabs from "react-bootstrap/Tabs";
 type MenuProps = {
   apps: Bucket;
   entrees: Bucket;
+  desserts: Bucket;
   drinks: Bucket;
 };
 
-async function loadBucketForCourse(course: Course): Promise<Bucket> {
+async function loadBucketForCourse(
+  course: Course,
+  priceKind: "dinner" | "drinks" | "dessert"
+): Promise<Bucket> {
   const rows = await drizzleDb.query.menu.findMany({
     where: and(eq(menu.disabled, false), eq(menu.course, course)),
     orderBy: [asc(menu.idx)],
@@ -43,7 +47,7 @@ async function loadBucketForCourse(course: Course): Promise<Bucket> {
     },
     with: {
       price: {
-        columns: { dinner: true, drinks: true },
+        columns: { dinner: true, drinks: true, dessert: true },
       },
     },
   });
@@ -53,14 +57,15 @@ async function loadBucketForCourse(course: Course): Promise<Bucket> {
     description: row.description,
     price: row.price
       ? {
-          dinner: row.price.dinner || null,
-          drinks: row.price.drinks || null,
+          dinner: priceKind === "dinner" ? row.price.dinner || null : null,
+          drinks: priceKind === "drinks" ? row.price.drinks || null : null,
+          dessert: priceKind === "dessert" ? row.price.dessert || null : null,
         }
       : null,
   }));
 }
 
-export default function Menu({ apps, entrees, drinks }: MenuProps) {
+export default function Menu({ apps, entrees, desserts, drinks }: MenuProps) {
   // TODO(6/4/22): Default active key is always dinner while lunch/hh are disbaled
   // const defaultActiveKey = useMemo(getDefaultActiveKey, []);
   const defaultActiveKey = "dinner";
@@ -102,6 +107,15 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
                       price={item.price?.dinner ?? ""}
                     />
                   ))}
+                  <MenuDivider>Desserts</MenuDivider>
+                  {desserts.map((item, idx) => (
+                    <MenuItem
+                      key={idx}
+                      name={item.name}
+                      description={item.description ?? ""}
+                      price={item.price?.dessert ?? ""}
+                    />
+                  ))}
                 </MenuItems>
               </Tab>
 
@@ -126,16 +140,18 @@ export default function Menu({ apps, entrees, drinks }: MenuProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const [apps, entrees, drinks] = await Promise.all([
-    loadBucketForCourse("appetizer"),
-    loadBucketForCourse("entree"),
-    loadBucketForCourse("drink"),
+  const [apps, entrees, desserts, drinks] = await Promise.all([
+    loadBucketForCourse("appetizer", "dinner"),
+    loadBucketForCourse("entree", "dinner"),
+    loadBucketForCourse("dessert", "dessert"),
+    loadBucketForCourse("drink", "drinks"),
   ]);
 
   return {
     props: {
       apps,
       entrees,
+      desserts,
       drinks,
     },
   };
