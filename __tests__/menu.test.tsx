@@ -6,10 +6,17 @@ import type { Bucket } from "@/lib/types/menu";
 const dinnerPrice = (n: number) => ({
   dinner: String(n),
   drinks: null as string | null,
+  dessert: null as string | null,
 });
 const drinksPrice = (n: number) => ({
   dinner: null as string | null,
   drinks: String(n),
+  dessert: null as string | null,
+});
+const dessertPrice = (n: number) => ({
+  dinner: null as string | null,
+  drinks: null as string | null,
+  dessert: String(n),
 });
 
 const apps = [
@@ -74,6 +81,14 @@ const entrees = [
   },
 ] satisfies Bucket;
 
+const desserts = [
+  {
+    name: "Tiramisu",
+    description: "Espresso-soaked ladyfingers, mascarpone, cocoa",
+    price: dessertPrice(9),
+  },
+] satisfies Bucket;
+
 const drinks = [
   {
     name: "Last Word",
@@ -101,7 +116,7 @@ describe("Menu", () => {
   it("fucking renders", () => {
     render(
       <ParallaxProvider>
-        <Menu apps={apps} entrees={entrees} drinks={drinks} />
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
       </ParallaxProvider>
     );
 
@@ -113,7 +128,7 @@ describe("Menu", () => {
   it("Has all the tabs", () => {
     render(
       <ParallaxProvider>
-        <Menu apps={apps} entrees={entrees} drinks={drinks} />
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
       </ParallaxProvider>
     );
 
@@ -128,19 +143,31 @@ describe("Menu", () => {
   it("Does not have ff'd tabs", () => {
     render(
       <ParallaxProvider>
-        <Menu apps={apps} entrees={entrees} drinks={drinks} />
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
       </ParallaxProvider>
     );
 
-    ["Lunch", "Happy Hour", "Dessert"].forEach((_tab) => {
+    ["Lunch", "Happy Hour"].forEach((_tab) => {
       expect(screen.queryByText(_tab)).toBeNull();
     });
+    expect(screen.queryByRole("tab", { name: "Dessert" })).toBeNull();
+  });
+
+  it("Lists desserts on the dinner tab", () => {
+    render(
+      <ParallaxProvider>
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
+      </ParallaxProvider>
+    );
+
+    expect(screen.getByText("Desserts")).toBeInTheDocument();
+    expect(screen.getByText("Tiramisu")).toBeInTheDocument();
   });
 
   it("Has dinner selected by default", () => {
     render(
       <ParallaxProvider>
-        <Menu apps={apps} entrees={entrees} drinks={drinks} />
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
       </ParallaxProvider>
     );
 
