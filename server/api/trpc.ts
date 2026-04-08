@@ -5,18 +5,23 @@ import { ZodError } from "zod";
 
 import { auth } from "@/lib/auth";
 import { getAuthSessionFromHeaders } from "@/lib/auth-session";
-import { db } from "@/server/db";
+import {
+  drizzleDb,
+  type AppDrizzleDatabase,
+} from "@/lib/db/libsql";
 
 type AuthSession = NonNullable<Awaited<ReturnType<typeof auth.api.getSession>>>;
 
 type CreateContextOptions = {
   session: AuthSession | null;
+  /** For tests — defaults to the app singleton `drizzleDb`. */
+  db?: AppDrizzleDatabase;
 };
 
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
-    db,
+    db: opts.db ?? drizzleDb,
   };
 };
 
@@ -48,16 +53,6 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 export const protectedProcedure = t.procedure.use((opts) => {
   const { ctx, next } = opts;
-
-  // TODO: Pin to dev server until we have more tests
-  // if (process.env.NODE_ENV !== "development") {
-  //   throw new TRPCError({ code: "UNAUTHORIZED" });
-  // }
-
-  // TODO: Only allow updates?
-  // if (ctx.req.method !== "POST") {
-  //   throw new TRPCError({ code: "METHOD_NOT_SUPPORTED" });
-  // }
 
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });

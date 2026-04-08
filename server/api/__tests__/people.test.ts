@@ -2,7 +2,7 @@ import { vi } from "vitest";
 import { appRouter } from "../root";
 import { createInnerTRPCContext } from "../trpc";
 
-test.skip("protected example router", async () => {
+test.skip("people: create", async () => {
   const ctx = createInnerTRPCContext({
     session: {
       user: {

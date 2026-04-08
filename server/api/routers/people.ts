@@ -1,5 +1,4 @@
 import { validationSchema } from "@/pages/admin/people";
-import { drizzleDb } from "@/lib/db/libsql";
 import { account, session, user } from "@/lib/db/schema";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
@@ -9,13 +8,13 @@ import { protectedProcedure, createTRPCRouter } from "../trpc";
 
 export const peopleRouter = createTRPCRouter({
   create: protectedProcedure.input(validationSchema).mutation(async (opts) => {
-    const { input } = opts;
+    const { input, ctx } = opts;
 
     try {
       const id = crypto.randomUUID();
       const now = new Date();
 
-      const [newUser] = await drizzleDb
+      const [newUser] = await ctx.db
         .insert(user)
         .values({
           id,
@@ -41,14 +40,14 @@ export const peopleRouter = createTRPCRouter({
     }
   }),
   update: protectedProcedure.input(validationSchema).mutation(async (opts) => {
-    const { input } = opts;
+    const { input, ctx } = opts;
 
     if (!input.id) {
       throw new TRPCError({ code: "BAD_REQUEST", message: "User id required" });
     }
 
     try {
-      const [updatedUser] = await drizzleDb
+      const [updatedUser] = await ctx.db
         .update(user)
         .set({
           name: input.name,
@@ -81,10 +80,10 @@ export const peopleRouter = createTRPCRouter({
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async (opts) => {
-      const { input } = opts;
+      const { input, ctx } = opts;
 
       try {
-        const [existing] = await drizzleDb
+        const [existing] = await ctx.db
           .select()
           .from(user)
           .where(eq(user.id, input.id))
@@ -94,9 +93,9 @@ export const peopleRouter = createTRPCRouter({
           throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
         }
 
-        await drizzleDb.delete(session).where(eq(session.userId, input.id));
-        await drizzleDb.delete(account).where(eq(account.userId, input.id));
-        await drizzleDb.delete(user).where(eq(user.id, input.id));
+        await ctx.db.delete(session).where(eq(session.userId, input.id));
+        await ctx.db.delete(account).where(eq(account.userId, input.id));
+        await ctx.db.delete(user).where(eq(user.id, input.id));
 
         return {
           ok: true,

@@ -1,8 +1,16 @@
 import { validationSchema as addValidationSchema } from "@/pages/admin/menu/add";
+import type { Course, Service } from "@/lib/db/schema";
+import {
+  MENU_COURSE_ORDER_CASE_SQL,
+  menu,
+  menuCourseDisplayOrder,
+  price,
+} from "@/lib/db/schema";
 import { TRPCError } from "@trpc/server";
-import { protectedProcedure, createTRPCRouter } from "../trpc";
-import { type Courses, Services } from "@prisma/client";
+import { and, asc, desc, eq, gt, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
+
+import { protectedProcedure, createTRPCRouter } from "../trpc";
 
 const updateMenuItemSchema = z.array(
   z.object({
@@ -31,93 +39,254 @@ const updateMenuItemSchema = z.array(
   })
 );
 
+type MenuBulkRow = {
+  id: string;
+  idx: number | null;
+  name: string | null;
+  description: string | null;
+  course: string | null;
+  disabled: boolean | null;
+};
+
+type PriceBulkRow = {
+  id: string;
+  dinner: string | null;
+  lunch: string | null;
+  hh: string | null;
+  drinks: string | null;
+  dessert: string | null;
+};
+
+/**
+ * One `UPDATE` for all menu rows (SQLite-friendly): `CASE id WHEN … THEN COALESCE(new, col)`.
+ * Bound `null` means “leave this column for this row”.
+ */
+function bulkUpdateMenuCase(rows: MenuBulkRow[]) {
+  if (rows.length === 0) {
+    return null;
+  }
+
+  const idxCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.idx}, idx)`),
+      sql`ELSE idx END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const nameCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.name}, name)`),
+      sql`ELSE name END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const descCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.description}, description)`),
+      sql`ELSE description END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const courseCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.course}, course)`),
+      sql`ELSE course END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const disabledCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => {
+        const v =
+          r.disabled === null || r.disabled === undefined
+            ? null
+            : r.disabled
+              ? 1
+              : 0;
+        return sql`WHEN ${r.id} THEN COALESCE(${v}, disabled)`;
+      }),
+      sql`ELSE disabled END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const idIn = sql.join(
+    rows.map((r) => sql`${r.id}`),
+    sql`, `
+  );
+
+  return sql`
+    UPDATE "Menu" SET
+      idx = ${idxCase},
+      name = ${nameCase},
+      description = ${descCase},
+      course = ${courseCase},
+      disabled = ${disabledCase}
+    WHERE id IN (${idIn})
+  `;
+}
+
+function bulkUpdatePriceCase(rows: PriceBulkRow[]) {
+  if (rows.length === 0) {
+    return null;
+  }
+
+  const dinnerCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.dinner}, dinner)`),
+      sql`ELSE dinner END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const lunchCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.lunch}, lunch)`),
+      sql`ELSE lunch END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const hhCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.hh}, hh)`),
+      sql`ELSE hh END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const drinksCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.drinks}, drinks)`),
+      sql`ELSE drinks END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const dessertCase = sql.join(
+    [
+      sql`CASE id`,
+      ...rows.map((r) => sql`WHEN ${r.id} THEN COALESCE(${r.dessert}, dessert)`),
+      sql`ELSE dessert END`,
+    ],
+    sql.raw(" ")
+  );
+
+  const idIn = sql.join(
+    rows.map((r) => sql`${r.id}`),
+    sql`, `
+  );
+
+  return sql`
+    UPDATE "Price" SET
+      dinner = ${dinnerCase},
+      lunch = ${lunchCase},
+      hh = ${hhCase},
+      drinks = ${drinksCase},
+      dessert = ${dessertCase}
+    WHERE id IN (${idIn})
+  `;
+}
+
+/**
+ * One pass: compact `idx` to 0…n-1 **globally** in display order: course (app → entree → dessert → drink),
+ * then `idx`, then `id`. Matches the admin list and public menu flow.
+ */
+const reindexMenuGlobalSql = sql.raw(`
+  UPDATE "Menu" AS m
+  SET idx = v.new_idx
+  FROM (
+    SELECT id, (ROW_NUMBER() OVER (ORDER BY ${MENU_COURSE_ORDER_CASE_SQL.trim()} ASC, idx ASC, id ASC) - 1) AS new_idx
+    FROM "Menu"
+  ) AS v
+  WHERE m.id = v.id
+`);
+
+/**
+ * `idx` is **per course**: ordering and shifts only affect rows sharing the same `course`.
+ * - `add` appends at `max(idx) + 1` within the course (or `0` if the course is empty).
+ * - `delete` decrements `idx` only for rows in that course with `idx` greater than the removed row.
+ * - `edit`: bulk `UPDATE "Menu"` / `UPDATE "Price"`, then global `idx` renumber (`ROW_NUMBER` by course display order, `idx`, `id`).
+ */
 export const menuRouter = createTRPCRouter({
   add: protectedProcedure.input(addValidationSchema).mutation(async (opts) => {
     const { input, ctx } = opts;
 
-    type Errors = { ok: false; data: null; error: string }[];
-    const errors: Errors = [];
-
-    // This type was taken directly from the prisma `.create(...)` method below.
-    // It may need to be updated in the future.
     const createdItems: {
       id: string;
       idx: number;
       name: string;
       description: string | null;
-      service: Services | null;
-      course: Courses;
+      service: Service | null;
+      course: Course;
       disabled: boolean;
     }[] = [];
 
     for (const item of input.items) {
       try {
-        await ctx.db.$transaction(async (tx) => {
-          if ((await tx.menu.count()) === 0) {
+        await ctx.db.transaction(async (tx) => {
+          const [lastIndexRow] = await tx
+            .select({ idx: menu.idx })
+            .from(menu)
+            .where(eq(menu.course, item.course))
+            .orderBy(desc(menu.idx))
+            .limit(1);
+
+          const nextIdx = lastIndexRow ? lastIndexRow.idx + 1 : 0;
+
+          const menuId = crypto.randomUUID();
+          const priceId = crypto.randomUUID();
+
+          await tx.insert(menu).values({
+            id: menuId,
+            idx: nextIdx,
+            name: item.name,
+            description: item.description ?? "",
+            course: item.course,
+            service: "dinner",
+            disabled: false,
+          });
+
+          await tx.insert(price).values({
+            id: priceId,
+            menuId,
+            dinner: item.price.dinner?.toString() || "0",
+            lunch: item.price.lunch?.toString() || "0",
+            hh: item.price.hh?.toString() || "0",
+            drinks: item.price.drinks?.toString() || "0",
+            dessert: item.price.dessert?.toString() || "0",
+          });
+
+          const [created] = await tx
+            .select({
+              id: menu.id,
+              idx: menu.idx,
+              name: menu.name,
+              description: menu.description,
+              service: menu.service,
+              course: menu.course,
+              disabled: menu.disabled,
+            })
+            .from(menu)
+            .where(eq(menu.id, menuId))
+            .limit(1);
+
+          if (created) {
+            createdItems.push(created);
           }
-
-          const lastIndex = await tx.menu.findFirst({
-            where: {
-              course: {
-                equals: item.course,
-              },
-            },
-            orderBy: {
-              idx: "desc",
-            },
-            select: {
-              idx: true,
-            },
-          });
-
-          if (!lastIndex) {
-            // TODO: Currently don't support adding new items to a fresh db, but this enables it.
-            // TODO: Not sure if it's good to have or nah
-            // lastIndex = { idx: 0 };
-
-            errors.push({
-              ok: false,
-              data: null,
-              error: `Couldn't find index to insert '${item.name}' at`,
-            });
-            throw new Error(`Couldn't find index to insert '${item.name}' at`);
-          }
-
-          // Add one to every index *after* the index we're inserting at
-          const _ = await tx.menu.updateMany({
-            where: {
-              idx: {
-                gt: lastIndex.idx,
-              },
-            },
-            data: {
-              idx: {
-                increment: 1,
-              },
-            },
-          });
-
-          // And then insert the new item at the index we found
-          const created = await tx.menu.create({
-            data: {
-              idx: lastIndex ? lastIndex.idx + 1 : 0,
-              name: item.name,
-              description: item.description,
-              course: item.course,
-              service: Services.dinner,
-              disabled: false,
-              price: {
-                create: {
-                  dinner: item.price.dinner?.toString() || "0",
-                  lunch: item.price.lunch?.toString() || "0",
-                  hh: item.price.hh?.toString() || "0",
-                  drinks: item.price.drinks?.toString() || "0",
-                  dessert: item.price.dessert?.toString() || "0",
-                },
-              },
-            },
-          });
-          createdItems.push(created);
         });
       } catch (error) {
         if (typeof error === "string") {
@@ -143,207 +312,83 @@ export const menuRouter = createTRPCRouter({
       const { input, ctx } = opts;
 
       try {
-        const results = await ctx.db.$transaction(
-          async (tx) => {
-            const deletions = input
-              .filter((i) => i.operation === "delete")
-              .map((i) => i.id);
+        const results = await ctx.db.transaction(async (tx) => {
+          const deletions = input
+            .filter((i) => i.operation === "delete")
+            .map((i) => i.id);
 
-            // Process deletions
-            if (deletions.length > 0) {
-              await tx.menu.deleteMany({
-                where: {
-                  id: {
-                    in: deletions,
-                  },
-                },
-              });
-            }
+          if (deletions.length > 0) {
+            await tx.delete(menu).where(inArray(menu.id, deletions));
+          }
 
-            // TODO: Process additions
-            // for (const item of input.filter((i) => i.operation === "add")) {
-            //   // Shift existing items to make space
-            //   await tx.menu.updateMany({
-            //     where: { idx: { gte: item.data.idx } },
-            //     data: { idx: { increment: 1 } },
-            //   });
+          // Two bulk UPDATEs (menu, then price), then reindex — single atomic transaction.
+          const menuRows: MenuBulkRow[] = [];
 
-            //   const newItem = await tx.menu.create({
-            //     data: {
-            //       ...item.data,
-            //       price: item.data.price ? { create: item.data.price } : undefined,
-            //     },
-            //     include: { price: true },
-            //   });
-            //   addedItems.push(newItem);
-            // }
+          const priceRows: PriceBulkRow[] = [];
 
-            const menuRows = [];
-            const priceRows = [];
+          for (const item of input) {
+            if (item.operation !== "update" || !item.data) continue;
+            const d = item.data;
 
-            for (const item of input) {
-              if (item.operation !== "update" || !item.data) continue;
-              const d = item.data;
-
-              // Collect only fields that exist in delta
-              menuRows.push({
-                id: item.id,
-                idx: d.idx ?? null,
-                name: d.name ?? null,
-                description: d.description ?? null,
-                service: d.service ?? null,
-                course: d.course ?? null,
-                disabled: d.disabled ?? null,
-              });
-
-              if (d.price) {
-                priceRows.push({
-                  id: d.price.id,
-                  dinner: d.price.dinner ?? null,
-                  lunch: d.price.lunch ?? null,
-                  hh: d.price.hh ?? null,
-                  drinks: d.price.drinks ?? null,
-                  dessert: d.price.dessert ?? null,
-                });
-              }
-            }
-
-            // Update menu rows in bulk
-            if (menuRows.length > 0) {
-              await tx.$executeRawUnsafe(
-                `
-                UPDATE "Menu" AS m
-                SET
-                  idx         = COALESCE(v.idx, m.idx),
-                  name        = COALESCE(v.name, m.name),
-                  description = COALESCE(v.description, m.description),
-                  course      = COALESCE(v.course, m.course),
-                  disabled    = COALESCE(v.disabled, m.disabled)
-                FROM (
-                  VALUES
-                  ${menuRows
-                    .map(
-                      (_, i) => `(
-                        $${i * 6 + 1}::text,       -- id
-                        $${i * 6 + 2}::int,        -- idx
-                        $${i * 6 + 3}::text,       -- name
-                        $${i * 6 + 4}::text,       -- description
-                        $${i * 6 + 5}::"Courses",  -- course
-                        $${i * 6 + 6}::boolean     -- disabled
-                      )`
-                    )
-                    .join(",")}
-                ) AS v(id, idx, name, description, course, disabled)
-                WHERE m.id = v.id;
-                `,
-                ...menuRows.flatMap((r) => [
-                  r.id,
-                  r.idx,
-                  r.name,
-                  r.description,
-                  r.course,
-                  r.disabled,
-                ])
-              );
-            }
-
-            // Update price rows in bulk
-            if (priceRows.length > 0) {
-              await tx.$executeRawUnsafe(
-                `
-                UPDATE "Price" AS p
-                SET
-                  dinner  = COALESCE(v.dinner, p.dinner),
-                  lunch   = COALESCE(v.lunch, p.lunch),
-                  hh      = COALESCE(v.hh, p.hh),
-                  drinks  = COALESCE(v.drinks, p.drinks),
-                  dessert = COALESCE(v.dessert, p.dessert)
-                FROM (
-                  VALUES
-                  ${priceRows
-                    .map(
-                      (_, i) => `(
-                        $${i * 6 + 1}::text, -- id
-                        $${i * 6 + 2}::text, -- dinner
-                        $${i * 6 + 3}::text, -- lunch
-                        $${i * 6 + 4}::text, -- hh
-                        $${i * 6 + 5}::text, -- drinks
-                        $${i * 6 + 6}::text  -- dessert
-                      )`
-                    )
-                    .join(",")}
-                ) AS v(id, dinner, lunch, hh, drinks, dessert)
-                WHERE p.id = v.id;
-                `,
-                ...priceRows.flatMap((r) => [
-                  r.id,
-                  r.dinner,
-                  r.lunch,
-                  r.hh,
-                  r.drinks,
-                  r.dessert,
-                ])
-              );
-            }
-
-            // Reset the index of the remaining items.
-            // This is an amalgamation of the links and some AI generated code to glue it together.
-            // See: https://github.com/prisma/prisma/discussions/19765
-            // See: https://gist.github.com/aalin/ea23b786e3d55329f6257c0f6576418b
-            // See: https://stackoverflow.com/a/6258586/4668680
-            await tx.$executeRaw`
-              UPDATE "Menu" AS m
-              SET "idx" = t.new_idx
-              FROM (
-                SELECT id, ROW_NUMBER() OVER (ORDER BY idx ASC) - 1 AS new_idx
-                FROM "Menu"
-              ) AS t
-              WHERE m.id = t.id
-            `;
-
-            // Fetch entire menu as our last order of business because the frontend is stoopid and can't
-            // selectively update the form with partial data
-            const menu = await tx.menu.findMany({
-              orderBy: [
-                {
-                  course: "asc",
-                },
-                { idx: "asc" },
-              ],
-              select: {
-                id: true,
-                idx: true,
-                name: true,
-                description: true,
-                course: true,
-                disabled: true,
-                price: {
-                  select: {
-                    id: true,
-                    lunch: true,
-                    dinner: true,
-                    drinks: true,
-                    dessert: true,
-                  },
-                },
-              },
+            menuRows.push({
+              id: item.id,
+              idx: d.idx ?? null,
+              name: d.name ?? null,
+              description: d.description ?? null,
+              course: d.course ?? null,
+              disabled: d.disabled ?? null,
             });
 
-            return {
-              // deletedIds,
-              // updatedItems,
-              menu,
-            };
-          },
-          // TODO: This is really, really slow and we will eventually need to fix it.
-          // The biggest issue is that we have to perform every update one by one. Prisma doesn't support batch updates natively.
-          // See:
-          // - https://github.com/prisma/prisma/discussions/19765
-          // - https://gist.github.com/aalin/ea23b786e3d55329f6257c0f6576418b
-          // Or, alternatively use raw SQL but upgrade to v6 so it's typed and safe
-          // - https://www.prisma.io/blog/prisma-6-better-performance-more-flexibility-and-type-safe-sql#typed-sql-type-safe-raw-sql-queries
-          { timeout: 60_000 }
-        );
+            if (d.price) {
+              priceRows.push({
+                id: d.price.id,
+                dinner: d.price.dinner ?? null,
+                lunch: d.price.lunch ?? null,
+                hh: d.price.hh ?? null,
+                drinks: d.price.drinks ?? null,
+                dessert: d.price.dessert ?? null,
+              });
+            }
+          }
+
+          const menuBulkSql = bulkUpdateMenuCase(menuRows);
+          if (menuBulkSql) {
+            await tx.run(menuBulkSql);
+          }
+
+          const priceBulkSql = bulkUpdatePriceCase(priceRows);
+          if (priceBulkSql) {
+            await tx.run(priceBulkSql);
+          }
+
+          await tx.run(reindexMenuGlobalSql);
+
+          const menuList = await tx.query.menu.findMany({
+            orderBy: [asc(menuCourseDisplayOrder), asc(menu.idx)],
+            columns: {
+              id: true,
+              idx: true,
+              name: true,
+              description: true,
+              course: true,
+              disabled: true,
+            },
+            with: {
+              price: {
+                columns: {
+                  id: true,
+                  lunch: true,
+                  dinner: true,
+                  drinks: true,
+                  dessert: true,
+                },
+              },
+            },
+          });
+
+          return { menu: menuList };
+        });
+
         return {
           ok: true,
           data: results,
@@ -360,6 +405,7 @@ export const menuRouter = createTRPCRouter({
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }
     }),
+  // `idx` in the payload is legacy; we load `course` + `idx` from the DB for same-course shifts.
   delete: protectedProcedure
     .input(
       z.array(
@@ -377,46 +423,36 @@ export const menuRouter = createTRPCRouter({
 
       for (const item of input) {
         try {
-          await ctx.db.$transaction(async (tx) => {
-            // Remove one from every index *after* the index we're removing from
-            const _ = await tx.menu.updateMany({
-              where: {
-                idx: {
-                  gt: item.idx,
-                },
-              },
-              data: {
-                idx: {
-                  decrement: 1,
-                },
-              },
-            });
+          await ctx.db.transaction(async (tx) => {
+            const [row] = await tx
+              .select({ course: menu.course, idx: menu.idx })
+              .from(menu)
+              .where(eq(menu.id, item.id))
+              .limit(1);
 
-            const deleted = await tx.menu.delete({
-              where: {
-                id: item.id,
-              },
-            });
+            if (!row) {
+              throw new Error("Menu item not found");
+            }
+
+            await tx
+              .update(menu)
+              .set({ idx: sql`${menu.idx} - 1` })
+              .where(
+                and(eq(menu.course, row.course), gt(menu.idx, row.idx))
+              );
+
+            await tx.delete(menu).where(eq(menu.id, item.id));
           });
         } catch (error) {
           errors.push({
             ok: false,
             data: null,
-            // @ts-expect-error: TODO: You should probably narrow down the type of errors that can pop up here
-            error: typeof error === "string" ? error : error.message,
+            error: typeof error === "string" ? error : (error as Error).message,
           });
         }
       }
 
       if (errors.length !== 0) {
-        // if (typeof error === "string") {
-        //   throw new TRPCError({
-        //     code: "INTERNAL_SERVER_ERROR",
-        //     message: error,
-        //   });
-        // } else {
-        //   throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
-        // }
         return {
           ok: false,
           data: null,
