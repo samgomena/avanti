@@ -95,6 +95,25 @@ export const menu = sqliteTable("Menu", {
   disabled: integer("disabled", { mode: "boolean" }).notNull().default(false),
 });
 
+/**
+ * Display / admin list order: appetizers (incl. soups & salads) → mains → dessert → drinks.
+ * Use with `asc(menuCourseDisplayOrder)`, then `asc(menu.idx)`.
+ */
+export const menuCourseDisplayOrder = sql`(CASE ${menu.course} WHEN 'appetizer' THEN 0 WHEN 'entree' THEN 1 WHEN 'dessert' THEN 2 WHEN 'drink' THEN 3 ELSE 99 END)`;
+
+/**
+ * Same ordering as {@link menuCourseDisplayOrder}, for raw SQL (`FROM "Menu"` column `course`).
+ * Keep in sync when changing course order.
+ */
+export const MENU_COURSE_ORDER_CASE_SQL = `
+CASE course
+  WHEN 'appetizer' THEN 0
+  WHEN 'entree' THEN 1
+  WHEN 'dessert' THEN 2
+  WHEN 'drink' THEN 3
+  ELSE 99
+END`;
+
 export const price = sqliteTable("Price", {
   id: text("id").primaryKey(),
   dinner: text("dinner").notNull().default(""),

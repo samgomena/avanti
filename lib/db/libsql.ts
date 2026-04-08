@@ -35,5 +35,7 @@ if (process.env.NODE_ENV !== "production") {
 
 export { libsqlClient };
 
-/** Drizzle over libSQL (Turso or local file) — parallel to Prisma until cutover. */
+/** Drizzle over libSQL (Turso or local file). */
 export const drizzleDb = drizzle(libsqlClient, { schema: sqliteSchema });
+
+export type AppDrizzleDatabase = typeof drizzleDb;
