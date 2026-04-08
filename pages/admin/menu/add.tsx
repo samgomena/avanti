@@ -174,8 +174,8 @@ const AddMenuItem: React.FC = () => {
                           options={[
                             { name: "Appetizers", value: "appetizer" },
                             { name: "Entrees", value: "entree" },
-                            { name: "Drinks", value: "drink" },
                             { name: "Desserts", value: "dessert" },
+                            { name: "Drinks", value: "drink" },
                           ]}
                         />
 

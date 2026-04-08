@@ -33,7 +33,12 @@ import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import FilterToggle from "@/components/Menu/FilterToggle";
 import HelpModal from "@/components/Menu/HelpModal";
 import { formatItemPrice } from "@/lib/utils/utils";
-import { courseValues, menu, type Course } from "@/lib/db/schema";
+import {
+  courseValues,
+  menu,
+  menuCourseDisplayOrder,
+  type Course,
+} from "@/lib/db/schema";
 import type { Menu as DbMenu, Price } from "@/lib/db/types";
 import classNames from "classnames";
 import { type DetailedDiff, detailedDiff } from "deep-object-diff";
@@ -349,20 +354,20 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                     Entrees
                   </FilterToggle>
                   <FilterToggle
-                    filterKey="drink"
-                    filter={filter}
-                    setFilter={setFilter}
-                    data-testid="filter-drinks"
-                  >
-                    {(checked) => (checked ? "Dranks" : "Drinks")}
-                  </FilterToggle>
-                  <FilterToggle
                     filterKey="dessert"
                     filter={filter}
                     setFilter={setFilter}
                     data-testid="filter-desserts"
                   >
                     Desserts
+                  </FilterToggle>
+                  <FilterToggle
+                    filterKey="drink"
+                    filter={filter}
+                    setFilter={setFilter}
+                    data-testid="filter-drinks"
+                  >
+                    {(checked) => (checked ? "Dranks" : "Drinks")}
                   </FilterToggle>
                   <span className="border-start mx-2" />
                   <FilterToggle
@@ -653,8 +658,8 @@ EditMenuItemProps) {
             options={[
               { name: "Appetizers", value: "appetizer" },
               { name: "Entrees", value: "entree" },
-              { name: "Drinks", value: "drink" },
               { name: "Desserts", value: "dessert" },
+              { name: "Drinks", value: "drink" },
             ]}
           />
 
@@ -703,7 +708,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // Roughly translates to:
   // SELECT `main`.`Menu`.`id`, `main`.`Menu`.`idx`, `main`.`Menu`.`name`, `main`.`Menu`.`description`, `main`.`Menu`.`service`, `main`.`Menu`.`course`, `main`.`Menu`.`disabled`, `main`.`Menu`.`priceId` FROM `main`.`Menu` WHERE 1=1 ORDER BY `main`.`Menu`.`course` ASC, `main`.`Menu`.`idx` ASC
   const menuRows = await drizzleDb.query.menu.findMany({
-    orderBy: [asc(menu.course), asc(menu.idx)],
+    orderBy: [asc(menuCourseDisplayOrder), asc(menu.idx)],
     columns: {
       id: true,
       idx: true,
