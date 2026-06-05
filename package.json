@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:local": "LIBSQL_URL=file:./data/local.db LIBSQL_AUTH_TOKEN= next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",

@@ -257,6 +257,66 @@ describe.sequential("tRPC routers (Drizzle, isolated DB)", () => {
     expect(afterDel.some((m) => m.id === addedId)).toBe(false);
   });
 
+  it("menu: edit with create persists new row (inline add)", async () => {
+    const menuId = "menu-seed-inline-1";
+    const priceId = "price-seed-inline-1";
+
+    // Use `drink` so this test is isolated from other cases that seed `appetizer` / `entree`.
+    await testDb.insert(menu).values({
+      id: menuId,
+      idx: 0,
+      name: "Existing drink",
+      description: "",
+      course: "drink",
+      service: "dinner",
+      disabled: false,
+    });
+    await testDb.insert(price).values({
+      id: priceId,
+      menuId,
+      dinner: "",
+      lunch: "",
+      hh: "",
+      drinks: "9",
+      dessert: "",
+    });
+
+    const editRes = await caller.menu.edit([
+      {
+        operation: "create",
+        data: {
+          idx: 0,
+          name: "New inline item",
+          description: "",
+          course: "drink",
+          disabled: false,
+          price: {
+            lunch: "",
+            dinner: "",
+            hh: "",
+            drinks: "12",
+            dessert: "",
+          },
+        },
+      },
+    ]);
+
+    expect(editRes.ok).toBe(true);
+    expect(
+      editRes.data?.menu.some((m: { name: string }) => m.name === "New inline item")
+    ).toBe(true);
+
+    const rows = await testDb.query.menu.findMany({
+      where: eq(menu.course, "drink"),
+      orderBy: [asc(menu.idx)],
+      columns: { name: true },
+    });
+    expect(rows.map((r) => r.name)).toEqual([
+      "New inline item",
+      "Existing drink",
+    ]);
+  });
+
   it("menu: add first item to an empty course (idx 0)", async () => {
     const res = await caller.menu.add({
       items: [

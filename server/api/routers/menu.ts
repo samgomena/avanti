@@ -7,36 +7,63 @@ import {
   price,
 } from "@/lib/db/schema";
 import { TRPCError } from "@trpc/server";
-import { and, asc, desc, eq, gt, inArray, sql } from "drizzle-orm";
+import { and, asc, desc, eq, gt, gte, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { protectedProcedure, createTRPCRouter } from "../trpc";
 
-const updateMenuItemSchema = z.array(
-  z.object({
-    id: z.string(),
-    operation: z.enum(["update", "delete"]),
-    data: z
+const menuEditUpdateDataSchema = z
+  .object({
+    idx: z.number().optional(),
+    name: z.string().optional(),
+    description: z.string().optional(),
+    service: z.enum(["dinner", "lunch", "hh"]).optional(),
+    course: z.enum(["appetizer", "entree", "drink", "dessert"]).optional(),
+    disabled: z.boolean().optional(),
+    price: z
       .object({
-        idx: z.number().optional(),
-        name: z.string().optional(),
-        description: z.string().optional(),
-        service: z.enum(["dinner", "lunch", "hh"]).optional(),
-        course: z.enum(["appetizer", "entree", "drink", "dessert"]).optional(),
-        disabled: z.boolean().optional(),
-        price: z
-          .object({
-            id: z.string(),
-            dinner: z.string().optional(),
-            lunch: z.string().optional(),
-            hh: z.string().optional(),
-            drinks: z.string().optional(),
-            dessert: z.string().optional(),
-          })
-          .optional(),
+        id: z.string(),
+        dinner: z.string().optional(),
+        lunch: z.string().optional(),
+        hh: z.string().optional(),
+        drinks: z.string().optional(),
+        dessert: z.string().optional(),
       })
       .optional(),
   })
+  .optional();
+
+const menuEditCreateDataSchema = z.object({
+  idx: z.number(),
+  name: z.string(),
+  description: z.string().optional(),
+  course: z.enum(["appetizer", "entree", "drink", "dessert"]),
+  disabled: z.boolean().optional(),
+  price: z.object({
+    dinner: z.string().optional(),
+    lunch: z.string().optional(),
+    hh: z.string().optional(),
+    drinks: z.string().optional(),
+    dessert: z.string().optional(),
+  }),
+});
+
+const updateMenuItemSchema = z.array(
+  z.discriminatedUnion("operation", [
+    z.object({
+      operation: z.literal("delete"),
+      id: z.string(),
+    }),
+    z.object({
+      operation: z.literal("update"),
+      id: z.string(),
+      data: menuEditUpdateDataSchema,
+    }),
+    z.object({
+      operation: z.literal("create"),
+      data: menuEditCreateDataSchema,
+    }),
+  ])
 );
 
 type MenuBulkRow = {
@@ -319,6 +346,47 @@ export const menuRouter = createTRPCRouter({
 
           if (deletions.length > 0) {
             await tx.delete(menu).where(inArray(menu.id, deletions));
+          }
+
+          const createOps = input
+            .filter((i) => i.operation === "create")
+            .sort((a, b) => {
+              const c = a.data.course.localeCompare(b.data.course);
+              if (c !== 0) return c;
+              return b.data.idx - a.data.idx;
+            });
+
+          for (const op of createOps) {
+            const d = op.data;
+            await tx
+              .update(menu)
+              .set({ idx: sql`${menu.idx} + 1` })
+              .where(
+                and(eq(menu.course, d.course), gte(menu.idx, d.idx))
+              );
+
+            const menuId = crypto.randomUUID();
+            const priceId = crypto.randomUUID();
+
+            await tx.insert(menu).values({
+              id: menuId,
+              idx: d.idx,
+              name: d.name,
+              description: d.description ?? "",
+              course: d.course,
+              service: "dinner",
+              disabled: d.disabled ?? false,
+            });
+
+            await tx.insert(price).values({
+              id: priceId,
+              menuId,
+              dinner: d.price.dinner?.toString() || "0",
+              lunch: d.price.lunch?.toString() || "0",
+              hh: d.price.hh?.toString() || "0",
+              drinks: d.price.drinks?.toString() || "0",
+              dessert: d.price.dessert?.toString() || "0",
+            });
           }
 
           // Two bulk UPDATEs (menu, then price), then reindex — single atomic transaction.

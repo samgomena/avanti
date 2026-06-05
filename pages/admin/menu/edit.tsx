@@ -251,9 +251,42 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
       operation: "delete" as const,
     }));
 
+    const createOperations = values.items
+      .map((item, index) => ({ item, index }))
+      .filter(({ item }) => item.id.startsWith("new-"))
+      .map(({ item, index }) => {
+        const idxWithinCourse =
+          values.items
+            .slice(0, index + 1)
+            .filter((i) => i.course === item.course).length - 1;
+        const strPrice = (v: unknown) =>
+          v === "" || v === undefined || v === null ? "" : String(v);
+        return {
+          operation: "create" as const,
+          data: {
+            idx: idxWithinCourse,
+            name: item.name,
+            description: item.description ?? "",
+            course: item.course,
+            disabled: item.disabled,
+            price: {
+              lunch: strPrice(item.price.lunch),
+              dinner: strPrice(item.price.dinner),
+              hh: strPrice(item.price.hh),
+              drinks: strPrice(item.price.drinks),
+              dessert: strPrice(item.price.dessert),
+            },
+          },
+        };
+      });
+
     // @ts-expect-error: We can't type the diff object any more concretely than `unknown` currently
-    const valuesWithNewIdx = Object.entries(diff?.updated.items ?? {}).map(
-      ([key, value]) => {
+    const valuesWithNewIdx = Object.entries(diff?.updated.items ?? {})
+      .filter(([key]) => {
+        const currentItem = values.items[Number(key)];
+        return Boolean(currentItem && !currentItem.id.startsWith("new-"));
+      })
+      .map(([key, value]) => {
         // key is the index (from the db) of the item that we want to update
         const currentItem = values.items[Number(key)];
         // If price is in the diff, ensure we include price.id from current values
@@ -270,14 +303,14 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
         const obj = {
           id: currentItem.id,
           operation: "update" as const,
-          // @ts-expect-error: We can't type the value object b/c the diff object doesn't let up
-          data: data as MenuItemWithPrice,
+          data: data as Record<string, unknown>,
         };
         return obj;
-      }
-    );
+      });
 
-    updateMutation.mutate([...removedItems, ...valuesWithNewIdx], {
+    updateMutation.mutate(
+      [...removedItems, ...createOperations, ...valuesWithNewIdx],
+      {
       onSuccess: (res) => {
         resetForm({
           values: { items: res.data.menu as MenuWithPrice[] },
@@ -411,7 +444,6 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                         <SortableList.Item id={item.id}>
                           <div
                             className={classNames(
-                              "group",
                               // Filtering logic
                               {
                                 // Don't filter items if there are *no* fitlers applied -- otherwise filter that ish
@@ -431,94 +463,106 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
                             )}
                             data-testid={`edit-item-container-${item.idx}`}
                           >
-                            <EditMenuItem
-                              mvIdx={item.mvIdx}
-                              hasError={errors.items?.[item.idx] !== undefined}
-                              item={item}
-                              dragHandle={<SortableList.DragHandle />}
-                              remove={onRemove(remove)}
-                              // TODO: Allow separating removed and edited
-                              // removed={removed.includes(item.idx)}
-                            />
-                            {/* TODO: Allow adding items in the middle of the thing */}
-                            {/* <div>
-                              <div className="d-flex">
-                                <hr style={{ flex: 1, width: "50%" }} />
-                                <div className="d-flex justify-center items-center group-hover opacity-0 opacity-100-hover">
-                                  <button
-                                    onClick={() => {
-                                      insert(item.mvIdx + 1, {
-                                        ...initialValue,
-                                        course: item.course,
-                                        idx: item.mvIdx + 1,
-                                      });
-                                    }}
-                                    type="button"
-                                    className="btn btn-outline-secondary btn-sm"
-                                    style={
-                                      {
-                                        "--bs-btn-padding-y": "0.25rem",
-                                        "--bs-btn-padding-x": "0.75rem",
-                                      } as React.CSSProperties
-                                    }
-                                  >
-                                    +
-                                  </button>
-                                </div>
-                                <hr
-                                  style={{
-                                    flex: 1,
-                                    width: "50%",
-                                    alignItems: "end",
+                            <div className="group">
+                              <EditMenuItem
+                                mvIdx={item.mvIdx}
+                                defaultExpanded={item.id.startsWith("new-")}
+                                hasError={
+                                  errors.items?.[item.mvIdx] !== undefined &&
+                                  !item.id.startsWith("new-")
+                                }
+                                item={item}
+                                dragHandle={<SortableList.DragHandle />}
+                                remove={onRemove(remove)}
+                                // TODO: Allow separating removed and edited
+                                // removed={removed.includes(item.idx)}
+                              />
+                            </div>
+                            <div
+                              className="group position-relative py-1"
+                              style={{ marginTop: "-0.125rem" }}
+                            >
+                              <hr
+                                className="m-0 w-100"
+                                style={{
+                                  // Make hr wider between different course sections
+                                  borderTopWidth: (() => {
+                                    const currentIdx = item.mvIdx;
+                                    // Helper function to check if an item would be visible
+                                    const isItemVisible = (
+                                      checkItem: MenuWithPrice
+                                    ) => {
+                                      const isFilteredOut =
+                                        Object.values(filter).some(Boolean) &&
+                                        !filter[checkItem.course];
+                                      const isHiddenByToggle =
+                                        checkItem.disabled && toggle.disabled;
+                                      const isHiddenBySearch =
+                                        checkItem.name
+                                          .toLowerCase()
+                                          .indexOf(searchText) === -1;
+                                      return (
+                                        !isFilteredOut &&
+                                        !isHiddenByToggle &&
+                                        !isHiddenBySearch
+                                      );
+                                    };
+
+                                    // Check if there are any more visible items from the same course after this one
+                                    const hasMoreVisibleItemsInSameCourse =
+                                      values.items
+                                        .slice(currentIdx)
+                                        .some((nextItem) => {
+                                          return (
+                                            isItemVisible(nextItem) &&
+                                            nextItem.course === item.course
+                                          );
+                                        });
+
+                                    // Show thick border if this is the last visible item in its course
+                                    // or if the next visible item is from a different course
+                                    return hasMoreVisibleItemsInSameCourse
+                                      ? "1px"
+                                      : "3px";
+                                  })(),
+                                }}
+                              />
+                              <div
+                                className="position-absolute top-50 start-50 translate-middle opacity-0 group-hover bg-white px-1"
+                                style={{ zIndex: 1 }}
+                              >
+                                <button
+                                  onClick={() => {
+                                    const insertionIndex = item.mvIdx + 1;
+                                    const temporaryId = `new-${item.id}-${insertionIndex}-${values.items.length}`;
+                                    insert(insertionIndex, {
+                                      ...initialValue,
+                                      id: temporaryId,
+                                      price: {
+                                        ...initialValue.price,
+                                        id: `${temporaryId}-price`,
+                                      },
+                                      course: item.course,
+                                      idx: insertionIndex,
+                                      mvIdx: insertionIndex,
+                                    });
                                   }}
-                                />
+                                  type="button"
+                                  aria-label={`Add item below ${item.name}`}
+                                  data-testid={`inline-add-item-${item.mvIdx}`}
+                                  className="btn btn-outline-secondary btn-sm lh-1 px-2 py-0"
+                                  style={
+                                    {
+                                      minWidth: "1.5rem",
+                                      minHeight: "1.5rem",
+                                      lineHeight: 1,
+                                    } as React.CSSProperties
+                                  }
+                                >
+                                  +
+                                </button>
                               </div>
-                            </div> */}
-                            <hr
-                              style={{
-                                flex: 1,
-                                // Make hr wider between different course sections
-                                borderWidth: (() => {
-                                  const currentIdx = item.mvIdx;
-                                  // Helper function to check if an item would be visible
-                                  const isItemVisible = (
-                                    checkItem: MenuWithPrice
-                                  ) => {
-                                    const isFilteredOut =
-                                      Object.values(filter).some(Boolean) &&
-                                      !filter[checkItem.course];
-                                    const isHiddenByToggle =
-                                      checkItem.disabled && toggle.disabled;
-                                    const isHiddenBySearch =
-                                      checkItem.name
-                                        .toLowerCase()
-                                        .indexOf(searchText) === -1;
-                                    return (
-                                      !isFilteredOut &&
-                                      !isHiddenByToggle &&
-                                      !isHiddenBySearch
-                                    );
-                                  };
-
-                                  // Check if there are any more visible items from the same course after this one
-                                  const hasMoreVisibleItemsInSameCourse =
-                                    values.items
-                                      .slice(currentIdx)
-                                      .some((nextItem) => {
-                                        return (
-                                          isItemVisible(nextItem) &&
-                                          nextItem.course === item.course
-                                        );
-                                      });
-
-                                  // Show thick border if this is the last visible item in its course
-                                  // or if the next visible item is from a different course
-                                  return hasMoreVisibleItemsInSameCourse
-                                    ? "1px"
-                                    : "3px";
-                                })(),
-                              }}
-                            />
+                            </div>
                           </div>
                         </SortableList.Item>
                       )}
@@ -545,6 +589,7 @@ const EditMenu: React.FC<EditMenuProps> = ({ menu }) => {
 type EditMenuItemProps = {
   mvIdx: number;
   item: MenuWithPrice;
+  defaultExpanded?: boolean;
   hasError: boolean;
   dragHandle: React.ReactNode;
   remove: (obj: { idx: number; id: string }) => void;
@@ -555,13 +600,14 @@ type EditMenuItemProps = {
 function EditMenuItem({
   mvIdx: idx,
   item,
+  defaultExpanded = false,
   hasError,
   dragHandle,
   remove,
 }: // TODO: Allow separating removed and edited
 // removed,
 EditMenuItemProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultExpanded);
   const { diff: status } = useContext(DiffStatus);
   const { setFieldValue } = useFormikContext();
   return (
