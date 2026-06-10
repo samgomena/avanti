@@ -10,24 +10,16 @@
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest",
-    "test-e2e": "playwright test",
+    "test:e2e": "playwright test",
     "test:ci": "CI=true eslint . && vitest run",
-    "db:push": "prisma db push",
     "db:libsql:push": "bunx drizzle-kit push",
+    "db:seed": "bun drizzle/seed.ts",
     "db:libsql:studio": "bunx drizzle-kit studio",
-    "auth:generate-schema": "bunx auth@latest generate --config ./lib/auth.ts --output ./lib/db/schema/auth.ts --yes",
-    "db:keepalive": "node ./scripts/db-keepalive.js",
-    "generate": "bunx prisma generate",
-    "COMMENT: This is done to fix builds on vercel": "",
-    "COMMENT: See: https://pris.ly/d/vercel-build": "",
-    "postinstall": "bunx prisma generate"
+    "auth:generate-schema": "bunx auth@latest generate --config ./lib/auth.ts --output ./lib/db/schema/auth.ts --yes"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/samgomena/avanti.git"
-  },
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "author": "Sam Gomena",
   "license": "ISC",
@@ -38,7 +30,6 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@libsql/client": "^0.17.2",
-    "@prisma/client": "^6.17.1",
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-query-devtools": "^5.91.1",
     "@trpc/client": "11.7.2",
@@ -80,6 +71,7 @@
     "@types/node": "^25.0.1",
     "@types/react": "19.2.7",
     "@vitejs/plugin-react": "^5.1.2",
+    "baseline-browser-mapping": "^2.10.37",
     "cheerio": "1.1.2",
     "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.8",
@@ -91,7 +83,6 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
-    "prisma": "^6.17.1",
     "smtp-tester": "^2.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
