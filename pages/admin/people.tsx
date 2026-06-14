@@ -1,10 +1,10 @@
 import BeforeUnload from "@/components/Form/BeforeUnload";
 import Field from "@/components/Form/FieldWithError";
 import { api } from "@/lib/api";
-import { db } from "@/server/db";
-import type { User } from "@prisma/client";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
+import { drizzleDb } from "@/lib/db/libsql";
+import { user as userTable } from "@/lib/db/schema";
 import { Form, Formik, type FormikValues } from "formik";
-import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import { useState } from "react";
@@ -17,8 +17,15 @@ import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import withAdminNav from "../../lib/withAdminNav";
 
+export type PeopleRow = {
+  id: string;
+  email: string;
+  name: string;
+  emailVerified: boolean;
+};
+
 type PeopleProps = {
-  users: User[];
+  users: PeopleRow[];
 };
 
 const colSpan = 5;
@@ -67,7 +74,7 @@ const People: React.FC<PeopleProps> = ({ users }) => {
                   <td colSpan={colSpan}>
                     {user.email}{" "}
                     <span className="d-md-inline d-md-none">
-                      {!user.emailVerified ? (
+                      {user.emailVerified ? (
                         <Check className="text-success" size={12} />
                       ) : (
                         <X className="text-danger" size={12} />
@@ -309,8 +316,8 @@ const DeleteUser = ({ userId, name }: { userId: string; name: string }) => {
 export default withAdminNav<PeopleProps>(People);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,
@@ -319,19 +326,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const _users = await db.user.findMany({
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      emailVerified: true,
-    },
-  });
-
-  const users = _users.map((user) => ({
-    ...user,
-    emailVerified: user.emailVerified?.getTime() ?? null,
-  }));
+  const users = await drizzleDb
+    .select({
+      id: userTable.id,
+      email: userTable.email,
+      name: userTable.name,
+      emailVerified: userTable.emailVerified,
+    })
+    .from(userTable);
 
   return {
     props: {

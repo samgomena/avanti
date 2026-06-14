@@ -1,24 +1,31 @@
 import { validationSchema } from "@/pages/admin/alerts";
+import { alert } from "@/lib/db/schema";
 import { TRPCError } from "@trpc/server";
-import { protectedProcedure, createTRPCRouter } from "../trpc";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
+
+import { protectedProcedure, createTRPCRouter } from "../trpc";
 
 export const alertsRouter = createTRPCRouter({
   create: protectedProcedure.input(validationSchema).mutation(async (opts) => {
     const { input, ctx } = opts;
 
     try {
-      const alert = await ctx.db.alert.create({
-        data: {
-          ...input,
+      const id = input.id ?? crypto.randomUUID();
+      const [row] = await ctx.db
+        .insert(alert)
+        .values({
+          id,
           start: new Date(input.start),
           end: new Date(input.end),
-        },
-      });
+          title: input.title,
+          text: input.text,
+        })
+        .returning();
 
       return {
         ok: true,
-        data: alert,
+        data: row,
         error: null,
       };
     } catch (error) {
@@ -31,24 +38,35 @@ export const alertsRouter = createTRPCRouter({
   update: protectedProcedure.input(validationSchema).mutation(async (opts) => {
     const { input, ctx } = opts;
 
+    if (!input.id) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: "Alert id required" });
+    }
+
     try {
-      const updated = await ctx.db.alert.update({
-        data: {
-          ...input,
+      const [row] = await ctx.db
+        .update(alert)
+        .set({
           start: new Date(input.start),
           end: new Date(input.end),
-        },
-        where: {
-          id: input.id,
-        },
-      });
+          title: input.title,
+          text: input.text,
+        })
+        .where(eq(alert.id, input.id))
+        .returning();
+
+      if (!row) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Alert not found" });
+      }
 
       return {
         ok: true,
-        data: updated,
+        data: row,
         error: null,
       };
     } catch (error) {
+      if (error instanceof TRPCError) {
+        throw error;
+      }
       if (typeof error === "string") {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: error });
       }
@@ -62,17 +80,24 @@ export const alertsRouter = createTRPCRouter({
       const { input, ctx } = opts;
 
       try {
-        const deleted = await ctx.db.alert.delete({
-          where: {
-            id: input.id,
-          },
-        });
+        const [deleted] = await ctx.db
+          .delete(alert)
+          .where(eq(alert.id, input.id))
+          .returning();
+
+        if (!deleted) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Alert not found" });
+        }
+
         return {
           ok: true,
           data: deleted,
           error: null,
         };
       } catch (error) {
+        if (error instanceof TRPCError) {
+          throw error;
+        }
         if (typeof error === "string") {
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",

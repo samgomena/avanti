@@ -1,7 +1,7 @@
 import PriceField from "@/components/Form/PriceField";
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
 import { api } from "@/lib/api";
-import { Courses } from "@prisma/client";
+import { courseValues } from "@/lib/db/schema";
 import {
   ErrorMessage,
   FieldArray,
@@ -9,7 +9,7 @@ import {
   Formik,
   type FormikHelpers,
 } from "formik";
-import { getSession } from "next-auth/react";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import type { GetServerSideProps } from "next/types";
 import type React from "react";
 import Button from "react-bootstrap/Button";
@@ -46,7 +46,7 @@ export const validationSchema = z.object({
       z.object({
         name: z.string({ error: "A name for this item is required!" }),
         description: z.string().optional(),
-        course: z.enum(Courses),
+        course: z.enum(courseValues),
         price: z.object({
           lunch: z.string().optional(),
           dinner: z.string().optional(),
@@ -174,8 +174,8 @@ const AddMenuItem: React.FC = () => {
                           options={[
                             { name: "Appetizers", value: "appetizer" },
                             { name: "Entrees", value: "entree" },
-                            { name: "Drinks", value: "drink" },
                             { name: "Desserts", value: "dessert" },
+                            { name: "Drinks", value: "drink" },
                           ]}
                         />
 
@@ -255,8 +255,8 @@ const AddMenuItem: React.FC = () => {
 export default withAdminNav(AddMenuItem);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,

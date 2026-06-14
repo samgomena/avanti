@@ -4,9 +4,25 @@ import { closestCenter } from "@dnd-kit/core";
 import type { MenuWithPrice } from "../../../pages/admin/menu/edit";
 
 // Mock the required modules
-vi.mock("next-auth/react", () => ({
-  getSession: vi.fn(() =>
-    Promise.resolve({ user: { email: "test@example.com" } })
+vi.mock("@/lib/auth-session", () => ({
+  getAuthSessionFromGssp: vi.fn(() =>
+    Promise.resolve({
+      user: {
+        id: "test-id",
+        email: "test@example.com",
+        name: "Test",
+        emailVerified: true,
+        image: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      session: {
+        id: "sess",
+        userId: "test-id",
+        expiresAt: new Date(),
+        token: "tok",
+      },
+    })
   ),
 }));
 

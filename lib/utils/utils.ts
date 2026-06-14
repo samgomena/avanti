@@ -1,4 +1,4 @@
-import { Menu, Price } from "@prisma/client";
+import type { Menu, Price } from "@/lib/db/types";
 import type { Hours } from "../types/info";
 import { Service } from "../types/menu";
 

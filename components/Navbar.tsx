@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
@@ -15,7 +15,7 @@ export default function AvantiNavbar() {
     return "dark";
   });
 
-  const { data: session } = useSession();
+  const { data: session } = authClient.useSession();
 
   const handleScroll = useCallback(() => {
     if (window.scrollY <= 1) {
@@ -38,7 +38,7 @@ export default function AvantiNavbar() {
     }
   }, []);
 
-  const isLoggedInPath = session ? "/admin/overview" : "/login";
+  const isLoggedInPath = session?.user ? "/admin/overview" : "/login";
 
   return (
     <Navbar
@@ -122,7 +122,7 @@ export default function AvantiNavbar() {
                     router.asPath.startsWith("/admin")
                   }
                 >
-                  {session ? "Admin" : "Login"}
+                  {session?.user ? "Admin" : "Login"}
                 </Nav.Link>
               </Link>
             </Nav.Item>

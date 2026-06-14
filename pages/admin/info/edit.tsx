@@ -1,14 +1,15 @@
 import SubmitResetButtons from "@/components/Form/SubmitResetButtons";
-import type { Contact, Days } from "@prisma/client";
+import type { Contact } from "@/lib/db/types";
+import type { Day } from "@/lib/db/schema";
 import { Form, Formik } from "formik";
-import { getSession } from "next-auth/react";
+import { getAuthSessionFromGssp } from "@/lib/auth-session";
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next/types";
 import BeforeUnload from "../../../components/Form/BeforeUnload";
 import Field from "../../../components/Form/FieldWithError";
 import HoursField from "../../../components/Form/HoursField";
 import { days } from "../../../lib/hooks/useInfo";
-import { db } from "@/server/db";
+import { drizzleDb } from "@/lib/db/libsql";
 import { capitalize } from "../../../lib/utils/utils";
 import withAdminNav from "../../../lib/withAdminNav";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -76,7 +77,7 @@ export type EditInfoProps = {
       id: string;
       open: string;
       close: string;
-      day: Days;
+      day: Day;
     }[];
   };
 };
@@ -190,8 +191,8 @@ const EditInfo: React.FC<EditInfoProps> = ({ info }) => {
 export default withAdminNav(EditInfo);
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  if (!session) {
+  const session = await getAuthSessionFromGssp(ctx);
+  if (!session?.user) {
     return {
       redirect: {
         permanent: false,
@@ -200,8 +201,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const info = await db.info.findFirst({
-    include: {
+  const info = await drizzleDb.query.info.findFirst({
+    with: {
       contact: true,
       hours: true,
     },

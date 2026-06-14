@@ -2,11 +2,26 @@ import { vi } from "vitest";
 import { appRouter } from "../root";
 import { createInnerTRPCContext } from "../trpc";
 
-test.skip("protected example router", async () => {
+test.skip("people: create", async () => {
   const ctx = createInnerTRPCContext({
     session: {
-      user: { name: "John Doe", email: "email@example.com" },
-      expires: "1",
+      user: {
+        id: "user-1",
+        name: "John Doe",
+        email: "email@example.com",
+        emailVerified: true,
+        image: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      session: {
+        id: "sess-1",
+        userId: "user-1",
+        expiresAt: new Date(),
+        token: "token",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     },
   });
   const caller = appRouter.createCaller(ctx);
@@ -21,6 +36,6 @@ test.skip("protected example router", async () => {
   expect(res.data).toMatchObject({
     name: "testuser1",
     email: "email@example.com",
-    emailVerified: null,
+    emailVerified: false,
   });
 });

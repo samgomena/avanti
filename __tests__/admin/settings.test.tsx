@@ -28,8 +28,8 @@ test("It shows to relevant infoz", () => {
     email: "fake@lolz.com",
     emailVerified: null,
     image: null,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
+    createdAt: createdAt.toISOString(),
+    updatedAt: updatedAt.toISOString(),
   };
 
   render(<Settings user={fakeUser} />);
@@ -38,12 +38,10 @@ test("It shows to relevant infoz", () => {
   expect(screen.getByText(`Email: ${fakeUser.email}`)).toBeInTheDocument();
 
   expect(
-    screen.getByText(
-      `Last updated: ${formatDate(fakeUser.updatedAt.toISOString())}`
-    )
+    screen.getByText(`Last updated: ${formatDate(fakeUser.updatedAt)}`)
   ).toBeInTheDocument();
 
   expect(
-    screen.getByText(`Created: ${formatDate(fakeUser.createdAt.toISOString())}`)
+    screen.getByText(`Created: ${formatDate(fakeUser.createdAt)}`)
   ).toBeInTheDocument();
 });

@@ -1,29 +1,34 @@
 import { TRPCError, initTRPC } from "@trpc/server";
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
-import type { Session } from "next-auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { db } from "@/server/db";
-import { getServerSession } from "next-auth/next";
-import { authConfig } from "@/pages/api/auth/[...nextauth]";
+import { auth } from "@/lib/auth";
+import { getAuthSessionFromHeaders } from "@/lib/auth-session";
+import {
+  drizzleDb,
+  type AppDrizzleDatabase,
+} from "@/lib/db/libsql";
+
+type AuthSession = NonNullable<Awaited<ReturnType<typeof auth.api.getSession>>>;
 
 type CreateContextOptions = {
-  session: Session | null;
+  session: AuthSession | null;
+  /** For tests — defaults to the app singleton `drizzleDb`. */
+  db?: AppDrizzleDatabase;
 };
 
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
-    db,
+    db: opts.db ?? drizzleDb,
   };
 };
 
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
+  const { req } = opts;
 
-  // Get the session from the server using the getServerSession wrapper function
-  const session = await getServerSession(req, res, authConfig);
+  const session = await getAuthSessionFromHeaders(req.headers);
 
   return createInnerTRPCContext({
     session,
@@ -49,23 +54,13 @@ export const publicProcedure = t.procedure;
 export const protectedProcedure = t.procedure.use((opts) => {
   const { ctx, next } = opts;
 
-  // TODO: Pin to dev server until we have more tests
-  // if (process.env.NODE_ENV !== "development") {
-  //   throw new TRPCError({ code: "UNAUTHORIZED" });
-  // }
-
-  // TODO: Only allow updates?
-  // if (ctx.req.method !== "POST") {
-  //   throw new TRPCError({ code: "METHOD_NOT_SUPPORTED" });
-  // }
-
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
   return next({
     ctx: {
-      session: { ...ctx.session, user: ctx.session.user },
+      session: ctx.session,
     },
   });
 });

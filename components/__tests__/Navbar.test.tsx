@@ -3,10 +3,18 @@ import Navbar from "../Navbar";
 import { vi } from "vitest";
 
 const getPath = vi.fn(() => "/test");
-const getSession = vi.fn(() => ({ data: false }));
 
-vi.mock("next-auth/react", () => ({
-  useSession: () => getSession(),
+const mockUseSession = vi.fn(() => ({
+  data: null as { user: { email: string } } | null,
+  isPending: false,
+  error: null,
+  refetch: vi.fn(),
+}));
+
+vi.mock("@/lib/auth-client", () => ({
+  authClient: {
+    useSession: () => mockUseSession(),
+  },
 }));
 
 vi.mock("next/router", () => ({
@@ -29,6 +37,15 @@ vi.mock("next/router", () => ({
 // }));
 
 describe("Navbar", () => {
+  beforeEach(() => {
+    mockUseSession.mockImplementation(() => ({
+      data: null,
+      isPending: false,
+      error: null,
+      refetch: vi.fn(),
+    }));
+  });
+
   it("renders", () => {
     render(<Navbar />);
 
@@ -70,10 +87,14 @@ describe("Navbar", () => {
 });
 
 describe("Navbar - Links", () => {
-  const navItems = 8;
-
   beforeEach(() => {
     getPath.mockReset();
+    mockUseSession.mockImplementation(() => ({
+      data: null,
+      isPending: false,
+      error: null,
+      refetch: vi.fn(),
+    }));
   });
 
   it("renders about page link with the correct classnames", () => {
@@ -151,7 +172,12 @@ describe("Navbar - Links", () => {
 
   it("renders admin page link with the correct href", () => {
     getPath.mockImplementation(() => "/admin");
-    getSession.mockImplementation(() => ({ data: true }));
+    mockUseSession.mockImplementation(() => ({
+      data: { user: { email: "admin@test.com" } },
+      isPending: false,
+      error: null,
+      refetch: vi.fn(),
+    }));
 
     render(<Navbar />);
 

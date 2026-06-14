@@ -15,6 +15,10 @@
 # production
 /build
 
+# SQLite (Drizzle local / CI)
+/data/*.db
+/data/*.db-*
+
 # misc
 .DS_Store
 *.code-workspace

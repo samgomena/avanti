@@ -1,10 +1,18 @@
-import { PrismaClient, type Alert } from "@prisma/client";
 import Link from "next/link";
 import type { GetStaticProps } from "next/types";
+import { desc } from "drizzle-orm";
 import { Facebook, Instagram, MapPin } from "react-feather";
 import { type BannerLayer, ParallaxBanner } from "react-scroll-parallax";
 
 import Alerts from "../components/Alerts";
+import { drizzleDb } from "@/lib/db/libsql";
+import { alert, contact } from "@/lib/db/schema";
+import type { Alert } from "@/lib/db/types";
+
+type SerializedAlert = Omit<Alert, "start" | "end"> & {
+  start: string;
+  end: string;
+};
 // import Carousel from "react-bootstrap/Carousel";
 
 const gradientOverlay: BannerLayer = {
@@ -47,7 +55,7 @@ export default function Home({
   alerts,
   info,
 }: {
-  alerts: Alert[];
+  alerts: SerializedAlert[];
   info: Info;
 }) {
   return (
@@ -168,28 +176,32 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const prisma = new PrismaClient();
-  const alerts = await prisma.alert.findMany({
-    orderBy: {
-      start: "desc",
-    },
-  });
-  // TODO: These need to be loaded not statically probably lol whoops
-  const _alerts = alerts?.map((alert) => ({
-    ...alert,
-    start: alert.start.toISOString(),
-    end: alert.end.toISOString(),
+  const alerts = await drizzleDb.select().from(alert).orderBy(desc(alert.start));
+  const _alerts = alerts?.map((row) => ({
+    ...row,
+    start: row.start.toISOString(),
+    end: row.end.toISOString(),
   }));
 
-  const contact = await prisma.contact.findFirst({
-    select: {
-      address: true,
-      facebook: true,
-      instagram: true,
-    },
-  });
+  const [contactRow] = await drizzleDb
+    .select({
+      address: contact.address,
+      facebook: contact.facebook,
+      instagram: contact.instagram,
+    })
+    .from(contact)
+    .limit(1);
 
   return {
-    props: { alerts: _alerts, info: { contact } },
+    props: {
+      alerts: _alerts,
+      info: {
+        contact: contactRow ?? {
+          address: "",
+          facebook: "",
+          instagram: "",
+        },
+      },
+    },
   };
 };

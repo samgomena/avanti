@@ -7,7 +7,8 @@ on:
 
 env:
   CI: true
-  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
+  LIBSQL_URL: file:./data/local.db
+  LIBSQL_AUTH_TOKEN: ""
   EMAIL_SERVER_USER: ""
   EMAIL_SERVER_PASSWORD: ""
   EMAIL_SERVER_HOST: localhost
@@ -44,11 +45,11 @@ jobs:
         run: |
           # npm install -g pnpm
           # pnpm install
-          # pnpm prisma db push
-          # pnpm prisma db seed
+          # pnpm run db:libsql:push
+          # pnpm run db:seed
           bun install
-          bun prisma db push
-          bun prisma db seed
+          bun run db:libsql:push
+          bun run db:seed
 
       - name: Install Playwright Browsers
         run: bunx playwright install --with-deps

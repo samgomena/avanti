@@ -1,126 +1,122 @@
 import { render, screen } from "@testing-library/react";
 import Menu from "../pages/menu";
 import { ParallaxProvider } from "react-scroll-parallax";
-import { Bucket } from "@/lib/types/menu";
+import type { Bucket } from "@/lib/types/menu";
+
+const dinnerPrice = (n: number) => ({
+  dinner: String(n),
+  drinks: null as string | null,
+  dessert: null as string | null,
+});
+const drinksPrice = (n: number) => ({
+  dinner: null as string | null,
+  drinks: String(n),
+  dessert: null as string | null,
+});
+const dessertPrice = (n: number) => ({
+  dinner: null as string | null,
+  drinks: null as string | null,
+  dessert: String(n),
+});
 
 const apps = [
   {
     name: "Marinated Olives",
     description: "",
-    price: {
-      dinner: 8,
-    },
+    price: dinnerPrice(8),
   },
   {
     name: "Marcona Almonds",
     description: "",
-    price: {
-      dinner: 6,
-    },
+    price: dinnerPrice(6),
   },
   {
     name: "Bread Service",
     description: "",
-    price: {
-      dinner: 5,
-    },
+    price: dinnerPrice(5),
   },
   {
     name: "Cheese Plate",
     description:
       "A handful of rotating cheeses with seasonal fruit, Marcona almonds, and fig compote",
-    price: {
-      dinner: 22,
-    },
+    price: dinnerPrice(22),
   },
   {
     name: "Arancini",
     description: "Fried risotto cakes filled with smoked pork and goat cheese",
-    price: {
-      dinner: 16,
-    },
+    price: dinnerPrice(16),
   },
-] as Bucket;
+] satisfies Bucket;
 
 const entrees = [
   {
     name: "Butternut Squash Risotto",
     description:
       "Served with pancetta, goat cheese, spinach, cipollini onions, and hazelnuts",
-    price: {
-      dinner: 28,
-    },
+    price: dinnerPrice(28),
   },
   {
     name: "Braised Short Ribs",
     description:
       "Served in a hoisin burgundy sauce with pomme purée, carrots, parsnips, and cippolini onions",
-    price: {
-      dinner: 37,
-    },
+    price: dinnerPrice(37),
   },
   {
     name: "Pan Roasted Sturgeon",
     description:
       "Served over a bed of creamed wild rice with grilled broccolini and tomato hazelnut pesto",
-    price: {
-      dinner: 36,
-    },
+    price: dinnerPrice(36),
   },
   {
     name: "Panko and Herb-Crusted Mahi Mahi",
     description:
       "Served with crème fraîche, rice, sauce chasseur with bacon, mushroom, tomato, shallots, and grilled asparagus",
-    price: {
-      dinner: 35,
-    },
+    price: dinnerPrice(35),
   },
   {
     name: "Smoked Pork Chop",
     description:
       "Brined in apple cider vinegar, served with French onion bread pudding and green beans, finished with mushroom sauce",
-    price: {
-      dinner: 36,
-    },
+    price: dinnerPrice(36),
   },
-] as Bucket;
+] satisfies Bucket;
+
+const desserts = [
+  {
+    name: "Tiramisu",
+    description: "Espresso-soaked ladyfingers, mascarpone, cocoa",
+    price: dessertPrice(9),
+  },
+] satisfies Bucket;
 
 const drinks = [
   {
     name: "Last Word",
     description: "Tanqueray, Luxardo, Green Chartreuse, lime",
-    price: {
-      drinks: 12,
-    },
+    price: drinksPrice(12),
   },
   {
     name: "Hemingway Daiquiri",
     description: "Bacardi, Luxardo, grapefruit, lime",
-    price: {
-      drinks: 12,
-    },
+    price: drinksPrice(12),
   },
   {
     name: "Grapefruit Drop",
     description: "Vodka, Campari, grapefruit, lemon",
-    price: {
-      drinks: 11,
-    },
+    price: drinksPrice(11),
   },
   {
     name: "Pineapple Mule",
     description: "Vodka, pineapple, lime, ginger beer",
-    price: {
-      drinks: 10,
-    },
+    price: drinksPrice(10),
   },
-] as Bucket;
+] satisfies Bucket;
 
 describe("Menu", () => {
   it("fucking renders", () => {
     render(
       <ParallaxProvider>
-        <Menu apps={apps} entrees={entrees} drinks={drinks} />
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
       </ParallaxProvider>
     );
 
@@ -132,7 +128,7 @@ describe("Menu", () => {
   it("Has all the tabs", () => {
     render(
       <ParallaxProvider>
-        <Menu apps={apps} entrees={entrees} drinks={drinks} />
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
       </ParallaxProvider>
     );
 
@@ -147,19 +143,31 @@ describe("Menu", () => {
   it("Does not have ff'd tabs", () => {
     render(
       <ParallaxProvider>
-        <Menu apps={apps} entrees={entrees} drinks={drinks} />
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
       </ParallaxProvider>
     );
 
-    ["Lunch", "Happy Hour", "Dessert"].forEach((_tab) => {
+    ["Lunch", "Happy Hour"].forEach((_tab) => {
       expect(screen.queryByText(_tab)).toBeNull();
     });
+    expect(screen.queryByRole("tab", { name: "Dessert" })).toBeNull();
+  });
+
+  it("Lists desserts on the dinner tab", () => {
+    render(
+      <ParallaxProvider>
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
+      </ParallaxProvider>
+    );
+
+    expect(screen.getByText("Desserts")).toBeInTheDocument();
+    expect(screen.getByText("Tiramisu")).toBeInTheDocument();
   });
 
   it("Has dinner selected by default", () => {
     render(
       <ParallaxProvider>
-        <Menu apps={apps} entrees={entrees} drinks={drinks} />
+        <Menu apps={apps} entrees={entrees} desserts={desserts} drinks={drinks} />
       </ParallaxProvider>
     );
 

@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "turso",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1777092860682,
+      "tag": "0000_far_eddie_brock",
+      "breakpoints": true
+    }
+  ]
+}

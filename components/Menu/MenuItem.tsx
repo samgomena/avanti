@@ -1,7 +1,8 @@
 type Props = {
   name: string;
   description: string;
-  price: number;
+  /** Stored as text in the DB; shown with a leading `$` in the layout. */
+  price: string | number;
 };
 
 const MenuItem: React.FC<Props> = ({ name, description, price }) => {
